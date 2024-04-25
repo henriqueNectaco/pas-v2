@@ -40,8 +40,8 @@ export default function Vendas() {
         </div>
       </form>
       {!responseData ? (<Spinner />) : (
-        <div className=" rounded-lg   border-black w-full h-full  p-2 lg:p-4  text-black">
-          <div className="rounded-lg  bg-gray-500 h-full gap-3 flex flex-col lg:flex-row   items-center lg:items-start lg:p-20 justify-center ">
+        <div className=" rounded-lg   border-black w-screen h-full  p-2 lg:p-4  text-black">
+          <div className="rounded-lg  bg-gray-500 h-full  flex flex-col lg:flex-row   items-center lg:items-start p-4 lg:pt-8 justify-center ">
             <div className=" w-2/6 flex flex-col items-center justify-center lg:gap-2 ">
               <p>Marketplace: {responseData.pedido.estabelecimento.marketplace.nome}</p>
               <p>Valor: {responseData.pedido.valor_bruto}</p>
@@ -66,21 +66,15 @@ export default function Vendas() {
               <p>Forma de pagamento: {responseData.zoopTransaction.payment_type}</p>
 
             </div>
+
+          </div >
+
+          <div class="grid grid-cols-2  max-w-screen   p-4 ">
+            <div class="bg-blue-200 p-4 rounded-md whitespace-pre-wrap">
+              {JSON.stringify(responseData.zoopTransaction)}
+            </div>
+            <div class="bg-green-200 p-4 rounded-md">Coluna 2</div>
           </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         </div>
       )}
 

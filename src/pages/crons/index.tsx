@@ -41,6 +41,19 @@ export default function Crons() {
     console.log(crons)
     console.log(mensagem)
   }, []);
+  function formatarData(dataString: any) {
+    const dataOriginal = new Date(dataString);
+
+    const dia = dataOriginal.getDate().toString().padStart(2, '0');
+    const mes = (dataOriginal.getMonth() + 1).toString().padStart(2, '0'); // Os meses são indexados a partir de 0
+    const ano = dataOriginal.getFullYear().toString();
+    const hora = dataOriginal.getHours().toString().padStart(2, '0');
+    const minutos = dataOriginal.getMinutes().toString().padStart(2, '0');
+
+    const dataFormatada = `${dia}/${mes}/${ano} ${hora}:${minutos}`;
+
+    return dataFormatada;
+  }
 
   return (
     <div className='h-scren w-screen'>
@@ -53,7 +66,7 @@ export default function Crons() {
             {crons.map((crons: any) => (
 
               <div key={crons.id}>
-                < CardCron Cron={crons.slug} Scheduled={crons.interval} Mensagem={crons.message} date='teste' />
+                < CardCron Cron={crons.slug} Scheduled={crons.interval} Mensagem={crons.message} date={formatarData(crons.start_date)} />
               </div>
             ))}
           </>
