@@ -56,7 +56,7 @@ export default function Crons() {
   }
 
   return (
-    <div className='h-scren w-screen'>
+    <div className='h-screen w-full'>
       <Header />
       <>
         {!crons ? (

@@ -18,7 +18,7 @@ export default function Header() {
   ];
 
   return (
-    <Navbar className="p-6 flex flex-row items-center justify-around bg-gradient-to-r from-cyan-500 to-blue-500  text-black "
+    <Navbar className="p-6  w-fscreen flex flex-row items-center justify-around bg-gradient-to-r from-cyan-500 to-blue-500  text-black "
       isBordered
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}

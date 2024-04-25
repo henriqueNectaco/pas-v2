@@ -8,7 +8,7 @@ type ConteudoCronProps = {
 export function CardCron(props: ConteudoCronProps) {
   return (
     <>
-      <div className='bg-white text-center px-8 rounded-xl mx-8 my-4 s border-2   lg:grid lg:grid-cols-5 '>
+      <div className='bg-white text-center rounded-lg   border-2 w-full  lg:grid lg:grid-cols-5 '>
         <div className="p-4 lg:my-auto">
           <p className="font-bold">Cron</p>
           <p className="">{props.Cron}</p>
