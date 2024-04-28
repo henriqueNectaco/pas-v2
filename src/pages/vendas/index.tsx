@@ -4,7 +4,8 @@ import axios from 'axios';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import Cookies from 'js-cookie';
-
+import JSONPrettyMon from 'react-json-pretty/themes/monikai.css';
+import JSONPretty from 'react-json-pretty';
 import { Spinner, X } from 'phosphor-react'
 
 
@@ -69,12 +70,16 @@ export default function Vendas() {
 
           </div >
 
-          <div class="grid grid-cols-2  max-w-screen   p-4 ">
-            <div class="bg-blue-200 p-4 rounded-md whitespace-pre-wrap">
-              {JSON.stringify(responseData.zoopTransaction)}
-            </div>
-            <div class="bg-green-200 p-4 rounded-md">Coluna 2</div>
+          <div className="text-sm m-2 grid grid-cols-1 lg:grid-cols-2 lg:col-span-2">
+          <div className="text-left m-1">
+            <p>Vendas</p>
+            <JSONPretty data={responseData.pedido} theme={{ JSONPrettyMon }} />
           </div>
+          <div className="text-left m-1">
+            <p>Zoop Transactions</p>
+            <JSONPretty data={responseData.zoopTransaction} theme={{ JSONPrettyMon }} />
+          </div>
+        </div>
         </div>
       )}
 

@@ -3,10 +3,12 @@ import Header from '../../components/Header/index';
 import { Button, Input } from '@nextui-org/react'
 import ButtonOptions from './buttonOptions'
 import { useEffect, useState } from "react";
-import A from './a'
+import DropdownMenuFirst from './a'
 import { DatePicker } from "@nextui-org/react";
 import {DotsThreeOutlineVertical} from 'phosphor-react'
 import axios from "axios";
+import DropdownMenuSecond from "./dropdown";
+
 
 export default function Marketplace() {
   const token = Cookies.get('token')
@@ -63,13 +65,13 @@ export default function Marketplace() {
           <Button  className='w-3/4' radius="md" size="md" variant="solid" color="primary">Novo Marketplace</Button>
           <Button  className='w-3/4' radius="md" size="md" variant="solid" color="primary">Importar todas as vendas</Button>
         </div>
-        <div className="w-full border-2 p-6 gap-4 flex flex-col lg:flex-row items-end justify-between  ">
+        <div className="w-full border-2 p-6 gap-4 flex flex-col lg:flex-row items-center lg:items-end justify-between  ">
           <Input className="w-1/8" placeholder="ID" variant="underlined" value={idInput} onChange={handleChangeIdInput} />
           <Input className="w-1/8" placeholder="Nome" variant="underlined" value={name} onChange={handleChangeNameInput} />
           <DatePicker className="w-1/8" onChange={handleDatePickerChange}  value={datePickerValue} variant="underlined" label={'Selecione uma data'} />
           <Input placeholder="email" className="w-1/8" variant="underlined" value={email} onChange={handleChangeEmailInput} />
           <Input placeholder="CNPJ" className="w-1/8" variant="underlined" value={cnpj} onChange={handleChangeCnpjInput} />
-          <A />
+          <DropdownMenuFirst />
           <Button onClick={handleCleanInput} color="danger">Limpar</Button>
           <Button color="primary">Filtrar</Button>
         </div>
@@ -97,7 +99,10 @@ export default function Marketplace() {
                 <p>Email:</p>
                 <p>{resData.mainECEmail}</p>
               </div>
-
+              <div className="w-1/4  flex flex-col items-center justify-center">
+                
+                <DropdownMenuSecond/>
+              </div>
             </div>
 
           ))}

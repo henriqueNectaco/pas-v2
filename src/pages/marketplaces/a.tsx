@@ -1,7 +1,7 @@
 import React from "react";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
-import { CaretDown } from "phosphor-react";
-export default function A() {
+import { CaretDown,DotsThreeOutlineVertical } from "phosphor-react";
+export default function DropdownMenuFirst() {
   return (
     <Dropdown>
       <DropdownTrigger>
@@ -13,7 +13,7 @@ export default function A() {
         </Button>
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
-        <DropdownItem key="new">Ativos</DropdownItem>
+        <DropdownItem key="new" >Ativos</DropdownItem>
         <DropdownItem key="copy">Desativados</DropdownItem>
         <DropdownItem key="edit">Todos</DropdownItem>
 
