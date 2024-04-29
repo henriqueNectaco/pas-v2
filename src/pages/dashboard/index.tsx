@@ -128,7 +128,7 @@ export default function DashBoard() {
             Até: <DatePicker variant='underlined' label={'teste'} />
 
           </div>
-          <Button color='primary' variant='solid' className='' size='md'>Enviar</Button>
+          <Button color='primary' variant='solid' className='' size='lg'>Enviar</Button>
         </div>
 
       </div>
@@ -141,7 +141,7 @@ export default function DashBoard() {
           <div className='border-2  lg:w-2/4 flex flex-col items-center justify-center'>
             <Input variant='underlined' placeholder='Dias' size='sm' className='w-[50vw]  lg:w-[20vw]' />
           </div>
-          <Button color='primary' variant='solid' className='' size='md'>Enviar</Button>
+          <Button color='primary' variant='solid' className='' size='lg'>Enviar</Button>
         </div>
 
       </div>
@@ -156,7 +156,7 @@ export default function DashBoard() {
             Até: <DatePicker variant='underlined' label={'teste'} />
 
           </div>
-          <Button color='primary' variant='solid' className='' size='md'>Enviar</Button>
+          <Button color='primary' variant='solid' className='' size='lg'>Enviar</Button>
         </div>
 
       </div>

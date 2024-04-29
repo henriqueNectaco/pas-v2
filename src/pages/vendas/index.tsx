@@ -41,8 +41,30 @@ export default function Vendas() {
         </div>
       </form>
       {!responseData ? (<Spinner />) : (
-        <div className=" rounded-lg   border-black w-screen h-full  p-2 lg:p-4  text-black">
-          <div className="rounded-lg  bg-gray-500 h-full  flex flex-col lg:flex-row   items-center lg:items-start p-4 lg:pt-8 justify-center ">
+        <div className=" rounded-lg bg-blue-400  border-black w-full h-full  p-2   text-black">
+       
+
+          <div className="text-sm m-2 grid grid-cols-1 lg:grid-cols-2 lg:col-span-2 ">
+          <div className="text-left m-1 w-2/4">
+            <p>Vendas</p>
+            <JSONPretty data={responseData.pedido} theme={{ JSONPrettyMon }} />
+          </div>
+          <div className="text-left w-3/4 m-1">
+            <p>Zoop Transactions</p>
+            <JSONPretty data={responseData.zoopTransaction} theme={{ JSONPrettyMon }} />
+          </div>
+        </div>
+        </div>
+      )}
+
+
+    </div>
+
+  )
+}
+
+/*
+  <div className="rounded-lg  bg-gray-500 h-full  flex flex-col lg:flex-row   items-center lg:items-start p-4 lg:pt-8 justify-center ">
             <div className=" w-2/6 flex flex-col items-center justify-center lg:gap-2 ">
               <p>Marketplace: {responseData.pedido.estabelecimento.marketplace.nome}</p>
               <p>Valor: {responseData.pedido.valor_bruto}</p>
@@ -68,23 +90,4 @@ export default function Vendas() {
 
             </div>
 
-          </div >
-
-          <div className="text-sm m-2 grid grid-cols-1 lg:grid-cols-2 lg:col-span-2">
-          <div className="text-left m-1">
-            <p>Vendas</p>
-            <JSONPretty data={responseData.pedido} theme={{ JSONPrettyMon }} />
-          </div>
-          <div className="text-left m-1">
-            <p>Zoop Transactions</p>
-            <JSONPretty data={responseData.zoopTransaction} theme={{ JSONPrettyMon }} />
-          </div>
-        </div>
-        </div>
-      )}
-
-
-    </div>
-
-  )
-}
+          </div > */
