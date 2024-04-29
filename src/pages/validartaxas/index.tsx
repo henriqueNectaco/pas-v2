@@ -9,7 +9,7 @@ export default function ValidarTaxas() {
 
   return (
     <div className='h-screen w-screen flex flex-col items-center  '>
-      <App />
+      <Header />
       <div className=' w-4/6 lg:w-2/6 flex flex-col items-center justify-center h-1/6 border-2 mt-8 lg:p-4'>
         <h1>Consultar Taxa</h1>
         <div className='flex flex-row items-center justify-center  w-full p-2'>

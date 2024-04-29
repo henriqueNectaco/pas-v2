@@ -1,6 +1,5 @@
 import React from "react";
-import {Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, NavbarContent, NavbarItem, Link, Button} from "@nextui-org/react";
-
+import { Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, NavbarContent, NavbarItem, Link, Button } from "@nextui-org/react";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -19,24 +18,21 @@ export default function App() {
   ];
 
   return (
-    <Navbar className="w-full p-4 flex flex-row justify-end"
-      isBordered
-      isMenuOpen={isMenuOpen}
-      onMenuOpenChange={setIsMenuOpen}
-    >
-      
+    <Navbar className="w-full   border-2">
+      <div className="w-screen border-2 border-red-500">
+      <NavbarContent className="border-2 col-span-1" justify="start">teste</NavbarContent>
       <NavbarContent className="sm:hidden" justify="start">
         <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} />
       </NavbarContent>
-sa
-      <NavbarContent className="sm:hidden pr-3" justify="center">
+
+      <NavbarContent className="sm:hidden pr-3 col-span-2" justify="center">
         <NavbarBrand>
           teste
           <p className="font-bold text-inherit">ACME</p>
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      <NavbarContent className="hidden sm:flex gap-4 border-2 border-blue-500 col-span-3 sm:col-span-1" justify="center">
         <NavbarBrand>
           TESTE
           <p className="font-bold text-inherit">ACME</p>
@@ -58,7 +54,7 @@ sa
         </NavbarItem>
       </NavbarContent>
 
-      <NavbarContent justify="end">
+      <NavbarContent className="border-2 col-span-1" justify="end">
         <NavbarItem className="hidden lg:flex">
           <Link href="#">Login</Link>
         </NavbarItem>
@@ -85,6 +81,7 @@ sa
           </NavbarMenuItem>
         ))}
       </NavbarMenu>
+      </div>
     </Navbar>
   );
 }

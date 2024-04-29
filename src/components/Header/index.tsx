@@ -49,11 +49,11 @@ export default function Header() {
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarBrand>
-          
-
+        
+        <Image src={logo} alt='teste' />
 
         </NavbarBrand>
-        <Image src={logo} alt='teste' />
+        
         <NavbarItem>
           <Link color="foreground" href="/dashboard
         ">
