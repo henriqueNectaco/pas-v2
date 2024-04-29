@@ -41,15 +41,15 @@ export default function Vendas() {
         </div>
       </form>
       {!responseData ? (<Spinner />) : (
-        <div className=" w-full max-w-3xl p-4 bg-blue-400 rounded-lg text-black">
+        <div className=" w-screen p-4 bg-blue-400 rounded-lg text-black">
        
 
-          <div className="text-sm m-2 grid grid-cols-1 lg:grid-cols-2 lg:col-span-2 ">
-          <div className="text-center p-4">
+          <div className="w-full text-sm m-2 grid grid-cols-1 lg:grid-cols-2 lg:col-span-2 ">
+          <div className="text-left p-4">
             <p>Vendas</p>
             <JSONPretty data={responseData.pedido} theme={{ JSONPrettyMon }} />
           </div>
-          <div className="text-center p-4">
+          <div className="text-left p-4">
             <p>Zoop Transactions</p>
             <JSONPretty data={responseData.zoopTransaction} theme={{ JSONPrettyMon }} />
           </div>
