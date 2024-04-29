@@ -77,7 +77,7 @@ export default function Marketplace() {
         </div>
       </div>
       {resData ? (
-        <div className="w-full h-full    border-2 border-red-600 p-2  ">
+        <div className="w-full h-full    border-2  p-2  ">
           {resData.map((resData: any) => (
             <div className="w-full border-2  flex  flex-col   items-center justify-center lg:flex-row p-4 gap-2">
 

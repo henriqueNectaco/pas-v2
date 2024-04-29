@@ -119,12 +119,12 @@ export default function DashBoard() {
 
 
     </div>
-    <div className='border-2 border-blue-400 w-full lg:h-screen flex  flex-col items-center justify-center  p-2 gap-2'>
-      <div className='h-2/4 border-2 rounded-lg w-full flex flex-col  items-center  justify-center lg:justify-between '>
+    <div className='border-2 border-blue-400 w-full lg:h-screen flex  flex-col items-center justify-center  p-4 gap-2'>
+      <div className=' h-2/4 lg:h-1/4 border-2 rounded-lg w-full flex flex-col  items-center  justify-center lg:justify-between '>
         <p>Reprocessar venda</p>
         <div className='border-2 w-full h-full flex  flex-col lg:flex-row lg:items-end items-center justify-between gap-2 p-4'>
           <Input variant='underlined' placeholder='ID do estabelecimento' size='sm' className='w-[50vw] lg:w-[20vw]' />
-          <div className='border-2 flex flex-col lg:flex-row items-center gap-1 w-2/4'> De: <DatePicker variant='underlined' label={'teste'} />
+          <div className='border-2 flex flex-col lg:flex-row items-center gap-1  w-3/4 lg:w-1/4'> De: <DatePicker variant='underlined' label={'teste'} />
             Até: <DatePicker variant='underlined' label={'teste'} />
 
           </div>
@@ -134,7 +134,7 @@ export default function DashBoard() {
       </div>
 
 
-      <div className='h-2/4 border-2 rounded-lg w-full flex flex-col  items-center justify-between p-2'>
+      <div className='h-2/4 lg:h-1/4 border-2 rounded-lg w-full flex flex-col  items-center justify-between p-4'>
         <p>Reprocessar saldo</p>
         <div className='border-2 w-full h-full flex flex-col lg:flex-row items-center justify-center lg:items-end lg:justify-between gap-2 p-4'>
           <Input variant='underlined' placeholder='ID do estabelecimento' size='sm' className=' w-[50vw] lg:w-[20vw]' />
@@ -148,11 +148,11 @@ export default function DashBoard() {
 
 
 
-      <div className='h-2/4 border-2 rounded-lg w-full flex flex-col  items-center justify-between '>
+      <div className='h-2/4 p-4 lg:h-1/4 border-2 rounded-lg w-full flex flex-col  items-center justify-between '>
         <p>Consolidar extrato</p>
         <div className='border-2 w-full h-full flex  flex-col lg:flex-row items-center justify-center lg:items-end lg:justify-between p-4 gap-2'>
           <Input variant='underlined' placeholder='ID do estabelecimento' size='sm' className='w-[50vw] lg:w-[20vw]' />
-          <div className='border-2 flex flex-col lg:flex-row items-center gap-1 w-full lg:w-2/4'> De: <DatePicker variant='underlined' label={'teste'} />
+          <div className='border-2 flex flex-col lg:flex-row items-center gap-1  w-3/4 lg:w-1/4'> De: <DatePicker variant='underlined' label={'teste'} />
             Até: <DatePicker variant='underlined' label={'teste'} />
 
           </div>

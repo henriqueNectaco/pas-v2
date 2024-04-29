@@ -16,54 +16,67 @@ export default function Header() {
     "Sair"
 
   ];
+  const menuItemsHrf=[
+'dashboar',
+'vendas',
+'marketplaces',
+'crons',
+'validartaxas',
+'ssls',
+'sair'
+
+  ]
 
   return (
-    <Navbar className="p-6  w-fscreen flex flex-row items-center justify-around bg-gradient-to-r from-cyan-500 to-blue-500  text-black "
+    <Navbar className="p-6  w-full flex flex-row items-start   bg-gradient-to-r from-cyan-500 to-blue-500  text-black "
       isBordered
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
     >
 
-      <NavbarContent className="sm:hidden" justify="start">
+      <NavbarContent className="sm:hidden " justify="start">
+        
         <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} />
-        <Image src={logo} alt='teste' />
-
+        
+<Image src={logo} alt='teste' />
       </NavbarContent>
 
       <NavbarContent className="sm:hidden pr-3" justify="center">
         <NavbarBrand>
-
+        
         </NavbarBrand>
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarBrand>
-          <Image src={logo} alt='teste' />
+          
 
 
         </NavbarBrand>
+        <Image src={logo} alt='teste' />
         <NavbarItem>
-          <Link color="foreground" href="#">
+          <Link color="foreground" href="/dashboard
+        ">
             Dashboard
           </Link>
         </NavbarItem>
         <NavbarItem isActive>
-          <Link href="#" aria-current="page">
+          <Link href="vendas" aria-current="page">
             Vendas
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" href="#">
+          <Link color="foreground" href="marketplaces">
             Marketplace
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" href="#">
+          <Link color="foreground" href="crons">
             Crons
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" href="#">
+          <Link color="foreground" href="validartaxas">
             Validar Taxas
           </Link>
         </NavbarItem>
@@ -76,7 +89,7 @@ export default function Header() {
 
       <NavbarContent justify="end">
 
-        <NavbarItem>
+        <NavbarItem justify='end'>
           <Button color='FFFF' href="#" className="button-no-border" variant="solid">
             <ArrowRight size={32} />
           </Button>

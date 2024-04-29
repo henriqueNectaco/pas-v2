@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import Cookies from 'js-cookie';
-
+import { Spinner } from '@nextui-org/react';
 import { CardCron } from './items';
 
 type CronProps = {
@@ -58,9 +58,10 @@ export default function Crons() {
   return (
     <div className='h-screen w-full'>
       <Header />
+      <div className='p-2 flex flex-col '>
       <>
         {!crons ? (
-          <p>carreganu</p>
+          <Spinner color='primary' size='lg'/>
         ) : (
           <>
             {crons.map((crons: any) => (
@@ -72,7 +73,7 @@ export default function Crons() {
           </>
         )}
 
-      </>
+      </></div>
     </div >)
 }
 /*
