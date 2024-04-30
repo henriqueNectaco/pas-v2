@@ -1,15 +1,16 @@
 import Cookies from "js-cookie";
+import React from "react";
 import Header from '../../components/Header/index';
-import { Button, Input } from '@nextui-org/react'
+import { Dropdown, Input, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
 import ButtonOptions from './buttonOptions'
 import { useEffect, useState } from "react";
 import DropdownMenuFirst from './a'
 import { DatePicker } from "@nextui-org/react";
-import { DotsThreeOutlineVertical } from 'phosphor-react'
+
 import axios from "axios";
 import DropdownMenuSecond from "./dropdown";
-
-
+import DropDownOne from "./newDrop";
+import { CaretDown, DotsThreeOutlineVertical } from "phosphor-react";
 export default function Marketplace() {
   const token = Cookies.get('token')
   const [email, setEmail] = useState('')
@@ -18,6 +19,7 @@ export default function Marketplace() {
   const [datePickerValue, setDatePickerValue] = useState(null)
   const [idInput, setIdInput] = useState('')
   const [resData, setResData] = useState('')
+  const [state, setState] = useState('ativos')
   const handleCleanInput = () => {
     setEmail('')
     setCnpj('')
@@ -26,10 +28,10 @@ export default function Marketplace() {
     setDatePickerValue(null)
 
   }
+  const handleChange = (e: any) => { setState(key); }
 
   const handleDatePickerChange = (newValue: any) => {
     setDatePickerValue(newValue); // Atualiza o estado com o novo valor do DatePicker
-    console.log(datePickerValue)
   };
   const handleChangeNameInput = (e: any) => {
     setName(e.target.value)
@@ -41,13 +43,28 @@ export default function Marketplace() {
     setEmail(e.target.value)
   }
   const handleChangeIdInput = (e: any) => { setIdInput(e.target.value) }
+  const fetchFilteredData = async () => {
+    try {
+      const res = await axios.get(`https://api.zsystems.com.br/z1/marketplaces?status=${state}`, { headers: { Authorization: `Bearer ${token}` }, })
+
+      setResData(res.data.marketplaces)
+      console.log('res com filtro', res.data)
+
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }
   useEffect(() => {
+
+
     const getServerSideDate = async () => {
       try {
-        const res = await axios.get('https://api.zsystems.com.br/z1/marketplaces?status=ativo', { headers: { Authorization: `Bearer ${token}` }, });
-        console.log(res.data.marketplaces); // Aqui você pode fazer algo com os dados da resposta 
+        const res = await axios.get(`https://api.zsystems.com.br/z1/marketplaces?status=ativo`, { headers: { Authorization: `Bearer ${token}` }, });
+
         setResData(res.data.marketplaces)
-        console.log(resData)
+        console.log('res.data sem filtro', res.data.marketplaces)
+
       } catch (error) {
         console.error(error);
       }
@@ -55,7 +72,10 @@ export default function Marketplace() {
 
     getServerSideDate();
   }, []);
-
+  useEffect(() => {
+    console.log('resData useeffect', resData)
+  }, [resData])
+  console.log('state', state)
   return (
     <div className=" h-screen w-full flex flex-col items-center  ">
       <Header />
@@ -65,15 +85,39 @@ export default function Marketplace() {
           <Button className='w-3/4' radius="md" size="sm" variant="solid" color="primary">Novo Marketplace</Button>
           <Button className='w-3/4' radius="md" size="sm" variant="solid" color="primary">Importar todas as vendas</Button>
         </div>
-        <div className="w-full border-2 p-12 lg:p-6 gap-4 flex flex-col lg:flex-row items-center lg:items-end justify-between  ">
+        <div className="w-full border-2 p-12 md:p-20 lg:p-6 gap-4 flex flex-col lg:flex-row items-center lg:items-end justify-between  ">
           <Input className="w-full lg:w-1/8" placeholder="ID" variant="underlined" value={idInput} onChange={handleChangeIdInput} />
           <Input className="w-full lg:w-1/8" placeholder="Nome" variant="underlined" value={name} onChange={handleChangeNameInput} />
           <DatePicker className="w-full lg:w-1/8" onChange={handleDatePickerChange} value={datePickerValue} variant="underlined" label={'Selecione uma data'} />
           <Input placeholder="email" className="w-full lg:w-1/8" variant="underlined" value={email} onChange={handleChangeEmailInput} />
           <Input placeholder="CNPJ" className="w-full lg:w-1/8" variant="underlined" value={cnpj} onChange={handleChangeCnpjInput} />
-          <DropdownMenuFirst />
+
+          <Dropdown >
+            <DropdownTrigger>
+              <Button
+                variant="bordered"
+              >
+                {state}
+                <CaretDown size={12} />
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu
+              aria-label="Action event example"
+              onAction={(key) => setState(key)}
+              color="primary"
+              variant="solid"
+              size='lg'
+            >
+              <DropdownItem key="todos">todos</DropdownItem>
+              <DropdownItem key="ativos">ativos</DropdownItem>
+              <DropdownItem key="removido">desativados</DropdownItem>
+
+            </DropdownMenu>
+          </Dropdown>
+
+
           <Button fullWidth={true} onClick={handleCleanInput} color="danger">Limpar</Button>
-          <Button fullWidth={true} color="primary">Filtrar</Button>
+          <Button fullWidth={true} onClick={fetchFilteredData} color="primary">Filtrar</Button>
         </div>
       </div>
       {resData ? (
@@ -83,7 +127,7 @@ export default function Marketplace() {
 
               <div className="w-1/4  flex flex-col items-center justify-center">
                 <p>Id:</p>
-                <p>{resData.mainECId}</p>
+                <p>{resData.id}</p>
               </div>
               <div className="w-1/4  flex flex-col items-center justify-center">
                 <p>ID EC:</p>
