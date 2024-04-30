@@ -118,7 +118,7 @@ export default function Home() {
                 <Button type='submit' variant="ghost" color="primary" fullWidth={true} radius="sm" disabled={isDisabled} className="disabled:opacity-50 disabled:cursor-not-allowed">Entrar</Button>
                 <Checkbox color="primary" radius='md'
                   size="md"
-                  className="">Manter conectado</Checkbox>
+                  className="">Manter conectado?</Checkbox>
               </div></form>
 
           </div>
