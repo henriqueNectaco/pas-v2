@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import React from "react";
 import Header from '../../components/Header/index';
-import { Dropdown, Input, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
+import { Dropdown, Input, DropdownTrigger, DropdownMenu, DropdownItem, Button, Spinner } from "@nextui-org/react";
 import ButtonOptions from './buttonOptions'
 import { useEffect, useState } from "react";
 import DropdownMenuFirst from './a'
@@ -81,9 +81,9 @@ export default function Marketplace() {
       <Header />
       <div className="w-full  p-2">
         <div className=" w-full     gap-2 lg:gap-6  p-2 lg:p-4 flex  flex-col lg:flex-row items-center  border-2  ">
-          <Button className='w-3/4 ' radius="md" size="sm" variant="solid" color="primary">Reprocessar todas as vendas</Button>
-          <Button className='w-3/4' radius="md" size="sm" variant="solid" color="primary">Novo Marketplace</Button>
-          <Button className='w-3/4' radius="md" size="sm" variant="solid" color="primary">Importar todas as vendas</Button>
+          <Button className='w-3/4 ' radius="md" size="md" variant="solid" color="primary">Reprocessar todas as vendas</Button>
+          <Button className='w-3/4' radius="md" size="md" variant="solid" color="primary">Novo Marketplace</Button>
+          <Button className='w-3/4' radius="md" size="md" variant="solid" color="primary">Importar todas as vendas</Button>
         </div>
         <div className="w-full border-2 p-12 md:p-20 lg:p-6 gap-4 flex flex-col lg:flex-row items-center lg:items-end justify-between  ">
           <Input className="w-full lg:w-1/8" placeholder="ID" variant="underlined" value={idInput} onChange={handleChangeIdInput} />
@@ -119,41 +119,43 @@ export default function Marketplace() {
           <Button fullWidth={true} onClick={handleCleanInput} color="danger">Limpar</Button>
           <Button fullWidth={true} onClick={fetchFilteredData} color="primary">Filtrar</Button>
         </div>
-      </div>
-      {resData ? (
-        <div className="w-full h-full    border-2  p-4 ">
-          {resData.map((resData: any) => (
-            <div className="w-full border-2 rounded-lg flex  flex-col   items-center justify-center lg:flex-row p-4 gap-2">
+      </div><>
+        {!resData ? (<Spinner size="4xl" color="primary" />) : (
+          <div className="w-full h-full    border-2  p-4 ">
+            <>
+              {resData.map((resData: any) => (
+                <div className="w-full border-2 rounded-lg flex  flex-col   items-center justify-center lg:flex-row p-4 gap-2">
 
-              <div className="w-1/4  flex flex-col items-center justify-center">
-                <p>Id:</p>
-                <p>{resData.id}</p>
-              </div>
-              <div className="w-1/4  flex flex-col items-center justify-center">
-                <p>ID EC:</p>
-                <p>{resData.mainECId}</p>
-              </div>
-              <div className="w-1/4  flex flex-col items-center justify-center">
-                <p>Marketplace
-                </p>
-                <p>{resData.mainECNomeFantasia}</p>
-              </div>
+                  <div className="w-1/4  flex flex-col items-center justify-center">
+                    <p>Id:</p>
+                    <p>{resData.id}</p>
+                  </div>
+                  <div className="w-1/4  flex flex-col items-center justify-center">
+                    <p>ID EC:</p>
+                    <p>{resData.mainECId}</p>
+                  </div>
+                  <div className="w-1/4  flex flex-col items-center justify-center">
+                    <p>Marketplace
+                    </p>
+                    <p>{resData.mainECNomeFantasia}</p>
+                  </div>
 
-              <div className="w-1/4  flex flex-col items-center justify-center">
-                <p>Email:</p>
-                <p>{resData.mainECEmail}</p>
-              </div>
-              <div className="w-1/4  flex flex-col items-center justify-center">
+                  <div className="w-1/4  flex flex-col items-center justify-center">
+                    <p>Email:</p>
+                    <p>{resData.mainECEmail}</p>
+                  </div>
+                  <div className="w-1/4  flex flex-col items-center justify-center">
 
-                <DropdownMenuSecond />
-              </div>
-            </div>
+                    <DropdownMenuSecond />
+                  </div>
+                </div>
 
-          ))}
+              ))}
 
-
-        </div>
-      ) : null}
+            </>
+          </div>
+        )}
+      </>
     </div>
 
   )
