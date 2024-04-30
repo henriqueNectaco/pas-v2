@@ -12,11 +12,12 @@ export default function DashBoard() {
   const [serviveStatus, setServiceStatus] = useState(null);
   const [amountIndicator, setAmountIndicator] = useState(null);
   const [totalMKT, setTotalMKT] = useState(null)
-  const [totalProcessed, setTotalProcessed] = useState(null);
+  const [totalProcessado, setTotalProcessed] = useState(null);
   const [startDate, setStartDate] = useState(new Date());
 const[totalProcessedToday,setTotalProcessedToday]=useState(null)
-
-
+const[totalProcessedYesterday,setTotalProcessedYesterday] =useState(null)
+const [totalProcesedLastMonth,setTotalProcessedLastMonth]=useState(null)
+const [totalProcessedThirtyDaysBefore,setTotalProcessedThirtyDaysBefore]=useState(null)
   const token = Cookies.get('token')
   /*const api = async (data) => {
 
@@ -51,17 +52,72 @@ const[totalProcessedToday,setTotalProcessedToday]=useState(null)
   previousDate.setDate(currentDate.getDate() - 30);
   const formattedPreviousDate = formatDateToYYYYMMDD(previousDate);
 
+const yesterday=new Date(dataAtual)
+yesterday.setDate(currentDate.getDate() - 1)
+const year = yesterday.getFullYear();
+const month = String(yesterday.getMonth() + 1).padStart(2, '0'); // Adiciona zero à esquerda se o mês for menor que 10
+const day = String(yesterday.getDate()).padStart(2, '0'); // Adiciona zero à esquerda se o dia for menor que 10
+const yesterdayFormatted = `${year}-${month}-${day}`;
 
 
+
+const lastMonth= new Date(currentDate)
+lastMonth.setMonth(currentDate.getMonth() - 1);
+const yearlasmonth = lastMonth.getFullYear();
+const monthlastMonth = String(lastMonth.getMonth() + 1).padStart(2, '0'); // Adiciona zero à esquerda se o mês for menor que 10
+const daylastMonth = String(lastMonth.getDate()).padStart(2, '0');
+const lastMonthFormatted = `${yearlasmonth}-${monthlastMonth}-${daylastMonth}`
+
+const previousMonth = new Date(lastMonth);
+previousMonth.setMonth(lastMonth.getMonth() - 1); // Define a data para o mês anterior ao mês anterior
+
+const yearPreviousMonth = previousMonth.getFullYear();
+const monthPreviousMonth = String(previousMonth.getMonth() + 1).padStart(2, '0'); // Adiciona zero à esquerda se o mês for menor que 10
+const dayPreviousMonth = String(previousMonth.getDate()).padStart(2, '0'); // Adiciona zero à esquerda se o dia for menor que 10
+
+const previousMonthFormatted = `${yearPreviousMonth}-${monthPreviousMonth}-${dayPreviousMonth}`
 
   useEffect(() => {
+
+const fetchTotalProcessedThirtyDaysLater=async()=>{
+  try{
+    const res=await axios.get(`https://pas-aps.up.railway.app/sale/total-processed?startDate=${previousMonthFormatted}&endDate=${lastMonthFormatted}`,{headers: { Authorization: `Bearer ${token}` }})
+ setTotalProcessedThirtyDaysBefore(res.data)
+  }
+  catch(error){
+    console.error(error)
+  }
+}
+
+const fetchTotalProcessedLastThirtyDays=async()=>{try{
+  const res=await axios.get(`https://pas-aps.up.railway.app/sale/total-processed?startDate=${lastMonthFormatted}&endDate=${today}`,{headers: { Authorization: `Bearer ${token}` }})
+setTotalProcessedLastMonth(res.data)
+
+}
+catch(error){
+  console.error(error)
+}
+}
+
+
+const FetchTotalProcessedYesterday=async()=>{
+  try{
+const res=await axios.get(`https://pas-aps.up.railway.app/sale/total-processed?startDate=${yesterdayFormatted}&endDate=${yesterdayFormatted}`,{
+  headers: { Authorization: `Bearer ${token}` }})
+setTotalProcessedYesterday(res.data)
+  }
+  catch(error){
+    console.error(error)
+  }
+}
+
 const fetchsTotalProcessedToday=async()=>{
   try{
-const res=axios.get(`https://pas-aps.up.railway.app/sale/total-processed?startDate=${today}&endDate=${today}`,{
+const res= await axios.get(`https://pas-aps.up.railway.app/sale/total-processed?startDate=${today}&endDate=${today}`,{
   headers: { Authorization: `Bearer ${token}` }
 })
 setTotalProcessedToday(res.data)
-console.log(res.data)
+
 
   }
   catch(error){
@@ -98,13 +154,7 @@ console.log(res.data)
         console.error(error)
       }
     };
-    const fetchTotalProcessed = async () => {
-      try {
-        const res = await axios.get(`https://pas-aps.up.railway.app/sale/total-processed?startDate=2024-04-22&endDate=2024-04-22
-        `, { headers: { Authorization: `Bearer ${token}` }, })
-        setTotalProcessed(res.data.totalProcessed)
-      } catch (error) { console.error(error) }
-    }
+   
 
     const fechTotalMKT = async () => {
       try {
@@ -118,8 +168,10 @@ console.log(res.data)
     fetchDataServiceStatus();
     fechAmountData()
     fechTotalMKT()
-    fetchTotalProcessed()
+    FetchTotalProcessedYesterday()
     fetchsTotalProcessedToday()
+    fetchTotalProcessedLastThirtyDays()
+    fetchTotalProcessedThirtyDaysLater()
   }, []);
 
   // Função para formatar a data para yyyy-mm-dd
@@ -143,7 +195,19 @@ console.log(res.data)
       </div>
       <div className=' w-full border-2 rounded-md flex flex-col items-center justify-center'>
         <p>Total processado Hoje</p>
-        {!amountIndicator ? (<Spinner />) : (<p>{totalProcessedToday}</p>)}
+        {!totalProcessedToday ? (<Spinner />) : (<p>{totalProcessedToday.totalProcessed}</p>)}
+      </div>
+      <div className=' w-full border-2 rounded-md flex flex-col items-center justify-center'>
+        <p>Total processado Ontem</p>
+        {!totalProcessedYesterday ? (<Spinner />) : (<p>{totalProcessedYesterday.totalProcessed}</p>)}
+      </div>
+      <div className=' w-full border-2 rounded-md flex flex-col items-center justify-center'>
+        <p>Total Processado Ultimos 30 dias</p>
+        {!totalProcesedLastMonth ? (<Spinner />) : (<p>{totalProcesedLastMonth.totalProcessed}</p>)}
+      </div>
+      <div className=' w-full border-2 rounded-md flex flex-col items-center justify-center'>
+        <p>Total 30 dias anteriores</p>
+        {!totalProcessedThirtyDaysBefore ? (<Spinner />) : (<p>{totalProcessedThirtyDaysBefore.totalProcessed}</p>)}
       </div>
 
     </div>
