@@ -14,6 +14,9 @@ export default function DashBoard() {
   const [totalMKT, setTotalMKT] = useState(null)
   const [totalProcessed, setTotalProcessed] = useState(null);
   const [startDate, setStartDate] = useState(new Date());
+const[totalProcessedToday,setTotalProcessedToday]=useState(null)
+
+
   const token = Cookies.get('token')
   /*const api = async (data) => {
 
@@ -33,7 +36,13 @@ export default function DashBoard() {
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   }
+  const dataAtual = new Date();
 
+  const ano = dataAtual.getFullYear();
+  const mes = String(dataAtual.getMonth() + 1).padStart(2, '0'); // Adiciona zero à esquerda se o mês for menor que 10
+  const dia = String(dataAtual.getDate()).padStart(2, '0'); // Adiciona zero à esquerda se o dia for menor que 10
+  
+  const today = `${ano}-${mes}-${dia}`;
   // Exemplo de uso
   const currentDate = new Date(); // Data atual
   const formattedDate = formatDateToYYYYMMDD(currentDate);
@@ -46,16 +55,31 @@ export default function DashBoard() {
 
 
   useEffect(() => {
+const fetchsTotalProcessedToday=async()=>{
+  try{
+const res=axios.get(`https://pas-aps.up.railway.app/sale/total-processed?startDate=${today}&endDate=${today}`,{
+  headers: { Authorization: `Bearer ${token}` }
+})
+setTotalProcessedToday(res.data)
+console.log(res.data)
+
+  }
+  catch(error){
+    console.error(error)
+  }
+}
+
+/*
     const fetchTotalChild = async () => {
       try {
         const res = await axios.get(`https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=&endDate=`, {
-          headers: { Authorization: `Bearer ${token}` },
+         
           //setAlgumacoisa(res.data) 
         })
       }
       catch (error) { console.error(error) }
-    }
-
+    } 
+*/
     const fetchDataServiceStatus = async () => {
       try {
         const response = await axios.get('https://api.zsystems.com.br/z1/services-status', { headers: { Authorization: `Bearer ${token}` }, });
@@ -78,7 +102,7 @@ export default function DashBoard() {
       try {
         const res = await axios.get(`https://pas-aps.up.railway.app/sale/total-processed?startDate=2024-04-22&endDate=2024-04-22
         `, { headers: { Authorization: `Bearer ${token}` }, })
-        setTotalProcessed(res.data)
+        setTotalProcessed(res.data.totalProcessed)
       } catch (error) { console.error(error) }
     }
 
@@ -95,6 +119,7 @@ export default function DashBoard() {
     fechAmountData()
     fechTotalMKT()
     fetchTotalProcessed()
+    fetchsTotalProcessedToday()
   }, []);
 
   // Função para formatar a data para yyyy-mm-dd
@@ -116,7 +141,10 @@ export default function DashBoard() {
         <p>Total Vendido</p>
         {!amountIndicator ? (<Spinner />) : (<p>{amountIndicator.result.transacionadoHoje.valorTotal}</p>)}
       </div>
-
+      <div className=' w-full border-2 rounded-md flex flex-col items-center justify-center'>
+        <p>Total processado Hoje</p>
+        {!amountIndicator ? (<Spinner />) : (<p>{totalProcessedToday}</p>)}
+      </div>
 
     </div>
     <div className='border-2 border-blue-400 w-full lg:h-screen flex  flex-col items-center justify-center  p-4 gap-2'>
