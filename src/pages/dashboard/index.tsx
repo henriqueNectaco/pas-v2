@@ -1,7 +1,8 @@
 import axios from 'axios';
 import Header from '../../components/Header/index';
 import { useEffect, useState } from 'react';
-
+import { TiThumbsUp } from "react-icons/ti";
+import { FaThumbsUp } from "react-icons/fa";
 import Cookies from 'js-cookie';
 import { Button, Spinner } from "@nextui-org/react";
 import { Input } from '@nextui-org/react';
@@ -20,6 +21,9 @@ export default function DashBoard() {
   const [totalProcessedThirtyDaysBefore, setTotalProcessedThirtyDaysBefore] = useState(null)
   const [totalMarketplaceChildRegistredLastThiryDays, setTotalMarketplaceChildRegistredLastThirtyDays] = useState(null)
   const [totalEstabelecimentsChildRegistredLastThirtyDays, setTotalEstabelecimentsChildRegistredLastThirtyDays] = useState(null)
+  const [totalNotProcessedToday, setTotalNotProcessedToday] = useState(null)
+
+
   const token = Cookies.get('token')
   /*const api = async (data) => {
 
@@ -31,7 +35,7 @@ export default function DashBoard() {
       console.log(error)
     }
   } */
-  function formatarData(dataString) {
+  function formatarData(dataString: any) {
     const data = new Date(dataString);
     const dia = String(data.getDate()).padStart(2, '0');
     const mes = String(data.getMonth() + 1).padStart(2, '0');
@@ -89,6 +93,19 @@ export default function DashBoard() {
   const previousMonthFormatted = `${yearPreviousMonth}-${monthPreviousMonth}-${dayPreviousMonth}`
 
   useEffect(() => {
+
+    const fetchTotalNotProcessedToday = async () => {
+      try {
+        const res = await axios.get(`
+https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDate=${today}`, { headers: { Authorization: `Bearer ${token}` } })
+        setTotalNotProcessedToday(res.data)
+
+      }
+      catch (error) {
+        console.error(error)
+      }
+    }
+
     const fetchTotalEstabelecimentsChildRegistredLastThirtyDays = async () => {
       try {
         const res = await axios.get(`https://pas-aps.up.railway.app/establishment/total-registered?startDate=${lastMonthFormatted}&endDate=${today}`, { headers: { Authorization: `Bearer ${token}` } })
@@ -207,6 +224,7 @@ export default function DashBoard() {
     fetchTotalProcessedThirtyDaysLater()
     fetchTotalMarketplaceChildRegistredLastThirtyDays()
     fetchTotalEstabelecimentsChildRegistredLastThirtyDays()
+    fetchTotalNotProcessedToday()
 
   }, []);
 
@@ -214,7 +232,7 @@ export default function DashBoard() {
 
 
 
-  return (<div className=' border-2 h-screen w-screen flex flex-col items-center  '>
+  return (<div className=' border-2 h-screen max-w-screen flex flex-col items-center  '>
     <Header />
 
     <div className='flex flex-col items-start justify-center w-full  border-2 border-red-500 p-2 gap-2'>
@@ -237,6 +255,15 @@ export default function DashBoard() {
         <p>Total processado Ontem</p>
         {!totalProcessedYesterday ? (<Spinner />) : (<p>{totalProcessedYesterday.totalProcessed}</p>)}
       </div>
+
+      <div className=' w-full border-2 rounded-md flex flex-col items-center justify-center'>
+        <p>Total não  processado Hoje</p>
+        {!totalNotProcessedToday ? (<Spinner />) : (<p>{totalNotProcessedToday.totalNotProcessed}</p>)}
+      </div>
+
+
+
+
       <div className=' w-full border-2 rounded-md flex flex-col items-center justify-center'>
         <p>Total Processado Ultimos 30 dias</p>
         {!totalProcesedLastMonth ? (<Spinner />) : (<p>{totalProcesedLastMonth.totalProcessed}</p>)}
@@ -267,7 +294,16 @@ export default function DashBoard() {
           <>{
             servicesStatus.map((servicesStatus: any) => (<div>
 
-              <p>teset</p>
+
+              <p>{servicesStatus.service}</p>
+              <p>{formatarData(servicesStatus.last_update)}</p>
+              {servicesStatus.status ? (<>
+
+                <FaThumbsUp color='green' size={50} /></>
+              ) : (
+                <TiThumbsUp color='red' fill='red' />
+              )}
+
 
 
             </div>))
@@ -275,8 +311,23 @@ export default function DashBoard() {
           </>
         )}
       </>
+      <div className={`border-2 ${totalNotProcessedToday?.totalNotProcessed > 0 ? 'bg-yellow-400' : 'bg-white'}`}>
+
+        <p>{totalNotProcessedToday?.totalNotProcessed}</p>
+
+
+      </div>
+
     </div>
-    <div className='border-2 border-blue-400 w-full lg:h-screen flex  flex-col items-center justify-center  p-4 gap-2'>
+
+  </div>
+
+
+  )
+}
+
+/*
+ <div className='border-2 border-blue-400 w-full lg:h-screen flex  flex-col items-center justify-center  p-4 gap-2'>
       <div className=' h-2/4 lg:h-1/4 border-2 rounded-lg w-full flex flex-col  items-center  justify-center lg:justify-between '>
         <p>Reprocessar venda</p>
         <div className='border-2 w-full h-full flex  flex-col lg:flex-row lg:items-end items-center justify-between gap-2 p-4'>
@@ -307,53 +358,4 @@ export default function DashBoard() {
 
 
     </div>
-  </div>
-
-
-  )
-}
-
-/*
- <div className='border-2 border-blue-400 w-full h-full flex flex-col items-center justify-center  p-2 gap-2'>
-<div className='lg:h-2/4 border-2 rounded-lg w-full flex flex-col  items-center justify-between lg:p-2'>
-        <p>Reprocessar venda</p>
-        <div className='border-2 w-full lg:h-full flex lg:flex-row items-end justify-between p-4'>
-          <Input variant='underlined' placeholder='ID do estabelecimento' size='sm' className='w-[30vw]' />
-          <div className='border-2 flex flex-row items-center gap-1 w-2/4'> De: <DatePicker variant='underlined' label={'teste'} />
-            Até: <DatePicker variant='underlined' label={'teste'} />
-
-          </div>
-          <Button color='primary' variant='solid' className='' size='md'>Enviar</Button>
-        </div>
-
-      </div>
-
-
-      <div className='lg:h-2/4 border-2 rounded-lg w-full flex flex-col  items-center justify-between lg:p-2'>
-        <p>Reprocessar saldo</p>
-        <div className='border-2 w-full lg:h-full flex lg:flex-row items-end justify-between p-4'>
-          <Input variant='underlined' placeholder='ID do estabelecimento' size='sm' className='w-[30vw]' />
-
-          <Input variant='underlined' placeholder='Dias' size='sm' className='w-[30vw]' />
-
-          <Button color='primary' variant='solid' className='' size='md'>Enviar</Button>
-        </div>
-
-      </div>
-
-
-
-          <div className='h-2/4 p-4 lg:h-1/4 border-2 rounded-lg w-full flex flex-col  items-center justify-between '>
-        <p>Consolidar extrato</p>
-        <div className='border-2 w-full h-full flex  flex-col lg:flex-row items-center justify-center lg:items-end lg:justify-between p-4 gap-2'>
-          <Input variant='underlined' placeholder='ID do estabelecimento' size='sm' className='w-[50vw] lg:w-[20vw]' />
-          <div className='border-2 flex flex-col lg:flex-row items-center gap-1  w-3/4 lg:w-1/4'> De: <DatePicker variant='underlined' label={'teste'} />
-            Até: <DatePicker variant='underlined' label={'teste'} />
-
-          </div>
-          <Button color='primary' variant='solid' className='' size='lg'>Enviar</Button>
-        </div>
-
-      </div>
-</div>
 */

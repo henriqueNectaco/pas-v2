@@ -1,15 +1,15 @@
 import React from "react";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
-import { CaretDown,DotsThreeOutlineVertical } from "phosphor-react";
+import { CaretDown, DotsThreeOutlineVertical } from "phosphor-react";
 export default function DropdownMenuSecond() {
   return (
-    <Dropdown>
+    <Dropdown >
       <DropdownTrigger>
         <Button
           variant="bordered"
         >
 
-<DotsThreeOutlineVertical size={32} />
+          <DotsThreeOutlineVertical size={32} />
         </Button>
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
@@ -22,7 +22,7 @@ export default function DropdownMenuSecond() {
         <DropdownItem key="tax_sale">Cobrança por transação</DropdownItem>
         <DropdownItem key="import_sale">Importar vendas</DropdownItem>
         <DropdownItem key="renovar_cache">Renovar Cache</DropdownItem>
-        <DropdownItem  key="baka">Desativar</DropdownItem>
+        <DropdownItem key="baka">Desativar</DropdownItem>
 
 
       </DropdownMenu>

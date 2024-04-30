@@ -29,7 +29,7 @@ export default function Vendas() {
   }
   console.log(responseData)
   return (
-    <div className='flex flex-col items-center  h-screen w-screen  '>
+    <div className='flex flex-col items-center  h-screen max-w-screen  '>
       <Header />
       <form className=" h-3/8  w-full lg:w-2/6 p-6 flex flex-col items-center justify-around  lg:px-8 rounded-xl  my-4 shadow-md border-2" >
         <label className=" font-bold">Vendas:</label>
@@ -41,19 +41,19 @@ export default function Vendas() {
         </div>
       </form>
       {!responseData ? (<Spinner />) : (
-        <div className=" w-screen p-4 bg-blue-400 rounded-lg text-black">
-       
+        <div className=" max-w-screen p-4 bg-blue-400 rounded-lg text-black">
 
-          <div className="w-full text-sm m-2 grid grid-cols-1 lg:grid-cols-2 lg:col-span-2 ">
-          <div className="text-left p-4">
-            <p>Vendas</p>
-            <JSONPretty data={responseData.pedido} theme={{ JSONPrettyMon }} />
+
+          <div className="max-w-screen text-sm m-2 grid grid-cols-1 lg:grid-cols-2 lg:col-span-2 ">
+            <div className="text-left p-4">
+              <p>Vendas</p>
+              <JSONPretty data={responseData.pedido} theme={{ JSONPrettyMon }} />
+            </div>
+            <div className="text-left p-4">
+              <p>Zoop Transactions</p>
+              <JSONPretty data={responseData.zoopTransaction} theme={{ JSONPrettyMon }} />
+            </div>
           </div>
-          <div className="text-left p-4">
-            <p>Zoop Transactions</p>
-            <JSONPretty data={responseData.zoopTransaction} theme={{ JSONPrettyMon }} />
-          </div>
-        </div>
         </div>
       )}
 
