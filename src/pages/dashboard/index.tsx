@@ -9,15 +9,17 @@ import { DatePicker } from '@nextui-org/react';
 
 
 export default function DashBoard() {
-  const [serviveStatus, setServiceStatus] = useState(null);
+  const [servicesStatus, setServicesStatus] = useState(null);
   const [amountIndicator, setAmountIndicator] = useState(null);
   const [totalMKT, setTotalMKT] = useState(null)
   const [totalProcessado, setTotalProcessed] = useState(null);
   const [startDate, setStartDate] = useState(new Date());
-const[totalProcessedToday,setTotalProcessedToday]=useState(null)
-const[totalProcessedYesterday,setTotalProcessedYesterday] =useState(null)
-const [totalProcesedLastMonth,setTotalProcessedLastMonth]=useState(null)
-const [totalProcessedThirtyDaysBefore,setTotalProcessedThirtyDaysBefore]=useState(null)
+  const [totalProcessedToday, setTotalProcessedToday] = useState(null)
+  const [totalProcessedYesterday, setTotalProcessedYesterday] = useState(null)
+  const [totalProcesedLastMonth, setTotalProcessedLastMonth] = useState(null)
+  const [totalProcessedThirtyDaysBefore, setTotalProcessedThirtyDaysBefore] = useState(null)
+  const [totalMarketplaceChildRegistredLastThiryDays, setTotalMarketplaceChildRegistredLastThirtyDays] = useState(null)
+  const [totalEstabelecimentsChildRegistredLastThirtyDays, setTotalEstabelecimentsChildRegistredLastThirtyDays] = useState(null)
   const token = Cookies.get('token')
   /*const api = async (data) => {
 
@@ -29,7 +31,16 @@ const [totalProcessedThirtyDaysBefore,setTotalProcessedThirtyDaysBefore]=useStat
       console.log(error)
     }
   } */
+  function formatarData(dataString) {
+    const data = new Date(dataString);
+    const dia = String(data.getDate()).padStart(2, '0');
+    const mes = String(data.getMonth() + 1).padStart(2, '0');
+    const ano = data.getFullYear();
+    const horas = String(data.getHours()).padStart(2, '0');
+    const minutos = String(data.getMinutes()).padStart(2, '0');
 
+    return `${dia}/${mes}/${ano} ${horas}:${minutos}`;
+  }
 
   function formatDateToYYYYMMDD(date: any) {
     const year = date.getFullYear();
@@ -42,104 +53,126 @@ const [totalProcessedThirtyDaysBefore,setTotalProcessedThirtyDaysBefore]=useStat
   const ano = dataAtual.getFullYear();
   const mes = String(dataAtual.getMonth() + 1).padStart(2, '0'); // Adiciona zero à esquerda se o mês for menor que 10
   const dia = String(dataAtual.getDate()).padStart(2, '0'); // Adiciona zero à esquerda se o dia for menor que 10
-  
+
   const today = `${ano}-${mes}-${dia}`;
   // Exemplo de uso
   const currentDate = new Date(); // Data atual
   const formattedDate = formatDateToYYYYMMDD(currentDate);
-  console.log(formattedDate); // Saída: "yyyy-mm-dd"
+  //console.log(formattedDate); // Saída: "yyyy-mm-dd"
   const previousDate = new Date();
   previousDate.setDate(currentDate.getDate() - 30);
   const formattedPreviousDate = formatDateToYYYYMMDD(previousDate);
 
-const yesterday=new Date(dataAtual)
-yesterday.setDate(currentDate.getDate() - 1)
-const year = yesterday.getFullYear();
-const month = String(yesterday.getMonth() + 1).padStart(2, '0'); // Adiciona zero à esquerda se o mês for menor que 10
-const day = String(yesterday.getDate()).padStart(2, '0'); // Adiciona zero à esquerda se o dia for menor que 10
-const yesterdayFormatted = `${year}-${month}-${day}`;
+  const yesterday = new Date(dataAtual)
+  yesterday.setDate(currentDate.getDate() - 1)
+  const year = yesterday.getFullYear();
+  const month = String(yesterday.getMonth() + 1).padStart(2, '0'); // Adiciona zero à esquerda se o mês for menor que 10
+  const day = String(yesterday.getDate()).padStart(2, '0'); // Adiciona zero à esquerda se o dia for menor que 10
+  const yesterdayFormatted = `${year}-${month}-${day}`;
 
 
 
-const lastMonth= new Date(currentDate)
-lastMonth.setMonth(currentDate.getMonth() - 1);
-const yearlasmonth = lastMonth.getFullYear();
-const monthlastMonth = String(lastMonth.getMonth() + 1).padStart(2, '0'); // Adiciona zero à esquerda se o mês for menor que 10
-const daylastMonth = String(lastMonth.getDate()).padStart(2, '0');
-const lastMonthFormatted = `${yearlasmonth}-${monthlastMonth}-${daylastMonth}`
+  const lastMonth = new Date(currentDate)
+  lastMonth.setMonth(currentDate.getMonth() - 1);
+  const yearlasmonth = lastMonth.getFullYear();
+  const monthlastMonth = String(lastMonth.getMonth() + 1).padStart(2, '0'); // Adiciona zero à esquerda se o mês for menor que 10
+  const daylastMonth = String(lastMonth.getDate()).padStart(2, '0');
+  const lastMonthFormatted = `${yearlasmonth}-${monthlastMonth}-${daylastMonth}`
+  console.log(lastMonthFormatted);
+  const previousMonth = new Date(lastMonth);
+  previousMonth.setMonth(lastMonth.getMonth() - 1); // Define a data para o mês anterior ao mês anterior
 
-const previousMonth = new Date(lastMonth);
-previousMonth.setMonth(lastMonth.getMonth() - 1); // Define a data para o mês anterior ao mês anterior
+  const yearPreviousMonth = previousMonth.getFullYear();
+  const monthPreviousMonth = String(previousMonth.getMonth() + 1).padStart(2, '0'); // Adiciona zero à esquerda se o mês for menor que 10
+  const dayPreviousMonth = String(previousMonth.getDate()).padStart(2, '0'); // Adiciona zero à esquerda se o dia for menor que 10
 
-const yearPreviousMonth = previousMonth.getFullYear();
-const monthPreviousMonth = String(previousMonth.getMonth() + 1).padStart(2, '0'); // Adiciona zero à esquerda se o mês for menor que 10
-const dayPreviousMonth = String(previousMonth.getDate()).padStart(2, '0'); // Adiciona zero à esquerda se o dia for menor que 10
-
-const previousMonthFormatted = `${yearPreviousMonth}-${monthPreviousMonth}-${dayPreviousMonth}`
+  const previousMonthFormatted = `${yearPreviousMonth}-${monthPreviousMonth}-${dayPreviousMonth}`
 
   useEffect(() => {
-
-const fetchTotalProcessedThirtyDaysLater=async()=>{
-  try{
-    const res=await axios.get(`https://pas-aps.up.railway.app/sale/total-processed?startDate=${previousMonthFormatted}&endDate=${lastMonthFormatted}`,{headers: { Authorization: `Bearer ${token}` }})
- setTotalProcessedThirtyDaysBefore(res.data)
-  }
-  catch(error){
-    console.error(error)
-  }
-}
-
-const fetchTotalProcessedLastThirtyDays=async()=>{try{
-  const res=await axios.get(`https://pas-aps.up.railway.app/sale/total-processed?startDate=${lastMonthFormatted}&endDate=${today}`,{headers: { Authorization: `Bearer ${token}` }})
-setTotalProcessedLastMonth(res.data)
-
-}
-catch(error){
-  console.error(error)
-}
-}
-
-
-const FetchTotalProcessedYesterday=async()=>{
-  try{
-const res=await axios.get(`https://pas-aps.up.railway.app/sale/total-processed?startDate=${yesterdayFormatted}&endDate=${yesterdayFormatted}`,{
-  headers: { Authorization: `Bearer ${token}` }})
-setTotalProcessedYesterday(res.data)
-  }
-  catch(error){
-    console.error(error)
-  }
-}
-
-const fetchsTotalProcessedToday=async()=>{
-  try{
-const res= await axios.get(`https://pas-aps.up.railway.app/sale/total-processed?startDate=${today}&endDate=${today}`,{
-  headers: { Authorization: `Bearer ${token}` }
-})
-setTotalProcessedToday(res.data)
-
-
-  }
-  catch(error){
-    console.error(error)
-  }
-}
-
-/*
-    const fetchTotalChild = async () => {
+    const fetchTotalEstabelecimentsChildRegistredLastThirtyDays = async () => {
       try {
-        const res = await axios.get(`https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=&endDate=`, {
-         
-          //setAlgumacoisa(res.data) 
-        })
+        const res = await axios.get(`https://pas-aps.up.railway.app/establishment/total-registered?startDate=${lastMonthFormatted}&endDate=${today}`, { headers: { Authorization: `Bearer ${token}` } })
+        setTotalEstabelecimentsChildRegistredLastThirtyDays(res.data)
       }
-      catch (error) { console.error(error) }
-    } 
-*/
+      catch (error) {
+        console.error(error)
+      }
+
+    }
+
+    const fetchTotalMarketplaceChildRegistredLastThirtyDays = async () => {
+      try {
+        const res = await axios.get(`https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=${lastMonthFormatted}&endDate=${formattedDate}`, { headers: { Authorization: `Bearer ${token}` } });
+        setTotalMarketplaceChildRegistredLastThirtyDays(res.data)
+      }
+      catch (error) {
+        console.error(error)
+      }
+    }
+
+    const fetchTotalProcessedThirtyDaysLater = async () => {
+      try {
+        const res = await axios.get(`https://pas-aps.up.railway.app/sale/total-processed?startDate=${previousMonthFormatted}&endDate=${lastMonthFormatted}`, { headers: { Authorization: `Bearer ${token}` } })
+        setTotalProcessedThirtyDaysBefore(res.data)
+      }
+      catch (error) {
+        console.error(error)
+      }
+    }
+
+    const fetchTotalProcessedLastThirtyDays = async () => {
+      try {
+        const res = await axios.get(`https://pas-aps.up.railway.app/sale/total-processed?startDate=${lastMonthFormatted}&endDate=${today}`, { headers: { Authorization: `Bearer ${token}` } })
+        setTotalProcessedLastMonth(res.data)
+
+      }
+      catch (error) {
+        console.error(error)
+      }
+    }
+
+
+    const FetchTotalProcessedYesterday = async () => {
+      try {
+        const res = await axios.get(`https://pas-aps.up.railway.app/sale/total-processed?startDate=${yesterdayFormatted}&endDate=${yesterdayFormatted}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+        setTotalProcessedYesterday(res.data)
+      }
+      catch (error) {
+        console.error(error)
+      }
+    }
+
+    const fetchsTotalProcessedToday = async () => {
+      try {
+        const res = await axios.get(`https://pas-aps.up.railway.app/sale/total-processed?startDate=${today}&endDate=${today}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+        setTotalProcessedToday(res.data)
+
+
+      }
+      catch (error) {
+        console.error(error)
+      }
+    }
+
+    /*
+        const fetchTotalChild = async () => {
+          try {
+            const res = await axios.get(`https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=&endDate=`, {
+             
+              //setAlgumacoisa(res.data) 
+            })
+          }
+          catch (error) { console.error(error) }
+        } 
+    */
     const fetchDataServiceStatus = async () => {
       try {
         const response = await axios.get('https://api.zsystems.com.br/z1/services-status', { headers: { Authorization: `Bearer ${token}` }, });
-        setServiceStatus(response.data.services);
+        setServicesStatus(response.data.services);
 
       } catch (error) {
         console.error('Erro ao chamar a API:', error);
@@ -154,7 +187,7 @@ setTotalProcessedToday(res.data)
         console.error(error)
       }
     };
-   
+
 
     const fechTotalMKT = async () => {
       try {
@@ -172,6 +205,9 @@ setTotalProcessedToday(res.data)
     fetchsTotalProcessedToday()
     fetchTotalProcessedLastThirtyDays()
     fetchTotalProcessedThirtyDaysLater()
+    fetchTotalMarketplaceChildRegistredLastThirtyDays()
+    fetchTotalEstabelecimentsChildRegistredLastThirtyDays()
+
   }, []);
 
   // Função para formatar a data para yyyy-mm-dd
@@ -209,7 +245,36 @@ setTotalProcessedToday(res.data)
         <p>Total 30 dias anteriores</p>
         {!totalProcessedThirtyDaysBefore ? (<Spinner />) : (<p>{totalProcessedThirtyDaysBefore.totalProcessed}</p>)}
       </div>
+      <div className=' w-full border-2 rounded-md flex flex-col items-center justify-center'>
+        <p>Total Marketplaces filhos registrados ultimos 30 dias</p>
+        {!totalMarketplaceChildRegistredLastThiryDays ? (<Spinner />) : (<p>{totalMarketplaceChildRegistredLastThiryDays.totalMarketplaceChild}</p>)}
+      </div>
+      <div className=' w-full border-2 rounded-md flex flex-col items-center justify-center'>
+        <p>Total Estabelecimentos filhos registrados ultimos 30 dias</p>
+        {!totalEstabelecimentsChildRegistredLastThirtyDays ? (<Spinner />) : (<p>{totalEstabelecimentsChildRegistredLastThirtyDays.totalRegistered}</p>)}
+      </div>
 
+      <div className=' w-full border-2 rounded-md flex flex-col items-center justify-center'>
+        <p>Service Status</p>
+        {!servicesStatus ? (<Spinner />) : (<div><p>{servicesStatus[0].service}</p>
+
+          <p>{formatarData(servicesStatus[0].last_update)}</p>
+        </div>)}
+      </div>
+      <>
+
+        {!servicesStatus ? (<Spinner color='primary' size='lg' />) : (
+          <>{
+            servicesStatus.map((servicesStatus: any) => (<div>
+
+              <p>teset</p>
+
+
+            </div>))
+          }
+          </>
+        )}
+      </>
     </div>
     <div className='border-2 border-blue-400 w-full lg:h-screen flex  flex-col items-center justify-center  p-4 gap-2'>
       <div className=' h-2/4 lg:h-1/4 border-2 rounded-lg w-full flex flex-col  items-center  justify-center lg:justify-between '>
@@ -240,18 +305,7 @@ setTotalProcessedToday(res.data)
 
 
 
-      <div className='h-2/4 p-4 lg:h-1/4 border-2 rounded-lg w-full flex flex-col  items-center justify-between '>
-        <p>Consolidar extrato</p>
-        <div className='border-2 w-full h-full flex  flex-col lg:flex-row items-center justify-center lg:items-end lg:justify-between p-4 gap-2'>
-          <Input variant='underlined' placeholder='ID do estabelecimento' size='sm' className='w-[50vw] lg:w-[20vw]' />
-          <div className='border-2 flex flex-col lg:flex-row items-center gap-1  w-3/4 lg:w-1/4'> De: <DatePicker variant='underlined' label={'teste'} />
-            Até: <DatePicker variant='underlined' label={'teste'} />
 
-          </div>
-          <Button color='primary' variant='solid' className='' size='lg'>Enviar</Button>
-        </div>
-
-      </div>
     </div>
   </div>
 
@@ -289,15 +343,15 @@ setTotalProcessedToday(res.data)
 
 
 
-      <div className='lg:h-2/4 border-2 rounded-lg w-full flex flex-col  items-center justify-between lg:p-2'>
+          <div className='h-2/4 p-4 lg:h-1/4 border-2 rounded-lg w-full flex flex-col  items-center justify-between '>
         <p>Consolidar extrato</p>
-        <div className='border-2 w-full lg:h-full flex lg:flex-row items-end justify-between p-4'>
-          <Input variant='underlined' placeholder='ID do estabelecimento' size='sm' className='w-[30vw]' />
-          <div className='border-2 flex flex-row items-center gap-1 w-2/4'> De: <DatePicker variant='underlined' label={'teste'} />
+        <div className='border-2 w-full h-full flex  flex-col lg:flex-row items-center justify-center lg:items-end lg:justify-between p-4 gap-2'>
+          <Input variant='underlined' placeholder='ID do estabelecimento' size='sm' className='w-[50vw] lg:w-[20vw]' />
+          <div className='border-2 flex flex-col lg:flex-row items-center gap-1  w-3/4 lg:w-1/4'> De: <DatePicker variant='underlined' label={'teste'} />
             Até: <DatePicker variant='underlined' label={'teste'} />
 
           </div>
-          <Button color='primary' variant='solid' className='' size='md'>Enviar</Button>
+          <Button color='primary' variant='solid' className='' size='lg'>Enviar</Button>
         </div>
 
       </div>
