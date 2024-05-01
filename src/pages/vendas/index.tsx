@@ -41,15 +41,66 @@ export default function Vendas() {
         </div>
       </form>
       {!responseData ? (<Spinner />) : (
-        <div className=" max-w-screen p-4 bg-blue-400 rounded-lg text-black">
+        
+        
+        
+        
+        
+        
+        <div className=" w-full  lg:p-2 text-white">
+<div className=" w-full bg-custom-black flex flex-col   items-center">
+<div className="  w-full flex flex-col items-center">
+  <h2>Estabelecimento</h2>
+  <p className="text-green-500">{responseData.pedido.estabelecimento.razao_social}</p>
+<h2>Marketplace</h2>
+<p className="text-green-500">{responseData.pedido.estabelecimento.marketplace.nome}</p>
+</div>
 
 
-          <div className="max-w-screen text-sm m-2 grid grid-cols-1 lg:grid-cols-2 lg:col-span-2 ">
-            <div className="text-left p-4">
+
+
+<div className="p-3 w-full flex flex-col items-center">
+
+<div className="  flex flex-row gap-2 w-full">
+  <p>Valor:</p>
+<p className="text-green-500">R$ {responseData.pedido.pagamentos[0].valor}</p>
+</div>
+</div>
+
+<div className="  p-3 w-full flex flex-col items-center">
+<div className="  flex flex-row gap-2 w-full">
+  <p>Taxa:</p>
+<p className="text-green-500">R$ {responseData.pedido.pagamentos[0].taxa}</p>
+</div>
+</div>
+
+<div className="  p-3 w-full flex flex-col items-center">
+<div className="  flex flex-row gap-2 w-full">
+  <p>Recebido:</p>
+<p className="text-green-500">R$ {responseData.pedido.pagamentos[0].valor_recebido}</p>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+          <div className=" bg-gray-400  max-w-full text-sm  grid grid-cols-1 lg:grid-cols-2 lg:col-span-2 ">
+            <div className=" w-full text-left ">
               <p>Vendas</p>
               <JSONPretty data={responseData.pedido} theme={{ JSONPrettyMon }} />
             </div>
-            <div className="text-left p-4">
+            <div className=" w-full text-left p-4 lg:p-2">
               <p>Zoop Transactions</p>
               <JSONPretty data={responseData.zoopTransaction} theme={{ JSONPrettyMon }} />
             </div>

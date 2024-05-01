@@ -235,7 +235,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
   return (<div className=' border-2 h-screen max-w-screen flex flex-col items-center  '>
     <Header />
 
-    <div className='flex flex-col items-start justify-center w-full  border-2 border-red-500 p-2 gap-2'>
+    <div className='flex flex-col items-start justify-center w-full  border-2 border-red-500 p-4 gap-2'>
 
       <div className=' w-full border-2 rounded-md flex flex-col items-center justify-center'>
         <p>Vendas</p>
@@ -288,7 +288,55 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
           <p>{formatarData(servicesStatus[0].last_update)}</p>
         </div>)}
       </div>
-      <>
+     
+      <div className={`border-2 ${totalNotProcessedToday?.totalNotProcessed > 0 ? 'bg-yellow-400' : 'bg-white'}`}>
+
+        <p>{totalNotProcessedToday?.totalNotProcessed}</p>
+
+
+      </div>
+      <div className='border-2 border-blue-400 w-full  flex h-full flex-col items-center justify-start lg:p-12  lg:gap-6'>
+      <div className='  border-2 border-red-500 rounded-lg w-full flex flex-col  items-center  justify-center  '>
+        <p>Reprocessar venda</p>
+        <div className='border-2 w-full h-full flex  flex-col lg:flex-row lg:items-end items-center justify-between lg:p-8 gap-2 '>
+          <Input variant='underlined' placeholder='ID do estabelecimento' size='sm' className='w-[50vw] lg:w-[20vw]' />
+          <div className='border-2 flex flex-col lg:flex-row items-end justify-center lg:justify-around  gap-1  w-3/4 lg:w-1/4'> De: <DatePicker variant='underlined' label={'teste'} />
+            Até: <DatePicker variant='underlined' label={'teste'} />
+
+          </div>
+          <Button color='primary' variant='solid' className='' size='lg'>Enviar</Button>
+        </div>
+
+      </div>
+
+
+      <div className=' border-2 border-yellow-400 rounded-lg w-full flex flex-col  items-center justify-between p-4'>
+        <p>Reprocessar saldo</p>
+        <div className='border-2 w-full h-full flex flex-col lg:flex-row items-center justify-center lg:items-end lg:justify-between gap-2 p-4'>
+          <Input variant='underlined' placeholder='ID do estabelecimento' size='sm' className=' w-[50vw] lg:w-[20vw]' />
+          <div className='border-2  lg:w-2/4 flex flex-col items-center justify-center'>
+            <Input variant='underlined' placeholder='Dias' size='sm' className='w-[50vw]  lg:w-[20vw]' />
+          </div>
+          <Button color='primary' variant='solid' className='' size='lg'>Enviar</Button>
+        </div>
+
+      </div>
+
+
+
+
+    </div>
+    </div>
+
+  </div>
+
+
+  )
+}
+
+
+/*
+ <>
 
         {!servicesStatus ? (<Spinner color='primary' size='lg' />) : (
           <>{
@@ -311,20 +359,9 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
           </>
         )}
       </>
-      <div className={`border-2 ${totalNotProcessedToday?.totalNotProcessed > 0 ? 'bg-yellow-400' : 'bg-white'}`}>
 
-        <p>{totalNotProcessedToday?.totalNotProcessed}</p>
+*/
 
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  )
-}
 
 /*
  <div className='border-2 border-blue-400 w-full lg:h-screen flex  flex-col items-center justify-center  p-4 gap-2'>
