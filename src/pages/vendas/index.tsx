@@ -54,7 +54,7 @@ export default function Vendas() {
           </div>
         </form>
       </div>
-      {!responseData ? (<Spinner />) : (
+      {responseData ? (
 
 
 
@@ -107,6 +107,35 @@ export default function Vendas() {
             </div>
 
 
+            <div className='border-2 w-full flex  flex-col  justify-center items-center p-3'>
+              <h1>Pagamentos </h1>
+              {responseData.pedido.pagamentos[0] ? (<div className='w-full flex flex-row gap-2 p-2'>
+                <p>Id:</p>
+                <p className='text-green-500'>{responseData.pedido.pagamentos[0].id}</p>
+              </div>) : (
+                <Spinner color="primary" size='lg' />)}
+
+              {responseData.pedido.status_pedido.titulo ? (<div className='w-full flex flex-row gap-2 p-2'>
+                <p>Status:</p>
+                <p className='text-green-500'>{responseData.pedido.status_pedido.titulo}</p>
+              </div>) : (
+                <Spinner color="primary" size='lg' />)}
+
+
+
+
+            </div>
+
+
+            {responseData.pedido.pedidos_splits[0] ? (
+              <div className="border-2 p-3 w-full flex flex-col items-center">
+                <div className="flex flex-row gap-2 w-full">
+                  <p>Markup:</p>
+                  <p className="text-green-500">R$ {responseData.pedido.pedidos_splits[0]}</p>
+                </div>
+              </div>
+            ) : null}
+
 
 
 
@@ -128,7 +157,7 @@ export default function Vendas() {
             </div>
           </div>
         </div>
-      )}
+      ) : null}
 
 
     </div>
