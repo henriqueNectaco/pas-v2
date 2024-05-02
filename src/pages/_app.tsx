@@ -1,18 +1,21 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { NextUIProvider } from "@nextui-org/system";
-import {Roboto,Libre_Franklin,Open_Sans} from '@next/font/google'
-
-const roboto=Open_Sans({
-  subsets:['latin'],
-  weight:['400']
+import { Roboto, Libre_Franklin, Open_Sans } from '@next/font/google'
+import { Toaster } from 'sonner';
+const roboto = Open_Sans({
+  subsets: ['latin'],
+  weight: ['400']
 })
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <NextUIProvider>
       <main className={roboto.className}>
-      <Component {...pageProps} />
+
+        <Toaster />
+        <Component {...pageProps} />
+
       </main>
     </NextUIProvider>
 

@@ -103,7 +103,10 @@ export default function Marketplace() {
             </DropdownTrigger>
             <DropdownMenu
               aria-label="Action event example"
-              onAction={(key) => setState(key)}
+              onAction={(key) => {
+                setState(key)
+
+              }}
               color="primary"
               variant="solid"
               size='lg'
