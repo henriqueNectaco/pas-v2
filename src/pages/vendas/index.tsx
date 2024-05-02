@@ -61,7 +61,7 @@ export default function Vendas() {
 
 
 
-        <div className=" w-full  lg:p-2 text-white">
+        <div className=" w-full  lg:p-2   text-white">
           <div className=" w-full bg-custom-black flex flex-col   items-center">
             <div className="  w-full flex flex-col items-center">
               <h2>Estabelecimento</h2>
@@ -121,11 +121,16 @@ export default function Vendas() {
               </div>) : (
                 <Spinner color="primary" size='lg' />)}
 
+{responseData.pedido.pagamentos ? (<div className='w-full flex flex-row gap-2 p-2'>
+                <p>Data de Recebimento:</p>
+                <p className='text-green-500'>{ new Date(responseData.pedido.pagamentos[0].data_recebimento).toLocaleString('pt-BR', { timeZone: 'UTC' })}</p>
+              </div>) : (
+                <Spinner color="primary" size='lg' />)}
 
 
 
             </div>
-
+                
 
             {responseData.pedido.pedidos_splits[0] ? (
               <div className="border-2 p-3 w-full flex flex-col items-center">

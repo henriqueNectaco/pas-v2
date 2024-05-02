@@ -3,6 +3,8 @@ import { Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, Navb
 import logo from '../../assets/logo.svg';
 import Image from "next/image";
 import { ArrowRight } from "phosphor-react";
+import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
@@ -28,6 +30,14 @@ export default function Header() {
     '/'
 
   ]
+  const router=useRouter()
+const LogOut =()=>{
+
+Cookies.remove('token'); // ou localStorage.removeItem('token');
+router.push('/');
+
+}
+
 
   return (
     <Navbar className="p-6  border-2 border-black w-full flex flex-row items-start max-w-screen   bg-gradient-to-r from-cyan-500 to-blue-500  text-black "
@@ -92,7 +102,7 @@ export default function Header() {
       <NavbarContent className='lg:ml-8 border-2 border-black  w-full' justify="end">
 
         <NavbarItem justify='end'>
-          <Button color='FFFF' href="#" className="button-no-border" variant="solid">
+          <Button onClick={LogOut} color='FFFF' href="#" className="button-no-border" variant="solid">
             <ArrowRight size={32} />
           </Button>
         </NavbarItem>

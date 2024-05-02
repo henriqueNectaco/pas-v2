@@ -35,9 +35,19 @@ export default function Crons() {
       toast.error(res.data.error)
     }
   };
+const Auth=async()=>{
+try{
+  const res =await axios.post(`https://api.zsystems.com.br/z1/autenticar`,{headers: { Authorization: `Bearer ${token}` }})
+}
+catch(error){
+  toast.error(error)
+}
 
+
+}
   useEffect(() => {
     getCrons();
+    Auth()
     console.log(crons)
     console.log(mensagem)
   }, []);
