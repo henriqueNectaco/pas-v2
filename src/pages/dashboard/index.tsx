@@ -244,7 +244,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
     servicesStatus.map((servicesStatus: any) => (
     <div  className='flex flex-col items-center justify-center mt-2 gap-2 border-2 p-4 rounded-lg'>
 
-      <p>{servicesStatus.service}</p>
+      <p className='font-bold'>{servicesStatus.service}</p>
       <p>{formatarData(servicesStatus.last_update)}</p>
 
       {servicesStatus.status ? (
@@ -261,8 +261,8 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
 
 
 
-      <div className=' w-full border-2 rounded-md flex flex-col items-center justify-center'>
-        <p>Vendas</p>
+      <div className='p-6  w-full border-2 rounded-md flex flex-col items-center justify-center'>
+        <p className='text-custom-black'>Vendas</p>
         {!amountIndicator ? (<Spinner />) :
           (<p> {amountIndicator.result.transacionadoHoje.quantidade}</p>)}
 

@@ -56,9 +56,9 @@ export default function Crons() {
   }
 
   return (
-    <div className='h-screen w-full'>
+    <div className='h-screen w-full text-black-500'>
       <Header />
-      <div className='p-2 flex flex-col '>
+      <div className='p-4  flex flex-col '>
       <>
         {!crons ? (
           <Spinner color='primary' size='lg'/>

@@ -81,7 +81,7 @@ export default function Home() {
       <div className=" bg-white h-full sm:flex sm:flex-col sm:justify-center sm:items-center lg:w-4/6  lg:h-4/6 md:flex md:flex-col md:items-center md:justify-center md:h-5/6 sm:p-0
       lg:grid lg:grid-cols-2 border-2  rounded-xl ">
         <div className="lg:col-start-1 lg:col-end-2 flex justify-center items-center bg-white  lg:h-full p-6 border-2  rounded-xl  ">
-          <Image alt="teste" src={logo} width={400} height={300} />
+          <Image  quality={100} alt="teste" src={logo} width={400} height={300} />
         </div>
         <div className=" border-2  rounded-xl lg:col-start-2 lg:col-end-3 bg-white    max-w-screen-xl mx-auto w-full  h-full lg:flex sm:flex sm:flex-col sm:items-center sm:justify-center
        lg:flex-col lg:items-center lg:justify-center lg:p-12 p-4" >
