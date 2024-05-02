@@ -267,11 +267,24 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
           (<p> {amountIndicator.result.transacionadoHoje.quantidade}</p>)}
 
       </div>
-      <div className=' w-full border-2 rounded-md flex flex-col items-center justify-center'>
+      <div className='p-6 w-full border-2 rounded-md flex flex-col items-center justify-center'>
         <p>Total Vendido</p>
-        {!amountIndicator ? (<Spinner />) : (<p>{amountIndicator.result.transacionadoHoje.valorTotal}</p>)}
+        {!amountIndicator ? (<Spinner />) : (<p>R$ {amountIndicator.result.transacionadoHoje.valorTotal}</p>)}
       </div>
-      <div className=' w-full border-2 rounded-md flex flex-col items-center justify-center'>
+      <div className='p-4 w-full border-2 rounded-md flex flex-col items-center justify-center'>
+        <p>Total Processado</p>
+        <p>Ontem/Hoje</p>
+        {!totalProcessedToday   ? (<Spinner />) : (<p>{totalProcessedYesterday.totalProcessed} / {totalProcessedToday.totalProcessed}</p>)}
+      </div>
+
+      <div className='p-6 w-full border-2 rounded-md flex flex-col items-center justify-center'>
+        <p>Marketplaces</p>
+        <p>filhos registrados</p>
+        {!totalMarketplaceChildRegistredLastThiryDays ? (<Spinner />) : (<p>{totalMarketplaceChildRegistredLastThiryDays.totalMarketplaceChild}</p>)}
+      </div>
+
+
+      <div className='p-6 w-full border-2 rounded-md flex flex-col items-center justify-center'>
         <p>Total processado Hoje</p>
         {!totalProcessedToday ? (<Spinner />) : (<p>{totalProcessedToday.totalProcessed}</p>)}
       </div>

@@ -79,7 +79,7 @@ export default function Marketplace() {
   return (
     <div className=" h-screen w-full flex flex-col items-center  ">
       <Header />
-      <div className="w-full  p-2">
+      <div className="w-full  p-2 lg:p-4">
         <div className=" w-full     gap-2 lg:gap-6  p-2 lg:p-4 flex  flex-col lg:flex-row items-center  border-2  ">
           <Button className='w-3/4 ' radius="md" size="md" variant="solid" color="primary">Reprocessar todas as vendas</Button>
           <Button className='w-3/4' radius="md" size="md" variant="solid" color="primary">Novo Marketplace</Button>
@@ -121,7 +121,7 @@ export default function Marketplace() {
         </div>
       </div><>
         {!resData ? (<Spinner size="4xl" color="primary" />) : (
-          <div className="w-full h-full    border-2  p-4 ">
+          <div className="w-full h-full      p-4 ">
             <>
               {resData.map((resData: any) => (
                 <div className="w-full border-2 rounded-lg flex  flex-col   items-center justify-center lg:flex-row p-4 gap-2">
