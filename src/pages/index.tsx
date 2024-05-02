@@ -40,7 +40,7 @@ export default function Home() {
       router.push('/dashboard');
     } catch (error) {
       console.log(error);
-      toast.error('Login não encntrado ')
+      toast.error('Login não encontrado ')
     }
   }
 

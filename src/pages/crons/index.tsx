@@ -58,22 +58,22 @@ export default function Crons() {
   return (
     <div className='h-screen w-full text-black-500'>
       <Header />
-      <div className='p-4  flex flex-col '>
-      <>
-        {!crons ? (
-          <Spinner color='primary' size='lg'/>
-        ) : (
-          <>
-            {crons.map((crons: any) => (
+      <div className='p-4  space-y-3 lg:space-y-2  flex flex-col '>
+        <>
+          {!crons ? (
+            <Spinner color='primary' size='lg' />
+          ) : (
+            <>
+              {crons.map((crons: any) => (
 
-              <div key={crons.id}>
-                < CardCron Cron={crons.slug} Scheduled={crons.interval} Mensagem={crons.message} date={formatarData(crons.start_date)} />
-              </div>
-            ))}
-          </>
-        )}
+                <div key={crons.id}>
+                  < CardCron Cron={crons.slug} Scheduled={crons.interval} Mensagem={crons.message} date={formatarData(crons.start_date)} />
+                </div>
+              ))}
+            </>
+          )}
 
-      </></div>
+        </></div>
     </div >)
 }
 /*

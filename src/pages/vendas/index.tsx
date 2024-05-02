@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 import JSONPrettyMon from 'react-json-pretty/themes/monikai.css';
 import JSONPretty from 'react-json-pretty';
 import { Spinner, X } from 'phosphor-react'
-
+import { toast } from 'sonner'
 
 export default function Vendas() {
   const [vendaId, setVendaId] = useState('')
@@ -22,87 +22,109 @@ export default function Vendas() {
     try {
       const response = await axios.get(`https://api.zsystems.com.br/z1/vendas/${vendaId}`,
         { headers: { Authorization: `Bearer ${token}` }, })
-      setResponseData(response.data)
+
+
+      if (response.data.success == true) { setResponseData(response.data) } else { toast.error('Id não encontrado') }
+
+
+
+
+
+
     } catch (error) {
+
       console.log(error.message)
     }
   }
-  console.log(responseData)
+
   return (
     <div className='flex flex-col items-center  h-screen max-w-screen  '>
       <Header />
-      <form className=" h-3/8  w-full lg:w-2/6 p-6 flex flex-col items-center justify-around  lg:px-8 rounded-xl  my-4 shadow-md border-2" >
-        <label className=" font-bold">Vendas:</label>
-        <Input type='text' placeholder="ID da venda ou zoop transaction ID" variant="underlined" className="w-5/6 lg:w-3/6" onChange={handleChange} value={vendaId} />
-        <div className="flex items-center justify-around  w-2/6 mt-6">
-          <Button onClick={handleSearch} color="primary" variant="shadow">Consultar</Button>
-          {vendaId ? (<Button onClick={handleCleanInput} color="danger">Limpar</Button>) : null}
+      <div className='w-full p-4 flex flex-col items-center'>
+        <form className=" h-full  w-full lg:w-2/6 p-6 flex flex-col items-center justify-around  lg:px-8 rounded-xl  my-4  shadow-md border-2" >
 
-        </div>
-      </form>
+          <label className=" font-bold">Vendas:</label>
+          <Input type='text' placeholder="ID da venda ou zoop transaction ID" variant="underlined" className="w-5/6 lg:w-3/6" onChange={handleChange} value={vendaId} />
+          <div className="flex items-center justify-around gap-2  - w-2/6 mt-6">
+
+
+            <Button onClick={handleSearch} color="primary" variant="shadow">Consultar</Button>
+            {vendaId ? (<Button onClick={handleCleanInput} color="danger">Limpar</Button>) : null}
+
+          </div>
+        </form>
+      </div>
       {!responseData ? (<Spinner />) : (
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
         <div className=" w-full  lg:p-2 text-white">
-<div className=" w-full bg-custom-black flex flex-col   items-center">
-<div className="  w-full flex flex-col items-center">
-  <h2>Estabelecimento</h2>
-  <p className="text-green-500">{responseData.pedido.estabelecimento.razao_social}</p>
-<h2>Marketplace</h2>
-<p className="text-green-500">{responseData.pedido.estabelecimento.marketplace.nome}</p>
-</div>
+          <div className=" w-full bg-custom-black flex flex-col   items-center">
+            <div className="  w-full flex flex-col items-center">
+              <h2>Estabelecimento</h2>
+              <p className="text-green-500">{responseData.pedido.estabelecimento.razao_social}</p>
+              <h2>Marketplace</h2>
+              <p className="text-green-500">{responseData.pedido.estabelecimento.marketplace.nome}</p>
+            </div>
 
 
 
 
-<div className="p-3 w-full flex flex-col items-center">
+            <div className="p-3 border-2 w-full flex flex-col items-center">
 
-<div className="  flex flex-row gap-2 w-full">
-  <p>Valor:</p>
-<p className="text-green-500">R$ {responseData.pedido.pagamentos[0].valor}</p>
-</div>
-</div>
+              <div className="  flex flex-row gap-2 w-full">
+                <p>Valor:</p>
+                <p className="text-green-500">R$ {responseData.pedido.pagamentos[0].valor}</p>
+              </div>
+            </div>
 
-<div className="  p-3 w-full flex flex-col items-center">
-<div className="  flex flex-row gap-2 w-full">
-  <p>Taxa:</p>
-<p className="text-green-500">R$ {responseData.pedido.pagamentos[0].taxa}</p>
-</div>
-</div>
-
-<div className="  p-3 w-full flex flex-col items-center">
-<div className="  flex flex-row gap-2 w-full">
-  <p>Recebido:</p>
-<p className="text-green-500">R$ {responseData.pedido.pagamentos[0].valor_recebido}</p>
-</div>
-</div>
+            <div className="border-2  p-3 w-full flex flex-col items-center">
+              <div className="  flex flex-row gap-2 w-full">
+                <p>Recebido:</p>
+                <p className="text-green-500">R$ {responseData.pedido.pagamentos[0].valor_recebido}</p>
+              </div>
+            </div>
 
 
-
+            <div className="border-2  p-3 w-full flex flex-col items-center">
+              <div className="  flex flex-row gap-2 w-full">
+                <p>Taxa:</p>
+                <p className="text-green-500">R$ {responseData.pedido.pagamentos[0].taxa}</p>
+              </div>
+            </div>
 
 
 
 
+            <div className="border-2  p-3 w-full flex flex-col items-center">
+              <div className="  flex flex-row gap-2 w-full">
+                <p>Markup:</p>
+                <p className="text-green-500">R$ {responseData.pedido.pagamentos[0].markup}</p>
+              </div>
+            </div>
 
 
 
-</div>
+
+
+
+
+          </div>
 
 
 
 
           <div className=" bg-gray-400  max-w-full text-sm  grid grid-cols-1 lg:grid-cols-2 lg:col-span-2 ">
-            <div className=" w-full text-left ">
+            <div className=" w-full text-left p-2 lg:p-4 ">
               <p>Vendas</p>
               <JSONPretty data={responseData.pedido} theme={{ JSONPrettyMon }} />
             </div>
-            <div className=" w-full text-left p-4 lg:p-2">
+            <div className=" w-full text-left lg:border-2 lg:rounded-3xl  p-2 lg:p-4">
               <p>Zoop Transactions</p>
-              <JSONPretty data={responseData.zoopTransaction} theme={{ JSONPrettyMon }} />
+              <JSONPretty className=" roundead-xl " data={responseData.zoopTransaction} theme={{ JSONPrettyMon }} />
             </div>
           </div>
         </div>

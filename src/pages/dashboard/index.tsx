@@ -22,7 +22,7 @@ export default function DashBoard() {
   const [totalMarketplaceChildRegistredLastThiryDays, setTotalMarketplaceChildRegistredLastThirtyDays] = useState(null)
   const [totalEstabelecimentsChildRegistredLastThirtyDays, setTotalEstabelecimentsChildRegistredLastThirtyDays] = useState(null)
   const [totalNotProcessedToday, setTotalNotProcessedToday] = useState(null)
-
+  const [totalMarketplaceChildRegistredPreviousMonth, setTotalMarketplaceChildRegistredPreviousMonth] = useState(null)
 
   const token = Cookies.get('token')
   /*const api = async (data) => {
@@ -92,7 +92,19 @@ export default function DashBoard() {
 
   const previousMonthFormatted = `${yearPreviousMonth}-${monthPreviousMonth}-${dayPreviousMonth}`
 
+
   useEffect(() => {
+    const fecthTotalMarketplaceChildResgistredPreviousMonth = async () => {
+      try {
+        const res = await axios.get(`
+        https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=${previousMonthFormatted}&endDate=${lastMonthFormatted}`, { headers: { Authorization: `Bearer ${token}` } })
+        setTotalMarketplaceChildRegistredPreviousMonth(res.data)
+
+      }
+      catch (error) {
+        console.error(error)
+      }
+    }
 
     const fetchTotalNotProcessedToday = async () => {
       try {
@@ -215,6 +227,8 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
         console.error(error)
       }
     }
+
+    fecthTotalMarketplaceChildResgistredPreviousMonth()
     fetchDataServiceStatus();
     fechAmountData()
     fechTotalMKT()
@@ -239,25 +253,25 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
 
 
 
-{!servicesStatus ? (<Spinner color='primary' size='lg' />) : (
-  <div className=' w-full '>{
-    servicesStatus.map((servicesStatus: any) => (
-    <div  className='flex flex-col items-center justify-center mt-2 gap-2 border-2 p-4 rounded-lg'>
+      {!servicesStatus ? (<Spinner color='primary' size='lg' />) : (
+        <div className=' w-full '>{
+          servicesStatus.map((servicesStatus: any) => (
+            <div className='flex flex-col items-center justify-center mt-2 gap-2 border-2 p-4 rounded-lg'>
 
-      <p className='font-bold'>{servicesStatus.service}</p>
-      <p>{formatarData(servicesStatus.last_update)}</p>
+              <p className='font-bold'>{servicesStatus.service}</p>
+              <p>{formatarData(servicesStatus.last_update)}</p>
 
-      {servicesStatus.status ? (
-      
+              {servicesStatus.status ? (
 
-<FaThumbsUp color='green' size={30} />
-) : (
-<TiThumbsUp color='red' fill='red' />
-)}
-    </div>))
-  }
-  </div>
-)}
+
+                <FaThumbsUp color='green' size={30} />
+              ) : (
+                <TiThumbsUp color='red' fill='red' />
+              )}
+            </div>))
+        }
+        </div>
+      )}
 
 
 
@@ -274,7 +288,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
       <div className='p-4 w-full border-2 rounded-md flex flex-col items-center justify-center'>
         <p>Total Processado</p>
         <p>Ontem/Hoje</p>
-        {!totalProcessedToday   ? (<Spinner />) : (<p>{totalProcessedYesterday.totalProcessed} / {totalProcessedToday.totalProcessed}</p>)}
+        {!totalProcessedToday ? (<Spinner />) : (<p>{totalProcessedYesterday.totalProcessed} / {totalProcessedToday.totalProcessed}</p>)}
       </div>
 
       <div className='p-6 w-full border-2 rounded-md flex flex-col items-center justify-center'>
@@ -282,6 +296,13 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
         <p>filhos registrados</p>
         {!totalMarketplaceChildRegistredLastThiryDays ? (<Spinner />) : (<p>{totalMarketplaceChildRegistredLastThiryDays.totalMarketplaceChild}</p>)}
       </div>
+
+      <div className='p-5 w-full border-2 rounded-md flex flex-col items-center justify-center'>
+        <p>Total Estabelecimentos filhos</p>
+        <p>registrados ultimos 30 dias</p>
+        {!totalEstabelecimentsChildRegistredLastThirtyDays ? (<Spinner />) : (<p>{totalEstabelecimentsChildRegistredLastThirtyDays.totalRegistered}</p>)}
+      </div>
+
 
 
       <div className='p-6 w-full border-2 rounded-md flex flex-col items-center justify-center'>
@@ -325,7 +346,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
           <p>{formatarData(servicesStatus[0].last_update)}</p>
         </div>)}
       </div>
-     
+
       <div className={`border-2 ${totalNotProcessedToday?.totalNotProcessed > 0 ? 'bg-yellow-400' : 'bg-white'}`}>
 
         <p>{totalNotProcessedToday?.totalNotProcessed}</p>
@@ -333,36 +354,36 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
 
       </div>
       <div className='border-2 border-blue-400 w-full  flex h-full flex-col items-center justify-start    lg:gap-6'>
-      <div className='  border-2 border-red-500 rounded-lg w-full flex flex-col  items-center  justify-center  '>
-        <p>Reprocessar venda</p>
-        <div className='border-2 w-full h-full flex  flex-col lg:flex-row lg:items-end items-center justify-between lg:p-6 gap-2 '>
-          <Input variant='underlined' placeholder='ID do estabelecimento' size='sm' className='w-[50vw] lg:w-[20vw]' />
-          <div className='border-2 flex flex-col lg:flex-row items-start lg:items-end justify-center lg:justify-around  gap-1  w-3/4 lg:w-1/4'> De: <DatePicker variant='underlined' label={'teste'} />
-            Até: <DatePicker variant='underlined' label={'teste'} />
+        <div className='  border-2 border-red-500 rounded-lg w-full flex flex-col  items-center  justify-center  '>
+          <p>Reprocessar venda</p>
+          <div className='border-2 w-full h-full flex  flex-col lg:flex-row lg:items-end items-center justify-between lg:p-6 gap-2 '>
+            <Input variant='underlined' placeholder='ID do estabelecimento' size='sm' className='w-[50vw] lg:w-[20vw]' />
+            <div className='border-2 flex flex-col lg:flex-row items-start lg:items-end justify-center lg:justify-around  gap-1  w-3/4 lg:w-1/4'> De: <DatePicker variant='underlined' label={'teste'} />
+              Até: <DatePicker variant='underlined' label={'teste'} />
 
+            </div>
+            <Button color='primary' variant='solid' className='' size='lg'>Enviar</Button>
           </div>
-          <Button color='primary' variant='solid' className='' size='lg'>Enviar</Button>
+
         </div>
 
-      </div>
 
+        <div className=' border-2 border-yellow-400 rounded-lg w-full flex flex-col  items-center justify-between p-4 lg:p-0'>
+          <p>Reprocessar saldo</p>
+          <div className='border-2 w-full h-full flex flex-col lg:flex-row items-center  justify-center lg:items-end lg:justify-between gap-2 p-6'>
+            <Input variant='underlined' placeholder='ID do estabelecimento' size='sm' className=' w-[50vw] lg:w-[20vw]' />
 
-      <div className=' border-2 border-yellow-400 rounded-lg w-full flex flex-col  items-center justify-between p-4 lg:p-0'>
-        <p>Reprocessar saldo</p>
-        <div className='border-2 w-full h-full flex flex-col lg:flex-row items-center  justify-center lg:items-end lg:justify-between gap-2 p-6'>
-          <Input variant='underlined' placeholder='ID do estabelecimento' size='sm' className=' w-[50vw] lg:w-[20vw]' />
-          
             <Input variant='underlined' placeholder='Dias' size='sm' className='w-[50vw]  lg:w-[20vw]' />
-          
-          <Button color='primary' variant='solid' className='' size='lg'>Enviar</Button>
+
+            <Button color='primary' variant='solid' className='' size='lg'>Enviar</Button>
+          </div>
+
         </div>
 
+
+
+
       </div>
-
-
-
-
-    </div>
     </div>
 
   </div>
