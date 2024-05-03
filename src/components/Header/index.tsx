@@ -18,7 +18,7 @@ export default function Header() {
     "Crons",
     "Validar taxas",
     "SSL's",
-    "sair"
+    
 
   ];
   const menuItemsHrf = [
@@ -28,8 +28,8 @@ export default function Header() {
     'marketplaces',
     'crons',
     'validartaxas',
-    'ssls',
-    '/'
+    'ssls'
+    
 
   ]
   const router=useRouter()
@@ -104,7 +104,7 @@ router.push('/');
       <NavbarContent className='lg:ml-8 border-2 border-black  w-full' justify="end">
 
         <NavbarItem justify='end'>
-          <Button onPress={onOpen} color='FFFF' href="#" className="button-no-border" variant="solid">
+          <Button  onClick={onOpen}   color='FFFF' href="#" className="button-no-border" variant="solid">
             <ArrowRight size={32} />
           </Button>
         </NavbarItem>
@@ -141,10 +141,10 @@ router.push('/');
 <p className="text-xl">Deseja Efetuar o LogOut?</p>
               </ModalBody>
               <ModalFooter className=" flex flex-row items-center justify-evenly bg-blue-500  ">
-                <Button  variant="light" onPress={onClose}>
+                <Button size="md" variant="light"  onPress={onClose}>
                   Cancelar
                 </Button>
-                <Button color="success" variant="solid" onPress={LogOut}>
+                <Button  size="md" color="success" variant="solid" onPress={LogOut}>
                   Confirmar
                 </Button>
               </ModalFooter>

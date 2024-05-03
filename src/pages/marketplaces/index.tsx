@@ -20,6 +20,7 @@ export default function Marketplace() {
   const [idInput, setIdInput] = useState('')
   const [resData, setResData] = useState('')
   const [state, setState] = useState('ativos')
+  const [marketplacesOptions,setMarketplacesOptions]=useState(null)
   const handleCleanInput = () => {
     setEmail('')
     setCnpj('')
@@ -124,10 +125,10 @@ export default function Marketplace() {
         </div>
       </div><>
         {!resData ? (<Spinner size="4xl" color="primary" />) : (
-          <div className="w-full h-full      p-4 ">
+          <div className="w-full h-full   space-y-2   p-4 ">
             <>
               {resData.map((resData: any) => (
-                <div className="w-full border-2 rounded-lg flex  flex-col   items-center justify-center lg:flex-row p-4 gap-2">
+                <div className="w-full border-2 rounded-lg flex  flex-col   items-center justify-center lg:flex-row p-4 gap-2 ">
 
                   <div className="w-1/4  flex flex-col items-center justify-center">
                     <p>Id:</p>
@@ -148,8 +149,38 @@ export default function Marketplace() {
                     <p>{resData.mainECEmail}</p>
                   </div>
                   <div className="w-1/4  flex flex-col items-center justify-center">
+                  <Dropdown >
+            <DropdownTrigger>
+              <Button
+                variant="bordered"
+              >
 
-                    <DropdownMenuSecond />
+                <DotsThreeOutlineVertical size={25} />
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu
+              aria-label="Action event example"
+              onAction={(key) => {
+if(key=='addssl'){alert('add ssl?'+ key)}else{alert('nao foi')}
+
+              }}
+              color="primary"
+              variant="solid"
+              size='lg'
+            >
+              <DropdownItem key="registerchildmarketplace">Cadastrar Marketplace filho</DropdownItem>
+              <DropdownItem key="showmarketplaceschilds">Visualizar Marketplaces filhos</DropdownItem>
+              <DropdownItem key='showestabelecimentschilds'>Visualizar Estabelecimentos filhos</DropdownItem>
+<DropdownItem key='addssl'>Adicionar SSL</DropdownItem>
+<DropdownItem key='reprocessSales'>Reprocessar Vendas</DropdownItem>
+<DropdownItem key='importEc'>Importar EC's</DropdownItem>
+<DropdownItem key='taxfortransaction'>Cobrança por transação</DropdownItem>
+<DropdownItem key='importSales'>Importar Vendas</DropdownItem>
+<DropdownItem key='renewcache'>Renovar Cache</DropdownItem>
+<DropdownItem key='turnOff'>Desativar</DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+                    
                   </div>
                 </div>
 
