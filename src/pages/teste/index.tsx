@@ -53,7 +53,7 @@ export default function Modalll(){
         </ModalContent>
       </Modal>
       
-      <Button onPress={onOpen}>abre</Button>
+      
       </>
     )
 }

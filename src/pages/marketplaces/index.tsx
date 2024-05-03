@@ -27,6 +27,7 @@ export default function Marketplace() {
     setName('')
     setIdInput('')
     setDatePickerValue(null)
+    setState(null)
 
   }
   const handleChange = (e: any) => { setState(key); }
@@ -78,7 +79,7 @@ export default function Marketplace() {
   }, [resData])
   console.log('state', state)
   return (
-    <div className=" h-screen w-full flex flex-col items-center  ">
+    <div className=" h-screen max-w-screen w-full flex flex-col items-center  ">
       <Header />
       <div className="w-full  p-2 lg:p-4">
         <div className=" w-full     gap-2 lg:gap-6  p-2 lg:p-4 lg:pl-8 flex lg:pr-8  flex-col lg:flex-row items-center  border-2  ">
@@ -152,7 +153,7 @@ export default function Marketplace() {
                   <Dropdown >
             <DropdownTrigger>
               <Button
-                variant="bordered"
+                variant="light"
               >
 
                 <DotsThreeOutlineVertical size={25} />

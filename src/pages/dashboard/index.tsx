@@ -339,13 +339,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
         {!totalEstabelecimentsChildRegistredLastThirtyDays ? (<Spinner />) : (<p>{totalEstabelecimentsChildRegistredLastThirtyDays.totalRegistered}</p>)}
       </div>
 
-      <div className=' w-full border-2 rounded-md flex flex-col items-center justify-center'>
-        <p>Service Status</p>
-        {!servicesStatus ? (<Spinner />) : (<div><p>{servicesStatus[0].service}</p>
-
-          <p>{formatarData(servicesStatus[0].last_update)}</p>
-        </div>)}
-      </div>
+   
 
       <div className={`border-2 ${totalNotProcessedToday?.totalNotProcessed > 0 ? 'bg-yellow-400' : 'bg-white'}`}>
 

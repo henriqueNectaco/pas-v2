@@ -29,7 +29,7 @@ export default function Crons() {
       setCrons(res.data.cronsLogs)
       setMensagem(res.data.cronsLogs.mensage)
       console.log()
-
+        
 
     } else {
       toast.error(res.data.error)
@@ -66,9 +66,9 @@ catch(error){
   }
 
   return (
-    <div className='h-screen w-full text-black-500'>
-      <Header />
-      <div className='p-4  space-y-3 lg:space-y-2  flex flex-col '>
+    <div className='  max-w-screen w-screen border-2 border-black text-black-500 '>
+      <Header/>
+      <div className='lg:p-4  p-2  max-w-screen space-y-3 lg:space-y-2  flex flex-col '>
         <>
           {!crons ? (
             <Spinner color='primary' size='lg' />
