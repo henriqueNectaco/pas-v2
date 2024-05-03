@@ -1,5 +1,6 @@
 import React from "react";
-import { Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, NavbarContent, NavbarItem, Link, Button } from "@nextui-org/react";
+import { Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, NavbarContent, NavbarItem, Link, Button, useDisclosure } from "@nextui-org/react";
+import {Input ,Modal, ModalContent, ModalHeader, ModalBody, ModalFooter,  RadioGroup, Radio} from "@nextui-org/react";
 import logo from '../../assets/logo.svg';
 import Image from "next/image";
 import { ArrowRight } from "phosphor-react";
@@ -7,7 +8,8 @@ import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
+  const {isOpen, onOpen, onOpenChange} =useDisclosure()
+  const [modalPlacement, setModalPlacement] = React.useState("top");
   const menuItems = [
     "Dashboard",
     "Dashboard",
@@ -39,7 +41,7 @@ router.push('/');
 }
 
 
-  return (
+  return (<div className="max-w-screen w-full">
     <Navbar className="p-6  border-2 border-black w-full flex flex-row items-start max-w-screen   bg-gradient-to-r from-cyan-500 to-blue-500  text-black "
       isBordered
       isMenuOpen={isMenuOpen}
@@ -102,7 +104,7 @@ router.push('/');
       <NavbarContent className='lg:ml-8 border-2 border-black  w-full' justify="end">
 
         <NavbarItem justify='end'>
-          <Button onClick={LogOut} color='FFFF' href="#" className="button-no-border" variant="solid">
+          <Button onPress={onOpen} color='FFFF' href="#" className="button-no-border" variant="solid">
             <ArrowRight size={32} />
           </Button>
         </NavbarItem>
@@ -125,5 +127,34 @@ router.push('/');
         ))}
       </NavbarMenu>
     </Navbar>
+    <>
+<Modal 
+        isOpen={isOpen} 
+        placement={modalPlacement}
+        onOpenChange={onOpenChange} 
+      >
+        <ModalContent className=" h-[25vh] border-2">
+          {(onClose) => (
+            <>
+              <ModalHeader className="  border-2 h-[7vh]  flex flex-col items-center justify-start gap-1"><p className="text-yellow-400">Warning!</p></ModalHeader>
+              <ModalBody className=" h-[15vh] flex flex-col items-center justify-center border-2">
+<p className="text-xl">Deseja Efetuar o LogOut?</p>
+              </ModalBody>
+              <ModalFooter className=" flex flex-row items-center justify-evenly bg-blue-500  ">
+                <Button  variant="light" onPress={onClose}>
+                  Cancelar
+                </Button>
+                <Button color="success" variant="solid" onPress={LogOut}>
+                  Confirmar
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+      
+      
+      </>
+    </div>
   );
 }

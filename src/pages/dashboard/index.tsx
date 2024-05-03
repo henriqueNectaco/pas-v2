@@ -288,7 +288,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
       <div className='p-4 w-full border-2 rounded-md flex flex-col items-center justify-center'>
         <p>Total Processado</p>
         <p>Ontem/Hoje</p>
-        {!totalProcessedToday ? (<Spinner />) : (<p>{totalProcessedYesterday.totalProcessed} / {totalProcessedToday.totalProcessed}</p>)}
+        {!totalProcessedToday || !totalProcessedYesterday ? (<Spinner />) : (<p>{totalProcessedYesterday.totalProcessed} / {totalProcessedToday.totalProcessed}</p>)}
       </div>
 
       <div className='p-6 w-full border-2 rounded-md flex flex-col items-center justify-center'>

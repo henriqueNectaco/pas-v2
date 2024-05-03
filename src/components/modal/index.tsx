@@ -27,7 +27,7 @@ export default function Modalll(){
     const [modalPlacement, setModalPlacement] = React.useState("top");
 
     return(
-<>
+
 <Modal 
         isOpen={isOpen} 
         placement={modalPlacement}
@@ -52,8 +52,5 @@ export default function Modalll(){
           )}
         </ModalContent>
       </Modal>
-      
-      <Button onPress={onOpen}>abre</Button>
-      </>
     )
 }
