@@ -1,7 +1,7 @@
 import Header from '../../components/Header/index'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 import Cookies from 'js-cookie';
 import { Spinner } from '@nextui-org/react';
 import { CardCron } from './items';
@@ -18,6 +18,23 @@ export default function Crons() {
   const [crons, setCrons] = useState<any>(null);
   const [mensagem, setMensagem] = useState<any>('');
   const token = Cookies.get('token')
+  const teste = async () => {
+    const res = await axios.get(`https://admin.zsystems.com.br/ssls 
+        `, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+
+    if (res.data.success === true) {
+      
+     
+     
+        
+
+    } else {
+      
+    }
+  };
+
   const getCrons = async () => {
     const res = await axios.get(`https://api.zsystems.com.br/z1/crons/logs
         `, {
@@ -25,7 +42,7 @@ export default function Crons() {
     })
 
     if (res.data.success === true) {
-      toast.success(res.data.sucess)
+      
       setCrons(res.data.cronsLogs)
       setMensagem(res.data.cronsLogs.mensage)
       console.log()
@@ -40,14 +57,15 @@ try{
   const res =await axios.post(`https://api.zsystems.com.br/z1/autenticar`,{headers: { Authorization: `Bearer ${token}` }})
 }
 catch(error){
-  toast.error(error)
+  
 }
 
 
 }
   useEffect(() => {
     getCrons();
-    Auth()
+    
+
     console.log(crons)
     console.log(mensagem)
   }, []);
