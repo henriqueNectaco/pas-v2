@@ -45,7 +45,7 @@ export default function Vendas() {
 
           <label className=" font-bold">Vendas:</label>
           <Input type='text' placeholder="ID da venda ou zoop transaction ID" variant="underlined" className="w-5/6 lg:w-3/6" onChange={handleChange} value={vendaId} />
-          <div className="flex items-center justify-around gap-2  - w-2/6 mt-6">
+          <div className="flex items-center justify-center lg:justify-around gap-2  - w-2/6  mt-4 lg:mt-6">
 
 
             <Button onClick={handleSearch} color="primary" variant="shadow">Consultar</Button>
@@ -61,8 +61,9 @@ export default function Vendas() {
 
 
 
-        <div className=" w-full  lg:p-2   text-white">
-          <div className=" w-full bg-custom-black flex flex-col   items-center">
+        <div className=" w-full  p-2    text-white">
+          
+          <div className=" w-full bg-custom-black flex flex-col lg:flex-row border-2 rounded-lg items-center">
             <div className="  w-full flex flex-col items-center">
               <h2>Estabelecimento</h2>
               <p className="text-green-500">{responseData.pedido.estabelecimento.razao_social}</p>
@@ -156,7 +157,7 @@ export default function Vendas() {
               <p>Vendas</p>
               <JSONPretty data={responseData.pedido} theme={{ JSONPrettyMon }} />
             </div>
-            <div className=" w-full text-left lg:border-2 lg:rounded-3xl  p-2 lg:p-4">
+            <div className=" w-full text-left   p-2 lg:p-4">
               <p>Zoop Transactions</p>
               <JSONPretty className=" roundead-xl " data={responseData.zoopTransaction} theme={{ JSONPrettyMon }} />
             </div>

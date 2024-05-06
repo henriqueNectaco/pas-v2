@@ -5,7 +5,7 @@ import { toast } from 'sonner';
 import Cookies from 'js-cookie';
 import { Spinner } from '@nextui-org/react';
 import { CardCron } from './items';
-
+import { useRouter } from "next/router";
 type CronProps = {
   Cron: string,
   Scheduled: string,
@@ -14,6 +14,8 @@ type CronProps = {
 }
 export default function Crons() {
 
+
+  const router = useRouter(); 
   const [logs, setLogs] = useState([]);
   const [crons, setCrons] = useState<any>(null);
   const [mensagem, setMensagem] = useState<any>('');
@@ -22,7 +24,9 @@ export default function Crons() {
     const res = await axios.get(`https://admin.zsystems.com.br/ssls 
         `, {
       headers: { Authorization: `Bearer ${token}` },
-    })
+    }
+  
+  )
 
     if (res.data.success === true) {
       
@@ -31,9 +35,35 @@ export default function Crons() {
         
 
     } else {
-      
+     router.back 
     }
   };
+
+  const myAuth=async()=>{
+    try{
+      if(token){
+        console.log('aq tem')
+      }else{
+        router.push('/')
+      }
+    } catch(error){toast.error(error)}}
+
+
+
+const  fetchCrons=async()=>{
+
+  try{const res =await axios.get(`https://api.zsystems.com.br/z1/crons/logs
+  `, {
+headers: { Authorization: `Bearer ${token}` },
+})
+
+  }
+  catch(error){
+    toast.error(error)
+
+  }
+}
+
 
   const getCrons = async () => {
     const res = await axios.get(`https://api.zsystems.com.br/z1/crons/logs
@@ -49,7 +79,9 @@ export default function Crons() {
         
 
     } else {
+      router.back
       toast.error(res.data.error)
+
     }
   };
 const Auth=async()=>{
@@ -63,12 +95,16 @@ catch(error){
 
 }
   useEffect(() => {
+  myAuth()
     getCrons();
     
 
     console.log(crons)
     console.log(mensagem)
   }, []);
+
+
+
   function formatarData(dataString: any) {
     const dataOriginal = new Date(dataString);
 

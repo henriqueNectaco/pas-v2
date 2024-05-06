@@ -87,7 +87,7 @@ export default function Marketplace() {
           <Button className='w-3/4' radius="md" size="md" variant="solid" color="primary">Novo Marketplace</Button>
           <Button className='w-3/4' radius="md" size="md" variant="solid" color="primary">Importar todas as vendas</Button>
         </div>
-        <div className="w-full border-2 p-12 md:p-20 lg:p-6 gap-4 flex flex-col lg:flex-row items-center lg:items-end justify-between  ">
+        <div className=" mt-2 w-full border-2 p-12 md:p-20 lg:p-6 gap-4 flex flex-col lg:flex-row items-center lg:items-end justify-between  ">
           <Input className="w-full lg:w-1/8" placeholder="ID" variant="underlined" value={idInput} onChange={handleChangeIdInput} />
           <Input className="w-full lg:w-1/8" placeholder="Nome" variant="underlined" value={name} onChange={handleChangeNameInput} />
           <DatePicker className="w-full lg:w-1/8" onChange={handleDatePickerChange} value={datePickerValue} variant="underlined" label={'Selecione uma data'} />
