@@ -23,6 +23,8 @@ export default function DashBoard() {
   const [totalEstabelecimentsChildRegistredLastThirtyDays, setTotalEstabelecimentsChildRegistredLastThirtyDays] = useState(null)
   const [totalNotProcessedToday, setTotalNotProcessedToday] = useState(null)
   const [totalMarketplaceChildRegistredPreviousMonth, setTotalMarketplaceChildRegistredPreviousMonth] = useState(null)
+const [totalNotPayedLastWeek,setTotalNotPayedLastWeek]=useState(null)
+
 
   const token = Cookies.get('token')
   /*const api = async (data) => {
@@ -246,17 +248,15 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
 
 
 
-  return (<div className=' border-2 h-screen max-w-screen flex flex-col items-center  '>
+  return (<div className=' h-screen max-w-screen flex flex-col items-center  '>
     <Header />
 
-    <div className='flex flex-col items-start justify-center w-full  border-2 border-red-500 p-4 gap-2'>
-
-
-
-      {!servicesStatus ? (<Spinner color='primary' size='lg' />) : (
+    <div className='flex flex-col items-start justify-center w-full  border-2 border-red-500  p-2 lg:p-4 gap-2'>
+<div className='border-2  w-full lg:grid lg:grid-cols-4 gap-2 '>
+  {!servicesStatus ? (<Spinner color='primary' size='lg' />) : (
         <div className=' w-full '>{
           servicesStatus.map((servicesStatus: any) => (
-            <div className='flex flex-col items-center justify-center mt-2 gap-2 border-2 p-4 rounded-lg'>
+            <div className='lg:h-[13vh] flex flex-col items-center justify-center mt-2 gap-2 border-2 p-4 rounded-lg'>
 
               <p className='font-bold'>{servicesStatus.service}</p>
               <p>{formatarData(servicesStatus.last_update)}</p>
@@ -274,102 +274,97 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
       )}
 
 
-
-      <div className='p-6  w-full border-2 rounded-md flex flex-col items-center justify-center'>
+      <div className='border-2 space-y-2 p-2'>
+        <div className='p-6 lg:h-[13vh] w-full border-2 rounded-md flex flex-col items-center justify-center'>
+        <p>Total Vendido</p>
+        {!amountIndicator ? (<Spinner />) : (<p>R$ {amountIndicator.result.transacionadoHoje.valorTotal}</p>)}
+      </div>
+      <div className='p-4 h-[13vh] w-full border-2 rounded-md flex flex-col items-center justify-center'>
+        <p>Total Processado</p>
+        <p>Ontem/Hoje</p>
+        {!totalProcessedToday || !totalProcessedYesterday ? (<Spinner />) : (<p>{totalProcessedYesterday.totalProcessed} / {totalProcessedToday.totalProcessed}</p>)}
+      </div>
+      <div className='p-6 h-[13vh] w-full border-2 rounded-md flex flex-col items-center justify-center'>
         <p className='text-custom-black'>Vendas</p>
         {!amountIndicator ? (<Spinner />) :
           (<p> {amountIndicator.result.transacionadoHoje.quantidade}</p>)}
 
       </div>
-      <div className='p-6 w-full border-2 rounded-md flex flex-col items-center justify-center'>
-        <p>Total Vendido</p>
-        {!amountIndicator ? (<Spinner />) : (<p>R$ {amountIndicator.result.transacionadoHoje.valorTotal}</p>)}
+      <div className='h-[13vh] w-full border-2 rounded-md flex flex-col items-center justify-center'>
+        <p>Pedidos processados </p>
+        <p>Mês atual / mes anterior</p>
+        {!totalProcesedLastMonth || !totalProcessedThirtyDaysBefore ? (<Spinner />) : (<p>{totalProcesedLastMonth.totalProcessed} / {totalProcessedThirtyDaysBefore.totalProcessed}</p>)}
       </div>
-      <div className='p-4 w-full border-2 rounded-md flex flex-col items-center justify-center'>
-        <p>Total Processado</p>
-        <p>Ontem/Hoje</p>
-        {!totalProcessedToday || !totalProcessedYesterday ? (<Spinner />) : (<p>{totalProcessedYesterday.totalProcessed} / {totalProcessedToday.totalProcessed}</p>)}
-      </div>
-
-      <div className='p-6 w-full border-2 rounded-md flex flex-col items-center justify-center'>
-        <p>Marketplaces</p>
-        <p>filhos registrados</p>
-        {!totalMarketplaceChildRegistredLastThiryDays ? (<Spinner />) : (<p>{totalMarketplaceChildRegistredLastThiryDays.totalMarketplaceChild}</p>)}
+    
+      
+      
       </div>
 
-      <div className='p-5 w-full border-2 rounded-md flex flex-col items-center justify-center'>
-        <p>Total Estabelecimentos filhos</p>
-        <p>registrados ultimos 30 dias</p>
-        {!totalEstabelecimentsChildRegistredLastThirtyDays ? (<Spinner />) : (<p>{totalEstabelecimentsChildRegistredLastThirtyDays.totalRegistered}</p>)}
-      </div>
-
-
-
-      <div className='p-6 w-full border-2 rounded-md flex flex-col items-center justify-center'>
-        <p>Total processado Hoje</p>
-        {!totalProcessedToday ? (<Spinner />) : (<p>{totalProcessedToday.totalProcessed}</p>)}
-      </div>
-      <div className=' w-full border-2 rounded-md flex flex-col items-center justify-center'>
-        <p>Total processado Ontem</p>
-        {!totalProcessedYesterday ? (<Spinner />) : (<p>{totalProcessedYesterday.totalProcessed}</p>)}
-      </div>
-
-      <div className=' w-full border-2 rounded-md flex flex-col items-center justify-center'>
-        <p>Total não  processado Hoje</p>
-        {!totalNotProcessedToday ? (<Spinner />) : (<p>{totalNotProcessedToday.totalNotProcessed}</p>)}
-      </div>
-
-
-
-
-      <div className=' w-full border-2 rounded-md flex flex-col items-center justify-center'>
-        <p>Total Processado Ultimos 30 dias</p>
-        {!totalProcesedLastMonth ? (<Spinner />) : (<p>{totalProcesedLastMonth.totalProcessed}</p>)}
-      </div>
-      <div className=' w-full border-2 rounded-md flex flex-col items-center justify-center'>
-        <p>Total 30 dias anteriores</p>
-        {!totalProcessedThirtyDaysBefore ? (<Spinner />) : (<p>{totalProcessedThirtyDaysBefore.totalProcessed}</p>)}
-      </div>
-      <div className=' w-full border-2 rounded-md flex flex-col items-center justify-center'>
-        <p>Total Marketplaces filhos registrados ultimos 30 dias</p>
-        {!totalMarketplaceChildRegistredLastThiryDays ? (<Spinner />) : (<p>{totalMarketplaceChildRegistredLastThiryDays.totalMarketplaceChild}</p>)}
-      </div>
-      <div className=' w-full border-2 rounded-md flex flex-col items-center justify-center'>
-        <p>Total Estabelecimentos filhos registrados ultimos 30 dias</p>
-        {!totalEstabelecimentsChildRegistredLastThirtyDays ? (<Spinner />) : (<p>{totalEstabelecimentsChildRegistredLastThirtyDays.totalRegistered}</p>)}
-      </div>
-
-   
-
-      <div className={`border-2 ${totalNotProcessedToday?.totalNotProcessed > 0 ? 'bg-yellow-400' : 'bg-white'}`}>
-
-        <p>{totalNotProcessedToday?.totalNotProcessed}</p>
+<div className='space-y-2 p-2'>
+<div className={`h-[13vh]  border-2 w-full rounded-md flex flex-col justify-center items-center ${totalNotProcessedToday?.totalNotProcessed > 0 ? 'bg-yellow-400' : 'bg-white'}`}>
+<p>Total não processado Hoje</p>
+        {
+          !totalNotProcessedToday ?(<Spinner size='md'/>):
+          (<p>{totalNotProcessedToday?.totalNotProcessed}</p>)
+        }
 
 
       </div>
+
+      <div className={` h-[13vh] border-2 w-full rounded-md flex flex-col items-center justify-center ${totalNotPayedLastWeek > 0 ? 'bg-yellow-400' : 'bg-white'}`}>
+<p>Total sem pagamento</p>
+<p>Semana Passada</p>
+        <Spinner size='lg'/>
+
+
+      </div>
+
+      <div className={`h-[13vh]  border-2 w-full rounded-md flex flex-col justify-center items-center ${totalNotPayedLastWeek > 0 ? 'bg-yellow-400' : 'bg-white'}`}>
+<p>Pedidos sem pagamento</p>
+<p>Hoje / Ontem</p>
+
+        <Spinner size='lg'/>
+
+
+      </div>
+
+
+
+
+</div>
+
+</div>
+
+
+      
       <div className='  w-full  flex h-full flex-col items-center justify-start    lg:gap-6'>
-        <div className='  border-2  rounded-lg w-full flex flex-col  items-center  justify-center  '>
+        <div className='  border-2 pt-4 rounded-lg w-full flex flex-col  items-center  justify-center  '>
           <p>Reprocessar venda</p>
           <div className=' w-full h-full flex  flex-col lg:flex-row lg:items-end items-center justify-between lg:p-6 gap-2 '>
             <Input variant='underlined' placeholder='ID do estabelecimento' size='sm' className='w-[50vw] lg:w-[20vw]' />
-            <div className=' flex flex-col lg:flex-row items-start lg:items-end justify-center lg:justify-around  gap-1  w-3/4 lg:w-1/4'> De: <DatePicker variant='underlined'  />
+            <div className=' flex flex-col lg:flex-row items-start lg:items-end justify-center lg:justify-around  gap-1  w-[50vw] lg:w-1/4'> De: <DatePicker variant='underlined'  />
               Até: <DatePicker variant='underlined'  />
 
             </div>
-            <Button color='primary' variant='solid' className='' size='lg'>Enviar</Button>
+            
+            <Button  color='primary' variant='solid' className='' size='lg'>Enviar</Button>
+     
+            
           </div>
 
         </div>
 
 
-        <div className=' border-2  rounded-lg w-full flex flex-col  items-center justify-between p-4 lg:p-0'>
+        <div className=' border-2  rounded-lg w-full flex flex-col  items-center justify-between pt-4 '>
           <p>Reprocessar saldo</p>
-          <div className=' w-full h-full flex flex-col lg:flex-row items-center  justify-center lg:items-end lg:justify-between gap-2 p-6'>
+          <div className='border-2 w-full h-full flex flex-col lg:flex-row items-center  justify-center lg:items-end lg:justify-between gap-2 p-4'>
             <Input variant='underlined' placeholder='ID do estabelecimento' size='sm' className=' w-[50vw] lg:w-[20vw]' />
 
             <Input variant='underlined' placeholder='Dias' size='sm' className='w-[50vw]  lg:w-[20vw]' />
 
-            <Button color='primary' variant='solid' className='' size='lg'>Enviar</Button>
+            <Button  color='primary' variant='solid' className='' size='lg'>Enviar</Button>
+     
+            
           </div>
 
         </div>
