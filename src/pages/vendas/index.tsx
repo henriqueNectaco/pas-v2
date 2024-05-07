@@ -62,151 +62,113 @@ export default function Vendas() {
   }, [])
 
   return (
-    <div className="flex flex-col items-center  h-screen max-w-screen  ">
+    <div className="flex flex-col items-center  h-screen max-w-screen w-full ">
       <Header />
-      <div className="w-full p-4 flex flex-col items-center">
-        <form className=" h-full  w-full lg:w-2/6 p-6 flex flex-col items-center justify-around  lg:px-8 rounded-xl  my-4  shadow-md border-2">
-          <label className=" font-bold">Vendas:</label>
-          <Input
-            type="text"
-            placeholder="ID da venda ou zoop transaction ID"
-            variant="underlined"
-            className="w-5/6 lg:w-3/6"
-            onChange={handleChange}
-            value={vendaId}
-          />
-          <div className="flex items-center justify-center lg:justify-around gap-2  - w-2/6  mt-4 lg:mt-6">
-            <Button onClick={handleSearch} color="primary" variant="shadow">
-              Consultar
-            </Button>
-            {vendaId ? (
-              <Button onClick={handleCleanInput} color="danger">
-                Limpar
+      <div className='w-full max-w-screen flex flex-col space-y-2 '>
+        <div className="w-full p-4 flex lg:flex-row flex-col items-center gap-2  justify-center h-full">
+          <form className=" h-full  w-full lg:w-2/6 p-6 flex flex-col items-center justify-around  lg:px-8 sm:rounded-xl  my-4  shadow-md border-2">
+            <label className=" font-bold">Vendas:</label>
+            <Input
+              type="text"
+              placeholder="ID da venda ou zoop transaction ID"
+              variant="underlined"
+              className="w-5/6 lg:w-3/6"
+              onChange={handleChange}
+              value={vendaId}
+            />
+            <div className="flex  items-center justify-center lg:justify-around gap-2   w-2/6  mt-4 lg:mt-6">
+              <Button onClick={handleSearch} color="primary" variant="shadow">
+                Consultar
               </Button>
-            ) : null}
-          </div>
-        </form>
-      </div>
-      {responseData ? (
-        <div className=" w-full      text-white">
-          <div className=" w-full bg-custom-black flex flex-col lg:flex-row border-2 rounded-lg items-center">
-            <div className="  w-full flex flex-col items-center">
-              <h2>Estabelecimento</h2>
-              <p className="text-green-500">
-                {responseData.pedido.estabelecimento.razao_social}
-              </p>
-              <h2>Marketplace</h2>
-              <p className="text-green-500">
-                {responseData.pedido.estabelecimento.marketplace.nome}
-              </p>
+              {vendaId ? (
+                <Button onClick={handleCleanInput} color="danger">
+                  Limpar
+                </Button>
+              ) : null}
+            </div>
+          </form>
+          {responseData ? (
+            <div className='border-2 bg-gray-500 lg:w-4/6 w-full h-full'>
+              esd
+
+
+
             </div>
 
-            <div className="p-3 border-2 w-full flex flex-col items-center">
-              <div className="  flex flex-row gap-2 w-full">
-                <p>Valor:</p>
-                <p className="text-green-500">
-                  R$ {responseData.pedido.pagamentos[0].valor}
-                </p>
-              </div>
-            </div>
 
-            <div className="border-2  p-3 w-full flex flex-col items-center">
-              <div className="  flex flex-row gap-2 w-full">
-                <p>Recebido:</p>
-                <p className="text-green-500">
-                  R$ {responseData.pedido.pagamentos[0].valor_recebido}
-                </p>
-              </div>
-            </div>
-
-            <div className="border-2  p-3 w-full flex flex-col items-center">
-              <div className="  flex flex-row gap-2 w-full">
-                <p>Taxa:</p>
-                +
-                <p className="text-green-500">
-                  R$ {responseData.pedido.pagamentos[0].taxa}
-                </p>
-              </div>
-            </div>
-
-            <div className="border-2  p-3 w-full flex flex-col items-center">
-              <div className="  flex flex-row gap-2 w-full">
-                <p>Markup:</p>
-                <p className="text-green-500">
-                  R$ {responseData.pedido.pagamentos[0].markup}
-                </p>
-              </div>
-            </div>
-
-            <div className="border-2 w-full flex  flex-col  justify-center items-center p-3">
-              <h1>Pagamentos </h1>
-              {responseData.pedido.pagamentos[0] ? (
-                <div className="w-full flex flex-row gap-2 p-2">
-                  <p>Id:</p>
-                  <p className="text-green-500">
-                    {responseData.pedido.pagamentos[0].id}
-                  </p>
-                </div>
-              ) : (
-                <Spinner color="primary" size="lg" />
-              )}
-
-              {responseData.pedido.status_pedido.titulo ? (
-                <div className="w-full flex flex-row gap-2 p-2">
-                  <p>Status:</p>
-                  <p className="text-green-500">
-                    {responseData.pedido.status_pedido.titulo}
-                  </p>
-                </div>
-              ) : (
-                <Spinner color="primary" size="lg" />
-              )}
-
-              {responseData.pedido.pagamentos ? (
-                <div className="w-full flex flex-row gap-2 p-2">
-                  <p>Data de Recebimento:</p>
-                  <p className="text-green-500">
-                    {new Date(
-                      responseData.pedido.pagamentos[0].data_recebimento,
-                    ).toLocaleString('pt-BR', { timeZone: 'UTC' })}
-                  </p>
-                </div>
-              ) : (
-                <Spinner color="primary" size="lg" />
-              )}
-            </div>
-
-            {responseData.pedido.pedidos_splits[0] ? (
-              <div className="border-2 p-3 w-full flex flex-col items-center">
-                <div className="flex flex-row gap-2 w-full">
-                  <p>Markup:</p>
-                  <p className="text-green-500">
-                    R$ {responseData.pedido.pedidos_splits[0]}
-                  </p>
-                </div>
-              </div>
-            ) : null}
-          </div>
-
-          <div className=" bg-black  max-w-full text-sm  grid grid-cols-1 lg:grid-cols-2 lg:col-span-2 ">
-            <div className=" w-full text-left p-2 lg:p-4 ">
-              <p>Vendas</p>
-              <JSONPretty
-                data={responseData.pedido}
-                theme={{ JSONPrettyMon }}
-              />
-            </div>
-            <div className=" w-full text-left   p-2 lg:p-4">
-              <p>Zoop Transactions</p>
-              <JSONPretty
-                className=" roundead-xl "
-                data={responseData.zoopTransaction}
-                theme={{ JSONPrettyMon }}
-              />
-            </div>
-          </div>
+          ) : null}
         </div>
-      ) : null}
+        {responseData ? (
+          <div className='w-full flex flex-col items-center lg:items-start justify-center gap-2  bg-white shadow-lg border-2 p-4  '>
+            <h1 className='font-bold'>Pagamentos</h1>
+
+
+
+            <div className='lg:grid lg:grid-cols-5 flex flex-col items-center justify-center  w-full space-y-2 space-x-2'>
+
+              <div className='flex flex-col space-y-2 border-2 items-center lg:items-start justify-center p-4'>
+                <p className='font-bold'>ID {responseData.pedido.id}</p>
+                <p>Status:  {responseData.pedido.status_pedido.titulo}</p>
+                <p>Valor</p>
+                <p>R$ {responseData.pedido.pagamentos[0].valor}</p>
+                <p>DR</p>
+                <p>  {new Date(
+                  responseData.pedido.pagamentos[0].data_recebimento,
+                ).toLocaleString('pt-BR', { timeZone: 'UTC' })}</p>
+              </div>
+
+
+              <div className='flex flex-col  items-center justify-center border-2 w-full h-full p-4'>
+                <p>Taxa</p>
+                <p>R$ {responseData.pedido.pagamentos[0].taxa}</p>
+
+              </div>
+              <div className='flex flex-col  items-center justify-center border-2 h-full w-full'>
+
+                <p>Recebido </p>
+                <p>R$ {responseData.pedido.pagamentos[0].valor_recebido}</p>
+
+              </div>
+
+
+              <div className='flex flex-col  items-center justify-center border-2 h-full w-full'>
+                <p>DP</p>
+                <p>-</p>
+
+
+              </div>
+              <div className='flex flex-col  items-center lg:justify-end border-2 h-full w-full p-4'>
+                <Button color='danger' size='md'>Reprocessar venda</Button>
+
+              </div>
+
+
+
+            </div>
+          </div>
+
+
+        ) : null}
+        {responseData ? (<div className=" bg-black  max-w-full text-sm  grid grid-cols-1 lg:grid-cols-2 lg:col-span-2 ">
+          <div className=" w-full text-left p-2 lg:p-4 ">
+            <p>Vendas</p>
+            <JSONPretty
+              data={responseData.pedido}
+              theme={{ JSONPrettyMon }}
+            />
+          </div>
+          <div className=" w-full text-left   p-2 lg:p-4">
+            <p>Zoop Transactions</p>
+            <JSONPretty
+              className=" roundead-xl "
+              data={responseData.zoopTransaction}
+              theme={{ JSONPrettyMon }}
+            />
+          </div>
+        </div>) : null}
+
+      </div>
+
     </div>
   )
 }

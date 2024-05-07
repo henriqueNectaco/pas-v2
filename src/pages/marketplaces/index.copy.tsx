@@ -219,10 +219,10 @@ export default function Marketplace() {
         {!resData ? (
           <Spinner size="4xl" color="primary" />
         ) : (
-          <div className="w-full h-full   space-y-2   p-4 ">
+          <div className="w-full h-full   space-y-2   p-4   ">
             <>
               {resData.map((resData: any) => (
-                <div className="w-full border-2 rounded-lg flex  flex-col   items-center justify-center lg:flex-row p-4 gap-2 ">
+                <div className="w-full border-b border-black  flex  flex-col   items-center justify-center lg:flex-row p-4 gap-2 ">
                   <div className="w-1/4  flex flex-col items-center justify-center">
                     <p>Id:</p>
                     <p>{resData.id}</p>
