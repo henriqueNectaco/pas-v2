@@ -88,7 +88,7 @@ export default function Vendas() {
         </form>
       </div>
       {responseData ? (
-        <div className=" w-full  p-2    text-white">
+        <div className=" w-full      text-white">
           <div className=" w-full bg-custom-black flex flex-col lg:flex-row border-2 rounded-lg items-center">
             <div className="  w-full flex flex-col items-center">
               <h2>Estabelecimento</h2>
@@ -122,6 +122,7 @@ export default function Vendas() {
             <div className="border-2  p-3 w-full flex flex-col items-center">
               <div className="  flex flex-row gap-2 w-full">
                 <p>Taxa:</p>
+                +
                 <p className="text-green-500">
                   R$ {responseData.pedido.pagamentos[0].taxa}
                 </p>
@@ -187,7 +188,7 @@ export default function Vendas() {
             ) : null}
           </div>
 
-          <div className=" bg-gray-400  max-w-full text-sm  grid grid-cols-1 lg:grid-cols-2 lg:col-span-2 ">
+          <div className=" bg-black  max-w-full text-sm  grid grid-cols-1 lg:grid-cols-2 lg:col-span-2 ">
             <div className=" w-full text-left p-2 lg:p-4 ">
               <p>Vendas</p>
               <JSONPretty

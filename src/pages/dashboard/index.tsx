@@ -295,7 +295,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
     <div className=" h-screen max-w-screen flex flex-col items-center  ">
       <Header />
 
-      <div className="flex flex-col items-start justify-center w-full  border-2 border-red-500  p-2 lg:p-4 gap-2">
+      <div className="flex flex-col items-start justify-center w-full h-full space-y-4  p-2 lg:p-4 gap-2">
         <div className="  w-full lg:grid lg:grid-cols-4 gap-2 ">
           <div className="flex flex-col   p-2 items-center space-y-2  ">
             {!servicesStatus ? (
@@ -303,7 +303,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
             ) : (
               <div className=" w-full space-y-2">
                 {servicesStatus.map((servicesStatus: any) => (
-                  <div className="lg:h-[13vh] flex flex-col items-center justify-center  gap-2 border-2 p-4  rounded-lg">
+                  <div className="lg:h-[13vh] shadow-lg flex flex-col items-center justify-center  gap-2 border-2 p-4  rounded-lg">
                     <p className="font-bold">{servicesStatus.service}</p>
                     <p>{formatarData(servicesStatus.last_update)}</p>
 
@@ -317,7 +317,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
               </div>
             )}
             <div
-              className={` h-[13vh] border-2 w-full rounded-md flex flex-col items-center justify-center ${totalNotPayedLastWeek > 0 ? 'bg-yellow-400' : 'bg-white'}`}
+              className={` h-[13vh] border-2 w-full shadow-lg rounded-md flex flex-col items-center justify-center ${totalNotPayedLastWeek > 0 ? 'bg-yellow-400' : 'bg-white'}`}
             >
               <p>Total sem pagamento</p>
               <p>Semana Passada</p>
@@ -326,7 +326,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
           </div>
 
           <div className=" space-y-2 p-2">
-            <div className="p-6 lg:h-[13vh] w-full border-2   rounded-md flex flex-col items-center justify-center">
+            <div className="shadow-lg p-6 lg:h-[13vh] w-full border-2   rounded-md flex flex-col items-center justify-center">
               <p>Total Vendido</p>
               {!amountIndicator ? (
                 <Spinner />
@@ -334,7 +334,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
                 <p>R$ {amountIndicator.result.transacionadoHoje.valorTotal}</p>
               )}
             </div>
-            <div className="p-4 h-[13vh] w-full border-2 rounded-md flex flex-col items-center justify-center">
+            <div className="p-4 shadow-lg h-[13vh] w-full border-2 rounded-md flex flex-col items-center justify-center">
               <p>Total Processado</p>
               <p>Ontem/Hoje</p>
               {!totalProcessedToday || !totalProcessedYesterday ? (
@@ -354,7 +354,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
                 <p> {amountIndicator.result.transacionadoHoje.quantidade}</p>
               )}
             </div>
-            <div className="h-[13vh] w-full border-2 rounded-md flex flex-col items-center justify-center">
+            <div className="h-[13vh]  w-full border-2 rounded-md flex flex-col items-center justify-center">
               <p>Pedidos processados </p>
               <p>Mês atual / mes anterior</p>
               {!totalProcesedLastMonth || !totalProcessedThirtyDaysBefore ? (
@@ -370,14 +370,14 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
 
           <div className="space-y-2  p-2">
             <div
-              className={`h-[13vh] space-y-2  border-2 w-full rounded-md flex flex-col justify-center items-center `}
+              className={`h-[13vh] space-y-2  border-2 w-full shadow-lg rounded-md flex flex-col justify-center items-center `}
             >
               <p>Total não processado Hoje</p>
               {!totalNotProcessedToday ? (
                 <Spinner size="md" />
               ) : (
                 <div
-                  className={` text-lg  flex flex-col justify-center items-center border-2 ${totalNotProcessedToday?.totalNotProcessed > 0 ? 'text-yellow-400' : 'text-black'}`}
+                  className={` text-lg  flex flex-col justify-center items-center  ${totalNotProcessedToday?.totalNotProcessed > 0 ? 'text-yellow-400' : 'text-black'}`}
                 >
                   <p>{totalNotProcessedToday?.totalNotProcessed}</p>
                 </div>
@@ -385,7 +385,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
             </div>
 
             <div
-              className={` h-[13vh] border-2 w-full rounded-md flex flex-col items-center justify-center ${totalNotPayedLastWeek > 0 ? 'bg-yellow-400' : 'bg-white'}`}
+              className={`shadow-lg h-[13vh] border-2 w-full rounded-md flex flex-col items-center justify-center ${totalNotPayedLastWeek > 0 ? 'bg-yellow-400' : 'bg-white'}`}
             >
               <p>Total sem pagamento</p>
               <p>Semana Passada</p>
@@ -393,7 +393,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
             </div>
 
             <div
-              className={`h-[13vh]  border-2 w-full rounded-md flex flex-col justify-center items-center ${totalNotPayedLastWeek > 0 ? 'bg-yellow-400' : 'bg-white'}`}
+              className={`h-[13vh] shadow-lg border-2 w-full rounded-md flex flex-col justify-center items-center ${totalNotPayedLastWeek > 0 ? 'bg-yellow-400' : 'bg-white'}`}
             >
               <p>Pedidos sem pagamento</p>
               <p>Hoje / Ontem</p>
@@ -403,7 +403,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
           </div>
         </div>
 
-        <div className="  w-full  flex h-full flex-col items-center justify-start    gap-4">
+        <div className="  w-full  flex h-full flex-col items-center justify-end    gap-4">
           <div className="  border-2 pt-2 rounded-lg w-full flex flex-col  items-center  justify-center  ">
             <p>Reprocessar venda</p>
             <div className=" w-full h-full flex  flex-col lg:flex-row lg:items-end items-center justify-between lg:p-8  ">
