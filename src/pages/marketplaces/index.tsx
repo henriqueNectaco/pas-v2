@@ -81,7 +81,7 @@ export default function Marketplace() {
   return (
     <div className=" h-screen max-w-screen w-full flex flex-col items-center  ">
       <Header />
-      <div className="w-full  p-2lg:p-4">
+      <div className="w-full  p-2 lg:p-4">
         <div className=" w-full     gap-2 lg:gap-6  p-2 lg:p-4 lg:pl-8 flex lg:pr-8  flex-col lg:flex-row items-center  border-2  ">
           <Button className='lg:w-[20vw] w-3/4 ' radius="md" size="md" variant="solid" color="primary">Reprocessar todas as vendas</Button>
           <Button className=' lg:w-[20vw] w-3/4' radius="md" size="md" variant="solid" color="primary">Novo Marketplace</Button>

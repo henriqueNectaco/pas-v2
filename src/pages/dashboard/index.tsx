@@ -252,11 +252,12 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
     <Header />
 
     <div className='flex flex-col items-start justify-center w-full  border-2 border-red-500  p-2 lg:p-4 gap-2'>
-<div className='border-2  w-full lg:grid lg:grid-cols-4 gap-2 '>
+<div className='  w-full lg:grid lg:grid-cols-4 gap-2 '>
+  <div className='flex flex-col   p-2 items-center space-y-2  '>
   {!servicesStatus ? (<Spinner color='primary' size='lg' />) : (
-        <div className=' w-full '>{
+        <div className=' w-full space-y-2'>{
           servicesStatus.map((servicesStatus: any) => (
-            <div className='lg:h-[13vh] flex flex-col items-center justify-center mt-2 gap-2 border-2 p-4 rounded-lg'>
+            <div className='lg:h-[13vh] flex flex-col items-center justify-center  gap-2 border-2 p-4  rounded-lg'>
 
               <p className='font-bold'>{servicesStatus.service}</p>
               <p>{formatarData(servicesStatus.last_update)}</p>
@@ -272,10 +273,18 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
         }
         </div>
       )}
+         <div className={` h-[13vh] border-2 w-full rounded-md flex flex-col items-center justify-center ${totalNotPayedLastWeek > 0 ? 'bg-yellow-400' : 'bg-white'}`}>
+<p>Total sem pagamento</p>
+<p>Semana Passada</p>
+        <Spinner size='lg'/>
 
 
-      <div className='border-2 space-y-2 p-2'>
-        <div className='p-6 lg:h-[13vh] w-full border-2 rounded-md flex flex-col items-center justify-center'>
+      </div>
+  </div>
+
+
+      <div className=' space-y-2 p-2'>
+        <div className='p-6 lg:h-[13vh] w-full border-2   rounded-md flex flex-col items-center justify-center'>
         <p>Total Vendido</p>
         {!amountIndicator ? (<Spinner />) : (<p>R$ {amountIndicator.result.transacionadoHoje.valorTotal}</p>)}
       </div>
@@ -337,10 +346,10 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
 
 
       
-      <div className='  w-full  flex h-full flex-col items-center justify-start    lg:gap-6'>
-        <div className='  border-2 pt-4 rounded-lg w-full flex flex-col  items-center  justify-center  '>
+      <div className='  w-full  flex h-full flex-col items-center justify-start    gap-4'>
+        <div className='  border-2 pt-2 rounded-lg w-full flex flex-col  items-center  justify-center  '>
           <p>Reprocessar venda</p>
-          <div className=' w-full h-full flex  flex-col lg:flex-row lg:items-end items-center justify-between lg:p-6 gap-2 '>
+          <div className=' w-full h-full flex  flex-col lg:flex-row lg:items-end items-center justify-between lg:p-6  '>
             <Input variant='underlined' placeholder='ID do estabelecimento' size='sm' className='w-[50vw] lg:w-[20vw]' />
             <div className=' flex flex-col lg:flex-row items-start lg:items-end justify-center lg:justify-around  gap-1  w-[50vw] lg:w-1/4'> De: <DatePicker variant='underlined'  />
               Até: <DatePicker variant='underlined'  />
