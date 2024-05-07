@@ -1,14 +1,14 @@
 type ConteudoCronProps = {
-  Cron: string,
-  Scheduled: string,
-  Mensagem: string,
-  date: string;
+  Cron: string
+  Scheduled: string
+  Mensagem: string
+  date: string
 }
 
 export function CardCron(props: ConteudoCronProps) {
   return (
     <>
-      <div className='bg-white text-center rounded-lg   border-2 w-full  lg:grid lg:grid-cols-5 '>
+      <div className="bg-white text-center rounded-lg   border-2 w-full  lg:grid lg:grid-cols-5 ">
         <div className="p-4 lg:my-auto">
           <p className="font-bold">Cron</p>
           <p className="">{props.Cron}</p>

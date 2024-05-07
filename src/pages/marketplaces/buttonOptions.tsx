@@ -1,23 +1,28 @@
-import React from "react";
-import { Button, ButtonGroup, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
-//import { ChevronDownIcon } from './ChevronDownIcon';
-import { CaretDown } from "phosphor-react";
+import React from 'react'
+import {
+  Button,
+  ButtonGroup,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+} from '@nextui-org/react'
+// import { ChevronDownIcon } from './ChevronDownIcon';
+import { CaretDown } from 'phosphor-react'
 export default function ButtonOptions() {
-  const [selectedOption, setSelectedOption] = React.useState(new Set(["merge"]));
-
-
+  const [selectedOption, setSelectedOption] = React.useState(new Set(['merge']))
 
   const labelsMap = {
-    merge: "Ativos",
-    squash: "Desativados",
-    rebase: "Todos",
+    merge: 'Ativos',
+    squash: 'Desativados',
+    rebase: 'Todos',
   }
 
   // Convert the Set to an Array and get the first value.
-  const selectedOptionValue = Array.from(selectedOption)[0];
+  const selectedOptionValue = Array.from(selectedOption)[0]
 
   return (
-    <ButtonGroup variant="flat" >
+    <ButtonGroup variant="flat">
       <Button>{labelsMap[selectedOptionValue]}</Button>
       <Dropdown placement="bottom-end">
         <DropdownTrigger>
@@ -33,17 +38,11 @@ export default function ButtonOptions() {
           onSelectionChange={setSelectedOption}
           className="max-w-[300px]"
         >
-          <DropdownItem key="merge" >
-            {labelsMap["merge"]}
-          </DropdownItem>
-          <DropdownItem key="squash" >
-            {labelsMap["squash"]}
-          </DropdownItem>
-          <DropdownItem key="rebase" >
-            {labelsMap["rebase"]}
-          </DropdownItem>
+          <DropdownItem key="merge">{labelsMap.merge}</DropdownItem>
+          <DropdownItem key="squash">{labelsMap.squash}</DropdownItem>
+          <DropdownItem key="rebase">{labelsMap.rebase}</DropdownItem>
         </DropdownMenu>
       </Dropdown>
     </ButtonGroup>
-  );
+  )
 }
