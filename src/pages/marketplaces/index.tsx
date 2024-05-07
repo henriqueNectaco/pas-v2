@@ -149,12 +149,12 @@ export default function Marketplace() {
           </Button>
         </div>
 
-        <div className="   w-full lg:w-4/6 border-2 p-4  lg:p-6 gap-2 flex flex-col lg:flex-row items-center lg:items-end justify-between  ">
+        <div className="   w-full  border-2 p-4  lg:p-6 gap-2 flex flex-col lg:flex-row items-center  lg:items-start justify-start  ">
 
 
           <Dropdown   >
             <DropdownTrigger>
-              <Button fullWidth={true} variant="light">
+              <Button className='w-[40vw]' size='lg' variant="solid">
                 {state}
                 <CaretDown size={20} />
               </Button>
@@ -175,10 +175,10 @@ export default function Marketplace() {
             </DropdownMenu>
           </Dropdown>
 
-          <Button onClick={handleCleanInput} color="danger">
+          <Button size='lg' onClick={handleCleanInput} color="danger">
             Limpar
           </Button>
-          <Button onClick={fetchFilteredData} color="primary">
+          <Button size='lg' onClick={fetchFilteredData} color="primary">
             Filtrar
           </Button>
         </div>
@@ -188,7 +188,7 @@ export default function Marketplace() {
         {!resData ? (
           <Spinner size="4xl" color="primary" />
         ) : (
-          <div className="w-full h-full   space-y-4    lg:p-10 ">
+          <div className="w-full h-full   space-y-4   border-2 p-8 ">
             <>
               {resData.map((resData: any) => (
                 <div className="w-full border-b border-black  flex  flex-col   items-center justify-center lg:flex-row p-4 gap-2 ">
@@ -213,7 +213,7 @@ export default function Marketplace() {
                     <Dropdown>
                       <DropdownTrigger>
                         <Button variant="light">
-                          <DotsThreeOutlineVertical size={25} />
+                          <DotsThreeOutlineVertical size={20} />
                         </Button>
                       </DropdownTrigger>
                       <DropdownMenu
