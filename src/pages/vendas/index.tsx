@@ -8,6 +8,8 @@ import JSONPrettyMon from 'react-json-pretty/themes/monikai.css'
 import JSONPretty from 'react-json-pretty'
 import { Spinner, X } from 'phosphor-react'
 import { toast } from 'sonner'
+import Router from 'next/router'
+
 
 export default function Vendas() {
   const [vendaId, setVendaId] = useState('')
@@ -36,6 +38,28 @@ export default function Vendas() {
       console.log(error.message)
     }
   }
+  useEffect(() => {
+    const auth = async () => {
+      try {
+        const res = await axios.post(`https://api.zsystems.com.br/z1/autenticar`, { token: token })
+        if (res.data.success === true) {
+
+
+
+        } else {
+          toast.error('Sua sessão expirou faça login novamente')
+          Router.push('/')
+
+        }
+      }
+      catch (error) {
+        console.error(error)
+      }
+
+    }
+    auth()
+
+  }, [])
 
   return (
     <div className="flex flex-col items-center  h-screen max-w-screen  ">

@@ -5,7 +5,7 @@ import { toast } from 'sonner'
 import Cookies from 'js-cookie'
 import { Spinner } from '@nextui-org/react'
 import { CardCron } from './items'
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
 type CronProps = {
   Cron: string
   Scheduled: string
@@ -18,46 +18,8 @@ export default function Crons() {
   const [crons, setCrons] = useState<any>(null)
   const [mensagem, setMensagem] = useState<any>('')
   const token = Cookies.get('token')
-  const teste = async () => {
-    const res = await axios.get(
-      `https://admin.zsystems.com.br/ssls 
-        `,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      },
-    )
 
-    if (res.data.success === true) {
-    } else {
-      router.back
-    }
-  }
 
-  const myAuth = async () => {
-    try {
-      if (token) {
-        console.log('aq tem')
-      } else {
-        router.push('/')
-      }
-    } catch (error) {
-      toast.error(error)
-    }
-  }
-
-  const fetchCrons = async () => {
-    try {
-      const res = await axios.get(
-        `https://api.zsystems.com.br/z1/crons/logs
-  `,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      )
-    } catch (error) {
-      toast.error(error)
-    }
-  }
 
   const getCrons = async () => {
     const res = await axios.get(
@@ -70,27 +32,38 @@ export default function Crons() {
 
     if (res.data.success === true) {
       setCrons(res.data.cronsLogs)
-      setMensagem(res.data.cronsLogs.mensage)
+
       console.log()
     } else {
       router.back
       toast.error(res.data.error)
     }
   }
-  const Auth = async () => {
+  const auth = async () => {
     try {
-      const res = await axios.post(
-        `https://api.zsystems.com.br/z1/autenticar`,
-        { headers: { Authorization: `Bearer ${token}` } },
-      )
-    } catch (error) {}
-  }
-  useEffect(() => {
-    myAuth()
-    getCrons()
+      const res = await axios.post(`https://api.zsystems.com.br/z1/autenticar`, { token: token })
+      if (res.data.success === true) {
+        getCrons()
 
-    console.log(crons)
-    console.log(mensagem)
+
+      } else {
+        toast.error('Sua sessão expirou faça login novamente')
+        Router.push('/')
+
+      }
+    }
+    catch (error) {
+      console.error(error)
+    }
+
+  }
+
+  useEffect(() => {
+
+    auth()
+
+
+
   }, [])
 
   function formatarData(dataString: any) {
@@ -108,9 +81,9 @@ export default function Crons() {
   }
 
   return (
-    <div className="  max-w-screen w-screen border-2 border-black text-black-500 ">
+    <div className="  max-w-screen w-full   text-black-500 ">
       <Header />
-      <div className="lg:p-4  p-2  max-w-screen space-y-3 lg:space-y-2  flex flex-col ">
+      <div className="lg:p-4  p-3  max-w-screen lg:space-y-4 space-y-2  flex flex-col ">
         <>
           {!crons ? (
             <Spinner color="primary" size="lg" />

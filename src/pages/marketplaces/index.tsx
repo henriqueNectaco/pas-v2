@@ -18,6 +18,12 @@ import axios from 'axios'
 import DropdownMenuSecond from './dropdown'
 import DropDownOne from './newDrop'
 import { CaretDown, DotsThreeOutlineVertical } from 'phosphor-react'
+import { toast } from 'sonner'
+import Router from 'next/router'
+
+
+
+
 export default function Marketplace() {
   const token = Cookies.get('token')
   const [email, setEmail] = useState('')
@@ -83,7 +89,27 @@ export default function Marketplace() {
       }
     }
 
-    getServerSideDate()
+
+    const auth = async () => {
+      try {
+        const res = await axios.post(`https://api.zsystems.com.br/z1/autenticar`, { token: token })
+        if (res.data.success === true) {
+          getServerSideDate()
+
+
+        } else {
+          toast.error('Sua sessão expirou faça login novamente')
+          Router.push('/')
+
+        }
+      }
+      catch (error) {
+        console.error(error)
+      }
+
+    }
+
+    auth()
   }, [])
   useEffect(() => {
     console.log('resData useeffect', resData)
