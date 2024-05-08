@@ -12,6 +12,7 @@ const config: Config = {
   theme: {
     extend: {colors: {
       'custom-black': '#020304',
+      'mygray':'#282631'
     },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

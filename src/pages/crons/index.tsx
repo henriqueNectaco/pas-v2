@@ -1,144 +1,110 @@
 import Header from '../../components/Header/index'
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { toast } from 'sonner';
-import Cookies from 'js-cookie';
-import { Spinner } from '@nextui-org/react';
-import { CardCron } from './items';
-import { useRouter } from "next/router";
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import { toast } from 'sonner'
+import Cookies from 'js-cookie'
+import { Spinner } from '@nextui-org/react'
+import { CardCron } from './items'
+import Router, { useRouter } from 'next/router'
 type CronProps = {
-  Cron: string,
-  Scheduled: string,
-  Mensagem: string,
-  date: string;
+  Cron: string
+  Scheduled: string
+  Mensagem: string
+  date: string
 }
 export default function Crons() {
-
-
-  const router = useRouter(); 
-  const [logs, setLogs] = useState([]);
-  const [crons, setCrons] = useState<any>(null);
-  const [mensagem, setMensagem] = useState<any>('');
+  const router = useRouter()
+  const [logs, setLogs] = useState([])
+  const [crons, setCrons] = useState<any>(null)
+  const [mensagem, setMensagem] = useState<any>('')
   const token = Cookies.get('token')
-  const teste = async () => {
-    const res = await axios.get(`https://admin.zsystems.com.br/ssls 
-        `, {
-      headers: { Authorization: `Bearer ${token}` },
-    }
-  
-  )
 
-    if (res.data.success === true) {
-      
-     
-     
-        
-
-    } else {
-     router.back 
-    }
-  };
-
-  const myAuth=async()=>{
-    try{
-      if(token){
-        console.log('aq tem')
-      }else{
-        router.push('/')
-      }
-    } catch(error){toast.error(error)}}
-
-
-
-const  fetchCrons=async()=>{
-
-  try{const res =await axios.get(`https://api.zsystems.com.br/z1/crons/logs
-  `, {
-headers: { Authorization: `Bearer ${token}` },
-})
-
-  }
-  catch(error){
-    toast.error(error)
-
-  }
-}
 
 
   const getCrons = async () => {
-    const res = await axios.get(`https://api.zsystems.com.br/z1/crons/logs
-        `, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
+    const res = await axios.get(
+      `https://api.zsystems.com.br/z1/crons/logs
+        `,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      },
+    )
 
     if (res.data.success === true) {
-      
       setCrons(res.data.cronsLogs)
-      setMensagem(res.data.cronsLogs.mensage)
-      console.log()
-        
 
+      console.log()
     } else {
       router.back
       toast.error(res.data.error)
-
     }
-  };
-const Auth=async()=>{
-try{
-  const res =await axios.post(`https://api.zsystems.com.br/z1/autenticar`,{headers: { Authorization: `Bearer ${token}` }})
-}
-catch(error){
-  
-}
+  }
+  const auth = async () => {
+    try {
+      const res = await axios.post(`https://api.zsystems.com.br/z1/autenticar`, { token: token })
+      if (res.data.success === true) {
+        getCrons()
 
 
-}
+      } else {
+        toast.error('Sua sessão expirou faça login novamente')
+        Router.push('/')
+
+      }
+    }
+    catch (error) {
+      console.error(error)
+    }
+
+  }
+
   useEffect(() => {
-  myAuth()
-    getCrons();
-    
 
-    console.log(crons)
-    console.log(mensagem)
-  }, []);
+    auth()
 
 
+
+  }, [])
 
   function formatarData(dataString: any) {
-    const dataOriginal = new Date(dataString);
+    const dataOriginal = new Date(dataString)
 
-    const dia = dataOriginal.getDate().toString().padStart(2, '0');
-    const mes = (dataOriginal.getMonth() + 1).toString().padStart(2, '0'); // Os meses são indexados a partir de 0
-    const ano = dataOriginal.getFullYear().toString();
-    const hora = dataOriginal.getHours().toString().padStart(2, '0');
-    const minutos = dataOriginal.getMinutes().toString().padStart(2, '0');
+    const dia = dataOriginal.getDate().toString().padStart(2, '0')
+    const mes = (dataOriginal.getMonth() + 1).toString().padStart(2, '0') // Os meses são indexados a partir de 0
+    const ano = dataOriginal.getFullYear().toString()
+    const hora = dataOriginal.getHours().toString().padStart(2, '0')
+    const minutos = dataOriginal.getMinutes().toString().padStart(2, '0')
 
-    const dataFormatada = `${dia}/${mes}/${ano} ${hora}:${minutos}`;
+    const dataFormatada = `${dia}/${mes}/${ano} ${hora}:${minutos}`
 
-    return dataFormatada;
+    return dataFormatada
   }
 
   return (
-    <div className='  max-w-screen w-screen border-2 border-black text-black-500 '>
-      <Header/>
-      <div className='lg:p-4  p-2  max-w-screen space-y-3 lg:space-y-2  flex flex-col '>
+    <div className="  max-w-screen w-full   text-black-500 ">
+      <Header />
+      <div className="lg:p-4  p-3  max-w-screen lg:space-y-4 space-y-2  flex flex-col ">
         <>
           {!crons ? (
-            <Spinner color='primary' size='lg' />
+            <Spinner color="primary" size="lg" />
           ) : (
             <>
               {crons.map((crons: any) => (
-
                 <div key={crons.id}>
-                  < CardCron Cron={crons.slug} Scheduled={crons.interval} Mensagem={crons.message} date={formatarData(crons.start_date)} />
+                  <CardCron
+                    Cron={crons.slug}
+                    Scheduled={crons.interval}
+                    Mensagem={crons.message}
+                    date={formatarData(crons.start_date)}
+                  />
                 </div>
               ))}
             </>
           )}
-
-        </></div>
-    </div >)
+        </>
+      </div>
+    </div>
+  )
 }
 /*
 <div className='bg-white text-center px-8 rounded-xl mx-8 my-4 shadow-md border-2 lg:grid lg:grid-cols-5 '>

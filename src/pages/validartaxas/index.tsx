@@ -4,10 +4,61 @@ import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import App from '@/components/Header/test';
 import {Input ,Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, RadioGroup, Radio} from "@nextui-org/react";
+import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue} from "@nextui-org/react";
+import {Card, CardHeader, CardBody, CardFooter, Divider, Link, Image} from "@nextui-org/react";
+
 
 
 export default function ValidarTaxas() {
-
+  const rows = [
+    {
+      key: "1",
+      name: "Tony Reichert",
+      role: "CEO",
+      status: "Active",
+    },
+    {
+      key: "2",
+      name: "Zoey Lang",
+      role: "Technical Lead",
+      status: "Paused",
+    },
+    {
+      key: "3",
+      name: "Jane Fisher",
+      role: "Senior Developer",
+      status: "Active",
+    },
+    {
+      key: "4",
+      name: "William Howard",
+      role: "Community Manager",
+      status: "Vacation",
+    },
+    {
+      key: "5",
+      name: "William Howard",
+      role: "Communsssssssssssssity Manager",
+      status: "Vacation",
+    }
+  ];
+  
+  const columns = [
+    {
+      key: "name",
+      label: "NAME",
+    },
+    {
+      key: "role",
+      label: "ROLE",
+    },
+    {
+      key: "status",
+      label: "STATUS",
+    },
+    {key:'a',label:'asd'}
+    
+  ];
   const router=useRouter()
   const LogOut =()=>{
   
@@ -18,15 +69,10 @@ export default function ValidarTaxas() {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const [modalPlacement, setModalPlacement] = React.useState("top");
   return (
-    <div className='h-screen w-screen flex flex-col items-center  '>
+    <div className='max-w-screen h-screen w-full flex flex-col items-center  '>
       <Header />
-      <div className=' w-4/6 lg:w-2/6 flex flex-col items-center justify-center h-1/6 border-2 mt-8 lg:p-4'>
-        <h1>Consultar Taxa</h1>
-        <div className='flex flex-row items-center justify-center  w-full p-2'>
-          <Input color='default' variant='underlined' className='w-2/4' size='sm' />
-          <Button onClick={() => { alert('vai se fuder') }} size='md' color='primary' variant='solid'>Consultar</Button></div>
-      </div>
-      <div className="flex flex-col gap-2">
+   
+      <div className="w-full h-full p-4 flex flex-col gap-2">
       <Button onPress={onOpen} className="max-w-fit">Open Modal</Button>
      
       <Modal 
@@ -54,6 +100,47 @@ export default function ValidarTaxas() {
         </ModalContent>
       </Modal>
     </div>
+
+
+    <Card className="max-w-[400px]">
+      <CardHeader className="flex gap-3">
+        <Image
+          alt="nextui logo"
+          height={40}
+          radius="sm"
+          src="https://avatars.githubusercontent.com/u/86160567?s=200&v=4"
+          width={40}
+        />
+        <div className="flex flex-col">
+          <p className="text-md">NextUI</p>
+          <p className="text-small text-default-500">nextui.org</p>
+        </div>
+      </CardHeader>
+      <Divider/>
+      <CardBody>
+        <p>Make beautiful websites regardless of your design experience.</p>
+      </CardBody>
+      <Divider/>
+      <CardFooter>
+        <Link
+          isExternal
+          showAnchorIcon
+          href="https://github.com/nextui-org/nextui"
+        >
+          Visit source code on GitHub.
+        </Link>
+      </CardFooter>
+    </Card>
+
+
+    
+
+
+ 
+
+
+
+
 
     </div>
   )

@@ -1,173 +1,227 @@
-import Header from "../../components/Header/index"
-import { Input, Button } from "@nextui-org/react";
-import axios from 'axios';
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
-import Cookies from 'js-cookie';
-import JSONPrettyMon from 'react-json-pretty/themes/monikai.css';
-import JSONPretty from 'react-json-pretty';
+import Header from '../../components/Header/index'
+import { Input, Button } from '@nextui-org/react'
+import axios from 'axios'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect, useState } from 'react'
+import Cookies from 'js-cookie'
+import JSONPrettyMon from 'react-json-pretty/themes/monikai.css'
+import JSONPretty from 'react-json-pretty'
 import { Spinner, X } from 'phosphor-react'
 import { toast } from 'sonner'
+import Router from 'next/router'
+
 
 export default function Vendas() {
   const [vendaId, setVendaId] = useState('')
-  const [responseData, setResponseData] = useState(null);
+  const [responseData, setResponseData] = useState(null)
   const token = Cookies.get('token')
   const handleCleanInput = () => {
-    setVendaId('');
+    setVendaId('')
     setResponseData(null)
   }
-  const handleChange = (e: any) => { setVendaId(e.target.value); }
+  const handleChange = (e: any) => {
+    setVendaId(e.target.value)
+  }
   const handleSearch = async () => {
     try {
-      const response = await axios.get(`https://api.zsystems.com.br/z1/vendas/${vendaId}`,
-        { headers: { Authorization: `Bearer ${token}` }, })
+      const response = await axios.get(
+        `https://api.zsystems.com.br/z1/vendas/${vendaId}`,
+        { headers: { Authorization: `Bearer ${token}` } },
+      )
 
-
-      if (response.data.success == true) { setResponseData(response.data) } else { toast.error('Id não encontrado') }
-
-
-
-
-
-
+      if (response.data.success == true) {
+        setResponseData(response.data)
+      } else {
+        toast.error('Id não encontrado')
+      }
     } catch (error) {
-
       console.log(error.message)
     }
   }
+  useEffect(() => {
+    const auth = async () => {
+      try {
+        const res = await axios.post(`https://api.zsystems.com.br/z1/autenticar`, { token: token })
+        if (res.data.success === true) {
+
+
+
+        } else {
+          toast.error('Sua sessão expirou faça login novamente')
+          Router.push('/')
+
+        }
+      }
+      catch (error) {
+        console.error(error)
+      }
+
+    }
+    auth()
+
+  }, [])
 
   return (
-    <div className='flex flex-col items-center  h-screen max-w-screen  '>
+    <div className="flex flex-col items-center  h-screen max-w-screen w-full ">
       <Header />
-      <div className='w-full p-4 flex flex-col items-center'>
-        <form className=" h-full  w-full lg:w-2/6 p-6 flex flex-col items-center justify-around  lg:px-8 rounded-xl  my-4  shadow-md border-2" >
-
-          <label className=" font-bold">Vendas:</label>
-          <Input type='text' placeholder="ID da venda ou zoop transaction ID" variant="underlined" className="w-5/6 lg:w-3/6" onChange={handleChange} value={vendaId} />
-          <div className="flex items-center justify-center lg:justify-around gap-2  - w-2/6  mt-4 lg:mt-6">
-
-
-            <Button onClick={handleSearch} color="primary" variant="shadow">Consultar</Button>
-            {vendaId ? (<Button onClick={handleCleanInput} color="danger">Limpar</Button>) : null}
-
-          </div>
-        </form>
-      </div>
-      {responseData ? (
-
-
-
-
-
-
-        <div className=" w-full  p-2    text-white">
-          
-          <div className=" w-full bg-custom-black flex flex-col lg:flex-row border-2 rounded-lg items-center">
-            <div className="  w-full flex flex-col items-center">
-              <h2>Estabelecimento</h2>
-              <p className="text-green-500">{responseData.pedido.estabelecimento.razao_social}</p>
-              <h2>Marketplace</h2>
-              <p className="text-green-500">{responseData.pedido.estabelecimento.marketplace.nome}</p>
+      <div className='w-full max-w-screen flex flex-col space-y-2  '>
+        <div className="w-full p-2 lg:p-4 flex lg:flex-row flex-col items-center gap-2  justify-center h-full">
+          <form className=" h-full  w-full lg:w-2/6 p-6 flex flex-col items-center justify-around  lg:px-8 sm:rounded-xl  my-4  shadow-md border-2">
+            <label className=" font-bold">Vendas:</label>
+            <Input
+              type="text"
+              placeholder="ID da venda ou zoop transaction ID"
+              variant="underlined"
+              className="w-5/6 lg:w-3/6"
+              onChange={handleChange}
+              value={vendaId}
+            />
+            <div className="flex  items-center justify-center lg:justify-around gap-2   w-2/6  mt-4 lg:mt-6">
+              <Button onClick={handleSearch} color="primary" variant="shadow">
+                Consultar
+              </Button>
+              {vendaId ? (
+                <Button onClick={handleCleanInput} color="danger">
+                  Limpar
+                </Button>
+              ) : null}
             </div>
+          </form>
+          {responseData ? (
+            <div className='border-2 bg-mygray p-4 lg:w-4/6 w-full h-full flex flex-col lg:grid lg:grid-cols-2'>
+             
+              <div className=' h-full w-full  text-white'>
+              <div className=''>
+<h1 className='font-bold'>Marketplace</h1>
+<p>{responseData.pedido.estabelecimento.marketplace.nome}</p>
 
-
-
-
-            <div className="p-3 border-2 w-full flex flex-col items-center">
-
-              <div className="  flex flex-row gap-2 w-full">
-                <p>Valor:</p>
-                <p className="text-green-500">R$ {responseData.pedido.pagamentos[0].valor}</p>
               </div>
-            </div>
 
-            <div className="border-2  p-3 w-full flex flex-col items-center">
-              <div className="  flex flex-row gap-2 w-full">
-                <p>Recebido:</p>
-                <p className="text-green-500">R$ {responseData.pedido.pagamentos[0].valor_recebido}</p>
+
+
+
+              
+<div>
+
+
+
               </div>
-            </div>
-
-
-            <div className="border-2  p-3 w-full flex flex-col items-center">
-              <div className="  flex flex-row gap-2 w-full">
-                <p>Taxa:</p>
-                <p className="text-green-500">R$ {responseData.pedido.pagamentos[0].taxa}</p>
               </div>
-            </div>
 
 
 
+              <div className=' h-full w-full space-y-4  text-white'>
 
-            <div className="border-2  p-3 w-full flex flex-col items-center">
-              <div className="  flex flex-row gap-2 w-full">
-                <p>Markup:</p>
-                <p className="text-green-500">R$ {responseData.pedido.pagamentos[0].markup}</p>
-              </div>
-            </div>
-
-
-            <div className='border-2 w-full flex  flex-col  justify-center items-center p-3'>
-              <h1>Pagamentos </h1>
-              {responseData.pedido.pagamentos[0] ? (<div className='w-full flex flex-row gap-2 p-2'>
-                <p>Id:</p>
-                <p className='text-green-500'>{responseData.pedido.pagamentos[0].id}</p>
-              </div>) : (
-                <Spinner color="primary" size='lg' />)}
-
-              {responseData.pedido.status_pedido.titulo ? (<div className='w-full flex flex-row gap-2 p-2'>
-                <p>Status:</p>
-                <p className='text-green-500'>{responseData.pedido.status_pedido.titulo}</p>
-              </div>) : (
-                <Spinner color="primary" size='lg' />)}
-
-{responseData.pedido.pagamentos ? (<div className='w-full flex flex-row gap-2 p-2'>
-                <p>Data de Recebimento:</p>
-                <p className='text-green-500'>{ new Date(responseData.pedido.pagamentos[0].data_recebimento).toLocaleString('pt-BR', { timeZone: 'UTC' })}</p>
-              </div>) : (
-                <Spinner color="primary" size='lg' />)}
-
-
-
-            </div>
                 
+             <div>
+             <h1 className='font-bold'>Estabelecimento</h1>
+              <p>{responseData.pedido.estabelecimento.razao_social} </p>
+             </div>
 
-            {responseData.pedido.pedidos_splits[0] ? (
-              <div className="border-2 p-3 w-full flex flex-col items-center">
-                <div className="flex flex-row gap-2 w-full">
-                  <p>Markup:</p>
-                  <p className="text-green-500">R$ {responseData.pedido.pedidos_splits[0]}</p>
+              <div className='border-2 pr-2'>
+                <div className='   flex  flex-row items-start justify-between'> 
+                  <p>Status</p>
+                  <p>{responseData.pedido.status_pedido.titulo}</p>
                 </div>
+                <div className='   flex flex-col lg:flex-row items-start justify-between'> 
+                  <p>Data</p>
+                  <p></p>
+                </div>
+                <div className='   flex  flex-row items-start justify-between'> 
+                  <p>Forma de pagamento</p>
+                  <p>{responseData.zoopTransaction.payment_type}</p>
+                </div>
+                <div className='   flex flex-row items-start justify-between'> 
+                  <p>Bandeira</p>
+                  <p>{responseData.zoopTransaction.payment_method.card_brand}</p>
+                </div>
+                <div className='   flex flex-row items-start justify-between'> 
+                  <p>Parcelas</p>
+                  <p>{responseData.pedido.parcelas}</p>
+                </div>
+                </div>
+
               </div>
-            ) : null}
 
 
-
-
-
-
-          </div>
-
-
-
-
-          <div className=" bg-gray-400  max-w-full text-sm  grid grid-cols-1 lg:grid-cols-2 lg:col-span-2 ">
-            <div className=" w-full text-left p-2 lg:p-4 ">
-              <p>Vendas</p>
-              <JSONPretty data={responseData.pedido} theme={{ JSONPrettyMon }} />
             </div>
-            <div className=" w-full text-left   p-2 lg:p-4">
-              <p>Zoop Transactions</p>
-              <JSONPretty className=" roundead-xl " data={responseData.zoopTransaction} theme={{ JSONPrettyMon }} />
-            </div>
-          </div>
+
+
+          ) : null}
         </div>
-      ) : null}
+        {responseData ? (
+        <div className='p-2'>
+          <div className='w-full flex flex-col items-center lg:items-start justify-center gap-2  bg-white shadow-lg border-2 p-4  '>
+            <h1 className='font-bold'>Pagamentos</h1>
 
+
+
+            <div className='lg:grid lg:grid-cols-4 flex flex-col items-start
+             justify-center  w-full  '>
+
+              <div className='flex flex-col lg:col-span-1 space-y-2 border-2 items-center lg:items-start justify-center p-4'>
+                <p className='font-bold'>ID {responseData.pedido.id}</p>
+                <p>Status:  {responseData.pedido.status_pedido.titulo}</p>
+                <p>Valor</p>
+                <p>R$ {responseData.pedido.pagamentos[0].valor}</p>
+                <p>DR</p>
+                <p>  {new Date(
+                  responseData.pedido.pagamentos[0].data_recebimento,
+                ).toLocaleString('pt-BR', { timeZone: 'UTC' })}</p>
+                <p>DP </p>
+                <p>-</p>
+              </div>
+
+
+              <div className='flex flex-col items-start  lg:items-center justify-center border-2 w-full h-full p-4'>
+                <p>Taxa</p>
+                <p>R$ {responseData.pedido.pagamentos[0].taxa}</p>
+
+              </div>
+              <div className='flex flex-col  items-center justify-center border-2 h-full w-full'>
+
+                <p>Recebido </p>
+                <p>R$ {responseData.pedido.pagamentos[0].valor_recebido}</p>
+
+              </div>
+
+
+              <div className=' flex flex-col  items-center justify-end border-2 h-full w-full p-4'>
+                
+                
+<Button color='danger' variant='shadow'>Reprocessar Venda</Button>
+
+              </div>
+             
+
+
+
+            </div>
+          </div>
+          </div>
+
+        ) : null}
+        {responseData ? (<div className=" bg-black  max-w-full text-sm  grid grid-cols-1 lg:grid-cols-2 lg:col-span-2 ">
+          <div className=" w-full text-left p-2 lg:p-4 ">
+            <p>Vendas</p>
+            <JSONPretty
+              data={responseData.pedido}
+              theme={{ JSONPrettyMon }}
+            />
+          </div>
+          <div className=" w-full text-left   p-2 lg:p-4">
+            <p>Zoop Transactions</p>
+            <JSONPretty
+              className=" roundead-xl "
+              data={responseData.zoopTransaction}
+              theme={{ JSONPrettyMon }}
+            />
+          </div>
+        </div>) : null}
+
+      </div>
 
     </div>
-
   )
 }
 
