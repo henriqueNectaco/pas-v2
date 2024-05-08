@@ -6,18 +6,33 @@ import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 import JSONPrettyMon from 'react-json-pretty/themes/monikai.css'
 import JSONPretty from 'react-json-pretty'
+import Header from '../../components/Header/index'
+import { Input, Button } from '@nextui-org/react'
+import axios from 'axios'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect, useState } from 'react'
+import Cookies from 'js-cookie'
+import JSONPrettyMon from 'react-json-pretty/themes/monikai.css'
+import JSONPretty from 'react-json-pretty'
 import { Spinner, X } from 'phosphor-react'
 import { toast } from 'sonner'
+import Router from 'next/router'
+
 import Router from 'next/router'
 
 
 export default function Vendas() {
   const [vendaId, setVendaId] = useState('')
   const [responseData, setResponseData] = useState(null)
+  const [responseData, setResponseData] = useState(null)
   const token = Cookies.get('token')
   const handleCleanInput = () => {
     setVendaId('')
+    setVendaId('')
     setResponseData(null)
+  }
+  const handleChange = (e: any) => {
+    setVendaId(e.target.value)
   }
   const handleChange = (e: any) => {
     setVendaId(e.target.value)
@@ -28,7 +43,16 @@ export default function Vendas() {
         `https://api.zsystems.com.br/z1/vendas/${vendaId}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
+      const response = await axios.get(
+        `https://api.zsystems.com.br/z1/vendas/${vendaId}`,
+        { headers: { Authorization: `Bearer ${token}` } },
+      )
 
+      if (response.data.success == true) {
+        setResponseData(response.data)
+      } else {
+        toast.error('Id não encontrado')
+      }
       if (response.data.success == true) {
         setResponseData(response.data)
       } else {
@@ -60,8 +84,31 @@ export default function Vendas() {
     auth()
 
   }, [])
+  useEffect(() => {
+    const auth = async () => {
+      try {
+        const res = await axios.post(`https://api.zsystems.com.br/z1/autenticar`, { token: token })
+        if (res.data.success === true) {
+
+
+
+        } else {
+          toast.error('Sua sessão expirou faça login novamente')
+          Router.push('/')
+
+        }
+      }
+      catch (error) {
+        console.error(error)
+      }
+
+    }
+    auth()
+
+  }, [])
 
   return (
+    <div className="flex flex-col items-center  h-screen max-w-screen w-full ">
     <div className="flex flex-col items-center  h-screen max-w-screen w-full ">
       <Header />
       <div className='w-full max-w-screen flex flex-col space-y-2  '>
@@ -217,6 +264,9 @@ export default function Vendas() {
               theme={{ JSONPrettyMon }}
             />
           </div>
+        </div>) : null}
+
+      </div>
         </div>) : null}
 
       </div>

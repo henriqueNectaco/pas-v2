@@ -1,19 +1,18 @@
-import React from "react";
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
-import { CaretDown, DotsThreeOutlineVertical } from "phosphor-react";
-
-
-
-
-
+import React from 'react'
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  Button,
+} from '@nextui-org/react'
+import { CaretDown, DotsThreeOutlineVertical } from 'phosphor-react'
 
 export default function DropDownOne(props: any) {
   return (
     <Dropdown>
       <DropdownTrigger>
-        <Button
-          variant="bordered"
-        >
+        <Button variant="bordered">
           Open Menu
           <CaretDown size={22} />
         </Button>
@@ -25,10 +24,7 @@ export default function DropDownOne(props: any) {
         <DropdownItem key={props.first}>{props.first}</DropdownItem>
         <DropdownItem key={props.second}>{props.second}</DropdownItem>
         <DropdownItem key={props.third}>{props.third}</DropdownItem>
-
-
-
       </DropdownMenu>
     </Dropdown>
-  );
+  )
 }

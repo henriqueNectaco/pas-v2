@@ -1,4 +1,4 @@
-;import React from "react";
+import React from 'react'
 import Header from '../../components/Header/index'
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
@@ -66,8 +66,8 @@ export default function ValidarTaxas() {
   router.push('/');
   
   }
-  const {isOpen, onOpen, onOpenChange} = useDisclosure();
-  const [modalPlacement, setModalPlacement] = React.useState("top");
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const [modalPlacement, setModalPlacement] = React.useState('top')
   return (
     <div className='max-w-screen h-screen w-full flex flex-col items-center  '>
       <Header />
@@ -145,8 +145,6 @@ export default function ValidarTaxas() {
     </div>
   )
 }
-
-
 
 /*
 
