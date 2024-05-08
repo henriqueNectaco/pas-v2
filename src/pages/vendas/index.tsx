@@ -6,33 +6,18 @@ import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 import JSONPrettyMon from 'react-json-pretty/themes/monikai.css'
 import JSONPretty from 'react-json-pretty'
-import Header from '../../components/Header/index'
-import { Input, Button } from '@nextui-org/react'
-import axios from 'axios'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect, useState } from 'react'
-import Cookies from 'js-cookie'
-import JSONPrettyMon from 'react-json-pretty/themes/monikai.css'
-import JSONPretty from 'react-json-pretty'
 import { Spinner, X } from 'phosphor-react'
 import { toast } from 'sonner'
-import Router from 'next/router'
-
 import Router from 'next/router'
 
 
 export default function Vendas() {
   const [vendaId, setVendaId] = useState('')
   const [responseData, setResponseData] = useState(null)
-  const [responseData, setResponseData] = useState(null)
   const token = Cookies.get('token')
   const handleCleanInput = () => {
     setVendaId('')
-    setVendaId('')
     setResponseData(null)
-  }
-  const handleChange = (e: any) => {
-    setVendaId(e.target.value)
   }
   const handleChange = (e: any) => {
     setVendaId(e.target.value)
@@ -43,16 +28,7 @@ export default function Vendas() {
         `https://api.zsystems.com.br/z1/vendas/${vendaId}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
-      const response = await axios.get(
-        `https://api.zsystems.com.br/z1/vendas/${vendaId}`,
-        { headers: { Authorization: `Bearer ${token}` } },
-      )
 
-      if (response.data.success == true) {
-        setResponseData(response.data)
-      } else {
-        toast.error('Id não encontrado')
-      }
       if (response.data.success == true) {
         setResponseData(response.data)
       } else {
@@ -84,35 +60,12 @@ export default function Vendas() {
     auth()
 
   }, [])
-  useEffect(() => {
-    const auth = async () => {
-      try {
-        const res = await axios.post(`https://api.zsystems.com.br/z1/autenticar`, { token: token })
-        if (res.data.success === true) {
-
-
-
-        } else {
-          toast.error('Sua sessão expirou faça login novamente')
-          Router.push('/')
-
-        }
-      }
-      catch (error) {
-        console.error(error)
-      }
-
-    }
-    auth()
-
-  }, [])
 
   return (
     <div className="flex flex-col items-center  h-screen max-w-screen w-full ">
-    <div className="flex flex-col items-center  h-screen max-w-screen w-full ">
       <Header />
-      <div className='w-full max-w-screen flex flex-col space-y-2  '>
-        <div className="w-full p-2 lg:p-4 flex lg:flex-row flex-col items-center gap-2  justify-center h-full">
+      <div className='w-full max-w-screen flex flex-col space-y-2 '>
+        <div className="w-full p-4 flex lg:flex-row flex-col items-center gap-2  justify-center h-full">
           <form className=" h-full  w-full lg:w-2/6 p-6 flex flex-col items-center justify-around  lg:px-8 sm:rounded-xl  my-4  shadow-md border-2">
             <label className=" font-bold">Vendas:</label>
             <Input
@@ -197,16 +150,14 @@ export default function Vendas() {
           ) : null}
         </div>
         {responseData ? (
-        <div className='p-2'>
           <div className='w-full flex flex-col items-center lg:items-start justify-center gap-2  bg-white shadow-lg border-2 p-4  '>
             <h1 className='font-bold'>Pagamentos</h1>
 
 
 
-            <div className='lg:grid lg:grid-cols-4 flex flex-col items-start
-             justify-center  w-full  '>
+            <div className='lg:grid lg:grid-cols-5 flex flex-col items-center justify-center  w-full space-y-2 space-x-2'>
 
-              <div className='flex flex-col lg:col-span-1 space-y-2 border-2 items-center lg:items-start justify-center p-4'>
+              <div className='flex flex-col space-y-2 border-2 items-center lg:items-start justify-center p-4'>
                 <p className='font-bold'>ID {responseData.pedido.id}</p>
                 <p>Status:  {responseData.pedido.status_pedido.titulo}</p>
                 <p>Valor</p>
@@ -215,12 +166,10 @@ export default function Vendas() {
                 <p>  {new Date(
                   responseData.pedido.pagamentos[0].data_recebimento,
                 ).toLocaleString('pt-BR', { timeZone: 'UTC' })}</p>
-                <p>DP </p>
-                <p>-</p>
               </div>
 
 
-              <div className='flex flex-col items-start  lg:items-center justify-center border-2 w-full h-full p-4'>
+              <div className='flex flex-col  items-center justify-center border-2 w-full h-full p-4'>
                 <p>Taxa</p>
                 <p>R$ {responseData.pedido.pagamentos[0].taxa}</p>
 
@@ -233,19 +182,22 @@ export default function Vendas() {
               </div>
 
 
-              <div className=' flex flex-col  items-center justify-end border-2 h-full w-full p-4'>
-                
-                
-<Button color='danger' variant='shadow'>Reprocessar Venda</Button>
+              <div className='flex flex-col  items-center justify-center border-2 h-full w-full'>
+                <p>DP</p>
+                <p>-</p>
+
 
               </div>
-             
+              <div className='flex flex-col  items-center lg:justify-end border-2 h-full w-full p-4'>
+                <Button color='danger' size='md'>Reprocessar venda</Button>
+
+              </div>
 
 
 
             </div>
           </div>
-          </div>
+
 
         ) : null}
         {responseData ? (<div className=" bg-black  max-w-full text-sm  grid grid-cols-1 lg:grid-cols-2 lg:col-span-2 ">
@@ -264,9 +216,6 @@ export default function Vendas() {
               theme={{ JSONPrettyMon }}
             />
           </div>
-        </div>) : null}
-
-      </div>
         </div>) : null}
 
       </div>

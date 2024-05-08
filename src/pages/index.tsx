@@ -74,7 +74,7 @@ export default function Home() {
             <h1 className="text-3xl lg:text-4xl">Entrar</h1>
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className=" border-2 mt-2 w-full p-4 lg:p-0 ml-0 mr-0 h-full flex flex-col items-center justify-start lg:justify-center"
+              className="  mt-2 w-full p-4 lg:p-0 ml-0 mr-0 h-full flex flex-col items-center justify-start lg:justify-center"
             >
               <div className=" w-full lg:p-4">
                 <label htmlFor="email" className="block mb-2 lg:text-base">
@@ -98,7 +98,7 @@ export default function Home() {
                   onChange={handlePasswordChange}
                 />
               </div>
-              <div className="border-2 lg:p-4 lg:h-[15vh] h-1/4 w-full flex flex-col items-center justify-center lg:justify-end lg:p-0 gap-2 lg:gap-4">
+              <div className=" lg:p-4 lg:h-[15vh] h-1/4 w-full flex flex-col items-center justify-center lg:justify-end  gap-2 lg:gap-4">
                 <Button
                   type="submit"
                   variant="ghost"
