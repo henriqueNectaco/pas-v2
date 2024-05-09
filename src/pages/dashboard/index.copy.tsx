@@ -1,10 +1,12 @@
 import axios from 'axios'
 import Header from '../../components/Header/index'
 import { useEffect, useState } from 'react'
-
+import { TiThumbsUp } from 'react-icons/ti'
+import { FaThumbsUp } from 'react-icons/fa'
 import Cookies from 'js-cookie'
 import { Button, Spinner, Input, DatePicker } from '@nextui-org/react'
-
+import { toast } from 'sonner'
+import Router from 'next/router'
 export default function DashBoard() {
   const [servicesStatus, setServicesStatus] = useState(null)
   const [amountIndicator, setAmountIndicator] = useState(null)
@@ -24,6 +26,13 @@ export default function DashBoard() {
     totalEstabelecimentsChildRegistredLastThirtyDays,
     setTotalEstabelecimentsChildRegistredLastThirtyDays,
   ] = useState(null)
+  const [totalNotProcessedToday, setTotalNotProcessedToday] = useState(null)
+  const [
+    totalMarketplaceChildRegistredPreviousMonth,
+    setTotalMarketplaceChildRegistredPreviousMonth,
+  ] = useState(null)
+  const [totalNotPayedLastWeek, setTotalNotPayedLastWeek] = useState(null)
+
   const token = Cookies.get('token')
   /* const api = async (data) => {
 
@@ -35,7 +44,7 @@ export default function DashBoard() {
       console.log(error)
     }
   } */
-  function formatarData(dataString) {
+  function formatarData(dataString: any) {
     const data = new Date(dataString)
     const dia = String(data.getDate()).padStart(2, '0')
     const mes = String(data.getMonth() + 1).padStart(2, '0')
@@ -94,6 +103,32 @@ export default function DashBoard() {
   const previousMonthFormatted = `${yearPreviousMonth}-${monthPreviousMonth}-${dayPreviousMonth}`
 
   useEffect(() => {
+    const fecthTotalMarketplaceChildResgistredPreviousMonth = async () => {
+      try {
+        const res = await axios.get(
+          `
+        https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=${previousMonthFormatted}&endDate=${lastMonthFormatted}`,
+          { headers: { Authorization: `Bearer ${token}` } },
+        )
+        setTotalMarketplaceChildRegistredPreviousMonth(res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    const fetchTotalNotProcessedToday = async () => {
+      try {
+        const res = await axios.get(
+          `
+https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDate=${today}`,
+          { headers: { Authorization: `Bearer ${token}` } },
+        )
+        setTotalNotProcessedToday(res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
     const fetchTotalEstabelecimentsChildRegistredLastThirtyDays = async () => {
       try {
         const res = await axios.get(
@@ -216,163 +251,192 @@ export default function DashBoard() {
         console.error(error)
       }
     }
-    fetchDataServiceStatus()
-    fechAmountData()
-    fechTotalMKT()
-    FetchTotalProcessedYesterday()
-    fetchsTotalProcessedToday()
-    fetchTotalProcessedLastThirtyDays()
-    fetchTotalProcessedThirtyDaysLater()
-    fetchTotalMarketplaceChildRegistredLastThirtyDays()
-    fetchTotalEstabelecimentsChildRegistredLastThirtyDays()
+    const auth = async () => {
+      try {
+        const res = await axios.post(
+          `https://api.zsystems.com.br/z1/autenticar`,
+          { token },
+        )
+        if (res.data.success === true) {
+          fecthTotalMarketplaceChildResgistredPreviousMonth()
+          fetchDataServiceStatus()
+          fechAmountData()
+          fechTotalMKT()
+          FetchTotalProcessedYesterday()
+          fetchsTotalProcessedToday()
+          fetchTotalProcessedLastThirtyDays()
+          fetchTotalProcessedThirtyDaysLater()
+          fetchTotalMarketplaceChildRegistredLastThirtyDays()
+          fetchTotalEstabelecimentsChildRegistredLastThirtyDays()
+          fetchTotalNotProcessedToday()
+        } else {
+          toast.error('Sua sessão expirou faça login novamente')
+          Router.push('/')
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    auth()
   }, [])
 
   // Função para formatar a data para yyyy-mm-dd
 
   return (
-    <div className=" border-2 h-screen w-screen flex flex-col items-center  ">
+    <div className=" h-screen max-w-screen flex flex-col items-center  ">
       <Header />
 
-      <div className="flex flex-col items-start justify-center w-full  border-2 border-red-500 p-2 gap-2">
-        <div className=" w-full border-2 rounded-md flex flex-col items-center justify-center">
-          <p>Vendas</p>
-          {!amountIndicator ? (
-            <Spinner />
-          ) : (
-            <p> {amountIndicator.result.transacionadoHoje.quantidade}</p>
-          )}
-        </div>
-        <div className=" w-full border-2 rounded-md flex flex-col items-center justify-center">
-          <p>Total Vendido</p>
-          {!amountIndicator ? (
-            <Spinner />
-          ) : (
-            <p>{amountIndicator.result.transacionadoHoje.valorTotal}</p>
-          )}
-        </div>
-        <div className=" w-full border-2 rounded-md flex flex-col items-center justify-center">
-          <p>Total processado Hoje</p>
-          {!totalProcessedToday ? (
-            <Spinner />
-          ) : (
-            <p>{totalProcessedToday.totalProcessed}</p>
-          )}
-        </div>
-        <div className=" w-full border-2 rounded-md flex flex-col items-center justify-center">
-          <p>Total processado Ontem</p>
-          {!totalProcessedYesterday ? (
-            <Spinner />
-          ) : (
-            <p>{totalProcessedYesterday.totalProcessed}</p>
-          )}
-        </div>
-        <div className=" w-full border-2 rounded-md flex flex-col items-center justify-center">
-          <p>Total Processado Ultimos 30 dias</p>
-          {!totalProcesedLastMonth ? (
-            <Spinner />
-          ) : (
-            <p>{totalProcesedLastMonth.totalProcessed}</p>
-          )}
-        </div>
-        <div className=" w-full border-2 rounded-md flex flex-col items-center justify-center">
-          <p>Total 30 dias anteriores</p>
-          {!totalProcessedThirtyDaysBefore ? (
-            <Spinner />
-          ) : (
-            <p>{totalProcessedThirtyDaysBefore.totalProcessed}</p>
-          )}
-        </div>
-        <div className=" w-full border-2 rounded-md flex flex-col items-center justify-center">
-          <p>Total Marketplaces filhos registrados ultimos 30 dias</p>
-          {!totalMarketplaceChildRegistredLastThiryDays ? (
-            <Spinner />
-          ) : (
-            <p>
-              {
-                totalMarketplaceChildRegistredLastThiryDays.totalMarketplaceChild
-              }
-            </p>
-          )}
-        </div>
-        <div className=" w-full border-2 rounded-md flex flex-col items-center justify-center">
-          <p>Total Estabelecimentos filhos registrados ultimos 30 dias</p>
-          {!totalEstabelecimentsChildRegistredLastThirtyDays ? (
-            <Spinner />
-          ) : (
-            <p>
-              {totalEstabelecimentsChildRegistredLastThirtyDays.totalRegistered}
-            </p>
-          )}
-        </div>
+      <div className="flex flex-col items-start justify-center w-full h-full space-y-4  p-2 lg:p-4 gap-2">
+        <div className="  w-full lg:grid lg:grid-cols-4 gap-2 ">
+          <div className="flex flex-col   p-2 items-center space-y-2  ">
+            {!servicesStatus ? (
+              <Spinner color="primary" size="lg" />
+            ) : (
+              <div className=" w-full space-y-2">
+                {servicesStatus.map((servicesStatus: any) => (
+                  <div className="lg:h-[13vh] shadow-lg flex flex-col items-center justify-center  gap-2 border-2 p-4  rounded-lg">
+                    <p className="font-bold">{servicesStatus.service}</p>
+                    <p>{formatarData(servicesStatus.last_update)}</p>
 
-        <div className=" w-full border-2 rounded-md flex flex-col items-center justify-center">
-          <p>Service Status</p>
-          {!servicesStatus ? (
-            <Spinner />
-          ) : (
-            <div>
-              <p>{servicesStatus[0].service}</p>
-
-              <p>{formatarData(servicesStatus[0].last_update)}</p>
+                    {servicesStatus.status ? (
+                      <FaThumbsUp color="green" size={30} />
+                    ) : (
+                      <TiThumbsUp color="red" fill="red" />
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+            <div
+              className={` h-[13vh] border-2 w-full shadow-lg rounded-md flex flex-col items-center justify-center ${totalNotPayedLastWeek > 0 ? 'bg-yellow-400' : 'bg-white'}`}
+            >
+              <p>Total sem pagamento</p>
+              <p>Semana Passada</p>
+              <Spinner size="lg" />
             </div>
-          )}
-        </div>
-        <>
-          {!servicesStatus ? (
-            <Spinner color="primary" size="lg" />
-          ) : (
-            <>
-              {servicesStatus.map((servicesStatus: any) => (
-                <div>
-                  <p>{servicesStatus.service}</p>
-                  <p>{formatarData(servicesStatus.last_update)}</p>
+          </div>
+
+          <div className=" space-y-2 p-2">
+            <div className="shadow-lg p-6 lg:h-[13vh] w-full border-2   rounded-md flex flex-col items-center justify-center">
+              <p>Total Vendido</p>
+              {!amountIndicator ? (
+                <Spinner />
+              ) : (
+                <p>R$ {amountIndicator.result.transacionadoHoje.valorTotal}</p>
+              )}
+            </div>
+            <div className="p-4 shadow-lg h-[13vh] w-full border-2 rounded-md flex flex-col items-center justify-center">
+              <p>Total Processado</p>
+              <p>Ontem/Hoje</p>
+              {!totalProcessedToday || !totalProcessedYesterday ? (
+                <Spinner />
+              ) : (
+                <p>
+                  {totalProcessedYesterday.totalProcessed} /{' '}
+                  {totalProcessedToday.totalProcessed}
+                </p>
+              )}
+            </div>
+            <div className="p-6 h-[13vh] w-full border-2 rounded-md flex flex-col items-center justify-center">
+              <p className="text-custom-black">Vendas</p>
+              {!amountIndicator ? (
+                <Spinner />
+              ) : (
+                <p> {amountIndicator.result.transacionadoHoje.quantidade}</p>
+              )}
+            </div>
+            <div className="h-[13vh]  w-full border-2 rounded-md flex flex-col items-center justify-center">
+              <p>Pedidos processados </p>
+              <p>Mês atual / mes anterior</p>
+              {!totalProcesedLastMonth || !totalProcessedThirtyDaysBefore ? (
+                <Spinner />
+              ) : (
+                <p>
+                  {totalProcesedLastMonth.totalProcessed} /{' '}
+                  {totalProcessedThirtyDaysBefore.totalProcessed}
+                </p>
+              )}
+            </div>
+          </div>
+
+          <div className="space-y-2  p-2">
+            <div
+              className={`h-[13vh] space-y-2  border-2 w-full shadow-lg rounded-md flex flex-col justify-center items-center `}
+            >
+              <p>Total não processado Hoje</p>
+              {!totalNotProcessedToday ? (
+                <Spinner size="md" />
+              ) : (
+                <div
+                  className={` text-lg  flex flex-col justify-center items-center  ${totalNotProcessedToday?.totalNotProcessed > 0 ? 'text-yellow-400' : 'text-black'}`}
+                >
+                  <p>{totalNotProcessedToday?.totalNotProcessed}</p>
                 </div>
-              ))}
-            </>
-          )}
-        </>
-      </div>
-      <div className="border-2 border-blue-400 w-full lg:h-screen flex  flex-col items-center justify-center  p-4 gap-2">
-        <div className="  border-2 rounded-lg w-full flex flex-col  items-center  justify-center lg:justify-between p-4">
-          <p>Reprocessar venda</p>
-          <div className="border-2 w-full h-full flex  flex-col lg:flex-row lg:items-end items-center justify-between gap-2 p-4">
-            <Input
-              variant="underlined"
-              placeholder="ID do estabelecimento"
-              size="sm"
-              className="w-[50vw] lg:w-[20vw]"
-            />
-            <div className="border-2 flex flex-col lg:flex-row items-center gap-1  w-3/4 lg:w-1/4">
-              {' '}
-              De: <DatePicker variant="underlined" label={'teste'} />
-              Até: <DatePicker variant="underlined" label={'teste'} />
+              )}
             </div>
-            <Button color="primary" variant="solid" className="" size="lg">
-              Enviar
-            </Button>
+
+            <div
+              className={`shadow-lg h-[13vh] border-2 w-full rounded-md flex flex-col items-center justify-center ${totalNotPayedLastWeek > 0 ? 'bg-yellow-400' : 'bg-white'}`}
+            >
+              <p>Total sem pagamento</p>
+              <p>Semana Passada</p>
+              <Spinner size="lg" />
+            </div>
+
+            <div
+              className={`h-[13vh] shadow-lg border-2 w-full rounded-md flex flex-col justify-center items-center ${totalNotPayedLastWeek > 0 ? 'bg-yellow-400' : 'bg-white'}`}
+            >
+              <p>Pedidos sem pagamento</p>
+              <p>Hoje / Ontem</p>
+
+              <Spinner size="lg" />
+            </div>
           </div>
         </div>
 
-        <div className="h-2/4 lg:h-1/4 border-2 rounded-lg w-full flex flex-col  items-center justify-between p-4">
-          <p>Reprocessar saldo</p>
-          <div className="border-2 w-full h-full flex flex-col lg:flex-row items-center justify-center lg:items-end lg:justify-between gap-2 p-4">
-            <Input
-              variant="underlined"
-              placeholder="ID do estabelecimento"
-              size="sm"
-              className=" w-[50vw] lg:w-[20vw]"
-            />
-            <div className="border-2  lg:w-2/4 flex flex-col items-center justify-center">
+        <div className="  w-full  flex h-full flex-col items-center justify-end    gap-4">
+          <div className="  border-2 pt-2 rounded-lg w-full flex flex-col  items-center  justify-center  ">
+            <p>Reprocessar venda</p>
+            <div className=" w-full h-full flex  flex-col lg:flex-row lg:items-end items-center justify-between lg:p-8  ">
+              <Input
+                variant="underlined"
+                placeholder="ID do estabelecimento"
+                size="sm"
+                className="w-[50vw] lg:w-[15vw]"
+              />
+              <div className=" border-2 flex flex-col lg:flex-row items-start lg:items-end justify-center lg:justify-around  gap-1  w-[50vw] lg:w-1/4">
+                De: <DatePicker variant="underlined" />
+                Até: <DatePicker variant="underlined" />
+              </div>
+
+              <Button color="primary" variant="solid" className="" size="lg">
+                Enviar
+              </Button>
+            </div>
+          </div>
+
+          <div className=" border-2  rounded-lg w-full flex flex-col  items-center justify-between pt-4 ">
+            <p>Reprocessar saldo</p>
+            <div className="border-2 w-full h-full flex flex-col lg:flex-row items-center  justify-center lg:items-end lg:justify-between gap-2 p-4">
+              <Input
+                variant="underlined"
+                placeholder="ID do estabelecimento"
+                size="sm"
+                className=" w-[50vw] lg:w-[15vw]"
+              />
+
               <Input
                 variant="underlined"
                 placeholder="Dias"
                 size="sm"
-                className="w-[50vw]  lg:w-[20vw]"
+                className="w-[50vw]  lg:w-[15vw]"
               />
+
+              <Button color="primary" variant="solid" className="" size="lg">
+                Enviar
+              </Button>
             </div>
-            <Button color="primary" variant="solid" className="" size="lg">
-              Enviar
-            </Button>
           </div>
         </div>
       </div>
@@ -381,38 +445,37 @@ export default function DashBoard() {
 }
 
 /*
- <div className='border-2 border-blue-400 w-full h-full flex flex-col items-center justify-center  p-2 gap-2'>
-<div className='lg:h-2/4 border-2 rounded-lg w-full flex flex-col  items-center justify-between lg:p-2'>
+ <>
+
+        {!servicesStatus ? (<Spinner color='primary' size='lg' />) : (
+          <>{
+            servicesStatus.map((servicesStatus: any) => (<div>
+
+
+              <p>{servicesStatus.service}</p>
+              <p>{formatarData(servicesStatus.last_update)}</p>
+              {servicesStatus.status ? (<>
+
+                <FaThumbsUp color='green' size={50} /></>
+              ) : (
+                <TiThumbsUp color='red' fill='red' />
+              )}
+
+
+
+            </div>))
+          }
+          </>
+        )}
+      </>
+
+*/
+
+/*
+ <div className='border-2 border-blue-400 w-full lg:h-screen flex  flex-col items-center justify-center  p-4 gap-2'>
+      <div className=' h-2/4 lg:h-1/4 border-2 rounded-lg w-full flex flex-col  items-center  justify-center lg:justify-between '>
         <p>Reprocessar venda</p>
-        <div className='border-2 w-full lg:h-full flex lg:flex-row items-end justify-between p-4'>
-          <Input variant='underlined' placeholder='ID do estabelecimento' size='sm' className='w-[30vw]' />
-          <div className='border-2 flex flex-row items-center gap-1 w-2/4'> De: <DatePicker variant='underlined' label={'teste'} />
-            Até: <DatePicker variant='underlined' label={'teste'} />
-
-          </div>
-          <Button color='primary' variant='solid' className='' size='md'>Enviar</Button>
-        </div>
-
-      </div>
-
-
-      <div className='lg:h-2/4 border-2 rounded-lg w-full flex flex-col  items-center justify-between lg:p-2'>
-        <p>Reprocessar saldo</p>
-        <div className='border-2 w-full lg:h-full flex lg:flex-row items-end justify-between p-4'>
-          <Input variant='underlined' placeholder='ID do estabelecimento' size='sm' className='w-[30vw]' />
-
-          <Input variant='underlined' placeholder='Dias' size='sm' className='w-[30vw]' />
-
-          <Button color='primary' variant='solid' className='' size='md'>Enviar</Button>
-        </div>
-
-      </div>
-
-
-
-          <div className='h-2/4 p-4 lg:h-1/4 border-2 rounded-lg w-full flex flex-col  items-center justify-between '>
-        <p>Consolidar extrato</p>
-        <div className='border-2 w-full h-full flex  flex-col lg:flex-row items-center justify-center lg:items-end lg:justify-between p-4 gap-2'>
+        <div className='border-2 w-full h-full flex  flex-col lg:flex-row lg:items-end items-center justify-between gap-2 p-4'>
           <Input variant='underlined' placeholder='ID do estabelecimento' size='sm' className='w-[50vw] lg:w-[20vw]' />
           <div className='border-2 flex flex-col lg:flex-row items-center gap-1  w-3/4 lg:w-1/4'> De: <DatePicker variant='underlined' label={'teste'} />
             Até: <DatePicker variant='underlined' label={'teste'} />
@@ -422,5 +485,22 @@ export default function DashBoard() {
         </div>
 
       </div>
-</div>
+
+
+      <div className='h-2/4 lg:h-1/4 border-2 rounded-lg w-full flex flex-col  items-center justify-between p-4'>
+        <p>Reprocessar saldo</p>
+        <div className='border-2 w-full h-full flex flex-col lg:flex-row items-center justify-center lg:items-end lg:justify-between gap-2 p-4'>
+          <Input variant='underlined' placeholder='ID do estabelecimento' size='sm' className=' w-[50vw] lg:w-[20vw]' />
+          <div className='border-2  lg:w-2/4 flex flex-col items-center justify-center'>
+            <Input variant='underlined' placeholder='Dias' size='sm' className='w-[50vw]  lg:w-[20vw]' />
+          </div>
+          <Button color='primary' variant='solid' className='' size='lg'>Enviar</Button>
+        </div>
+
+      </div>
+
+
+
+
+    </div>
 */

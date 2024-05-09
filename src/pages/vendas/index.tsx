@@ -36,6 +36,7 @@ interface Pedido {
 }
 
 interface ZoopTransaction {
+  created_at: Date
   payment_method: {
     card_brand: string
     // Outras propriedades se necessário
@@ -93,6 +94,16 @@ export default function Vendas() {
     }
     auth()
   }, [])
+  const formatarData = (dataString: Date) => {
+    const data = new Date(dataString)
+    const dia = String(data.getDate()).padStart(2, '0')
+    const mes = String(data.getMonth() + 1).padStart(2, '0')
+    const ano = data.getFullYear()
+    const horas = String(data.getHours()).padStart(2, '0')
+    const minutos = String(data.getMinutes()).padStart(2, '0')
+
+    return `${dia}/${mes}/${ano} ${horas}:${minutos}`
+  }
 
   return (
     <div className="flex flex-col items-center  h-screen max-w-screen w-full ">
@@ -167,11 +178,15 @@ export default function Vendas() {
                 <div className=" pr-2">
                   <div className="   flex  flex-row items-start justify-between">
                     <p>Status</p>
-                    <p>{responseData.status_pedido.titulo}</p>
+                    <p
+                      className={`${responseData.status_pedido.titulo === 'Aprovado' ? 'text-green-500' : responseData.status_pedido.titulo === 'Pendente ' ? 'text-yellow-500' : 'text-red-500'}`}
+                    >
+                      {responseData.status_pedido.titulo}{' '}
+                    </p>
                   </div>
                   <div className="   flex flex-col lg:flex-row items-start justify-between">
                     <p>Data</p>
-                    <p></p>
+                    <p>{formatarData(responseZoopTransaction.created_at)}</p>
                   </div>
                   <div className="   flex  flex-row items-start justify-between">
                     <p>Forma de pagamento</p>
@@ -198,10 +213,19 @@ export default function Vendas() {
               <div className="lg:grid lg:grid-cols-5 flex flex-col items-center justify-center  w-full space-y-2 space-x-2">
                 <div className="flex flex-col space-y-2 items-center lg:items-start justify-center p-4 lg:pl-0">
                   <p className="font-bold">ID {responseData.id}</p>
-                  <p>Status: {responseData.status_pedido.titulo}</p>
+
+                  <div className="gap-1 flex flex-row items-center  justify-center lg:justify-between">
+                    <p>Status:</p>
+                    <p
+                      className={`${responseData.status_pedido.titulo === 'Aprovado' ? 'text-green-500' : responseData.status_pedido.titulo === 'Pendente ' ? 'text-yellow-500' : 'text-red-500'}`}
+                    >
+                      {responseData.status_pedido.titulo}{' '}
+                    </p>
+                  </div>
+
                   <p>Valor</p>
                   <p>R$ {responseData.pagamentos[0].valor}</p>
-                  <p>DR</p>
+                  <p>Data Recebimento</p>
                   <p>
                     {' '}
                     {new Date(
