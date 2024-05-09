@@ -40,20 +40,6 @@ export default function DashComponent(props: PropsType) {
                   <span className="ml-2 text-gray-500">26/03/2024 16:30</span>
                 </div>
               </div>
-              <div className="flex items-center justify-between">
-                <span className="font-semibold">API</span>
-                <div className="flex items-center">
-                  <CheckIcon className="text-green-500" />
-                  <span className="ml-2 text-gray-500">09/05/2024 11:45</span>
-                </div>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="font-semibold">RabbitMQ</span>
-                <div className="flex items-center">
-                  <CheckIcon className="text-green-500" />
-                  <span className="ml-2 text-gray-500">19/04/2024 12:05</span>
-                </div>
-              </div>
             </CardContent>
           </Card>
           <Card className="flex-1 shadow-md bg-white">

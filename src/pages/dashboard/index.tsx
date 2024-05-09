@@ -394,51 +394,6 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
             </div>
           </div>
         </div>
-
-        <div className="  w-full  flex h-full flex-col items-center justify-end    gap-4">
-          <div className="  border-2 pt-2 rounded-lg w-full flex flex-col  items-center  justify-center  ">
-            <p>Reprocessar venda</p>
-            <div className=" w-full h-full flex  flex-col lg:flex-row lg:items-end items-center justify-between lg:p-8  ">
-              <Input
-                variant="underlined"
-                placeholder="ID do estabelecimento"
-                size="sm"
-                className="w-[50vw] lg:w-[15vw]"
-              />
-              <div className=" border-2 flex flex-col lg:flex-row items-start lg:items-end justify-center lg:justify-around  gap-1  w-[50vw] lg:w-1/4">
-                De: <DatePicker variant="underlined" />
-                Até: <DatePicker variant="underlined" />
-              </div>
-
-              <Button color="primary" variant="solid" className="" size="lg">
-                Enviar
-              </Button>
-            </div>
-          </div>
-
-          <div className=" border-2  rounded-lg w-full flex flex-col  items-center justify-between pt-4 ">
-            <p>Reprocessar saldo</p>
-            <div className="border-2 w-full h-full flex flex-col lg:flex-row items-center  justify-center lg:items-end lg:justify-between gap-2 p-4">
-              <Input
-                variant="underlined"
-                placeholder="ID do estabelecimento"
-                size="sm"
-                className=" w-[50vw] lg:w-[15vw]"
-              />
-
-              <Input
-                variant="underlined"
-                placeholder="Dias"
-                size="sm"
-                className="w-[50vw]  lg:w-[15vw]"
-              />
-
-              <Button color="primary" variant="solid" className="" size="lg">
-                Enviar
-              </Button>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   )
