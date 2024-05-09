@@ -88,16 +88,41 @@ export default function Vendas() {
             </div>
           </form>
           {responseData ? (
-            <div className='border-2 bg-mygray p-4 lg:w-4/6 w-full h-full flex flex-col lg:grid lg:grid-cols-2'>
+            <div className=' bg-mygray p-4 lg:w-4/6 gap-4 w-full h-full flex flex-col lg:grid lg:grid-cols-2'>
              
-              <div className=' h-full w-full  text-white'>
+              <div className=' h-full w-full space-y-4  text-white'>
               <div className=''>
 <h1 className='font-bold'>Marketplace</h1>
 <p>{responseData.pedido.estabelecimento.marketplace.nome}</p>
 
               </div>
 
-
+              <div className=' pr-2'>
+                <div className='   flex  flex-row items-start justify-between'> 
+                  <p>Valor</p>
+                  <p>{responseData.pedido.valor_bruto}</p>
+                </div>
+                <div className='   flex flex-col lg:flex-row items-start justify-between'> 
+                  <p>Valor liquido</p>
+                  <p>{responseData.pedido.valor_liquido}</p>
+                </div>
+                <div className='   flex  flex-row items-start justify-between'> 
+                  <p>Taxa Custos</p>
+                  <p>{responseData.pedido.pagamentos[0].taxa}</p>
+                </div>
+                <div className='   flex flex-row items-start justify-between'> 
+                  <p>Markup</p>
+                  <p>{responseData.zoopTransaction.payment_method.card_brand}</p>
+                </div>
+                <div className='   flex flex-row items-start justify-between'> 
+                  <p>Tabela de Markup</p>
+                  <p>{responseData.pedido.pagamentos[0].markup}</p>
+                </div>
+                <div className='   flex flex-row items-start justify-between'> 
+                  <p>Splits</p>
+                  <p>?</p>
+                </div>
+                </div>
 
 
               
@@ -118,7 +143,7 @@ export default function Vendas() {
               <p>{responseData.pedido.estabelecimento.razao_social} </p>
              </div>
 
-              <div className='border-2 pr-2'>
+              <div className=' pr-2'>
                 <div className='   flex  flex-row items-start justify-between'> 
                   <p>Status</p>
                   <p>{responseData.pedido.status_pedido.titulo}</p>
@@ -149,7 +174,7 @@ export default function Vendas() {
 
           ) : null}
         </div>
-        {responseData ? (
+        {responseData ? (<div className='p-2'>
           <div className='w-full flex flex-col items-center lg:items-start justify-center gap-2  bg-white shadow-lg border-2 p-4  '>
             <h1 className='font-bold'>Pagamentos</h1>
 
@@ -157,10 +182,10 @@ export default function Vendas() {
 
             <div className='lg:grid lg:grid-cols-5 flex flex-col items-center justify-center  w-full space-y-2 space-x-2'>
 
-              <div className='flex flex-col space-y-2 border-2 items-center lg:items-start justify-center p-4'>
+              <div className='flex flex-col space-y-2 items-center lg:items-start justify-center p-4 lg:pl-0'>
                 <p className='font-bold'>ID {responseData.pedido.id}</p>
                 <p>Status:  {responseData.pedido.status_pedido.titulo}</p>
-                <p>Valor</p>
+                <p>Valor</p>  
                 <p>R$ {responseData.pedido.pagamentos[0].valor}</p>
                 <p>DR</p>
                 <p>  {new Date(
@@ -169,12 +194,12 @@ export default function Vendas() {
               </div>
 
 
-              <div className='flex flex-col  items-center justify-center border-2 w-full h-full p-4'>
+              <div className='flex flex-col  items-center justify-center  w-full h-full p-4'>
                 <p>Taxa</p>
                 <p>R$ {responseData.pedido.pagamentos[0].taxa}</p>
 
               </div>
-              <div className='flex flex-col  items-center justify-center border-2 h-full w-full'>
+              <div className='flex flex-col  items-center justify-center  h-full w-full'>
 
                 <p>Recebido </p>
                 <p>R$ {responseData.pedido.pagamentos[0].valor_recebido}</p>
@@ -182,13 +207,13 @@ export default function Vendas() {
               </div>
 
 
-              <div className='flex flex-col  items-center justify-center border-2 h-full w-full'>
+              <div className='flex flex-col  items-center justify-center  h-full w-full'>
                 <p>DP</p>
                 <p>-</p>
 
 
               </div>
-              <div className='flex flex-col  items-center lg:justify-end border-2 h-full w-full p-4'>
+              <div className='flex flex-col  items-center lg:justify-end  h-full w-full p-4'>
                 <Button color='danger' size='md'>Reprocessar venda</Button>
 
               </div>
@@ -197,19 +222,19 @@ export default function Vendas() {
 
             </div>
           </div>
-
+          </div>
 
         ) : null}
         {responseData ? (<div className=" bg-black  max-w-full text-sm  grid grid-cols-1 lg:grid-cols-2 lg:col-span-2 ">
-          <div className=" w-full text-left p-2 lg:p-4 ">
-            <p>Vendas</p>
+          <div className=" w-full text-left p-2  ">
+            <p className='text-white'>Vendas</p>
             <JSONPretty
               data={responseData.pedido}
               theme={{ JSONPrettyMon }}
             />
           </div>
-          <div className=" w-full text-left   p-2 lg:p-4">
-            <p>Zoop Transactions</p>
+          <div className=" w-full text-left  p-2  ">
+            <p className='text-white'>Zoop Transactions</p>
             <JSONPretty
               className=" roundead-xl "
               data={responseData.zoopTransaction}
