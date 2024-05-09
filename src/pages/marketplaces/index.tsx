@@ -167,7 +167,7 @@ export default function Marketplace() {
 
             >
               <DropdownItem key="todos">todos</DropdownItem>
-              <DropdownItem key="ativos">ativos</DropdownItem>
+              <DropdownItem key="ativos">ativoss</DropdownItem>
               <DropdownItem key="removido">desativados</DropdownItem>
             </DropdownMenu>
           </Dropdown>
