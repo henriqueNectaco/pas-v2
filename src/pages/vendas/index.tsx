@@ -11,7 +11,12 @@ import { toast } from 'sonner'
 import Router from 'next/router'
 
 interface Pedido {
+  id: string
+  status_pedido: {
+    titulo: string
+  }
   estabelecimento: {
+    razao_social: string
     marketplace: {
       nome: string
     }
@@ -21,7 +26,10 @@ interface Pedido {
   pagamentos: {
     taxa: number
     markup: number
-    // Outras propriedades se necessário
+    data_recebimento: string
+    valor_recebido: number
+    valor: number
+    // Outras propriedades se necessário0,,,,,,,,,,,,,,,,,,
   }[]
   parcelas: number
   // Outras propriedades se necessário
@@ -74,6 +82,7 @@ export default function Vendas() {
           { token },
         )
         if (res.data.success === true) {
+          console.log('foi ')
         } else {
           toast.error('Sua sessão expirou faça login novamente')
           Router.push('/')
