@@ -102,11 +102,7 @@ export default function DashBoard() {
 
   const previousMonthFormatted = `${yearPreviousMonth}-${monthPreviousMonth}-${dayPreviousMonth}`
 
-
-
   useEffect(() => {
-
-
     const fecthTotalMarketplaceChildResgistredPreviousMonth = async () => {
       try {
         const res = await axios.get(
@@ -257,7 +253,10 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
     }
     const auth = async () => {
       try {
-        const res = await axios.post(`https://api.zsystems.com.br/z1/autenticar`, { token: token })
+        const res = await axios.post(
+          `https://api.zsystems.com.br/z1/autenticar`,
+          { token },
+        )
         if (res.data.success === true) {
           fecthTotalMarketplaceChildResgistredPreviousMonth()
           fetchDataServiceStatus()
@@ -270,23 +269,16 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
           fetchTotalMarketplaceChildRegistredLastThirtyDays()
           fetchTotalEstabelecimentsChildRegistredLastThirtyDays()
           fetchTotalNotProcessedToday()
-
-
         } else {
           toast.error('Sua sessão expirou faça login novamente')
           Router.push('/')
-
         }
-      }
-      catch (error) {
+      } catch (error) {
         console.error(error)
       }
-
     }
 
-
     auth()
-
   }, [])
 
   // Função para formatar a data para yyyy-mm-dd
@@ -414,7 +406,6 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
                 className="w-[50vw] lg:w-[15vw]"
               />
               <div className=" border-2 flex flex-col lg:flex-row items-start lg:items-end justify-center lg:justify-around  gap-1  w-[50vw] lg:w-1/4">
-
                 De: <DatePicker variant="underlined" />
                 Até: <DatePicker variant="underlined" />
               </div>

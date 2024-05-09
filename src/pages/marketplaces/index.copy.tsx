@@ -12,7 +12,7 @@ import {
   DatePicker,
 } from '@nextui-org/react'
 import ButtonOptions from './buttonOptions'
-import DropdownMenuFirst from './a'
+import DropdownMenuFirst from './listMarketplaces'
 
 import axios from 'axios'
 import DropdownMenuSecond from './dropdown'
@@ -20,9 +20,6 @@ import DropDownOne from './newDrop'
 import { CaretDown, DotsThreeOutlineVertical } from 'phosphor-react'
 import { toast } from 'sonner'
 import Router from 'next/router'
-
-
-
 
 export default function Marketplace() {
   const token = Cookies.get('token')
@@ -40,7 +37,7 @@ export default function Marketplace() {
     setName('')
     setIdInput('')
     setDatePickerValue(null)
-    setState(null)
+    setState('')
   }
   const handleChange = (e: any) => {
     setState(key)
@@ -89,24 +86,21 @@ export default function Marketplace() {
       }
     }
 
-
     const auth = async () => {
       try {
-        const res = await axios.post(`https://api.zsystems.com.br/z1/autenticar`, { token: token })
+        const res = await axios.post(
+          `https://api.zsystems.com.br/z1/autenticar`,
+          { token },
+        )
         if (res.data.success === true) {
           getServerSideDate()
-
-
         } else {
           toast.error('Sua sessão expirou faça login novamente')
           Router.push('/')
-
         }
-      }
-      catch (error) {
+      } catch (error) {
         console.error(error)
       }
-
     }
 
     auth()
@@ -119,7 +113,7 @@ export default function Marketplace() {
     <div className=" h-screen max-w-screen w-full flex flex-col items-center  ">
       <Header />
       <div className="w-full flex flex-col items-center    p-2 lg:p-4">
-        <div className=" w-full     gap-2 lg:gap-6  p-2 lg:p-4 lg:pl-8 flex lg:pr-8  flex-col lg:flex-row items-center  border-2  ">
+        <div className="   w-full  border-2 p-4  lg:p-6 gap-2 flex flex-col lg:flex-row items-center  lg:items-start justify-start  ">
           <Button
             className="lg:w-[20vw] w-3/4 "
             radius="md"
@@ -147,14 +141,9 @@ export default function Marketplace() {
           >
             Importar todas as vendas
           </Button>
-        </div>
-
-        <div className="   w-full  border-2 p-4  lg:p-6 gap-2 flex flex-col lg:flex-row items-center  lg:items-start justify-start  ">
-
-
-          <Dropdown   >
+          <Dropdown>
             <DropdownTrigger>
-              <Button className='' size='lg' variant="solid">
+              <Button className="" size="md" variant="solid">
                 {state}
                 <CaretDown size={20} />
               </Button>
@@ -167,33 +156,28 @@ export default function Marketplace() {
               color="primary"
               variant="solid"
               size="lg"
-
             >
               <DropdownItem key="todos">todos</DropdownItem>
-              <DropdownItem key="ativos">ativos</DropdownItem>
+              <DropdownItem key="ativos">ativoss</DropdownItem>
               <DropdownItem key="removido">desativados</DropdownItem>
             </DropdownMenu>
           </Dropdown>
-
-          <Button size='lg' onClick={handleCleanInput} color="danger">
+          <Button size="md" onClick={handleCleanInput} color="danger">
             Limpar
           </Button>
-          <Button size='lg' onClick={fetchFilteredData} color="primary">
+          <Button size="md" onClick={fetchFilteredData} color="primary">
             Filtrar
           </Button>
-          assdddddg
-          
         </div>
-
       </div>
       <>
         {!resData ? (
-          <Spinner size="4xl" color="primary" />
+          <Spinner size="lg" color="primary" />
         ) : (
           <div className=" max-w-screen w-full h-full  space-y-4    p-4 ">
             <>
               {resData.map((resData: any) => (
-                <div className="w-full border-2 border-white-400    flex  flex-col   items-center justify-center lg:flex-row p-4 gap-2 ">
+                <div className="w-full border-2 border-sky-400 shadow-md  rounded-md    flex  flex-col   items-center justify-center lg:flex-row p-4 gap-2 ">
                   <div className="w-1/4  flex flex-col items-center justify-center">
                     <p>Id:</p>
                     <p>{resData.id}</p>
@@ -229,7 +213,6 @@ export default function Marketplace() {
                         }}
                         color="primary"
                         variant="solid"
-                        size="lg"
                       >
                         <DropdownItem key="registerchildmarketplace">
                           Cadastrar Marketplace filho
@@ -266,6 +249,6 @@ export default function Marketplace() {
           </div>
         )}
       </>
-    </div >
+    </div>
   )
 }

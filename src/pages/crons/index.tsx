@@ -7,19 +7,17 @@ import { Spinner } from '@nextui-org/react'
 import { CardCron } from './items'
 import Router, { useRouter } from 'next/router'
 type CronProps = {
-  Cron: string
-  Scheduled: string
-  Mensagem: string
-  date: string
+  slug: string
+  id: string
+  message: string
+  start_date: Date
+  cron: string
+  interval: string
 }
 export default function Crons() {
-  const router = useRouter()
-  const [logs, setLogs] = useState([])
-  const [crons, setCrons] = useState<any>(null)
-  const [mensagem, setMensagem] = useState<any>('')
+  const [crons, setCrons] = useState<object>()
+
   const token = Cookies.get('token')
-
-
 
   const getCrons = async () => {
     const res = await axios.get(
@@ -35,38 +33,31 @@ export default function Crons() {
 
       console.log()
     } else {
-      router.back
       toast.error(res.data.error)
     }
   }
   const auth = async () => {
     try {
-      const res = await axios.post(`https://api.zsystems.com.br/z1/autenticar`, { token: token })
+      const res = await axios.post(
+        `https://api.zsystems.com.br/z1/autenticar`,
+        { token },
+      )
       if (res.data.success === true) {
         getCrons()
-
-
       } else {
         toast.error('Sua sessão expirou faça login novamente')
         Router.push('/')
-
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error)
     }
-
   }
 
   useEffect(() => {
-
     auth()
+  })
 
-
-
-  }, [])
-
-  function formatarData(dataString: any) {
+  function formatarData(dataString: Date): string {
     const dataOriginal = new Date(dataString)
 
     const dia = dataOriginal.getDate().toString().padStart(2, '0')
@@ -89,7 +80,7 @@ export default function Crons() {
             <Spinner color="primary" size="lg" />
           ) : (
             <>
-              {crons.map((crons: any) => (
+              {crons.map((crons: CronProps) => (
                 <div key={crons.id}>
                   <CardCron
                     Cron={crons.slug}
