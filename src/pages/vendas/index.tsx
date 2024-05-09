@@ -65,7 +65,7 @@ export default function Vendas() {
     <div className="flex flex-col items-center  h-screen max-w-screen w-full ">
       <Header />
       <div className='w-full max-w-screen flex flex-col space-y-2 '>
-        <div className="w-full p-4 flex lg:flex-row flex-col items-center gap-2  justify-center h-full">
+        <div className="w-full lg:p-4 p-2 lg:pr-0 flex lg:flex-row flex-col items-center lg:gap-4  justify-center h-full">
           <form className=" h-full  w-full lg:w-2/6 p-6 flex flex-col items-center justify-around  lg:px-8 sm:rounded-xl  my-4  shadow-md border-2">
             <label className=" font-bold">Vendas:</label>
             <Input
@@ -91,7 +91,7 @@ export default function Vendas() {
             <div className=' bg-mygray p-4 lg:w-4/6 gap-4 w-full h-full flex flex-col lg:grid lg:grid-cols-2'>
              
               <div className=' h-full w-full space-y-4  text-white'>
-              <div className=''>
+              <div className='flex flex-col'>
 <h1 className='font-bold'>Marketplace</h1>
 <p>{responseData.pedido.estabelecimento.marketplace.nome}</p>
 

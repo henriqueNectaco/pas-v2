@@ -118,7 +118,7 @@ export default function Marketplace() {
   return (
     <div className=" h-screen max-w-screen w-full flex flex-col items-center  ">
       <Header />
-      <div className="w-full  p-2 lg:p-4">
+      <div className="w-full flex flex-col items-center    p-2 lg:p-4">
         <div className=" w-full     gap-2 lg:gap-6  p-2 lg:p-4 lg:pl-8 flex lg:pr-8  flex-col lg:flex-row items-center  border-2  ">
           <Button
             className="lg:w-[20vw] w-3/4 "
@@ -148,48 +148,15 @@ export default function Marketplace() {
             Importar todas as vendas
           </Button>
         </div>
-        <div className=" mt-2 w-full border-2 p-12 md:p-20 lg:p-6 gap-4 flex flex-col lg:flex-row items-center lg:items-end justify-between  ">
-          <Input
-            className="w-full lg:w-1/8"
-            placeholder="ID"
-            variant="underlined"
-            value={idInput}
-            onChange={handleChangeIdInput}
-          />
-          <Input
-            className="w-full lg:w-1/8"
-            placeholder="Nome"
-            variant="underlined"
-            value={name}
-            onChange={handleChangeNameInput}
-          />
-          <DatePicker
-            className="w-full lg:w-1/8"
-            onChange={handleDatePickerChange}
-            value={datePickerValue}
-            variant="underlined"
-            label={'Selecione uma data'}
-          />
-          <Input
-            placeholder="email"
-            className="w-full lg:w-1/8"
-            variant="underlined"
-            value={email}
-            onChange={handleChangeEmailInput}
-          />
-          <Input
-            placeholder="CNPJ"
-            className="w-full lg:w-1/8"
-            variant="underlined"
-            value={cnpj}
-            onChange={handleChangeCnpjInput}
-          />
 
-          <Dropdown>
+        <div className="   w-full  border-2 p-4  lg:p-6 gap-2 flex flex-col lg:flex-row items-center  lg:items-start justify-start  ">
+
+
+          <Dropdown   >
             <DropdownTrigger>
-              <Button variant="bordered">
+              <Button className='' size='lg' variant="solid">
                 {state}
-                <CaretDown size={12} />
+                <CaretDown size={20} />
               </Button>
             </DropdownTrigger>
             <DropdownMenu
@@ -200,6 +167,7 @@ export default function Marketplace() {
               color="primary"
               variant="solid"
               size="lg"
+
             >
               <DropdownItem key="todos">todos</DropdownItem>
               <DropdownItem key="ativos">ativos</DropdownItem>
@@ -207,22 +175,25 @@ export default function Marketplace() {
             </DropdownMenu>
           </Dropdown>
 
-          <Button fullWidth={true} onClick={handleCleanInput} color="danger">
+          <Button size='lg' onClick={handleCleanInput} color="danger">
             Limpar
           </Button>
-          <Button fullWidth={true} onClick={fetchFilteredData} color="primary">
+          <Button size='lg' onClick={fetchFilteredData} color="primary">
             Filtrar
           </Button>
+          assdddddg
+          
         </div>
+
       </div>
       <>
         {!resData ? (
           <Spinner size="4xl" color="primary" />
         ) : (
-          <div className="w-full h-full   space-y-2   p-4   ">
+          <div className=" max-w-screen w-full h-full  space-y-4    p-4 ">
             <>
               {resData.map((resData: any) => (
-                <div className="w-full border-b border-black  flex  flex-col   items-center justify-center lg:flex-row p-4 gap-2 ">
+                <div className="w-full border-2 border-white-400    flex  flex-col   items-center justify-center lg:flex-row p-4 gap-2 ">
                   <div className="w-1/4  flex flex-col items-center justify-center">
                     <p>Id:</p>
                     <p>{resData.id}</p>
@@ -244,7 +215,7 @@ export default function Marketplace() {
                     <Dropdown>
                       <DropdownTrigger>
                         <Button variant="light">
-                          <DotsThreeOutlineVertical size={25} />
+                          <DotsThreeOutlineVertical size={20} />
                         </Button>
                       </DropdownTrigger>
                       <DropdownMenu
@@ -295,6 +266,6 @@ export default function Marketplace() {
           </div>
         )}
       </>
-    </div>
+    </div >
   )
 }
