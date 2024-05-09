@@ -26,7 +26,7 @@ type ListProps = {
 export default function Marketplace() {
   const token = Cookies.get('token')
 
-  const [resData, setResData] = useState('')
+  const [resData, setResData] = useState<object>()
   const [state, setState] = useState('ativos')
 
   const handleCleanInput = () => {
