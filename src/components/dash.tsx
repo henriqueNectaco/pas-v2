@@ -15,15 +15,33 @@ import { CardTitle, CardHeader, CardContent, Card } from '@/components/ui/card'
 import { Input } from '@nextui-org/input'
 import { Calendar } from '@/components/ui/calendar'
 type PropsType = {
-  titulo: string
+  
+  servicesStatus:any
+  processadosHoje:number
+  processadosOntem:number
+processadosMesAtual:number
+processadosMesAnterior:number
+naoProcessadosOntem :number
+naoProcessadosHoje:number
+
+}
+function formatarData(dataString: any) {
+  const data = new Date(dataString)
+  const dia = String(data.getDate()).padStart(2, '0')
+  const mes = String(data.getMonth() + 1).padStart(2, '0')
+  const ano = data.getFullYear()
+  const horas = String(data.getHours()).padStart(2, '0')
+  const minutos = String(data.getMinutes()).padStart(2, '0')
+
+  return `${dia}/${mes}/${ano} ${horas}:${minutos}`
 }
 
-export default function DashComponent(props: PropsType) {
+export default function DashComponent(props: PropsType ) {
   return (
     <>
-      <div className="flex flex-col gap-6 p-6 bg-white rounded-lg shadow-md">
+      <div className="flex flex-col gap-6 lg:p-4 p-2   ">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card className="flex-1 shadow-md bg-white">
+          <Card className="flex-1 shadow-md bg-white ">
             <CardHeader>
               <CardTitle>
                 <div className="flex items-center gap-2">
@@ -32,17 +50,21 @@ export default function DashComponent(props: PropsType) {
                 </div>
               </CardTitle>
             </CardHeader>
-            <CardContent className="grid grid-cols-1 gap-4 p-4">
-              <div className="flex items-center justify-between">
-                <span className="font-semibold">{props.service}</span>
-                <div className="flex items-center">
+            <CardContent className="flex flex-col justify-center gap-4 p-4">
+          
+              {props.servicesStatus.map((services) => ( 
+                <div className='flex items-center justify-between' key={services.id}>
+                  <span className="font-semibold">{services.service}</span>
+                  <div className="flex items-center">
                   <CheckIcon className="text-green-500" />
-                  <span className="ml-2 text-gray-500">26/03/2024 16:30</span>
-                </div>
-              </div>
+                  <span className="ml-2 text-gray-500">{formatarData(services.last_update)}</span>
+                  </div>
+                  </div>
+              ))}
             </CardContent>
+          
           </Card>
-          <Card className="flex-1 shadow-md bg-white">
+          <Card className="flex-1 shadow-md bg-white ">
             <CardHeader>
               <CardTitle>
                 <div className="flex items-center gap-2">
@@ -56,13 +78,13 @@ export default function DashComponent(props: PropsType) {
                 <span className="font-semibold">
                   Pedidos Processados Hoje/Ontem
                 </span>
-                <span className="text-gray-500">88847/65056</span>
+                <span className="text-gray-500">{props.processadosHoje}/{props.processadosOntem}</span>
               </div>
               <div className="flex justify-between">
                 <span className="font-semibold">
-                  Pedidos Processados 30 Dias/30 Dias Anteriores
+                  Pedidos Processados Mês Atual/Mês Anterior
                 </span>
-                <span className="text-gray-500">2287291/2604236</span>
+                <span className="text-gray-500">{props.processadosMesAtual}/{props.processadosMesAnterior}</span>
               </div>
               <div className="flex justify-between">
                 <span className="font-semibold">
@@ -80,7 +102,7 @@ export default function DashComponent(props: PropsType) {
                 <span className="font-semibold">
                   Pedidos Não Processados Hoje/Ontem
                 </span>
-                <span className="text-gray-500">0/0</span>
+                <span className="text-gray-500">{props.naoProcessadosHoje}/{props.naoProcessadosOntem}</span>
               </div>
             </CardContent>
           </Card>
@@ -128,20 +150,7 @@ export default function DashComponent(props: PropsType) {
               placeholder="Digite o ID da Venda"
               variant="underlined"
             />
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  className="text-indigo-600 hover:bg-indigo-600 hover:text-white"
-                  variant="outline"
-                >
-                  <CalendarDaysIcon className="h-4 w-4 mr-2" />
-                  Selecionar Data
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent align="start" className="w-auto p-0">
-                <Calendar initialFocus mode="single" />
-              </PopoverContent>
-            </Popover>
+            
             <div className="ml-auto sm:ml-4">
               <Button className="bg-indigo-600 text-white hover:bg-indigo-700">
                 <ReplaceIcon className="h-4 w-4 mr-2" />
@@ -349,3 +358,18 @@ function SunMoonIcon(props) {
     </svg>
   )
 }
+
+/*
+  <CardContent className="grid grid-cols-1 gap-4 p-4">
+
+
+            {props.servicesStatus.map(() => ( 
+                <div key={props.id}>
+                  <p>{props.serviceName}</p>
+                  <CheckIcon className="text-green-500" />
+                  <p>{props.last_update}</p>
+                  <p>rtes</p>
+
+                </div>
+              ))}
+            </CardContent> */
