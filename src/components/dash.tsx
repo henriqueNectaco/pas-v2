@@ -4,7 +4,7 @@
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
  */
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
+import {Button} from '@nextui-org/button'
 import {
   PopoverTrigger,
   PopoverContent,
@@ -14,6 +14,7 @@ import { Avatar } from '@/components/ui/avatar'
 import { CardTitle, CardHeader, CardContent, Card } from '@/components/ui/card'
 import { Input } from '@nextui-org/input'
 import { Calendar } from '@/components/ui/calendar'
+import { Spinner } from '@nextui-org/react'
 type PropsType = {
   
   servicesStatus:any
@@ -23,7 +24,10 @@ processadosMesAtual:number
 processadosMesAnterior:number
 naoProcessadosOntem :number
 naoProcessadosHoje:number
-
+vendas:number
+totalVendido:number
+marketplacesCadastradosUltimos30dias:number
+estabelecimentosFilhosRegistradosUltimos30dias:number
 }
 function formatarData(dataString: any) {
   const data = new Date(dataString)
@@ -40,7 +44,7 @@ export default function DashComponent(props: PropsType ) {
   return (
     <>
       <div className="flex flex-col gap-6 lg:p-4 p-2   ">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 ">
           <Card className="flex-1 shadow-md bg-white ">
             <CardHeader>
               <CardTitle>
@@ -50,9 +54,11 @@ export default function DashComponent(props: PropsType ) {
                 </div>
               </CardTitle>
             </CardHeader>
-            <CardContent className="flex flex-col justify-center gap-4 p-4">
-          
-              {props.servicesStatus.map((services) => ( 
+            <CardContent className="flex flex-col justify-center  gap-4 p-4">
+          {!props.servicesStatus ? (<Spinner  size='lg'/>):(
+<>
+
+{props.servicesStatus.map((services) => ( 
                 <div className='flex items-center justify-between' key={services.id}>
                   <span className="font-semibold">{services.service}</span>
                   <div className="flex items-center">
@@ -61,6 +67,9 @@ export default function DashComponent(props: PropsType ) {
                   </div>
                   </div>
               ))}
+</>
+)}
+           
             </CardContent>
           
           </Card>
@@ -78,13 +87,23 @@ export default function DashComponent(props: PropsType ) {
                 <span className="font-semibold">
                   Pedidos Processados Hoje/Ontem
                 </span>
-                <span className="text-gray-500">{props.processadosHoje}/{props.processadosOntem}</span>
+                {!props.processadosOntem || !props.naoProcessadosHoje ? (<Spinner size='sm'/>):
+                (
+                  <span className="text-gray-500">{props.processadosHoje}/{props.processadosOntem}</span>  
+                )}
+                
               </div>
               <div className="flex justify-between">
                 <span className="font-semibold">
                   Pedidos Processados Mês Atual/Mês Anterior
                 </span>
-                <span className="text-gray-500">{props.processadosMesAtual}/{props.processadosMesAnterior}</span>
+                {!props.processadosMesAtual || !props.processadosMesAnterior ? (<Spinner size='sm'/>):
+                (
+<span className="text-gray-500">{props.processadosMesAtual}/{props.processadosMesAnterior}</span>
+                )
+
+                }
+                
               </div>
               <div className="flex justify-between">
                 <span className="font-semibold">
@@ -102,7 +121,13 @@ export default function DashComponent(props: PropsType ) {
                 <span className="font-semibold">
                   Pedidos Não Processados Hoje/Ontem
                 </span>
-                <span className="text-gray-500">{props.naoProcessadosHoje}/{props.naoProcessadosOntem}</span>
+{!props.naoProcessadosHoje || !props.naoProcessadosOntem ?(<Spinner size='sm'/>):
+( <div className='flex flex-row'><p className={`${props.naoProcessadosHoje > 0 ? 'text-yellow-400' : 'text-gray-50'}`}>{props.naoProcessadosHoje}</p>
+/
+<span className={`${props.naoProcessadosOntem > 0 ? 'text-yellow-400' : 'text-gray-50'}`}>{props.naoProcessadosOntem}</span> </div>)}
+
+            
+               
               </div>
             </CardContent>
           </Card>
@@ -118,11 +143,17 @@ export default function DashComponent(props: PropsType ) {
             <CardContent className="grid grid-cols-1 gap-4 p-4">
               <div className="flex justify-between">
                 <span className="font-semibold">Vendas</span>
-                <span className="text-gray-500">20046</span>
+                {!props.vendas ? (<Spinner size='sm'/>):(
+                <span className="text-gray-500">{props.vendas}</span>  
+                )}
+                
               </div>
               <div className="flex justify-between">
                 <span className="font-semibold">Valor Total de Vendas</span>
-                <span className="text-gray-500">R$ 1.860.933,45</span>
+                {!props.totalVendido ?(<Spinner size='sm'/>):(
+                <span className="text-gray-500">{props.totalVendido}</span>  
+                )}
+                
               </div>
               <div className="flex justify-between">
                 <span className="font-semibold">SSLs Este Mês/Último Mês</span>
@@ -130,15 +161,19 @@ export default function DashComponent(props: PropsType ) {
               </div>
               <div className="flex justify-between">
                 <span className="font-semibold">
-                  Marketplaces Registrados 30 Dias/30 Dias Anteriores
+                  Marketplaces filhos Registrados ultimos 30 dias
                 </span>
-                <span className="text-gray-500">217/282</span>
+                {!props.marketplacesCadastradosUltimos30dias ?(<Spinner  size='sm'/>):
+                (<span className="text-gray-500">{props.marketplacesCadastradosUltimos30dias}</span>)}
               </div>
               <div className="flex justify-between">
                 <span className="font-semibold">
-                  Estabelecimentos Filhos Registrados 30 Dias/30 Dias Anteriores
+                  Estabelecimentos Filhos Registrados ultimos 30 dias 
                 </span>
-                <span className="text-gray-500">7027/7639</span>
+                {!props.estabelecimentosFilhosRegistradosUltimos30dias ?(<Spinner size='sm'/>):(
+                <span className="text-gray-500">{props.estabelecimentosFilhosRegistradosUltimos30dias}</span>  
+                )}
+                
               </div>
             </CardContent>
           </Card>
@@ -153,7 +188,7 @@ export default function DashComponent(props: PropsType ) {
             
             <div className="ml-auto sm:ml-4">
               <Button className="bg-indigo-600 text-white hover:bg-indigo-700">
-                <ReplaceIcon className="h-4 w-4 mr-2" />
+                
                 Reprocessar Venda
               </Button>
             </div>
@@ -166,7 +201,7 @@ export default function DashComponent(props: PropsType ) {
             />
             <div className="ml-auto sm:ml-4">
               <Button className="bg-indigo-600 text-white hover:bg-indigo-700">
-                <ReplaceIcon className="h-4 w-4 mr-2" />
+                
                 Reprocessar Saldo
               </Button>
             </div>

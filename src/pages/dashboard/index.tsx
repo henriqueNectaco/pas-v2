@@ -9,6 +9,7 @@ import { toast } from 'sonner'
 import Router from 'next/router'
 import DashComponent from '@/components/dash'
 export default function DashBoard() {
+  const [numVendas,setNumVendas]=useState()
   const [servicesStatus, setServicesStatus] = useState()
   const [amountIndicator, setAmountIndicator] = useState(null)
   const [totalMKT, setTotalMKT] = useState(null)
@@ -20,14 +21,15 @@ export default function DashBoard() {
   const [totalProcessedThirtyDaysBefore, setTotalProcessedThirtyDaysBefore] =
     useState(null)
     const [totalNotProcessedYesterday,setTotalNotProcessedYesterday]=useState()
+    const [totalVendido,setTotalVendido]=useState()
   const [
     totalMarketplaceChildRegistredLastThiryDays,
     setTotalMarketplaceChildRegistredLastThirtyDays,
-  ] = useState(null)
+  ] = useState()
   const [
     totalEstabelecimentsChildRegistredLastThirtyDays,
     setTotalEstabelecimentsChildRegistredLastThirtyDays,
-  ] = useState(null)
+  ] = useState()
   const [totalNotProcessedToday, setTotalNotProcessedToday] = useState(null)
   const [
     totalMarketplaceChildRegistredPreviousMonth,
@@ -36,16 +38,7 @@ export default function DashBoard() {
   const [totalNotPayedLastWeek, setTotalNotPayedLastWeek] = useState(null)
 
   const token = Cookies.get('token')
-  /* const api = async (data) => {
 
-    try {
-      const response = await axios.get('https://api.zsystems.com.br/z1/services-status', data);
-      const status = response.data
-      console.log(data)
-    } catch (error) {
-      console.log(error)
-    }
-  } */
   function formatDate(data) {
     const dataObj = new Date(data);
     const dia = dataObj.getDate().toString().padStart(2, '0');
@@ -84,7 +77,7 @@ export default function DashBoard() {
   // Exemplo de uso
   const currentDate = new Date() // Data atual
   const formattedDate = formatDateToYYYYMMDD(currentDate)
-  // console.log(formattedDate); // Saída: "yyyy-mm-dd"
+  
   const previousDate = new Date()
   previousDate.setDate(currentDate.getDate() - 30)
   const formattedPreviousDate = formatDateToYYYYMMDD(previousDate)
@@ -102,7 +95,7 @@ export default function DashBoard() {
   const monthlastMonth = String(lastMonth.getMonth() + 1).padStart(2, '0') // Adiciona zero à esquerda se o mês for menor que 10
   const daylastMonth = String(lastMonth.getDate()).padStart(2, '0')
   const lastMonthFormatted = `${yearlasmonth}-${monthlastMonth}-${daylastMonth}`
-  console.log(lastMonthFormatted)
+  
   const previousMonth = new Date(lastMonth)
   previousMonth.setMonth(lastMonth.getMonth() - 1) // Define a data para o mês anterior ao mês anterior
 
@@ -115,192 +108,195 @@ export default function DashBoard() {
 
   const previousMonthFormatted = `${yearPreviousMonth}-${monthPreviousMonth}-${dayPreviousMonth}`
 
-  useEffect(() => {
-    const fecthTotalMarketplaceChildResgistredPreviousMonth = async () => {
-      try {
-        const res = await axios.get(
-          `
-        https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=${previousMonthFormatted}&endDate=${lastMonthFormatted}`,
-          { headers: { Authorization: `Bearer ${token}` } },
-        )
-        setTotalMarketplaceChildRegistredPreviousMonth(res.data)
-      } catch (error) {
-        console.error(error)
-      }
+  const fecthTotalMarketplaceChildResgistredPreviousMonth = async () => {
+    try {
+      const res = await axios.get(
+        `
+      https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=${previousMonthFormatted}&endDate=${lastMonthFormatted}`,
+        { headers: { Authorization: `Bearer ${token}` } },
+      )
+      setTotalMarketplaceChildRegistredPreviousMonth(res.data)
+    } catch (error) {
+      console.error(error)
     }
+  }
 const fetchTotanNotProcessedYesterday=async ()=>{
 try{
-  const res =await axios.get(`https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${yesterdayFormatted}&endDate=${yesterdayFormatted}`,
-  { headers: { Authorization: `Bearer ${token}` } }
-  )
-  setTotalNotProcessedYesterday(res.data.totalNotProcessed)
+const res =await axios.get(`https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${yesterdayFormatted}&endDate=${yesterdayFormatted}`,
+{ headers: { Authorization: `Bearer ${token}` } }
+)
+setTotalNotProcessedYesterday(res.data.totalNotProcessed)
 }
 catch (error) {
-  console.error(error)
+console.error(error)
 }
 }
-    const fetchTotalNotProcessedToday = async () => {
-      try {
-        const res = await axios.get(
-          `
+  const fetchTotalNotProcessedToday = async () => {
+    try {
+      const res = await axios.get(
+        `
 https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDate=${today}`,
-          { headers: { Authorization: `Bearer ${token}` } },
-        )
-        setTotalNotProcessedToday(res.data.totalNotProcessed)
-      } catch (error) {
-        console.error(error)
-      }
+        { headers: { Authorization: `Bearer ${token}` } },
+      )
+      setTotalNotProcessedToday(res.data.totalNotProcessed)
+    } catch (error) {
+      console.error(error)
     }
+  }
 
-    const fetchTotalEstabelecimentsChildRegistredLastThirtyDays = async () => {
-      try {
-        const res = await axios.get(
-          `https://pas-aps.up.railway.app/establishment/total-registered?startDate=${lastMonthFormatted}&endDate=${today}`,
-          { headers: { Authorization: `Bearer ${token}` } },
-        )
-        setTotalEstabelecimentsChildRegistredLastThirtyDays(res.data)
-      } catch (error) {
-        console.error(error)
-      }
+  const fetchTotalEstabelecimentsChildRegistredLastThirtyDays = async () => {
+    try {
+      const res = await axios.get(
+        `https://pas-aps.up.railway.app/establishment/total-registered?startDate=${lastMonthFormatted}&endDate=${today}`,
+        { headers: { Authorization: `Bearer ${token}` } },
+      )
+      setTotalEstabelecimentsChildRegistredLastThirtyDays(res.data.totalRegistered)
+    } catch (error) {
+      console.error(error)
     }
+  }
 
-    const fetchTotalMarketplaceChildRegistredLastThirtyDays = async () => {
-      try {
-        const res = await axios.get(
-          `https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=${lastMonthFormatted}&endDate=${formattedDate}`,
-          { headers: { Authorization: `Bearer ${token}` } },
-        )
-        setTotalMarketplaceChildRegistredLastThirtyDays(res.data)
-      } catch (error) {
-        console.error(error)
-      }
+  const fetchTotalMarketplaceChildRegistredLastThirtyDays = async () => {
+    try {
+      const res = await axios.get(
+        `https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=${lastMonthFormatted}&endDate=${formattedDate}`,
+        { headers: { Authorization: `Bearer ${token}` } },
+      )
+      setTotalMarketplaceChildRegistredLastThirtyDays(res.data.totalMarketplaceChild)
+    } catch (error) {
+      console.error(error)
     }
+  }
 
-    const fetchTotalProcessedThirtyDaysLater = async () => {
-      try {
-        const res = await axios.get(
-          `https://pas-aps.up.railway.app/sale/total-processed?startDate=${previousMonthFormatted}&endDate=${lastMonthFormatted}`,
-          { headers: { Authorization: `Bearer ${token}` } },
-        )
-        setTotalProcessedThirtyDaysBefore(res.data.totalProcessed)
-      } catch (error) {
-        console.error(error)
-      }
+  const fetchTotalProcessedThirtyDaysLater = async () => {
+    try {
+      const res = await axios.get(
+        `https://pas-aps.up.railway.app/sale/total-processed?startDate=${previousMonthFormatted}&endDate=${lastMonthFormatted}`,
+        { headers: { Authorization: `Bearer ${token}` } },
+      )
+      setTotalProcessedThirtyDaysBefore(res.data.totalProcessed)
+    } catch (error) {
+      console.error(error)
     }
+  }
 
-    const fetchTotalProcessedLastThirtyDays = async () => {
-      try {
-        const res = await axios.get(
-          `https://pas-aps.up.railway.app/sale/total-processed?startDate=${lastMonthFormatted}&endDate=${today}`,
-          { headers: { Authorization: `Bearer ${token}` } },
-        )
-        setTotalProcessedLastMonth(res.data.totalProcessed)
-      } catch (error) {
-        console.error(error)
-      }
+  const fetchTotalProcessedLastThirtyDays = async () => {
+    try {
+      const res = await axios.get(
+        `https://pas-aps.up.railway.app/sale/total-processed?startDate=${lastMonthFormatted}&endDate=${today}`,
+        { headers: { Authorization: `Bearer ${token}` } },
+      )
+      setTotalProcessedLastMonth(res.data.totalProcessed)
+    } catch (error) {
+      console.error(error)
     }
+  }
 
-    const FetchTotalProcessedYesterday = async () => {
-      try {
-        const res = await axios.get(
-          `https://pas-aps.up.railway.app/sale/total-processed?startDate=${yesterdayFormatted}&endDate=${yesterdayFormatted}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          },
-        )
-        setTotalProcessedYesterday(res.data.totalProcessed)
-      } catch (error) {
-        console.error(error)
-      }
+  const FetchTotalProcessedYesterday = async () => {
+    try {
+      const res = await axios.get(
+        `https://pas-aps.up.railway.app/sale/total-processed?startDate=${yesterdayFormatted}&endDate=${yesterdayFormatted}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      )
+      setTotalProcessedYesterday(res.data.totalProcessed)
+    } catch (error) {
+      console.error(error)
     }
+  }
 
-    const fetchsTotalProcessedToday = async () => {
-      try {
-        const res = await axios.get(
-          `https://pas-aps.up.railway.app/sale/total-processed?startDate=${today}&endDate=${today}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          },
-        )
-        setTotalProcessedToday(res.data.totalProcessed)
-      } catch (error) {
-        console.error(error)
-      }
+  const fetchsTotalProcessedToday = async () => {
+    try {
+      const res = await axios.get(
+        `https://pas-aps.up.railway.app/sale/total-processed?startDate=${today}&endDate=${today}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      )
+      setTotalProcessedToday(res.data.totalProcessed)
+    } catch (error) {
+      console.error(error)
     }
+  }
 
-    /*
-        const fetchTotalChild = async () => {
-          try {
-            const res = await axios.get(`https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=&endDate=`, {
-             
-              //setAlgumacoisa(res.data) 
-            })
-          }
-          catch (error) { console.error(error) }
-        } 
-    */
-    const fetchDataServiceStatus = async () => {
-      try {
-        const response = await axios.get(
-          'https://api.zsystems.com.br/z1/services-status',
-          { headers: { Authorization: `Bearer ${token}` } },
-        )
-        setServicesStatus(response.data.services)
-      } catch (error) {
-        console.error('Erro ao chamar a API:', error)
-      }
-    }
-    const fechAmountData = async () => {
-      try {
-        const response = await axios.get(
-          'https://api.zsystems.com.br/z1/indicadores',
-          { headers: { Authorization: `Bearer ${token}` } },
-        )
-        setAmountIndicator(response.data)
-        console.log(amountIndicator)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-
-    const fechTotalMKT = async () => {
-      try {
-        const response = await axios.get(
-          `https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=${formattedPreviousDate}&endDate=${formattedDate}`,
-          { headers: { Authorization: `Bearer ${token}` } },
-        )
-        setTotalMKT(response.data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    const auth = async () => {
-      try {
-        const res = await axios.post(
-          `https://api.zsystems.com.br/z1/autenticar`,
-          { token },
-        )
-        if (res.data.success === true) {
-          fecthTotalMarketplaceChildResgistredPreviousMonth()
-          fetchDataServiceStatus()
-          fechAmountData()
-          fechTotalMKT()
-          FetchTotalProcessedYesterday()
-          fetchsTotalProcessedToday()
-          fetchTotalProcessedLastThirtyDays()
-          fetchTotalProcessedThirtyDaysLater()
-          fetchTotalMarketplaceChildRegistredLastThirtyDays()
-          fetchTotalEstabelecimentsChildRegistredLastThirtyDays()
-          fetchTotalNotProcessedToday()
-          fetchTotanNotProcessedYesterday()
-        } else {
-          toast.error('Sua sessão expirou faça login novamente')
-          Router.push('/')
+  /*
+      const fetchTotalChild = async () => {
+        try {
+          const res = await axios.get(`https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=&endDate=`, {
+           
+            //setAlgumacoisa(res.data) 
+          })
         }
-      } catch (error) {
-        console.error(error)
-      }
+        catch (error) { console.error(error) }
+      } 
+  */
+  const fetchDataServiceStatus = async () => {
+    try {
+      const response = await axios.get(
+        'https://api.zsystems.com.br/z1/services-status',
+        { headers: { Authorization: `Bearer ${token}` } },
+      )
+      setServicesStatus(response.data.services)
+    } catch (error) {
+      console.error('Erro ao chamar a API:', error)
     }
+  }
+  const fechAmountData = async () => {
+    try {
+      const response = await axios.get(
+        'https://api.zsystems.com.br/z1/indicadores',
+        { headers: { Authorization: `Bearer ${token}` } },
+      )
+      setAmountIndicator(response.data)
+      setTotalVendido(response.data.result.transacionadoHoje.valorTotal)
+      setNumVendas(response.data.result.transacionadoHoje.quantidade)
+      
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const fechTotalMKT = async () => {
+    try {
+      const response = await axios.get(
+        `https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=${formattedPreviousDate}&endDate=${formattedDate}`,
+        { headers: { Authorization: `Bearer ${token}` } },
+      )
+      setTotalMKT(response.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  const auth = async () => {
+    try {
+      const res = await axios.post(
+        `https://api.zsystems.com.br/z1/autenticar`,
+        { token },
+      )
+      if (res.data.success === true) {
+        fecthTotalMarketplaceChildResgistredPreviousMonth()
+        fetchDataServiceStatus()
+        fechAmountData()
+        fechTotalMKT()
+        FetchTotalProcessedYesterday()
+        fetchsTotalProcessedToday()
+        fetchTotalProcessedLastThirtyDays()
+        fetchTotalProcessedThirtyDaysLater()
+        fetchTotalMarketplaceChildRegistredLastThirtyDays()
+        fetchTotalEstabelecimentsChildRegistredLastThirtyDays()
+        fetchTotalNotProcessedToday()
+        fetchTotanNotProcessedYesterday()
+      } else {
+        toast.error('Sua sessão expirou faça login novamente')
+        Router.push('/')
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  useEffect(() => {
+  
 
     auth()
   }, [])
@@ -312,20 +308,23 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
       <Header />
       <div className=' h-full lg:h-[60vh] border-2 w-full  max-w-screen flex flex-col items-center justify-start lg:justify-center '>
 
-{!servicesStatus ||  !totalProcessedToday || !totalProcessedYesterday || !totalProcessedLastMonth || !totalProcessedThirtyDaysBefore  || !totalNotProcessedYesterday || !totalNotProcessedToday ? (<Spinner/>):
-(
+
+
 
   <DashComponent processadosHoje={totalProcessedToday} processadosOntem={totalProcessedYesterday} servicesStatus={servicesStatus}
   processadosMesAtual={totalProcessedLastMonth}
   processadosMesAnterior={totalProcessedThirtyDaysBefore} 
 naoProcessadosHoje={totalNotProcessedToday}
-naoProcessadosOntem={totalNotProcessedYesterday}
-  
+naoProcessadosOntem={totalNotProcessedYesterday}  
+   totalVendido={totalVendido}
+  marketplacesCadastradosUltimos30dias={totalMarketplaceChildRegistredLastThiryDays}
+  vendas={numVendas}
+  estabelecimentosFilhosRegistradosUltimos30dias={totalEstabelecimentsChildRegistredLastThirtyDays}
   />
 
   
   
-)}
+
     </div>
     </div>
   )
