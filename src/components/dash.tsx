@@ -33,13 +33,17 @@ export default function DashComponent(props: PropsType) {
               </CardTitle>
             </CardHeader>
             <CardContent className="grid grid-cols-1 gap-4 p-4">
-              <div className="flex items-center justify-between">
-                <span className="font-semibold">{props.service}</span>
-                <div className="flex items-center">
-                  <CheckIcon className="text-green-500" />
-                  <span className="ml-2 text-gray-500">26/03/2024 16:30</span>
-                </div>
-              </div>
+              {props.servicesStatus.map((props.serviceStatus)=>(
+  <div className="flex items-center justify-between">
+  <span className="font-semibold">{props.service}</span>
+  <div className="flex items-center">
+    <CheckIcon className="text-green-500" />
+    <span className="ml-2 text-gray-500">{props.last_update}</span>
+  </div>
+</div>
+
+              ))}
+            
             </CardContent>
           </Card>
           <Card className="flex-1 shadow-md bg-white">
