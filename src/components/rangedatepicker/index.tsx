@@ -17,6 +17,7 @@ export default function DateRangePickerComponent() {
           label="Selecione um intervalo"
           value={value}
           onChange={setValue}
+          variant="underlined"
         />
       </div>
     </div>

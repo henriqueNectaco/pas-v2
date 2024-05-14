@@ -53,7 +53,7 @@ export default function DashComponent(props: PropsType) {
     <>
       <div className="flex flex-col gap-6  p-2 lg:p-0 h-full   ">
         <div className="lg:grid lg:grid-cols-3 md:grid-cols-3 gap-4 lg:gap-6 flex flex-col  ">
-          <Card className="flex-1 shadow-md bg-white border-gray-400">
+          <Card className="flex-1 shadow-md  border-gray-400 bg-gray-100">
             <CardHeader>
               <CardTitle>
                 <div className="flex items-center gap-2">
@@ -87,7 +87,7 @@ export default function DashComponent(props: PropsType) {
               )}
             </CardContent>
           </Card>
-          <Card className="flex-1 shadow-md bg-white border-gray-400 ">
+          <Card className="flex-1 shadow-md bg-white border-gray-400 bg-gray-100">
             <CardHeader>
               <CardTitle>
                 <div className="flex items-center gap-2">
@@ -235,7 +235,7 @@ export default function DashComponent(props: PropsType) {
                 </Button>
               </div>
             </div>
-            <div className=" border border-gray-400 rounded-md flex  flex-col items-center lg:grid lg:grid-cols-2 lg:items-end justify-center p-4 lg:pb-2 lg:pr-0    gap-2   lg:gap-4">
+            <div className=" rounded-md flex  flex-col items-center lg:grid lg:grid-cols-2 lg:items-end justify-center p-4 lg:pb-2 lg:pr-0    gap-2   lg:gap-4">
               <div className="items-end w-2/3 lg:w-full ">
                 <Input
                   className=""
