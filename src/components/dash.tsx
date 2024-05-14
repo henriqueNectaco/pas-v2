@@ -308,24 +308,6 @@ function CodeIcon(props) {
   )
 }
 
-function MountainIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
-    </svg>
-  )
-}
 
 function PizzaIcon(props) {
   return (
@@ -350,30 +332,7 @@ function PizzaIcon(props) {
   )
 }
 
-function ReplaceIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M14 4c0-1.1.9-2 2-2" />
-      <path d="M20 2c1.1 0 2 .9 2 2" />
-      <path d="M22 8c0 1.1-.9 2-2 2" />
-      <path d="M16 10c-1.1 0-2-.9-2-2" />
-      <path d="m3 7 3 3 3-3" />
-      <path d="M6 10V5c0-1.7 1.3-3 3-3h1" />
-      <rect width="8" height="8" x="2" y="14" rx="2" />
-    </svg>
-  )
-}
+
 
 function ShoppingCartIcon(props) {
   return (
@@ -396,32 +355,7 @@ function ShoppingCartIcon(props) {
   )
 }
 
-function SunMoonIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M12 8a2.83 2.83 0 0 0 4 4 4 4 0 1 1-4-4" />
-      <path d="M12 2v2" />
-      <path d="M12 20v2" />
-      <path d="m4.9 4.9 1.4 1.4" />
-      <path d="m17.7 17.7 1.4 1.4" />
-      <path d="M2 12h2" />
-      <path d="M20 12h2" />
-      <path d="m6.3 17.7-1.4 1.4" />
-      <path d="m19.1 4.9-1.4 1.4" />
-    </svg>
-  )
-}
+
 
 /*
   <CardContent className="grid grid-cols-1 gap-4 p-4">
