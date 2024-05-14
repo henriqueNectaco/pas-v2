@@ -1,84 +1,15 @@
-import Cookies from 'js-cookie'
-import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header/index'
 import {
+  Button,
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-  Button,
   Spinner,
 } from '@nextui-org/react'
-import ListMarketplaces from './listMarketplaces'
-import axios from 'axios'
-
-import { CaretDown } from 'phosphor-react'
-import { toast } from 'sonner'
-import Router from 'next/router'
-
-type ListProps = {
-  id: string
-  mainECId: string
-  mainECNomeFantasia: string
-  mainECEmail: string
-}
-
-export default function Marketplace() {
-  const token = Cookies.get('token')
-
-  const [resData, setResData] = useState<Object>()
-  const [state, setState] = useState('ativos')
-
-  const fetchFilteredData = async () => {
-    try {
-      const res = await axios.get(
-        `https://api.zsystems.com.br/z1/marketplaces?status=${state}`,
-        { headers: { Authorization: `Bearer ${token}` } },
-      )
-
-      setResData(res.data.marketplaces)
-      console.log('res com filtro', res.data)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-  const getServerSideDate = async () => {
-    try {
-      const res = await axios.get(
-        `https://api.zsystems.com.br/z1/marketplaces?status=ativo`,
-        { headers: { Authorization: `Bearer ${token}` } },
-      )
-
-      setResData(res.data.marketplaces)
-      console.log('res.data sem filtro', res.data.marketplaces)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-  useEffect(() => {
-    const auth = async () => {
-      try {
-        const res = await axios.post(
-          `https://api.zsystems.com.br/z1/autenticar`,
-          { token },
-        )
-        if (res.data.success === true) {
-          getServerSideDate()
-        } else {
-          toast.error('Sua sessão expirou faça login novamente')
-          Router.push('/')
-        }
-      } catch (error) {
-        console.error(error)
-      }
-    }
-
-    auth()
-  }, [])
-  useEffect(() => {
-    console.log('resData useeffect', resData)
-  }, [resData])
-  console.log('state', state)
+import { useState } from 'react'
+export default function mktteste() {
+  const [state, setState] = useState()
   return (
     <div className=" h-full max-w-screen w-full flex flex-col items-center bg-gray-100 ">
       <Header />
