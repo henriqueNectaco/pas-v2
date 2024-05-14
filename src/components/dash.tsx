@@ -3,25 +3,31 @@
  * @see https://v0.dev/t/04YR81o54JE
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
  */
-import Link from 'next/link'
-import { Button } from '@nextui-org/button'
 
+import { Button } from '@nextui-org/button'
+import { useState } from 'react'
 import { CardTitle, CardHeader, CardContent, Card } from '@/components/ui/card'
 import { Input } from '@nextui-org/input'
 import DateRangePickerComponent from '../components/rangedatepicker/index'
-import { DatePicker, Spinner } from '@nextui-org/react'
+import { Spinner } from '@nextui-org/react'
 type PropsType = {
-  servicesStatus: Object
-  processadosHoje: number
-  processadosOntem: number
-  processadosMesAtual: number
-  processadosMesAnterior: number
-  naoProcessadosOntem: number
-  naoProcessadosHoje: number
-  vendas: number
-  totalVendido: number
-  marketplacesCadastradosUltimos30dias: number
-  estabelecimentosFilhosRegistradosUltimos30dias: number
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  servicesStatus: any | null
+  processadosHoje: number | null
+  processadosOntem: number | null
+  processadosMesAtual: number | null
+  processadosMesAnterior: number | null
+  naoProcessadosOntem: number | undefined
+  naoProcessadosHoje: number | null
+  vendas: number | undefined
+  totalVendido: number | undefined
+  marketplacesCadastradosUltimos30dias: number | undefined
+  estabelecimentosFilhosRegistradosUltimos30dias: number | undefined
+  idEstabelecimento: number | undefined
+  idEstabelecimentoInputFormTwo: () => void
+  reprocessarSaldo: () => void
+  inputDias: () => void | null
+  reprocessarVenda: () => void
 }
 
 type typeServices = {
@@ -30,6 +36,7 @@ type typeServices = {
   service: string
   status: boolean
 }
+
 function formatarData(dataString: string) {
   const data = new Date(dataString)
   const dia = String(data.getDate()).padStart(2, '0')
@@ -50,7 +57,7 @@ export default function DashComponent(props: PropsType) {
             <CardHeader>
               <CardTitle>
                 <div className="flex items-center gap-2">
-                  <CodeIcon className="h-6 w-6 text-indigo-600" />
+                  <CodeIcon className="h-6 w-6 text-blue-500" />
                   <span>Services Status</span>
                 </div>
               </CardTitle>
@@ -207,17 +214,23 @@ export default function DashComponent(props: PropsType) {
             </CardContent>
           </Card>
           <div className=" grid col-span-2 grid-rows-2 gap-2 lg:gap-5 mt-4 ">
-            <div className=" border border-gray-400 rounded-md flex  flex-col items-center lg:grid lg:grid-cols-2 lg:items-end justify-center   p-4 lg:pb-2 lg:pr-0 gap-2 lg:gap-4">
+            <div className="  flex  flex-col items-center lg:grid lg:grid-cols-2 lg:items-end justify-center   p-4 lg:pb-2 lg:pr-0 gap-2 lg:gap-4">
               <div className="lg:w-full w-2/3 items-end justify-center   ">
                 <Input
                   className=" text-sm"
                   placeholder="Digite o ID do Estabelecimento"
                   variant="underlined"
+                  onChange={props.idEstabelecimento}
                 />
               </div>
               <div className="w-2/3 lg:w-full flex flex-col lg:flex-row items-center    h-full lg:items-end gap-2  ">
                 <DateRangePickerComponent />
-                <Button className="" fullWidth color="primary">
+                <Button
+                  className=""
+                  fullWidth
+                  color="primary"
+                  onClick={props.reprocessarVenda}
+                >
                   Reprocessar Venda
                 </Button>
               </div>
@@ -228,6 +241,7 @@ export default function DashComponent(props: PropsType) {
                   className=""
                   placeholder="Digite o ID do Estabelecimento"
                   variant="underlined"
+                  onChange={props.idEstabelecimentoInputFormTwo}
                 />
               </div>
               <div className="w-2/3 lg:w-full flex lg:flex-row flex-col items-center lg:justify-between  lg:items-end  gap-2">
@@ -236,12 +250,14 @@ export default function DashComponent(props: PropsType) {
                   className=""
                   placeholder="Dias"
                   variant="underlined"
+                  onChange={props.inputDias}
                 />
 
                 <Button
                   className=" text-white "
                   color="primary"
                   fullWidth={true}
+                  onClick={props.reprocessarSaldo}
                 >
                   Reprocessar Saldo
                 </Button>
@@ -254,7 +270,8 @@ export default function DashComponent(props: PropsType) {
   )
 }
 
-function CheckIcon(props) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, prettier/prettier
+function CheckIcon(props:any) {
   return (
     <svg
       {...props}

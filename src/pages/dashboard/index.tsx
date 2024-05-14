@@ -9,6 +9,7 @@ import { toast } from 'sonner'
 import Router from 'next/router'
 import DashComponent from '@/components/dash'
 export default function DashBoard() {
+  const [id, setId] = useState(null)
   const [numVendas, setNumVendas] = useState()
   const [servicesStatus, setServicesStatus] = useState()
   const [amountIndicator, setAmountIndicator] = useState(null)
@@ -36,7 +37,7 @@ export default function DashBoard() {
     setTotalMarketplaceChildRegistredPreviousMonth,
   ] = useState(null)
   const [totalNotPayedLastWeek, setTotalNotPayedLastWeek] = useState(null)
-
+  const [MarketplacesChildsById, setMarketplacesChildsById] = useState(null)
   const token = Cookies.get('token')
 
   function formatDateToYYYYMMDD(date: any) {
@@ -85,6 +86,18 @@ export default function DashBoard() {
   const dayPreviousMonth = String(previousMonth.getDate()).padStart(2, '0') // Adiciona zero à esquerda se o dia for menor que 10
 
   const previousMonthFormatted = `${yearPreviousMonth}-${monthPreviousMonth}-${dayPreviousMonth}`
+
+  const showMarketplaceChild = async () => {
+    try {
+      const res = await axios.get(
+        `https://api.zsystems.com.br/marketplaces/${id}/filhos`,
+        { headers: { Authorization: `Bearer ${token}` } },
+      )
+      setMarketplacesChildsById(res.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   const fecthTotalMarketplaceChildResgistredPreviousMonth = async () => {
     try {
@@ -280,6 +293,12 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
     auth()
   }, [])
 
+  const [idEstabelecimento, setIdEstabelecimento] = useState('')
+  const [dias, setDias] = useState()
+  const [idEstabeleciment, setIdEstabeleciment] = useState()
+  const handleChangeDays = (e: number) => {
+    setDias(e.target.value)
+  }
   // Função para formatar a data para yyyy-mm-dd
 
   return (
@@ -302,6 +321,19 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
           estabelecimentosFilhosRegistradosUltimos30dias={
             totalEstabelecimentsChildRegistredLastThirtyDays
           }
+          inputDias={handleChangeDays}
+          reprocessarSaldo={() => {
+            alert('reprorcessando saldo')
+          }}
+          idEstabelecimentoInputFormTwo={(e: string) => {
+            setIdEstabeleciment(e.target.value)
+          }}
+          reprocessarVenda={() => {
+            alert('reprocessando el venda')
+          }}
+          idEstabelecimento={(e: number) => {
+            setIdEstabelecimento(e.target.value)
+          }}
         />
       </div>
     </div>
