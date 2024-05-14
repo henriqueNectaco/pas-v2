@@ -306,7 +306,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
   return (
     <div className=" h-screen max-w-screen flex flex-col items-center  ">
       <Header />
-      <div className=' h-full lg:h-[60vh] border-2 w-full  max-w-screen flex flex-col items-center justify-start lg:justify-center '>
+      <div className=' h-screen  border-2 border-blue-400 w-full  max-w-screen flex flex-col items-center justify-start  lg:pt-10 '>
 
 
 

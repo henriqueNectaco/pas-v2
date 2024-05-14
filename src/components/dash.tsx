@@ -43,7 +43,7 @@ function formatarData(dataString: any) {
 export default function DashComponent(props: PropsType ) {
   return (
     <>
-      <div className="flex flex-col gap-6 lg:p-4 p-2   ">
+      <div className="flex flex-col gap-6 lg:p-4 p-2  h-full lg:space-y-4 space-y-1  ">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6  ">
           <Card className="flex-1 shadow-md bg-white border-gray-400">
             <CardHeader>
@@ -178,27 +178,28 @@ export default function DashComponent(props: PropsType ) {
             </CardContent>
           </Card>
         </div>
-        <div className="flex  flex-row items-end justify-center   lg:justify-between  p-2 lg:p-4 border-2">
+        <div className=' h-1/3 flex items-center lg:items-center flex-col justify-start lg:gap-10 gap-4' >
+        <div className=" border-gray-300 border-2 rounded-md flex  flex-row items-end justify-center   lg:justify-between  p-2   lg:p-4   w-full ">
          
-          <div className="flex  flex-col lg:flex-row items-center   w-full lg:gap-6 gap-2 sm:flex-row">
+          <div className="flex  flex-col lg:flex-row lg:items-end   items-center w-full lg:gap-6 gap-2 sm:flex-row">
             <div className='lg:w-1/3 w-2/3 items-end justify-center '>
             <Input
-              className="flex-1 px-3 py-2 text-sm   "
+              className=" text-sm   "
               placeholder="Digite o ID do Estabelecimento"
               variant="underlined"
               
             />
             </div>
-            <div className='w-2/3  flex flex-col lg:flex-row  border-2 h-full items-end gap-2 '>
+            <div className='w-2/3 lg:w-1/3 flex flex-col lg:flex-row   h-full items-end gap-2 '>
 
 <p>De:</p>
             <DatePicker variant='underlined' size='sm'  />
    <p>Até:</p>
    <DatePicker variant='underlined' size='sm'  />
             </div>
-            <div className=" flex flex-col items-center border-2 justify-center  lg:w-1/3 w-2/3 ">
-              <Button className="bg-indigo-600 text-white hover:bg-indigo-700"
-              fullWidth={true}>
+            <div className=" flex flex-col  items-center lg:items-end border-2 justify-center  lg:w-1/3 w-2/3 ">
+              <Button className="" fullWidth
+               color='primary'>
                 
                 Reprocessar Venda
               </Button>
@@ -207,30 +208,33 @@ export default function DashComponent(props: PropsType ) {
         </div>
 
 
-        <div className="border-2 border-red-500 flex  flex-col lg:flex-row items-end justify-around gap-4">
+        <div className="border-gray-300 border-2 rounded-md w-full  flex  flex-col lg:flex-row  items-end lg:items-end justify-center  lg:p-4 p-2  ">
          
-          <div className="flex flex-col items-center gap-4 sm:flex-row w-full border-2">
-           <div className='w-1/3'>
+          <div className="flex flex-col items-center justify-between gap-2 lg:gap-6 sm:flex-row w-full  ">
+           <div className='lg:w-1/3 w-2/3'>
             <Input
-              className="flex-1 px-3 py-2 text-sm"
+              className=""
               placeholder="Digite o ID do Estabelecimento"
               variant="underlined"
             />
             </div>
-               <div className=" lg:w-1/3">
+               <div className=" lg:w-1/3 w-2/3">
                <Input
-              className="flex-1 px-3 py-2 text-sm"
+              className=""
               placeholder="Dias"
               variant="underlined"
             />
             </div>
-            <div className=" lg:w-1/3 border-2">
-              <Button className="bg-indigo-600 text-white hover:bg-indigo-700">
+            <div className=" flex flex-col items-center lg:items-end  justify-center  lg:w-1/3 w-2/3  ">
+              <Button className="b text-white "
+              
+              color='primary'>
                 
                 Reprocessar Saldo
               </Button>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </>
