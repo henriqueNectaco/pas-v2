@@ -5,18 +5,13 @@
  */
 import Link from 'next/link'
 import { Button } from '@nextui-org/button'
-import {
-  PopoverTrigger,
-  PopoverContent,
-  Popover,
-} from '@/components/ui/popover'
-import { Avatar } from '@/components/ui/avatar'
+
 import { CardTitle, CardHeader, CardContent, Card } from '@/components/ui/card'
 import { Input } from '@nextui-org/input'
-import { Calendar } from '@/components/ui/calendar'
+
 import { DatePicker, Spinner } from '@nextui-org/react'
 type PropsType = {
-  servicesStatus: any
+  servicesStatus: Object
   processadosHoje: number
   processadosOntem: number
   processadosMesAtual: number
@@ -28,7 +23,14 @@ type PropsType = {
   marketplacesCadastradosUltimos30dias: number
   estabelecimentosFilhosRegistradosUltimos30dias: number
 }
-function formatarData(dataString: any) {
+
+type typeServices = {
+  last_update: string
+  id: string
+  service: string
+  status: boolean
+}
+function formatarData(dataString: string) {
   const data = new Date(dataString)
   const dia = String(data.getDate()).padStart(2, '0')
   const mes = String(data.getMonth() + 1).padStart(2, '0')
@@ -58,14 +60,16 @@ export default function DashComponent(props: PropsType) {
                 <Spinner size="lg" />
               ) : (
                 <>
-                  {props.servicesStatus.map((services) => (
+                  {props.servicesStatus.map((services: typeServices) => (
                     <div
                       className="flex items-center justify-between"
                       key={services.id}
                     >
                       <span className="font-semibold">{services.service}</span>
                       <div className="flex items-center">
-                        <CheckIcon className="text-green-500" />
+                        <CheckIcon
+                          className={`${services.status === true ? 'text-green-500' : 'text-red-500'}`}
+                        />
                         <span className="ml-2 text-gray-500">
                           {formatarData(services.last_update)}
                         </span>
@@ -204,7 +208,7 @@ export default function DashComponent(props: PropsType) {
           </Card>
         </div>
         <div className=" h-1/3 flex items-center lg:items-center flex-col justify-start lg:gap-10 gap-4">
-          <div className=" border-gray-300 border-2 rounded-md flex  flex-row items-end justify-center   lg:justify-between  p-2   lg:p-4   w-full ">
+          <div className="border border-gray-400 rounded-md flex  flex-row items-end justify-center   lg:justify-between  p-2   lg:p-4   w-full ">
             <div className="flex  flex-col lg:flex-row lg:items-end   items-center w-full lg:gap-6 gap-2 sm:flex-row">
               <div className="lg:w-1/3 w-2/3 items-end justify-center ">
                 <Input
@@ -213,13 +217,13 @@ export default function DashComponent(props: PropsType) {
                   variant="underlined"
                 />
               </div>
-              <div className="w-2/3 lg:w-1/3 flex flex-col lg:flex-row   h-full items-end gap-2 ">
+              <div className="w-2/3 lg:w-1/3 flex flex-col lg:flex-row items-center  h-full lg:items-end gap-2 ">
                 <p>De:</p>
                 <DatePicker variant="underlined" size="sm" />
                 <p>Até:</p>
                 <DatePicker variant="underlined" size="sm" />
               </div>
-              <div className=" flex flex-col  items-center lg:items-end border-2 justify-center  lg:w-1/3 w-2/3 ">
+              <div className=" flex flex-col  items-center lg:items-end  justify-center  lg:w-1/3 w-2/3 ">
                 <Button className="" fullWidth color="primary">
                   Reprocessar Venda
                 </Button>
@@ -237,7 +241,12 @@ export default function DashComponent(props: PropsType) {
                 />
               </div>
               <div className=" lg:w-1/3 w-2/3">
-                <Input className="" placeholder="Dias" variant="underlined" />
+                <Input
+                  type="number"
+                  className=""
+                  placeholder="Dias"
+                  variant="underlined"
+                />
               </div>
               <div className=" flex flex-col items-center lg:items-end  justify-center  lg:w-1/3 w-2/3  ">
                 <Button className="b text-white " color="primary">
@@ -249,34 +258,6 @@ export default function DashComponent(props: PropsType) {
         </div>
       </div>
     </>
-  )
-}
-
-function CalendarDaysIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M8 2v4" />
-      <path d="M16 2v4" />
-      <rect width="18" height="18" x="3" y="4" rx="2" />
-      <path d="M3 10h18" />
-      <path d="M8 14h.01" />
-      <path d="M12 14h.01" />
-      <path d="M16 14h.01" />
-      <path d="M8 18h.01" />
-      <path d="M12 18h.01" />
-      <path d="M16 18h.01" />
-    </svg>
   )
 }
 

@@ -21,7 +21,8 @@ export default function Home() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isDisabled, setIsDisabled] = useState(true)
-  const [responseApi, setResponseApi] = useState(null)
+
+  const [token, setToken] = useState(Cookies.get('token'))
   const { register, handleSubmit } = useForm<FormschemaData>({
     resolver: zodResolver(Formschema),
   })
@@ -34,9 +35,8 @@ export default function Home() {
         'https://api.zsystems.com.br/z1/login',
         data,
       )
-      const token = response.data.usuario.token
-      setResponseApi(response.data)
-      Cookies.set('token', token)
+
+      Cookies.set('token', response.data.usuario.token)
       toast.success('Login realizado com sucesso!')
       router.push('/dashboard')
     } catch (error) {
@@ -44,7 +44,24 @@ export default function Home() {
       toast.error('Login não encontrado ')
     }
   }
+  const auth = async () => {
+    try {
+      const response = await axios.post(
+        'https://api.zsystems.com.br/z1/autenticar',
+        { token },
+      )
+      if (response.data.success === true) {
+        toast.success('Login Encontrado')
+        router.push('/dashboard')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
+  useEffect(() => {
+    auth()
+  }, [])
   useEffect(() => {
     setIsDisabled(!(email && password))
   }, [email, password])

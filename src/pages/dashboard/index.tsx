@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react'
 import { TiThumbsUp } from 'react-icons/ti'
 import { FaThumbsUp } from 'react-icons/fa'
 import Cookies from 'js-cookie'
-import { Button, Spinner, Input, DatePicker } from '@nextui-org/react'
+
 import { toast } from 'sonner'
 import Router from 'next/router'
 import DashComponent from '@/components/dash'
 export default function DashBoard() {
-  const [numVendas,setNumVendas]=useState()
+  const [numVendas, setNumVendas] = useState()
   const [servicesStatus, setServicesStatus] = useState()
   const [amountIndicator, setAmountIndicator] = useState(null)
   const [totalMKT, setTotalMKT] = useState(null)
@@ -20,8 +20,8 @@ export default function DashBoard() {
   const [totalProcessedLastMonth, setTotalProcessedLastMonth] = useState(null)
   const [totalProcessedThirtyDaysBefore, setTotalProcessedThirtyDaysBefore] =
     useState(null)
-    const [totalNotProcessedYesterday,setTotalNotProcessedYesterday]=useState()
-    const [totalVendido,setTotalVendido]=useState()
+  const [totalNotProcessedYesterday, setTotalNotProcessedYesterday] = useState()
+  const [totalVendido, setTotalVendido] = useState()
   const [
     totalMarketplaceChildRegistredLastThiryDays,
     setTotalMarketplaceChildRegistredLastThirtyDays,
@@ -39,28 +39,6 @@ export default function DashBoard() {
 
   const token = Cookies.get('token')
 
-  function formatDate(data) {
-    const dataObj = new Date(data);
-    const dia = dataObj.getDate().toString().padStart(2, '0');
-    const mes = (dataObj.getMonth() + 1).toString().padStart(2, '0');
-    const ano = dataObj.getFullYear();
-    const horas = dataObj.getHours().toString().padStart(2, '0');
-    const minutos = dataObj.getMinutes().toString().padStart(2, '0');
-  
-    return `${dia}/${mes}/${ano} ${horas}:${minutos}`;
-  }
-
-  function formatarData(dataString: any) {
-    const data = new Date(dataString)
-    const dia = String(data.getDate()).padStart(2, '0')
-    const mes = String(data.getMonth() + 1).padStart(2, '0')
-    const ano = data.getFullYear()
-    const horas = String(data.getHours()).padStart(2, '0')
-    const minutos = String(data.getMinutes()).padStart(2, '0')
-
-    return `${dia}/${mes}/${ano} ${horas}:${minutos}`
-  }
-
   function formatDateToYYYYMMDD(date: any) {
     const year = date.getFullYear()
     const month = String(date.getMonth() + 1).padStart(2, '0') // O mês começa de 0 (janeiro é 0)
@@ -77,7 +55,7 @@ export default function DashBoard() {
   // Exemplo de uso
   const currentDate = new Date() // Data atual
   const formattedDate = formatDateToYYYYMMDD(currentDate)
-  
+
   const previousDate = new Date()
   previousDate.setDate(currentDate.getDate() - 30)
   const formattedPreviousDate = formatDateToYYYYMMDD(previousDate)
@@ -95,7 +73,7 @@ export default function DashBoard() {
   const monthlastMonth = String(lastMonth.getMonth() + 1).padStart(2, '0') // Adiciona zero à esquerda se o mês for menor que 10
   const daylastMonth = String(lastMonth.getDate()).padStart(2, '0')
   const lastMonthFormatted = `${yearlasmonth}-${monthlastMonth}-${daylastMonth}`
-  
+
   const previousMonth = new Date(lastMonth)
   previousMonth.setMonth(lastMonth.getMonth() - 1) // Define a data para o mês anterior ao mês anterior
 
@@ -120,17 +98,17 @@ export default function DashBoard() {
       console.error(error)
     }
   }
-const fetchTotanNotProcessedYesterday=async ()=>{
-try{
-const res =await axios.get(`https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${yesterdayFormatted}&endDate=${yesterdayFormatted}`,
-{ headers: { Authorization: `Bearer ${token}` } }
-)
-setTotalNotProcessedYesterday(res.data.totalNotProcessed)
-}
-catch (error) {
-console.error(error)
-}
-}
+  const fetchTotanNotProcessedYesterday = async () => {
+    try {
+      const res = await axios.get(
+        `https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${yesterdayFormatted}&endDate=${yesterdayFormatted}`,
+        { headers: { Authorization: `Bearer ${token}` } },
+      )
+      setTotalNotProcessedYesterday(res.data.totalNotProcessed)
+    } catch (error) {
+      console.error(error)
+    }
+  }
   const fetchTotalNotProcessedToday = async () => {
     try {
       const res = await axios.get(
@@ -150,7 +128,9 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
         `https://pas-aps.up.railway.app/establishment/total-registered?startDate=${lastMonthFormatted}&endDate=${today}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
-      setTotalEstabelecimentsChildRegistredLastThirtyDays(res.data.totalRegistered)
+      setTotalEstabelecimentsChildRegistredLastThirtyDays(
+        res.data.totalRegistered,
+      )
     } catch (error) {
       console.error(error)
     }
@@ -162,7 +142,9 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
         `https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=${lastMonthFormatted}&endDate=${formattedDate}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
-      setTotalMarketplaceChildRegistredLastThirtyDays(res.data.totalMarketplaceChild)
+      setTotalMarketplaceChildRegistredLastThirtyDays(
+        res.data.totalMarketplaceChild,
+      )
     } catch (error) {
       console.error(error)
     }
@@ -251,7 +233,6 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
       setAmountIndicator(response.data)
       setTotalVendido(response.data.result.transacionadoHoje.valorTotal)
       setNumVendas(response.data.result.transacionadoHoje.quantidade)
-      
     } catch (error) {
       console.error(error)
     }
@@ -296,8 +277,6 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
     }
   }
   useEffect(() => {
-  
-
     auth()
   }, [])
 
@@ -306,26 +285,25 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
   return (
     <div className=" h-screen max-w-screen flex flex-col items-center  ">
       <Header />
-      <div className=' h-screen    w-full  max-w-screen flex flex-col items-center justify-start  lg:pt-10 '>
-
-
-
-
-  <DashComponent processadosHoje={totalProcessedToday} processadosOntem={totalProcessedYesterday} servicesStatus={servicesStatus}
-  processadosMesAtual={totalProcessedLastMonth}
-  processadosMesAnterior={totalProcessedThirtyDaysBefore} 
-naoProcessadosHoje={totalNotProcessedToday}
-naoProcessadosOntem={totalNotProcessedYesterday}  
-   totalVendido={totalVendido}
-  marketplacesCadastradosUltimos30dias={totalMarketplaceChildRegistredLastThiryDays}
-  vendas={numVendas}
-  estabelecimentosFilhosRegistradosUltimos30dias={totalEstabelecimentsChildRegistredLastThirtyDays}
-  />
-
-  
-  
-
-    </div>
+      <div className=" h-screen    w-full  max-w-screen flex flex-col items-center justify-start  lg:pt-10 ">
+        <DashComponent
+          processadosHoje={totalProcessedToday}
+          processadosOntem={totalProcessedYesterday}
+          servicesStatus={servicesStatus}
+          processadosMesAtual={totalProcessedLastMonth}
+          processadosMesAnterior={totalProcessedThirtyDaysBefore}
+          naoProcessadosHoje={totalNotProcessedToday}
+          naoProcessadosOntem={totalNotProcessedYesterday}
+          totalVendido={totalVendido}
+          marketplacesCadastradosUltimos30dias={
+            totalMarketplaceChildRegistredLastThiryDays
+          }
+          vendas={numVendas}
+          estabelecimentosFilhosRegistradosUltimos30dias={
+            totalEstabelecimentsChildRegistredLastThirtyDays
+          }
+        />
+      </div>
     </div>
   )
 }

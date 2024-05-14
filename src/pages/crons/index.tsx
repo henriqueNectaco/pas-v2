@@ -5,7 +5,7 @@ import { toast } from 'sonner'
 import Cookies from 'js-cookie'
 import { Spinner } from '@nextui-org/react'
 import { CardCron } from './items'
-import Router, { useRouter } from 'next/router'
+import Router from 'next/router'
 type CronProps = {
   slug: string
   id: string
@@ -55,7 +55,7 @@ export default function Crons() {
 
   useEffect(() => {
     auth()
-  })
+  }, [])
 
   function formatarData(dataString: Date): string {
     const dataOriginal = new Date(dataString)
