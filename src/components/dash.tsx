@@ -8,7 +8,7 @@ import { Button } from '@nextui-org/button'
 
 import { CardTitle, CardHeader, CardContent, Card } from '@/components/ui/card'
 import { Input } from '@nextui-org/input'
-
+import DateRangePickerComponent from '../components/rangedatepicker/index'
 import { DatePicker, Spinner } from '@nextui-org/react'
 type PropsType = {
   servicesStatus: Object
@@ -218,10 +218,7 @@ export default function DashComponent(props: PropsType) {
                 />
               </div>
               <div className="w-2/3 lg:w-1/3 flex flex-col lg:flex-row items-center  h-full lg:items-end gap-2 ">
-                <p>De:</p>
-                <DatePicker variant="underlined" size="sm" />
-                <p>Até:</p>
-                <DatePicker variant="underlined" size="sm" />
+                <DateRangePickerComponent />
               </div>
               <div className=" flex flex-col  items-center lg:items-end  justify-center  lg:w-1/3 w-2/3 ">
                 <Button className="" fullWidth color="primary">

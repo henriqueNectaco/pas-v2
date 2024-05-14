@@ -55,18 +55,18 @@ export default function Header() {
   return (
     <div className="w-full   max-w-screen">
       <Navbar
-        className="pt-6 pb-6 w-full  border-2 border-red-700 flex flex-row items-start justify-center bg-gradient-to-r from-cyan-500 to-blue-500 text-black"
+        maxWidth={'full'}
+        className=" lg:pb-6 p-4 w-full  border-2  flex flex-row items-start justify-center bg-gradient-to-r from-cyan-500 to-blue-500 text-black"
         isBordered
         isMenuOpen={isMenuOpen}
         onMenuOpenChange={setIsMenuOpen}
-        
       >
         <NavbarContent className="sm:hidden " justify="start">
           <NavbarMenuToggle
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           />
 
-          <Image src={logo} alt="teste" width={200} height={70} />
+          <Image src={logo} alt="teste" />
         </NavbarContent>
 
         <NavbarContent className="sm:hidden pr-3" justify="center">
@@ -74,47 +74,48 @@ export default function Header() {
         </NavbarContent>
 
         <NavbarContent
-          className=" w-screen  hidden sm:flex gap-4"
+          className=" w-[69vw]    hidden sm:flex gap-4"
           justify="center"
         >
-          <NavbarBrand>
+          <NavbarBrand className=" ">
             <Image src={logo} alt="teste" />
           </NavbarBrand>
-
-          <NavbarItem >
-            <Link color="foreground" href="/dashboard">
-              Dashboard
-            </Link>
-          </NavbarItem>
-          <NavbarItem isActive>
-            <Link href="vendas" aria-current="page">
-              Vendas
-            </Link>
-          </NavbarItem>
-          <NavbarItem>
-            <Link color="foreground" href="marketplaces">
-              Marketplace
-            </Link>
-          </NavbarItem>
-          <NavbarItem>
-            <Link color="foreground" href="crons">
-              Crons
-            </Link>
-          </NavbarItem>
-          <NavbarItem>
-            <Link color="foreground" href="validartaxas">
-              Validar Taxas
-            </Link>
-          </NavbarItem>
-          <NavbarItem>
-            <Link color="foreground" href="#">
-              SSL's
-            </Link>
-          </NavbarItem>
+          <NavbarContent>
+            <NavbarItem className="">
+              <Link color="foreground" href="/dashboard">
+                Dashboard
+              </Link>
+            </NavbarItem>
+            <NavbarItem isActive>
+              <Link href="vendas" aria-current="page">
+                Vendas
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Link color="foreground" href="marketplaces">
+                Marketplace
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Link color="foreground" href="crons">
+                Crons
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Link color="foreground" href="validartaxas">
+                Validar Taxas
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Link color="foreground" href="#">
+                SSL's
+              </Link>
+            </NavbarItem>
+          </NavbarContent>
         </NavbarContent>
 
         <NavbarContent className=" " justify="end">
-          <NavbarItem className="" >
+          <NavbarItem className="">
             <Button
               onClick={onOpen}
               color="FFFF"
