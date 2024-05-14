@@ -87,10 +87,12 @@ export default function Marketplace() {
   return (
     <div className=" h-screen max-w-screen w-full flex flex-col items-center  ">
       <Header />
-      <div className="w-full flex flex-col items-center    p-2 lg:p-4">
-        <div className="   w-full  border-2 p-4  lg:p-6 gap-2 flex flex-col lg:flex-row items-center  lg:items-start justify-start  ">
+      <div className="w-full flex flex-col items-center    pl-4 pr-4 mt-4">
+        <div className="  lg:pt-4 lg:pb-2 w-full    gap-2 flex flex-col lg:flex-row items-center  lg:items-start justify-start  ">
+         <div className='lg:w-3/4 w-full flex flex-col lg:flex-row items-center justify-center lg:justify-start boder-2 gap-2'>
+         <div className=' flex flex-col lg:flex-row lg:w-3/4 w-full'>
           <Button
-            className="lg:w-[20vw] w-3/4 "
+           fullWidth={true}
             radius="md"
             size="md"
             variant="solid"
@@ -99,7 +101,7 @@ export default function Marketplace() {
             Reprocessar todas as vendas
           </Button>
           <Button
-            className=" lg:w-[20vw] w-3/4"
+           fullWidth={true}
             radius="md"
             size="md"
             variant="solid"
@@ -108,7 +110,7 @@ export default function Marketplace() {
             Novo Marketplace
           </Button>
           <Button
-            className="lg:w-[20vw] w-3/4"
+fullWidth={true}
             radius="md"
             size="md"
             variant="solid"
@@ -116,9 +118,12 @@ export default function Marketplace() {
           >
             Importar todas as vendas
           </Button>
+          </div>
+          </div>
+          <div className=' w-full lg:w-1/4 flex flex-col lg:flex-row justify-center   gap-2 lg:gap-4 lg:justify-end'>
           <Dropdown>
             <DropdownTrigger>
-              <Button className="" size="md" variant="solid">
+              <Button className="" size="md" variant="solid" fullWidth={true}>
                 {state}
                 <CaretDown size={20} />
               </Button>
@@ -136,12 +141,11 @@ export default function Marketplace() {
               <DropdownItem key="removido">desativados</DropdownItem>
             </DropdownMenu>
           </Dropdown>
-          <Button size="md" onClick={handleCleanInput} color="danger">
-            Limpar
-          </Button>
-          <Button size="md" onClick={fetchFilteredData} color="primary">
+         
+          <Button size="md" onClick={fetchFilteredData} color="primary" >
             Filtrar
           </Button>
+          </div>
         </div>
       </div>
       <>

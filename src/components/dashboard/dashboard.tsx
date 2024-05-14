@@ -15,13 +15,26 @@ import { CardTitle, CardHeader, CardContent, Card } from '@/components/ui/card'
 import { Input } from '@nextui-org/input'
 import { Calendar } from '@/components/ui/calendar'
 type PropsType = {
-  titulo: string
+  
+  serviceName: string
+  servicesStatus: Object
+  last_update: any
+  id:number
+id_sec:number
+serviceName_sec: string
+last_update_sec:any
+id_t:number
+serviceName_t: string 
+last_update_t:any
+
+
 }
 
-export default function DashComponentt(props: PropsType) {
+
+export default function DashComponent(props: PropsType) {
   return (
     <>
-      <div className="flex flex-col gap-6 p-6 bg-white rounded-lg shadow-md">
+      <div className="flex flex-col gap-6 lg:p-4 p-2   ">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <Card className="flex-1 shadow-md bg-white">
             <CardHeader>
@@ -32,31 +45,30 @@ export default function DashComponentt(props: PropsType) {
                 </div>
               </CardTitle>
             </CardHeader>
-            <CardContent className="grid grid-cols-1 gap-4 p-4">
-
-
-              <div className="flex items-center justify-between">
-                <span className="font-semibold">Webhooks</span>
+            <CardContent className="flex flex-col justify-center gap-4 p-4">
+              <div className="flex items-center justify-between"key={props.id}>
+                <span className="font-semibold">{props.serviceName}</span>
                 <div className="flex items-center">
                   <CheckIcon className="text-green-500" />
-                  <span className="ml-2 text-gray-500">26/03/2024 16:30</span>
+                  <span className="ml-2 text-gray-500">{props.last_update}</span>
                 </div>
               </div>
-              <div className="flex items-center justify-between">
-                <span className="font-semibold">API</span>
+              <div className="flex items-center justify-between"key={props.id_sec}>
+                <span className="font-semibold">{props.serviceName_sec}</span>
                 <div className="flex items-center">
                   <CheckIcon className="text-green-500" />
-                  <span className="ml-2 text-gray-500">09/05/2024 11:45</span>
+                  <span className="ml-2 text-gray-500">{props.last_update_sec}</span>
                 </div>
               </div>
-              <div className="flex items-center justify-between">
-                <span className="font-semibold">RabbitMQ</span>
+              <div className="flex items-center justify-between"key={props.id_t}>
+                <span className="font-semibold">{props.serviceName_t}</span>
                 <div className="flex items-center">
                   <CheckIcon className="text-green-500" />
-                  <span className="ml-2 text-gray-500">19/04/2024 12:05</span>
+                  <span className="ml-2 text-gray-500">{props.last_update_t}</span>
                 </div>
               </div>
             </CardContent>
+          
           </Card>
           <Card className="flex-1 shadow-md bg-white">
             <CardHeader>
@@ -144,20 +156,7 @@ export default function DashComponentt(props: PropsType) {
               placeholder="Digite o ID da Venda"
               variant="underlined"
             />
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  className="text-indigo-600 hover:bg-indigo-600 hover:text-white"
-                  variant="outline"
-                >
-                  <CalendarDaysIcon className="h-4 w-4 mr-2" />
-                  Selecionar Data
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent align="start" className="w-auto p-0">
-                <Calendar initialFocus mode="single" />
-              </PopoverContent>
-            </Popover>
+            
             <div className="ml-auto sm:ml-4">
               <Button className="bg-indigo-600 text-white hover:bg-indigo-700">
                 <ReplaceIcon className="h-4 w-4 mr-2" />
@@ -365,3 +364,18 @@ function SunMoonIcon(props) {
     </svg>
   )
 }
+
+/*
+  <CardContent className="grid grid-cols-1 gap-4 p-4">
+
+
+            {props.servicesStatus.map(() => ( 
+                <div key={props.id}>
+                  <p>{props.serviceName}</p>
+                  <CheckIcon className="text-green-500" />
+                  <p>{props.last_update}</p>
+                  <p>rtes</p>
+
+                </div>
+              ))}
+            </CardContent> */

@@ -53,19 +53,20 @@ export default function Header() {
   }
 
   return (
-    <div className="w-full  max-w-screen">
+    <div className="w-full   max-w-screen">
       <Navbar
-        className="p-6 w-full flex flex-row items-start justify-evenly bg-gradient-to-r from-cyan-500 to-blue-500 text-black"
+        className="pt-6 pb-6 w-full  border-2 border-red-700 flex flex-row items-start justify-center bg-gradient-to-r from-cyan-500 to-blue-500 text-black"
         isBordered
         isMenuOpen={isMenuOpen}
         onMenuOpenChange={setIsMenuOpen}
+        
       >
-        <NavbarContent className="sm:hidden" justify="start">
+        <NavbarContent className="sm:hidden " justify="start">
           <NavbarMenuToggle
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           />
 
-          <Image src={logo} alt="teste" />
+          <Image src={logo} alt="teste" width={200} height={70} />
         </NavbarContent>
 
         <NavbarContent className="sm:hidden pr-3" justify="center">
@@ -73,14 +74,14 @@ export default function Header() {
         </NavbarContent>
 
         <NavbarContent
-          className="border-2 border-red-400 w-full hidden sm:flex gap-4"
+          className=" w-screen  hidden sm:flex gap-4"
           justify="center"
         >
           <NavbarBrand>
             <Image src={logo} alt="teste" />
           </NavbarBrand>
 
-          <NavbarItem>
+          <NavbarItem >
             <Link color="foreground" href="/dashboard">
               Dashboard
             </Link>
@@ -112,8 +113,8 @@ export default function Header() {
           </NavbarItem>
         </NavbarContent>
 
-        <NavbarContent className="border-2 border-black " justify="end">
-          <NavbarItem className="border-2" justify="end">
+        <NavbarContent className=" " justify="end">
+          <NavbarItem className="" >
             <Button
               onClick={onOpen}
               color="FFFF"
@@ -126,7 +127,7 @@ export default function Header() {
           </NavbarItem>
         </NavbarContent>
 
-        <NavbarMenu className="border-2">
+        <NavbarMenu className="">
           {menuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link
