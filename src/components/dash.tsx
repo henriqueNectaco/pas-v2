@@ -44,8 +44,8 @@ function formatarData(dataString: string) {
 export default function DashComponent(props: PropsType) {
   return (
     <>
-      <div className="flex flex-col gap-6 lg:p-4 p-2  h-full lg:space-y-4 space-y-1  ">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6  ">
+      <div className="flex flex-col gap-6  p-2 lg:p-0 h-full   ">
+        <div className="lg:grid lg:grid-cols-3 md:grid-cols-3 gap-4 lg:gap-6 flex flex-col  ">
           <Card className="flex-1 shadow-md bg-white border-gray-400">
             <CardHeader>
               <CardTitle>
@@ -206,47 +206,43 @@ export default function DashComponent(props: PropsType) {
               </div>
             </CardContent>
           </Card>
-        </div>
-        <div className=" h-1/3 flex items-center lg:items-center flex-col justify-start lg:gap-10 gap-4">
-          <div className="border border-gray-400 rounded-md flex  flex-row items-end justify-center   lg:justify-between  p-2   lg:p-4   w-full ">
-            <div className="flex  flex-col lg:flex-row lg:items-end   items-center w-full lg:gap-6 gap-2 sm:flex-row">
-              <div className="lg:w-1/3 w-2/3 items-end justify-center ">
+          <div className=" grid col-span-2 grid-rows-2 gap-2 lg:gap-5 mt-4 ">
+            <div className=" border border-gray-400 rounded-md flex  flex-col items-center lg:grid lg:grid-cols-2 lg:items-end justify-center   p-4 lg:pb-2 lg:pr-0 gap-2 lg:gap-4">
+              <div className="lg:w-full w-2/3 items-end justify-center   ">
                 <Input
-                  className=" text-sm   "
+                  className=" text-sm"
                   placeholder="Digite o ID do Estabelecimento"
                   variant="underlined"
                 />
               </div>
-              <div className="w-2/3 lg:w-1/3 flex flex-col lg:flex-row items-center  h-full lg:items-end gap-2 ">
+              <div className="w-2/3 lg:w-full flex flex-col lg:flex-row items-center    h-full lg:items-end gap-2  ">
                 <DateRangePickerComponent />
-              </div>
-              <div className=" flex flex-col  items-center lg:items-end  justify-center  lg:w-1/3 w-2/3 ">
                 <Button className="" fullWidth color="primary">
                   Reprocessar Venda
                 </Button>
               </div>
             </div>
-          </div>
-
-          <div className="border-gray-300 border-2 rounded-md w-full  flex  flex-col lg:flex-row  items-end lg:items-end justify-center  lg:p-4 p-2  ">
-            <div className="flex flex-col items-center justify-between gap-2 lg:gap-6 sm:flex-row w-full  ">
-              <div className="lg:w-1/3 w-2/3">
+            <div className=" border border-gray-400 rounded-md flex  flex-col items-center lg:grid lg:grid-cols-2 lg:items-end justify-center p-4 lg:pb-2 lg:pr-0    gap-2   lg:gap-4">
+              <div className="items-end w-2/3 lg:w-full ">
                 <Input
                   className=""
                   placeholder="Digite o ID do Estabelecimento"
                   variant="underlined"
                 />
               </div>
-              <div className=" lg:w-1/3 w-2/3">
+              <div className="w-2/3 lg:w-full flex lg:flex-row flex-col items-center lg:justify-between  lg:items-end  gap-2">
                 <Input
                   type="number"
                   className=""
                   placeholder="Dias"
                   variant="underlined"
                 />
-              </div>
-              <div className=" flex flex-col items-center lg:items-end  justify-center  lg:w-1/3 w-2/3  ">
-                <Button className="b text-white " color="primary">
+
+                <Button
+                  className=" text-white "
+                  color="primary"
+                  fullWidth={true}
+                >
                   Reprocessar Saldo
                 </Button>
               </div>

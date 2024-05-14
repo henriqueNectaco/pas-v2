@@ -81,7 +81,7 @@ export default function Marketplace() {
   }, [resData])
   console.log('state', state)
   return (
-    <div className=" h-screen max-w-screen w-full flex flex-col items-center  ">
+    <div className=" h-full max-w-screen w-full flex flex-col items-center bg-gray-100 ">
       <Header />
       <div className="w-full flex flex-col items-center    pl-4 pr-4 mt-4">
         <div className="  lg:pt-4 lg:pb-2 w-full    gap-2 flex flex-col lg:flex-row items-center  lg:items-start justify-start  ">

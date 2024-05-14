@@ -19,7 +19,7 @@ export default function ListMarketplaces(props: ContentMarketplaceProps) {
   return (
     <div
       key={props.id}
-      className="w-full border-b border-sky-400 shadow-md  rounded-md    flex  flex-col   items-center justify-center lg:flex-row p-4 gap-2 "
+      className="w-full border-b border-sky-400 shadow-md  rounded-md    flex  flex-col   items-center justify-center lg:flex-row p-4 gap-2 bg-white"
     >
       <div className="w-1/4  flex flex-col items-center justify-center">
         <p>Id:</p>
