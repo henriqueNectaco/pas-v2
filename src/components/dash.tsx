@@ -214,7 +214,7 @@ export default function DashComponent(props: PropsType) {
             </CardContent>
           </Card>
           <div className=" grid col-span-2 grid-rows-2 gap-2 lg:gap-5 mt-4 ">
-            <div className="  flex  flex-col items-center lg:grid lg:grid-cols-2 lg:items-end justify-center   p-4 lg:pb-2 lg:pr-0 gap-2 lg:gap-4">
+            <div className="  flex  flex-col items-center lg:grid lg:grid-cols-2 lg:items-end justify-center lg:pl-0  p-4 lg:pb-2 lg:pr-0 gap-2 lg:gap-4">
               <div className="lg:w-full w-2/3 items-end justify-center   ">
                 <Input
                   className=" text-sm"
@@ -235,7 +235,7 @@ export default function DashComponent(props: PropsType) {
                 </Button>
               </div>
             </div>
-            <div className=" rounded-md flex  flex-col items-center lg:grid lg:grid-cols-2 lg:items-end justify-center p-4 lg:pb-2 lg:pr-0    gap-2   lg:gap-4">
+            <div className=" rounded-md flex  flex-col items-center lg:grid lg:grid-cols-2 lg:items-end justify-center p-4 lg:pb-2 lg:pr-0   lg:pl-0 gap-2   lg:gap-4">
               <div className="items-end w-2/3 lg:w-full ">
                 <Input
                   className=""

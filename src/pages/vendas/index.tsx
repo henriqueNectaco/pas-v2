@@ -206,7 +206,7 @@ export default function Vendas() {
           ) : null}
         </div>
         {responseData ? (
-          <div className="p-2">
+          <div className="p-2 lg:pr-0">
             <div className="w-full flex flex-col items-center lg:items-start justify-center gap-2  bg-white shadow-lg border-2 p-4  ">
               <h1 className="font-bold">Pagamentos</h1>
 

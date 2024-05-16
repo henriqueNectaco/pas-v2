@@ -74,14 +74,14 @@ export default function Crons() {
   return (
     <div className="  max-w-screen w-full   text-black-500 ">
       <Header />
-      <div className="lg:p-4  p-3  max-w-screen lg:space-y-4 space-y-2  flex flex-col ">
+      <div className="lg:p-4  p-3  max-w-screen  space-y-2  flex flex-col ">
         <>
           {!crons ? (
             <Spinner color="primary" size="lg" />
           ) : (
-            <>
+            <div className='  border-2 border-red-500 space-y-4  lg:grid-cols-1'>
               {crons.map((crons: CronProps) => (
-                <div key={crons.id}>
+                <div className='' key={crons.id}>
                   <CardCron
                     Cron={crons.slug}
                     Scheduled={crons.interval}
@@ -90,9 +90,10 @@ export default function Crons() {
                   />
                 </div>
               ))}
-            </>
+            </div>
           )}
         </>
+        
       </div>
     </div>
   )
