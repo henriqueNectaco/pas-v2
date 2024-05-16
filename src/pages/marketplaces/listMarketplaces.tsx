@@ -53,7 +53,7 @@ export default function ListMarketplaces(props: ContentMarketplaceProps) {
             color="primary"
             variant="solid"
           >
-            <DropdownItem key="registerchildmarketplace">
+            <DropdownItem key={[props.id, 'string']}>
               Cadastrar Marketplace filho
             </DropdownItem>
             <DropdownItem key="showmarketplaceschilds">

@@ -11,17 +11,18 @@ import {
 } from '@nextui-org/react'
 import ListMarketplaces from './listMarketplaces'
 import axios from 'axios'
+import TableTestes from '../tablemarketplaces/table'
 
 import { CaretDown } from 'phosphor-react'
 import { toast } from 'sonner'
 import Router from 'next/router'
 
-  type ListProps = {
-    id: string
-    mainECId: string
-    mainECNomeFantasia: string
-    mainECEmail: string
-  }
+type ListProps = {
+  id: string
+  mainECId: string
+  mainECNomeFantasia: string
+  mainECEmail: string
+}
 
 export default function Marketplace() {
   const token = Cookies.get('token')
@@ -142,13 +143,22 @@ export default function Marketplace() {
             </Button>
           </div>
         </div>
+        <>
+          {!resData ? (
+            <Spinner size="lg" color="primary" />
+          ) : (
+            <div className=" max-w-screen w-full h-full  space-y-4    p-4 ">
+              <TableTestes marketplace={resData} />
+            </div>
+          )}
+        </>
       </div>
-      <>
-        {!resData ? (
-          <Spinner size="lg" color="primary" />
-        ) : (
-          <div className=" max-w-screen w-full h-full  space-y-4    p-4 ">
-            {resData.map((resData: ListProps) => (
+    </div>
+  )
+}
+
+/*
+   {resData.map((resData: ListProps) => (
               <ListMarketplaces
                 id={resData.id}
                 key={resData.id}
@@ -157,9 +167,4 @@ export default function Marketplace() {
                 mainECNomeFantasia={resData.mainECNomeFantasia}
               />
             ))}
-          </div>
-        )}
-      </>
-    </div>
-  )
-}
+            */
