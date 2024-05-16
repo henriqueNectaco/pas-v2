@@ -9,7 +9,7 @@ export default function ListSmallRes(props: listProps) {
       ) : (
         <>
           {props.data.map((mkt: mktProps) => (
-            <div key={mkt.id}></div>
+            <div key={mkt.id}>teste</div>
           ))}
         </>
       )}
