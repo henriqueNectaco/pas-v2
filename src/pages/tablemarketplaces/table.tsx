@@ -72,7 +72,7 @@ export default function TableTestes(props: marketplaceProps) {
                           aria-label="Action event example"
                           onAction={(key) => {
                             if (key == 'showmarketplaceschilds') {
-                              router.push(`/marketplaces/${mkt.id}`)
+                              router.push(`/marketplaces/${mkt.id}/filhos`)
                             }
                           }}
                           color="primary"

@@ -6,6 +6,7 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import { Spinner } from '@nextui-org/react'
 import TableTestes from '@/pages/tablemarketplaces/table'
+import ListChilds from './listChilds'
 export default function IdMarketplaces() {
   const router = useRouter()
   const token = Cookies.get('token')
@@ -44,14 +45,14 @@ https://api.zsystems.com.br/marketplaces/${id}/filhos`,
   }, [])
 
   return (
-    <div className="h-screen max-w-screen w-full bg-gray-50">
+    <div className="h-screen max-w-screen w-full bg-gray-50 flex flex-col items-center  border-2 border-red-400">
       <Header />
       <>
         {!marketplacesChilds ? (
           <Spinner size="lg" color="primary" />
         ) : (
           <div className=" max-w-screen w-full h-full  space-y-4    p-4 ">
-            <TableTestes marketplace={marketplacesChilds} />
+            <ListChilds marketplace={marketplacesChilds} />
           </div>
         )}
       </>
