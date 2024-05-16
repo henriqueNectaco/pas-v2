@@ -14,22 +14,22 @@ export default function ListChilds(props: PropsTypes) {
       <table className="w-full max-w-screen  border border-blue-500 ">
         <thead className="w-screen  border-b-2  border-black ">
           <tr className=" w-screen   ">
-            <th className="  p-3 text-sm font-semibold tracking-wide text-left">
+            <th className="w-1/8  p-3 text-sm font-semibold tracking-wide text-left">
               Id
             </th>
-            <th className="      p-3 text-sm font-semibold tracking-wide text-left">
+            <th className="  w-1/8    p-3 text-sm font-semibold tracking-wide text-left">
               Nome
             </th>
-            <th className="  p-3 text-sm font-semibold tracking-wide text-left">
+            <th className="w-1/8  p-3 text-sm font-semibold tracking-wide text-left">
               Status
             </th>
-            <th className="  p-3 text-sm font-semibold tracking-wide text-left">
+            <th className="w-1/8  p-3 text-sm font-semibold tracking-wide text-left">
               Data de criação
             </th>
-            <th className="  p-3 text-sm font-semibold tracking-wide text-left">
+            <th className=" w-2/8 p-3 text-sm font-semibold tracking-wide text-left">
               Email
             </th>
-            <th className="  p-3 text-sm font-semibold tracking-wide text-left">
+            <th className=" w-1/8 p-3 text-sm font-semibold tracking-wide text-left">
               dropdown
             </th>
           </tr>
