@@ -1,6 +1,6 @@
 import axios from 'axios'
 import Header from '../../components/Header/index'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, ChangeEvent } from 'react'
 import { formatDatePicker, getLastDayOfMonth, formatDate } from '@/utils/dates'
 import Cookies from 'js-cookie'
 import { toast } from 'sonner'
@@ -324,7 +324,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
     idEstabelecimentoReprocessarSaldo,
     setIdEstabelecimentoReprocessarSaldo,
   ] = useState()
-  const handleChangeDays = (e: number) => {
+  const handleChangeDays = (e: ChangeEvent<HTMLInputElement>) => {
     setDaysReprocessarSaldo(e.target.value)
   }
 
@@ -351,12 +351,14 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
             totalEstabelecimentsChildRegistredLastThirtyDays
           }
           inputDias={handleChangeDays}
-          idEstabelecimentoInputFormTwo={(e) => {
+          idEstabelecimentoInputFormTwo={(
+            e: React.ChangeEvent<HTMLInputElement>,
+          ) => {
             setIdEstabelecimentoReprocessarSaldo(e.target.value)
           }}
           reprocessarSaldo={reprocessarSaldo}
           reprocessarVenda={reprocessSale} //
-          idEstabelecimento={(e: number) => {
+          idEstabelecimento={(e: React.ChangeEvent<HTMLInputElement>) => {
             setIdEstabelecimento(e.target.value)
           }}
         />

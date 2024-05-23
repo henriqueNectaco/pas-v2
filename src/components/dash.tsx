@@ -5,7 +5,7 @@
  */
 
 import { Button } from '@nextui-org/button'
-import { datePickerProps, PropsType, typeServices } from '@/types/dashboard'
+import { PropsType, typeServices } from '@/types/dashboard'
 import { CardTitle, CardHeader, CardContent, Card } from '@/components/ui/card'
 import { Input } from '@nextui-org/input'
 import DateRangePickerComponent from '../components/rangedatepicker/index'
@@ -73,7 +73,7 @@ export default function DashComponent(props: PropsType) {
                   </span>
                 )}
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between gap-2">
                 <span className="font-semibold">
                   Pedidos Processados Mês Atual/Mês Anterior
                 </span>

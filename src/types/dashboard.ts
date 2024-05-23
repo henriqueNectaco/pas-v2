@@ -1,3 +1,9 @@
+import React, {
+  Dispatch,
+  SetStateAction,
+  ChangeEventHandler,
+  ChangeEvent,
+} from 'react'
 export type PropsType = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   servicesStatus: any | null
@@ -11,12 +17,12 @@ export type PropsType = {
   totalVendido: number | undefined
   marketplacesCadastradosUltimos30dias: number | undefined
   estabelecimentosFilhosRegistradosUltimos30dias: number | undefined
-  idEstabelecimento: (e: number) => void
-  idEstabelecimentoInputFormTwo: (e: number) => void
+  idEstabelecimento: () => void
+  idEstabelecimentoInputFormTwo: () => void
   reprocessarSaldo: () => void
-  inputDias: (e: number) => void
+  inputDias: Dispatch<SetStateAction<string>>
   reprocessarVenda: () => void
-  value: date
+  value: Date
   setValue: () => void
 }
 
@@ -27,6 +33,6 @@ export type typeServices = {
   status: boolean
 }
 export type datePickerProps = {
-  value: date
+  value: Date
   setValue: () => void
 }

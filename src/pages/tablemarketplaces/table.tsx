@@ -48,17 +48,17 @@ export default function TableTestes(props: marketplaceProps) {
               <>
                 {props.marketplace.map((mkt: mktProps) => (
                   <tr key={mkt.id} className="bg-white ">
-                    <td className=" text-sm text-gray-700 whitespace-nowrap p-4">
+                    <td className="flex items-center justify-start text-sm text-gray-700 whitespace-nowrap p-4">
                       {mkt.id}
                     </td>
-                    <td className="p-4 text-sm text-gray-700 whitespace-nowrap">
+                    <td className="p-4 text-sm text-gray-700 whitespace-nowrap ">
                       {mkt.mainECId}
                     </td>
 
-                    <td className="p-4 text-sm text-gray-700 whitespace-nowrap">
+                    <td className="p-4 text-sm text-gray-700 whitespace-nowrap ">
                       {mkt.mainECNomeFantasia}
                     </td>
-                    <td className="p-4 text-sm text-gray-700 whitespace-nowrap">
+                    <td className="p-4 text-sm text-gray-700 whitespace-nowrap ">
                       {mkt.mainECEmail}
                     </td>
                     <td className="p-4 text-sm text-gray-700 whitespace-nowrap">
@@ -71,8 +71,12 @@ export default function TableTestes(props: marketplaceProps) {
                         <DropdownMenu
                           aria-label="Action event example"
                           onAction={(key) => {
-                            if (key == 'showmarketplaceschilds') {
+                            if (key === 'showmarketplaceschilds') {
                               router.push(`/marketplaces/${mkt.id}/filhos`)
+                            } else if (key === 'showestabelecimentschilds') {
+                              router.push(
+                                `/marketplaces/${mkt.id}/estabelecimentos`,
+                              )
                             }
                           }}
                           color="primary"

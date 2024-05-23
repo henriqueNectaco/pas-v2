@@ -21,7 +21,7 @@ import {
 } from '@nextui-org/react'
 import logo from '../../assets/logo.svg'
 import Image from 'next/image'
-import { ArrowRight } from 'phosphor-react'
+import { SignOut } from 'phosphor-react'
 import { useRouter } from 'next/router'
 import Cookies from 'js-cookie'
 export default function Header() {
@@ -123,7 +123,7 @@ export default function Header() {
               className="button-no-border"
               variant="solid"
             >
-              <ArrowRight size={25} />
+              <SignOut size={25} />
             </Button>
           </NavbarItem>
         </NavbarContent>
