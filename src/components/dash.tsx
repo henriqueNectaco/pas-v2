@@ -10,43 +10,8 @@ import { CardTitle, CardHeader, CardContent, Card } from '@/components/ui/card'
 import { Input } from '@nextui-org/input'
 import DateRangePickerComponent from '../components/rangedatepicker/index'
 import { Spinner } from '@nextui-org/react'
-type PropsType = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  servicesStatus: any | null
-  processadosHoje: number | null
-  processadosOntem: number | null
-  processadosMesAtual: number | null
-  processadosMesAnterior: number | null
-  naoProcessadosOntem: number | undefined
-  naoProcessadosHoje: number | null
-  vendas: number | undefined
-  totalVendido: number | undefined
-  marketplacesCadastradosUltimos30dias: number | undefined
-  estabelecimentosFilhosRegistradosUltimos30dias: number | undefined
-  idEstabelecimento: number | undefined
-  idEstabelecimentoInputFormTwo: () => void
-  reprocessarSaldo: () => void
-  inputDias: () => void | null
-  reprocessarVenda: () => void
-}
-
-type typeServices = {
-  last_update: string
-  id: string
-  service: string
-  status: boolean
-}
-
-function formatarData(dataString: string) {
-  const data = new Date(dataString)
-  const dia = String(data.getDate()).padStart(2, '0')
-  const mes = String(data.getMonth() + 1).padStart(2, '0')
-  const ano = data.getFullYear()
-  const horas = String(data.getHours()).padStart(2, '0')
-  const minutos = String(data.getMinutes()).padStart(2, '0')
-
-  return `${dia}/${mes}/${ano} ${horas}:${minutos}`
-}
+import { PropsType, typeServices } from '@/types/dashboard'
+import { formatarData } from '@/utils/dates'
 
 export default function DashComponent(props: PropsType) {
   return (
@@ -87,7 +52,7 @@ export default function DashComponent(props: PropsType) {
               )}
             </CardContent>
           </Card>
-          <Card className="flex-1 shadow-md bg-white border-gray-400 bg-gray-100">
+          <Card className="flex-1 shadow-md  border-gray-400 bg-gray-100">
             <CardHeader>
               <CardTitle>
                 <div className="flex items-center gap-2">

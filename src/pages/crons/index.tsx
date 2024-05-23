@@ -1,11 +1,13 @@
 import Header from '../../components/Header/index'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { getCrons } from '@/utils/reqs.js'
 import { toast } from 'sonner'
 import Cookies from 'js-cookie'
 import { Spinner } from '@nextui-org/react'
 import { CardCron } from './items'
 import Router from 'next/router'
+import { formatarData } from '@/utils/dates'
 type CronProps = {
   slug: string
   id: string
@@ -19,23 +21,6 @@ export default function Crons() {
 
   const token = Cookies.get('token')
 
-  const getCrons = async () => {
-    const res = await axios.get(
-      `https://api.zsystems.com.br/z1/crons/logs
-        `,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      },
-    )
-
-    if (res.data.success === true) {
-      setCrons(res.data.cronsLogs)
-
-      console.log()
-    } else {
-      toast.error(res.data.error)
-    }
-  }
   const auth = async () => {
     try {
       const res = await axios.post(
@@ -43,7 +28,7 @@ export default function Crons() {
         { token },
       )
       if (res.data.success === true) {
-        getCrons()
+        getCrons(setCrons, token)
       } else {
         toast.error('Sua sessão expirou faça login novamente')
         Router.push('/')
@@ -57,20 +42,6 @@ export default function Crons() {
     auth()
   }, [])
 
-  function formatarData(dataString: Date): string {
-    const dataOriginal = new Date(dataString)
-
-    const dia = dataOriginal.getDate().toString().padStart(2, '0')
-    const mes = (dataOriginal.getMonth() + 1).toString().padStart(2, '0') // Os meses são indexados a partir de 0
-    const ano = dataOriginal.getFullYear().toString()
-    const hora = dataOriginal.getHours().toString().padStart(2, '0')
-    const minutos = dataOriginal.getMinutes().toString().padStart(2, '0')
-
-    const dataFormatada = `${dia}/${mes}/${ano} ${hora}:${minutos}`
-
-    return dataFormatada
-  }
-
   return (
     <div className="  max-w-screen w-full   text-black-500 ">
       <Header />
@@ -79,9 +50,9 @@ export default function Crons() {
           {!crons ? (
             <Spinner color="primary" size="lg" />
           ) : (
-            <div className='  border-2 border-red-500 space-y-4  lg:grid-cols-1'>
+            <div className="  border-2 border-red-500 space-y-4  lg:grid-cols-1">
               {crons.map((crons: CronProps) => (
-                <div className='' key={crons.id}>
+                <div className="" key={crons.id}>
                   <CardCron
                     Cron={crons.slug}
                     Scheduled={crons.interval}
@@ -93,7 +64,6 @@ export default function Crons() {
             </div>
           )}
         </>
-        
       </div>
     </div>
   )

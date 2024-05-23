@@ -1,13 +1,13 @@
 import axios from 'axios'
 import Header from '../../components/Header/index'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { TiThumbsUp } from 'react-icons/ti'
 import { FaThumbsUp } from 'react-icons/fa'
 import Cookies from 'js-cookie'
-
 import { toast } from 'sonner'
 import Router from 'next/router'
 import DashComponent from '@/components/dash'
+
 export default function DashBoard() {
   const [id, setId] = useState(null)
   const [numVendas, setNumVendas] = useState()
@@ -86,19 +86,21 @@ export default function DashBoard() {
   const dayPreviousMonth = String(previousMonth.getDate()).padStart(2, '0') // Adiciona zero à esquerda se o dia for menor que 10
 
   const previousMonthFormatted = `${yearPreviousMonth}-${monthPreviousMonth}-${dayPreviousMonth}`
-
-  const showMarketplaceChild = async () => {
+  const reprocessSale = async () => {
     try {
       const res = await axios.get(
-        `https://api.zsystems.com.br/marketplaces/${id}/filhos`,
-        { headers: { Authorization: `Bearer ${token}` } },
+        `https://api.zsystems.com.br/z1/reprocessar-vendas/-1/23-05-2024/23-05-2024`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
       )
-      setMarketplacesChildsById(res.data)
+      if (res.data.success === true) {
+        toast.success(res.data.message)
+      }
     } catch (error) {
       console.error(error)
     }
   }
-
   const fecthTotalMarketplaceChildResgistredPreviousMonth = async () => {
     try {
       const res = await axios.get(
@@ -299,7 +301,6 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
   const handleChangeDays = (e: number) => {
     setDias(e.target.value)
   }
-  // Função para formatar a data para yyyy-mm-dd
 
   return (
     <div className=" h-screen max-w-screen flex flex-col items-center  ">
@@ -328,9 +329,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
           idEstabelecimentoInputFormTwo={(e: string) => {
             setIdEstabeleciment(e.target.value)
           }}
-          reprocessarVenda={() => {
-            alert('reprocessando el venda')
-          }}
+          reprocessarVenda={reprocessSale} //
           idEstabelecimento={(e: number) => {
             setIdEstabelecimento(e.target.value)
           }}

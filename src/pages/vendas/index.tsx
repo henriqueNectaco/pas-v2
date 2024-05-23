@@ -1,7 +1,7 @@
 import Header from '../../components/Header/index'
 import { Input, Button } from '@nextui-org/react'
 import axios from 'axios'
-
+import { formatarData } from '@/utils/dates'
 import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 import JSONPrettyMon from 'react-json-pretty/themes/monikai.css'
@@ -9,41 +9,7 @@ import JSONPretty from 'react-json-pretty'
 
 import { toast } from 'sonner'
 import Router from 'next/router'
-
-interface Pedido {
-  id: string
-  status_pedido: {
-    titulo: string
-  }
-  estabelecimento: {
-    razao_social: string
-    marketplace: {
-      nome: string
-    }
-  }
-  valor_bruto: number
-  valor_liquido: number
-  pagamentos: {
-    taxa: number
-    markup: number
-    data_recebimento: string
-    valor_recebido: number
-    valor: number
-    // Outras propriedades se necessário0,,,,,,,,,,,,,,,,,,
-  }[]
-  parcelas: number
-  // Outras propriedades se necessário
-}
-
-interface ZoopTransaction {
-  created_at: Date
-  payment_method: {
-    card_brand: string
-    // Outras propriedades se necessário
-  }
-  payment_type: string
-  // Outras propriedades se necessário
-}
+import { ZoopTransaction, Pedido } from '@/types/vendas'
 
 export default function Vendas() {
   const [vendaId, setVendaId] = useState('')
@@ -94,16 +60,6 @@ export default function Vendas() {
     }
     auth()
   }, [])
-  const formatarData = (dataString: Date) => {
-    const data = new Date(dataString)
-    const dia = String(data.getDate()).padStart(2, '0')
-    const mes = String(data.getMonth() + 1).padStart(2, '0')
-    const ano = data.getFullYear()
-    const horas = String(data.getHours()).padStart(2, '0')
-    const minutos = String(data.getMinutes()).padStart(2, '0')
-
-    return `${dia}/${mes}/${ano} ${horas}:${minutos}`
-  }
 
   return (
     <div className="flex flex-col items-center  h-screen max-w-screen w-full ">

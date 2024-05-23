@@ -17,13 +17,6 @@ import { CaretDown } from 'phosphor-react'
 import { toast } from 'sonner'
 import Router from 'next/router'
 
-type ListProps = {
-  id: string
-  mainECId: string
-  mainECNomeFantasia: string
-  mainECEmail: string
-}
-
 export default function Marketplace() {
   const token = Cookies.get('token')
 
