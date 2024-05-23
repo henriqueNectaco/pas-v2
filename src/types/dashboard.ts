@@ -11,13 +11,13 @@ export type PropsType = {
   totalVendido: number | undefined
   marketplacesCadastradosUltimos30dias: number | undefined
   estabelecimentosFilhosRegistradosUltimos30dias: number | undefined
-  idEstabelecimento: number | undefined
-  idEstabelecimentoInputFormTwo: () => void
+  idEstabelecimento: (e: number) => void
+  idEstabelecimentoInputFormTwo: (e: number) => void
   reprocessarSaldo: () => void
-  inputDias: () => void | null
+  inputDias: (e: number) => void
   reprocessarVenda: () => void
   value: date
-  onChange: () => void
+  setValue: () => void
 }
 
 export type typeServices = {
@@ -25,4 +25,8 @@ export type typeServices = {
   id: string
   service: string
   status: boolean
+}
+export type datePickerProps = {
+  value: date
+  setValue: () => void
 }

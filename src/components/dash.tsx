@@ -5,12 +5,11 @@
  */
 
 import { Button } from '@nextui-org/button'
-import { useState } from 'react'
+import { datePickerProps, PropsType, typeServices } from '@/types/dashboard'
 import { CardTitle, CardHeader, CardContent, Card } from '@/components/ui/card'
 import { Input } from '@nextui-org/input'
 import DateRangePickerComponent from '../components/rangedatepicker/index'
 import { Spinner } from '@nextui-org/react'
-import { PropsType, typeServices } from '@/types/dashboard'
 import { formatarData } from '@/utils/dates'
 
 export default function DashComponent(props: PropsType) {
@@ -180,7 +179,7 @@ export default function DashComponent(props: PropsType) {
           </Card>
           <div className=" grid col-span-2 grid-rows-2 gap-2 lg:gap-5 mt-4 ">
             <div className="  flex  flex-col items-center lg:grid lg:grid-cols-2 lg:items-end justify-center lg:pl-0  p-4 lg:pb-2 lg:pr-0 gap-2 lg:gap-4">
-              <div className="lg:w-full w-2/3 items-end justify-center   ">
+              <div className="lg:w-full w-full items-end justify-center   ">
                 <Input
                   className=" text-sm"
                   placeholder="Digite o ID do Estabelecimento"
@@ -188,8 +187,11 @@ export default function DashComponent(props: PropsType) {
                   onChange={props.idEstabelecimento}
                 />
               </div>
-              <div className="w-2/3 lg:w-full flex flex-col lg:flex-row items-center    h-full lg:items-end gap-2  ">
-                <DateRangePickerComponent />
+              <div className="w-full lg:w-full flex flex-col lg:flex-row items-center    h-full lg:items-end gap-2  ">
+                <DateRangePickerComponent
+                  value={props.value}
+                  setValue={props.setValue}
+                />
                 <Button
                   className=""
                   fullWidth
@@ -201,15 +203,14 @@ export default function DashComponent(props: PropsType) {
               </div>
             </div>
             <div className=" rounded-md flex  flex-col items-center lg:grid lg:grid-cols-2 lg:items-end justify-center p-4 lg:pb-2 lg:pr-0   lg:pl-0 gap-2   lg:gap-4">
-              <div className="items-end w-2/3 lg:w-full ">
+              <div className="items-end w-full ">
                 <Input
-                  className=""
                   placeholder="Digite o ID do Estabelecimento"
                   variant="underlined"
                   onChange={props.idEstabelecimentoInputFormTwo}
                 />
               </div>
-              <div className="w-2/3 lg:w-full flex lg:flex-row flex-col items-center lg:justify-between  lg:items-end  gap-2">
+              <div className="w-full flex lg:flex-row flex-col items-center lg:justify-between  lg:items-end  gap-2">
                 <Input
                   type="number"
                   className=""

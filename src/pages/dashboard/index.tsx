@@ -1,14 +1,21 @@
 import axios from 'axios'
 import Header from '../../components/Header/index'
 import React, { useEffect, useState } from 'react'
-import { TiThumbsUp } from 'react-icons/ti'
-import { FaThumbsUp } from 'react-icons/fa'
+import { formatDatePicker, getLastDayOfMonth, formatDate } from '@/utils/dates'
 import Cookies from 'js-cookie'
 import { toast } from 'sonner'
 import Router from 'next/router'
 import DashComponent from '@/components/dash'
-
+import { parseDate } from '@internationalized/date'
 export default function DashBoard() {
+  const todaydp = new Date()
+  const lastDayOfMonth = getLastDayOfMonth(todaydp)
+
+  const [value, setValue] = useState({
+    start: parseDate(todaydp.toISOString().split('T')[0]), // Data atual
+    end: parseDate(lastDayOfMonth.toISOString().split('T')[0]), // Último dia do mês
+  })
+  const [daysReprocessarSaldo, setDaysReprocessarSaldo] = useState()
   const [id, setId] = useState(null)
   const [numVendas, setNumVendas] = useState()
   const [servicesStatus, setServicesStatus] = useState()
@@ -86,10 +93,26 @@ export default function DashBoard() {
   const dayPreviousMonth = String(previousMonth.getDate()).padStart(2, '0') // Adiciona zero à esquerda se o dia for menor que 10
 
   const previousMonthFormatted = `${yearPreviousMonth}-${monthPreviousMonth}-${dayPreviousMonth}`
+  const reprocessarSaldo = async () => {
+    try {
+      const res = await axios.get(
+        `
+      https://api.zsystems.com.br/z1/reprocessar-saldo/${idEstabelecimentoReprocessarSaldo}/${daysReprocessarSaldo}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      )
+      if (res.data.success === true) {
+        toast.success('reprocessando')
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
   const reprocessSale = async () => {
     try {
       const res = await axios.get(
-        `https://api.zsystems.com.br/z1/reprocessar-vendas/-1/23-05-2024/23-05-2024`,
+        `https://api.zsystems.com.br/z1/reprocessar-vendas/${idEstabelecimento}/${formatDate(value.start.toDate())}/${formatDate(value.end.toDate())}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -296,10 +319,13 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
   }, [])
 
   const [idEstabelecimento, setIdEstabelecimento] = useState('')
-  const [dias, setDias] = useState()
-  const [idEstabeleciment, setIdEstabeleciment] = useState()
+
+  const [
+    idEstabelecimentoReprocessarSaldo,
+    setIdEstabelecimentoReprocessarSaldo,
+  ] = useState()
   const handleChangeDays = (e: number) => {
-    setDias(e.target.value)
+    setDaysReprocessarSaldo(e.target.value)
   }
 
   return (
@@ -307,6 +333,8 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
       <Header />
       <div className=" h-screen    w-full  max-w-screen flex flex-col items-center justify-start  lg:pt-10 ">
         <DashComponent
+          setValue={setValue}
+          value={value}
           processadosHoje={totalProcessedToday}
           processadosOntem={totalProcessedYesterday}
           servicesStatus={servicesStatus}
@@ -323,12 +351,10 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
             totalEstabelecimentsChildRegistredLastThirtyDays
           }
           inputDias={handleChangeDays}
-          reprocessarSaldo={() => {
-            alert('reprorcessando saldo')
+          idEstabelecimentoInputFormTwo={(e) => {
+            setIdEstabelecimentoReprocessarSaldo(e.target.value)
           }}
-          idEstabelecimentoInputFormTwo={(e: string) => {
-            setIdEstabeleciment(e.target.value)
-          }}
+          reprocessarSaldo={reprocessarSaldo}
           reprocessarVenda={reprocessSale} //
           idEstabelecimento={(e: number) => {
             setIdEstabelecimento(e.target.value)

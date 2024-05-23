@@ -1,26 +1,16 @@
-import React, { useState } from 'react'
 import { DateRangePicker } from '@nextui-org/react'
-import { parseDate } from '@internationalized/date'
-import { formatDatePicker, getLastDayOfMonth } from '@/utils/dates'
 
+import { datePickerProps } from '@/types/dashboard'
 // Função para obter o último dia do mês atual
 
-export default function DateRangePickerComponent() {
-  const today = new Date()
-  const lastDayOfMonth = getLastDayOfMonth(today)
-
-  const [value, setValue] = useState({
-    start: parseDate(today.toISOString().split('T')[0]), // Data atual
-    end: parseDate(lastDayOfMonth.toISOString().split('T')[0]), // Último dia do mês
-  })
-
+export default function DateRangePickerComponent(props: datePickerProps) {
   return (
     <div className="flex flex-row gap-2 w-full">
       <div className="w-full flex flex-col gap-y-2">
         <DateRangePicker
           label="Selecione um intervalo"
-          value={value}
-          onChange={setValue}
+          value={props.value}
+          onChange={props.setValue}
           fullWidth={true}
           variant="underlined"
         />
