@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button"
-import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet"
-import Link from "next/link"
+import { Button } from '@/components/ui/button'
+import { SheetTrigger, SheetContent, Sheet } from '@/components/ui/sheet'
+import Link from 'next/link'
 
 export default function HeaderMine() {
   return (
@@ -9,7 +9,11 @@ export default function HeaderMine() {
         <div className="container mx-auto px-4 md:px-6 flex flex-col items-start justify-between h-full">
           <Sheet>
             <SheetTrigger asChild>
-              <Button className="text-white mt-4 w-auto lg:hidden" size="icon" variant="outline">
+              <Button
+                className="text-white mt-4 w-auto lg:hidden"
+                size="icon"
+                variant="outline"
+              >
                 <MenuIcon className="h-6 w-6" />
                 <span className="sr-only">Toggle navigation menu</span>
               </Button>
@@ -31,14 +35,20 @@ export default function HeaderMine() {
                 <Link className="font-medium hover:text-blue-200" href="#">
                   Validar taxas e SSL's
                 </Link>
-                <Button className="text-white hover:bg-blue-600" variant="outline">
+                <Button
+                  className="text-white hover:bg-blue-600"
+                  variant="outline"
+                >
                   Logout
                 </Button>
               </div>
             </SheetContent>
           </Sheet>
           <div className="flex items-center justify-between w-full py-6 md:py-8">
-            <Link className="font-medium hover:text-blue-200 hidden lg:flex items-center" href="#">
+            <Link
+              className="font-medium hover:text-blue-200 hidden lg:flex items-center"
+              href="#"
+            >
               <MountainIcon className="h-6 w-6" />
               <span className="sr-only">Acme Inc</span>
             </Link>
@@ -60,7 +70,10 @@ export default function HeaderMine() {
               </Link>
             </nav>
             <div className="hidden md:block">
-              <Button className="text-white hover:bg-blue-600" variant="outline">
+              <Button
+                className="text-white hover:bg-blue-600"
+                variant="outline"
+              >
                 Logout
               </Button>
             </div>
@@ -92,7 +105,6 @@ function MenuIcon(props) {
     </svg>
   )
 }
-
 
 function MountainIcon(props) {
   return (
