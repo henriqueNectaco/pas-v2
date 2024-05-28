@@ -1,9 +1,4 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  ChangeEventHandler,
-  ChangeEvent,
-} from 'react'
+import { Dispatch, SetStateAction } from 'react'
 export type PropsType = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   servicesStatus: any | null
@@ -17,10 +12,15 @@ export type PropsType = {
   totalVendido: number | undefined
   marketplacesCadastradosUltimos30dias: number | undefined
   estabelecimentosFilhosRegistradosUltimos30dias: number | undefined
-  idEstabelecimento: ChangeEventHandler<HTMLInputElement>
-  idEstabelecimentoInputFormTwo: Dispatch<SetStateAction<ChangeEvent>>
+  idEstabelecimento: () => void
+  idEstabelecimentoReprocessarSaldo: Dispatch<
+    SetStateAction<string | undefined>
+  >
   reprocessarSaldo: () => void
-  inputDias: Dispatch<SetStateAction<string>>
+  inputDias: Dispatch<SetStateAction<string | undefined>>
+  idEstabelecimentoReprocessarVenda: Dispatch<
+    SetStateAction<string | undefined>
+  >
   reprocessarVenda: () => void
   value: Date
   setValue: () => void

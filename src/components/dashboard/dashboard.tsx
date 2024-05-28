@@ -15,21 +15,17 @@ import { CardTitle, CardHeader, CardContent, Card } from '@/components/ui/card'
 import { Input } from '@nextui-org/input'
 import { Calendar } from '@/components/ui/calendar'
 type PropsType = {
-  
   serviceName: string
   servicesStatus: Object
   last_update: any
-  id:number
-id_sec:number
-serviceName_sec: string
-last_update_sec:any
-id_t:number
-serviceName_t: string 
-last_update_t:any
-
-
+  id: number
+  id_sec: number
+  serviceName_sec: string
+  last_update_sec: any
+  id_t: number
+  serviceName_t: string
+  last_update_t: any
 }
-
 
 export default function DashComponent(props: PropsType) {
   return (
@@ -46,29 +42,40 @@ export default function DashComponent(props: PropsType) {
               </CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col justify-center gap-4 p-4">
-              <div className="flex items-center justify-between"key={props.id}>
+              <div className="flex items-center justify-between" key={props.id}>
                 <span className="font-semibold">{props.serviceName}</span>
                 <div className="flex items-center">
                   <CheckIcon className="text-green-500" />
-                  <span className="ml-2 text-gray-500">{props.last_update}</span>
+                  <span className="ml-2 text-gray-500">
+                    {props.last_update}
+                  </span>
                 </div>
               </div>
-              <div className="flex items-center justify-between"key={props.id_sec}>
+              <div
+                className="flex items-center justify-between"
+                key={props.id_sec}
+              >
                 <span className="font-semibold">{props.serviceName_sec}</span>
                 <div className="flex items-center">
                   <CheckIcon className="text-green-500" />
-                  <span className="ml-2 text-gray-500">{props.last_update_sec}</span>
+                  <span className="ml-2 text-gray-500">
+                    {props.last_update_sec}
+                  </span>
                 </div>
               </div>
-              <div className="flex items-center justify-between"key={props.id_t}>
+              <div
+                className="flex items-center justify-between"
+                key={props.id_t}
+              >
                 <span className="font-semibold">{props.serviceName_t}</span>
                 <div className="flex items-center">
                   <CheckIcon className="text-green-500" />
-                  <span className="ml-2 text-gray-500">{props.last_update_t}</span>
+                  <span className="ml-2 text-gray-500">
+                    {props.last_update_t}
+                  </span>
                 </div>
               </div>
             </CardContent>
-          
           </Card>
           <Card className="flex-1 shadow-md bg-white">
             <CardHeader>
@@ -156,7 +163,7 @@ export default function DashComponent(props: PropsType) {
               placeholder="Digite o ID da Venda"
               variant="underlined"
             />
-            
+
             <div className="ml-auto sm:ml-4">
               <Button className="bg-indigo-600 text-white hover:bg-indigo-700">
                 <ReplaceIcon className="h-4 w-4 mr-2" />

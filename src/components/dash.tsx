@@ -11,7 +11,7 @@ import { Input } from '@nextui-org/input'
 import DateRangePickerComponent from '../components/rangedatepicker/index'
 import { Spinner } from '@nextui-org/react'
 import { formatarData } from '@/utils/dates'
-
+import React, { ChangeEvent } from 'react'
 export default function DashComponent(props: PropsType) {
   return (
     <>
@@ -181,10 +181,13 @@ export default function DashComponent(props: PropsType) {
             <div className="  flex  flex-col items-center lg:grid lg:grid-cols-2 lg:items-end justify-center lg:pl-0  p-4 lg:pb-2 lg:pr-0 gap-2 lg:gap-4">
               <div className="lg:w-full w-full items-end justify-center   ">
                 <Input
+                  type="number"
                   className=" text-sm"
                   placeholder="Digite o ID do Estabelecimento"
                   variant="underlined"
-                  onChange={props.idEstabelecimento}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    props.idEstabelecimentoReprocessarVenda(e.target.value)
+                  }}
                 />
               </div>
               <div className="w-full lg:w-full flex flex-col lg:flex-row items-center    h-full lg:items-end gap-2  ">
@@ -207,7 +210,10 @@ export default function DashComponent(props: PropsType) {
                 <Input
                   placeholder="Digite o ID do Estabelecimento"
                   variant="underlined"
-                  onChange={props.idEstabelecimentoInputFormTwo}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    props.idEstabelecimentoReprocessarSaldo(e.target.value)
+                  }}
+                  type="number"
                 />
               </div>
               <div className="w-full flex lg:flex-row flex-col items-center lg:justify-between  lg:items-end  gap-2">
@@ -216,7 +222,9 @@ export default function DashComponent(props: PropsType) {
                   className=""
                   placeholder="Dias"
                   variant="underlined"
-                  onChange={props.inputDias}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    props.inputDias(e.target.value)
+                  }}
                 />
 
                 <Button
@@ -256,7 +264,7 @@ function CheckIcon(props:any) {
   )
 }
 
-function CodeIcon(props) {
+function CodeIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
@@ -276,7 +284,7 @@ function CodeIcon(props) {
   )
 }
 
-function PizzaIcon(props) {
+function PizzaIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
@@ -299,7 +307,7 @@ function PizzaIcon(props) {
   )
 }
 
-function ShoppingCartIcon(props) {
+function ShoppingCartIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}

@@ -15,7 +15,9 @@ export default function DashBoard() {
     start: parseDate(todaydp.toISOString().split('T')[0]), // Data atual
     end: parseDate(lastDayOfMonth.toISOString().split('T')[0]), // Último dia do mês
   })
-  const [daysReprocessarSaldo, setDaysReprocessarSaldo] = useState()
+  const [daysReprocessarSaldo, setDaysReprocessarSaldo] = useState<
+    string | undefined
+  >(undefined)
   const [id, setId] = useState(null)
   const [numVendas, setNumVendas] = useState()
   const [servicesStatus, setServicesStatus] = useState()
@@ -112,7 +114,7 @@ export default function DashBoard() {
   const reprocessSale = async () => {
     try {
       const res = await axios.get(
-        `https://api.zsystems.com.br/z1/reprocessar-vendas/${idEstabelecimento}/${formatDate(value.start.toDate())}/${formatDate(value.end.toDate())}`,
+        `https://api.zsystems.com.br/z1/reprocessar-vendas/${idEstabelecimentoReprocessarVenda}/${formatDate(value.start.toDate())}/${formatDate(value.end.toDate())}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -318,15 +320,15 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
     auth()
   }, [])
 
-  const [idEstabelecimento, setIdEstabelecimento] = useState('')
+  const [
+    idEstabelecimentoReprocessarVenda,
+    setIdEstabelecimentoReprocessarVenda,
+  ] = useState<string | undefined>(undefined)
 
   const [
     idEstabelecimentoReprocessarSaldo,
     setIdEstabelecimentoReprocessarSaldo,
-  ] = useState()
-  const handleChangeDays = (e: ChangeEvent<HTMLInputElement>) => {
-    setDaysReprocessarSaldo(e.target.value)
-  }
+  ] = useState<string | undefined>(undefined)
 
   return (
     <div className=" h-screen max-w-screen flex flex-col items-center  ">
@@ -350,15 +352,22 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
           estabelecimentosFilhosRegistradosUltimos30dias={
             totalEstabelecimentsChildRegistredLastThirtyDays
           }
+<<<<<<< HEAD
           inputDias={handleChangeDays}
           idEstabelecimentoInputFormTwo={(e: ChangeEvent<HTMLInputElement>) => {
             setIdEstabelecimentoReprocessarSaldo(e.target.value)
           }}
+=======
+          inputDias={setDaysReprocessarSaldo}
+          idEstabelecimentoReprocessarSaldo={
+            setIdEstabelecimentoReprocessarSaldo
+          }
+>>>>>>> f25724046ca2ed05b92fb9125cd97124f22c2cf4
           reprocessarSaldo={reprocessarSaldo}
           reprocessarVenda={reprocessSale} //
-          idEstabelecimento={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setIdEstabelecimento(e.target.value)
-          }}
+          idEstabelecimentoReprocessarVenda={
+            setIdEstabelecimentoReprocessarVenda
+          }
         />
       </div>
     </div>
