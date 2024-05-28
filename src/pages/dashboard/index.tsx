@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Header from '../../components/Header/index'
-import React, { useEffect, useState, ChangeEvent } from 'react'
-import { formatDatePicker, getLastDayOfMonth, formatDate } from '@/utils/dates'
+import React, { useEffect, useState } from 'react'
+import { getLastDayOfMonth, formatDate } from '@/utils/dates'
 import Cookies from 'js-cookie'
 import { toast } from 'sonner'
 import Router from 'next/router'
@@ -18,13 +18,12 @@ export default function DashBoard() {
   const [daysReprocessarSaldo, setDaysReprocessarSaldo] = useState<
     string | undefined
   >(undefined)
-  const [id, setId] = useState(null)
+
   const [numVendas, setNumVendas] = useState()
   const [servicesStatus, setServicesStatus] = useState()
-  const [amountIndicator, setAmountIndicator] = useState(null)
+
   const [totalMKT, setTotalMKT] = useState(null)
-  const [totalProcessado, setTotalProcessed] = useState(null)
-  const [startDate, setStartDate] = useState(new Date())
+
   const [totalProcessedToday, setTotalProcessedToday] = useState(null)
   const [totalProcessedYesterday, setTotalProcessedYesterday] = useState(null)
   const [totalProcessedLastMonth, setTotalProcessedLastMonth] = useState(null)
@@ -45,11 +44,10 @@ export default function DashBoard() {
     totalMarketplaceChildRegistredPreviousMonth,
     setTotalMarketplaceChildRegistredPreviousMonth,
   ] = useState(null)
-  const [totalNotPayedLastWeek, setTotalNotPayedLastWeek] = useState(null)
-  const [MarketplacesChildsById, setMarketplacesChildsById] = useState(null)
+
   const token = Cookies.get('token')
 
-  function formatDateToYYYYMMDD(date: any) {
+  function formatDateToYYYYMMDD(date: Date) {
     const year = date.getFullYear()
     const month = String(date.getMonth() + 1).padStart(2, '0') // O mês começa de 0 (janeiro é 0)
     const day = String(date.getDate()).padStart(2, '0')
@@ -270,7 +268,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
         'https://api.zsystems.com.br/z1/indicadores',
         { headers: { Authorization: `Bearer ${token}` } },
       )
-      setAmountIndicator(response.data)
+
       setTotalVendido(response.data.result.transacionadoHoje.valorTotal)
       setNumVendas(response.data.result.transacionadoHoje.quantidade)
     } catch (error) {
@@ -352,17 +350,10 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
           estabelecimentosFilhosRegistradosUltimos30dias={
             totalEstabelecimentsChildRegistredLastThirtyDays
           }
-<<<<<<< HEAD
-          inputDias={handleChangeDays}
-          idEstabelecimentoInputFormTwo={(e: ChangeEvent<HTMLInputElement>) => {
-            setIdEstabelecimentoReprocessarSaldo(e.target.value)
-          }}
-=======
           inputDias={setDaysReprocessarSaldo}
           idEstabelecimentoReprocessarSaldo={
             setIdEstabelecimentoReprocessarSaldo
           }
->>>>>>> f25724046ca2ed05b92fb9125cd97124f22c2cf4
           reprocessarSaldo={reprocessarSaldo}
           reprocessarVenda={reprocessSale} //
           idEstabelecimentoReprocessarVenda={
@@ -433,4 +424,6 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
 
 
     </div>
+  
+  
 */

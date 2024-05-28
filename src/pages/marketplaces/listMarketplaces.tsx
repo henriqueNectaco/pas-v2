@@ -54,7 +54,7 @@ export default function ListMarketplaces(props: ContentMarketplaceProps) {
             variant="solid"
           >
             <DropdownItem key={[props.id, 'string']}>
-              Cadastrar Marketplace filho
+              Cadastrar Marketplace filhu
             </DropdownItem>
             <DropdownItem key="showmarketplaceschilds">
               Visualizar Marketplaces filhos

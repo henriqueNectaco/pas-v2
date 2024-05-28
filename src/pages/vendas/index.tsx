@@ -2,11 +2,10 @@ import Header from '../../components/Header/index'
 import { Input, Button } from '@nextui-org/react'
 import axios from 'axios'
 import { formatarData } from '@/utils/dates'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, ChangeEvent } from 'react'
 import Cookies from 'js-cookie'
 import JSONPrettyMon from 'react-json-pretty/themes/monikai.css'
 import JSONPretty from 'react-json-pretty'
-
 import { toast } from 'sonner'
 import Router from 'next/router'
 import { ZoopTransaction, Pedido } from '@/types/vendas'
@@ -21,7 +20,7 @@ export default function Vendas() {
     setVendaId('')
     setResponseData(null)
   }
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setVendaId(e.target.value)
   }
   const handleSearch = async () => {
@@ -38,7 +37,7 @@ export default function Vendas() {
         toast.error('Id não encontrado')
       }
     } catch (error) {
-      console.log(error.message)
+      console.error(error)
     }
   }
   useEffect(() => {

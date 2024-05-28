@@ -16,8 +16,9 @@ type CronProps = {
   cron: string
   interval: string
 }
+
 export default function Crons() {
-  const [crons, setCrons] = useState<object>()
+  const [crons, setCrons] = useState<CronProps[] | undefined>([])
 
   const token = Cookies.get('token')
 
@@ -52,7 +53,7 @@ export default function Crons() {
           ) : (
             <div className="  border-2 border-red-500 space-y-4  lg:grid-cols-1">
               {crons.map((crons: CronProps) => (
-                <div className="" key={crons.id}>
+                <div key={crons.id}>
                   <CardCron
                     Cron={crons.slug}
                     Scheduled={crons.interval}

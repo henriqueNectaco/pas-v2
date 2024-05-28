@@ -1,4 +1,6 @@
+import { DateValue, RangeValue } from '@nextui-org/react'
 import { Dispatch, SetStateAction } from 'react'
+
 export type PropsType = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   servicesStatus: any | null
@@ -22,8 +24,9 @@ export type PropsType = {
     SetStateAction<string | undefined>
   >
   reprocessarVenda: () => void
-  value: Date
-  setValue: () => void
+
+  setValue: (value: RangeValue<DateValue>) => void
+  value: RangeValue<DateValue> | null | undefined
 }
 
 export type typeServices = {
@@ -33,6 +36,7 @@ export type typeServices = {
   status: boolean
 }
 export type datePickerProps = {
-  value: Date
-  setValue: () => void
+  value: RangeValue<DateValue> | null | undefined
+
+  setValue: (value: RangeValue<DateValue>) => void
 }

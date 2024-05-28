@@ -89,7 +89,7 @@ export default function TableTestes(props: marketplaceProps) {
                             Visualizar Marketplaces filhos
                           </DropdownItem>
                           <DropdownItem key="showestabelecimentschilds">
-                            Visualizar Estabelecimentos filhos
+                            Visualizar Estabelecimentos filhos tables
                           </DropdownItem>
                           <DropdownItem key="addssl">
                             Adicionar SSL

@@ -16,12 +16,12 @@ export default function DropdownMenuSecond() {
         </Button>
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
-        <DropdownItem key="new">Cadatrar Marketplace filho</DropdownItem>
+        <DropdownItem key="new">Cadatrar Marketpssslace filho</DropdownItem>
         <DropdownItem key="copy">Visualizar Marketplaces filhos</DropdownItem>
         <DropdownItem key="show_estabeleciments_child">
           Visualizar Estabelecimentos filhos
         </DropdownItem>
-        <DropdownItem key="add_ssl">Adicionar SSL</DropdownItem>
+        <DropdownItem key="add_ssl">Adicionar ssSSL</DropdownItem>
         <DropdownItem key="re_sales">Reprocessar vendas</DropdownItem>
         <DropdownItem key="import_ec">Importar EC's</DropdownItem>
         <DropdownItem key="tax_sale">Cobrança por transação</DropdownItem>
