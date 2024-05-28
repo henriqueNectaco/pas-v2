@@ -1,15 +1,7 @@
-import {
-  Spinner,
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-  Button,
-} from '@nextui-org/react'
 import React from 'react'
-import { DotsThreeOutlineVertical } from 'phosphor-react'
-import { useRouter } from 'next/router'
 
+import { Spinner } from '@nextui-org/react'
+import DropdownButton from '../marketplaces/dropdown'
 type mktProps = {
   id: number
   mainECId: number
@@ -20,10 +12,9 @@ type marketplaceProps = {
   marketplace: Array | null
 }
 export default function TableTestes(props: marketplaceProps) {
-  const router = useRouter()
   return (
-    <div className="max-w-screen  w-full   h-screen bg-gray-100">
-      <div className="  overflow-auto rounded-lg shadow hidden md:hidden lg:hidden xl:block border  max-w-screen">
+    <div className="max-w-screen  w-full   h-screen bg-white">
+      <div className=" p-2 overflow-auto rounded-lg shadow hidden md:hidden lg:hidden xl:block border  max-w-screen">
         <table className="w-full max-w-screen ">
           <thead className="w-full  border-b-2  border-black ">
             <tr className=" w-full   ">
@@ -48,70 +39,21 @@ export default function TableTestes(props: marketplaceProps) {
               <>
                 {props.marketplace.map((mkt: mktProps) => (
                   <tr key={mkt.id} className="bg-white ">
-                    <td className="flex items-center justify-start text-sm text-gray-700 whitespace-nowrap p-4">
+                    <td className="flex items-center justify-start text-sm text-gray-700 whitespace-nowrap p-3">
                       {mkt.id}
                     </td>
-                    <td className="p-4 text-sm text-gray-700 whitespace-nowrap ">
+                    <td className=" text-sm text-gray-700 whitespace-nowrap p-3">
                       {mkt.mainECId}
                     </td>
 
-                    <td className="p-4 text-sm text-gray-700 whitespace-nowrap ">
+                    <td className=" text-sm text-gray-700 whitespace-nowrap p-3">
                       {mkt.mainECNomeFantasia}
                     </td>
-                    <td className="p-4 text-sm text-gray-700 whitespace-nowrap ">
+                    <td className=" text-sm text-blue-600 whitespace-nowrap p-3">
                       {mkt.mainECEmail}
                     </td>
-                    <td className="p-4 text-sm text-gray-700 whitespace-nowrap">
-                      <Dropdown>
-                        <DropdownTrigger>
-                          <Button variant="light">
-                            <DotsThreeOutlineVertical size={20} />
-                          </Button>
-                        </DropdownTrigger>
-                        <DropdownMenu
-                          aria-label="Action event example"
-                          onAction={(key) => {
-                            if (key === 'showmarketplaceschilds') {
-                              router.push(`/marketplaces/${mkt.id}/filhos`)
-                            } else if (key === 'showestabelecimentschilds') {
-                              router.push(
-                                `/marketplaces/${mkt.id}/estabelecimentos`,
-                              )
-                            }
-                          }}
-                          color="primary"
-                          variant="solid"
-                        >
-                          <DropdownItem key={mkt.id}>
-                            Cadastrar Marketplace filho
-                          </DropdownItem>
-                          <DropdownItem key="showmarketplaceschilds">
-                            Visualizar Marketplaces filhos
-                          </DropdownItem>
-                          <DropdownItem key="showestabelecimentschilds">
-                            Visualizar Estabelecimentos filhos tables
-                          </DropdownItem>
-                          <DropdownItem key="addssl">
-                            Adicionar SSL
-                          </DropdownItem>
-                          <DropdownItem key="reprocessSales">
-                            Reprocessar Vendas
-                          </DropdownItem>
-                          <DropdownItem key="importEc">
-                            Importar EC&apos;s
-                          </DropdownItem>
-                          <DropdownItem key="taxfortransaction">
-                            Cobrança por transação
-                          </DropdownItem>
-                          <DropdownItem key="importSales">
-                            Importar Vendas
-                          </DropdownItem>
-                          <DropdownItem key="renewcache">
-                            Renovar Cache
-                          </DropdownItem>
-                          <DropdownItem key="turnOff">Desativar</DropdownItem>
-                        </DropdownMenu>
-                      </Dropdown>
+                    <td className=" text-sm text-gray-700 whitespace-nowrap p-3">
+                      <DropdownButton id={mkt.id} />
                     </td>
                   </tr>
                 ))}
@@ -149,48 +91,7 @@ export default function TableTestes(props: marketplaceProps) {
                   <p>{mkt.mainECEmail}</p>
                 </div>
                 <div className="w-1/4  flex flex-col items-center justify-center">
-                  <Dropdown>
-                    <DropdownTrigger>
-                      <Button variant="light">
-                        <DotsThreeOutlineVertical size={20} />
-                      </Button>
-                    </DropdownTrigger>
-                    <DropdownMenu
-                      aria-label="Action event example"
-                      onAction={(key) => {
-                        alert(key)
-                      }}
-                      color="primary"
-                      variant="solid"
-                    >
-                      <DropdownItem key={mkt.id}>
-                        Cadastrar Marketplace filho
-                      </DropdownItem>
-                      <DropdownItem key="showmarketplaceschilds">
-                        Visualizar Marketplaces filhos
-                      </DropdownItem>
-                      <DropdownItem key="showestabelecimentschilds">
-                        Visualizar Estabelecimentos filhos
-                      </DropdownItem>
-                      <DropdownItem key="addssl">Adicionar SSL</DropdownItem>
-                      <DropdownItem key="reprocessSales">
-                        Reprocessar Vendas
-                      </DropdownItem>
-                      <DropdownItem key="importEc">
-                        Importar EC&apos;s
-                      </DropdownItem>
-                      <DropdownItem key="taxfortransaction">
-                        Cobrança por transação
-                      </DropdownItem>
-                      <DropdownItem key="importSales">
-                        Importar Vendas
-                      </DropdownItem>
-                      <DropdownItem key="renewcache">
-                        Renovar Cache
-                      </DropdownItem>
-                      <DropdownItem key="turnOff">Desativar</DropdownItem>
-                    </DropdownMenu>
-                  </Dropdown>
+                  <DropdownButton id={mkt.id} />
                 </div>
               </div>
             ))}

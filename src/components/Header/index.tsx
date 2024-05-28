@@ -10,14 +10,11 @@ import {
   Link,
   Button,
   useDisclosure,
-  Input,
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
   ModalFooter,
-  RadioGroup,
-  Radio,
 } from '@nextui-org/react'
 import logo from '../../assets/logo.svg'
 import Image from 'next/image'
@@ -29,7 +26,7 @@ export default function Header() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const [modalPlacement, setModalPlacement] = React.useState('top')
   const menuItems = [
-    'Dashboard',
+    'dashboard',
     'Dashboard',
     'Vendas',
     'Marketplace',
@@ -39,7 +36,7 @@ export default function Header() {
   ]
   const menuItemsHrf = [
     'dashboard',
-    'Dashboard',
+    'dashboard',
     'vendas',
     'marketplaces',
     'crons',
@@ -108,7 +105,7 @@ export default function Header() {
             </NavbarItem>
             <NavbarItem>
               <Link color="foreground" href="#">
-                SSL's
+                SSL&apos;s
               </Link>
             </NavbarItem>
           </NavbarContent>
@@ -118,10 +115,9 @@ export default function Header() {
           <NavbarItem className="">
             <Button
               onClick={onOpen}
-              color="FFFF"
               href="#"
               className="button-no-border"
-              variant="solid"
+              variant="light"
             >
               <SignOut size={25} />
             </Button>

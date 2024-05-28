@@ -5,8 +5,8 @@ export default function FilterEstabeleciments(
   props: propsFilterEstabeleciment,
 ) {
   return (
-    <div className="flex flex-col lg:grid lg:grid-cols-2 w-full border bg-white">
-      <div className="border-2 col-span-1 ">
+    <div className="flex flex-col lg:grid lg:grid-cols-4 w-full  bg-white">
+      <div className=" col-span-2 flex flex-col lg:flex-row gap-2 p-3 lg:items-end lg:justify-end items-center justify-center">
         <Input onChange={props.onChangeId} variant="underlined" label="ID" />
         <Input
           variant="underlined"
@@ -19,13 +19,15 @@ export default function FilterEstabeleciments(
           label="Nome na Fatura"
         />
       </div>
-      <div className="border-2 col-span-1">
-        <Button onClick={props.limparFiltro} color="danger">
-          Limpar Filtro
-        </Button>
-        <Button onClick={props.filtrar} color="primary">
-          Filtrar
-        </Button>
+      <div className=" col-span-2 flex flex-col lg:flex-row  lg:items-end lg:justify-end p-3 gap-2">
+        <div className="col-span-1 lg:w-1/2  flex flex-col lg:flex-row gap-2 lg:gap-1 ">
+          <Button onClick={props.limparFiltro} color="danger" fullWidth={true}>
+            Limpar Filtro
+          </Button>
+          <Button onClick={props.filtrar} color="primary" fullWidth={true}>
+            Filtrar
+          </Button>
+        </div>
       </div>
     </div>
   )

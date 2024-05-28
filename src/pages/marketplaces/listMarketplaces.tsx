@@ -1,12 +1,4 @@
 import React from 'react'
-import {
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-  Button,
-} from '@nextui-org/react'
-import { DotsThreeOutlineVertical } from 'phosphor-react'
 
 type ContentMarketplaceProps = {
   id: string
@@ -53,7 +45,7 @@ export default function ListMarketplaces(props: ContentMarketplaceProps) {
             color="primary"
             variant="solid"
           >
-            <DropdownItem key={[props.id, 'string']}>
+            <DropdownItem key={props.id}>
               Cadastrar Marketplace filhu
             </DropdownItem>
             <DropdownItem key="showmarketplaceschilds">
@@ -77,3 +69,14 @@ export default function ListMarketplaces(props: ContentMarketplaceProps) {
     </div>
   )
 }
+/*
+import {
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  Button,
+} from '@nextui-org/react'
+import { DotsThreeOutlineVertical } from 'phosphor-react'
+*/

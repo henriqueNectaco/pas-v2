@@ -1,4 +1,5 @@
 import React from 'react'
+import { useRouter } from 'next/router'
 import {
   Dropdown,
   DropdownTrigger,
@@ -6,28 +7,47 @@ import {
   DropdownItem,
   Button,
 } from '@nextui-org/react'
-import { CaretDown, DotsThreeOutlineVertical } from 'phosphor-react'
-export default function DropdownMenuSecond() {
+import { DotsThreeOutlineVertical } from 'phosphor-react'
+type TypeProps = {
+  id: number
+}
+export default function DropdownButton(props: TypeProps) {
+  const router = useRouter()
   return (
     <Dropdown>
       <DropdownTrigger>
-        <Button variant="bordered">
-          <DotsThreeOutlineVertical size={32} />
+        <Button variant="light">
+          <DotsThreeOutlineVertical size={20} />
         </Button>
       </DropdownTrigger>
-      <DropdownMenu aria-label="Static Actions">
-        <DropdownItem key="new">Cadatrar Marketpssslace filho</DropdownItem>
-        <DropdownItem key="copy">Visualizar Marketplaces filhos</DropdownItem>
-        <DropdownItem key="show_estabeleciments_child">
+      <DropdownMenu
+        aria-label="Action event example"
+        onAction={(key) => {
+          if (key === 'showmarketplaceschilds') {
+            router.push(`/marketplaces/${props.id}/filhos`)
+          } else if (key === 'showestabelecimentschilds') {
+            router.push(`/marketplaces/${props.id}/estabelecimentos`)
+          }
+        }}
+        color="primary"
+        variant="solid"
+      >
+        <DropdownItem key={props.id}>Cadastrar Marketplace filho</DropdownItem>
+        <DropdownItem key="showmarketplaceschilds">
+          Visualizar Marketplaces filhos
+        </DropdownItem>
+        <DropdownItem key="showestabelecimentschilds">
           Visualizar Estabelecimentos filhos
         </DropdownItem>
-        <DropdownItem key="add_ssl">Adicionar ssSSL</DropdownItem>
-        <DropdownItem key="re_sales">Reprocessar vendas</DropdownItem>
-        <DropdownItem key="import_ec">Importar EC's</DropdownItem>
-        <DropdownItem key="tax_sale">Cobrança por transação</DropdownItem>
-        <DropdownItem key="import_sale">Importar vendas</DropdownItem>
-        <DropdownItem key="renovar_cache">Renovar Cache</DropdownItem>
-        <DropdownItem key="baka">Desativar</DropdownItem>
+        <DropdownItem key="addssl">Adicionar SSL</DropdownItem>
+        <DropdownItem key="reprocessSales">Reprocessar Vendas</DropdownItem>
+        <DropdownItem key="importEc">Importar EC&apos;s</DropdownItem>
+        <DropdownItem key="taxfortransaction">
+          Cobrança por transação
+        </DropdownItem>
+        <DropdownItem key="importSales">Importar Vendas</DropdownItem>
+        <DropdownItem key="renewcache">Renovar Cache</DropdownItem>
+        <DropdownItem key="turnOff">Desativar</DropdownItem>
       </DropdownMenu>
     </Dropdown>
   )
