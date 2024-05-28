@@ -1,10 +1,5 @@
 import React from 'react'
-import Header from '../../components/Header/index'
-import { useRouter } from 'next/router'
-import Cookies from 'js-cookie'
-
 import {
-  Input,
   Modal,
   ModalContent,
   ModalHeader,
@@ -12,45 +7,53 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
-  RadioGroup,
-  Radio,
 } from '@nextui-org/react'
 
-export default function Modalll() {
-  const router = useRouter()
-  const LogOut = () => {
-    Cookies.remove('token') // ou localStorage.removeItem('token');
-    router.push('/')
-  }
+export default function App() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
-  const [modalPlacement, setModalPlacement] = React.useState('top')
 
   return (
-    <Modal
-      isOpen={isOpen}
-      placement={modalPlacement}
-      onOpenChange={onOpenChange}
-    >
-      <ModalContent className=" h-[25vh] border-2">
-        {(onClose) => (
-          <>
-            <ModalHeader className=" border-2 h-[7vh]  flex flex-col items-center justify-start gap-1">
-              <p className="text-yellow-400">Warning!</p>
-            </ModalHeader>
-            <ModalBody className="border-2 border-red-500 h-[15vh] flex flex-col items-center justify-center ">
-              <p className="text-xl">Deseja Efetuar o LogOut?</p>
-            </ModalBody>
-            <ModalFooter className="flex flex-row items-center justify-center">
-              <Button color="danger" variant="light" onPress={onClose}>
-                Cancelar
-              </Button>
-              <Button color="primary" onPress={LogOut}>
-                Confirmar
-              </Button>
-            </ModalFooter>
-          </>
-        )}
-      </ModalContent>
-    </Modal>
+    <>
+      <Button onPress={onOpen}>Open Modal</Button>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Modal Title
+              </ModalHeader>
+              <ModalBody>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Nullam pulvinar risus non risus hendrerit venenatis.
+                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
+                </p>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Nullam pulvinar risus non risus hendrerit venenatis.
+                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
+                </p>
+                <p>
+                  Magna exercitation reprehenderit magna aute tempor cupidatat
+                  consequat elit dolor adipisicing. Mollit dolor eiusmod sunt ex
+                  incididunt cillum quis. Velit duis sit officia eiusmod Lorem
+                  aliqua enim laboris do dolor eiusmod. Et mollit incididunt
+                  nisi consectetur esse laborum eiusmod pariatur proident Lorem
+                  eiusmod et. Culpa deserunt nostrud ad veniam.
+                </p>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+                <Button color="primary" onPress={onClose}>
+                  Action
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+    </>
   )
 }

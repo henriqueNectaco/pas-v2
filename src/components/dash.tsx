@@ -194,6 +194,7 @@ export default function DashComponent(props: PropsType) {
                 <DateRangePickerComponent
                   value={props.value}
                   setValue={props.setValue}
+                  variant={'underlined'}
                 />
                 <Button
                   className=""

@@ -37,6 +37,6 @@ export type typeServices = {
 }
 export type datePickerProps = {
   value: RangeValue<DateValue> | null | undefined
-
+  variant: 'flat' | 'bordered' | 'faded' | 'underlined' | undefined
   setValue: (value: RangeValue<DateValue>) => void
 }
