@@ -17,8 +17,8 @@ export type PropsType = {
   totalVendido: number | undefined
   marketplacesCadastradosUltimos30dias: number | undefined
   estabelecimentosFilhosRegistradosUltimos30dias: number | undefined
-  idEstabelecimento: () => void
-  idEstabelecimentoInputFormTwo: () => void
+  idEstabelecimento: ChangeEventHandler<HTMLInputElement>
+  idEstabelecimentoInputFormTwo: Dispatch<SetStateAction<ChangeEvent>>
   reprocessarSaldo: () => void
   inputDias: Dispatch<SetStateAction<string>>
   reprocessarVenda: () => void

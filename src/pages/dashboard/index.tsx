@@ -351,9 +351,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
             totalEstabelecimentsChildRegistredLastThirtyDays
           }
           inputDias={handleChangeDays}
-          idEstabelecimentoInputFormTwo={(
-            e: React.ChangeEvent<HTMLInputElement>,
-          ) => {
+          idEstabelecimentoInputFormTwo={(e: ChangeEvent<HTMLInputElement>) => {
             setIdEstabelecimentoReprocessarSaldo(e.target.value)
           }}
           reprocessarSaldo={reprocessarSaldo}
