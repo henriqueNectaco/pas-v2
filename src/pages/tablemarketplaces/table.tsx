@@ -39,7 +39,7 @@ export default function TableTestes(props: marketplaceProps) {
               <>
                 {props.marketplace.map((mkt: mktProps) => (
                   <tr key={mkt.id} className="bg-white ">
-                    <td className="flex items-center justify-start text-sm text-gray-700 whitespace-nowrap p-3">
+                    <td className="  text-sm text-gray-700 whitespace-nowrap p-3">
                       {mkt.id}
                     </td>
                     <td className=" text-sm text-gray-700 whitespace-nowrap p-3">

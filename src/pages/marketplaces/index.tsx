@@ -72,13 +72,13 @@ export default function Marketplace() {
   useEffect(() => {
     console.log('resData useeffect', resData)
   }, [resData])
-  console.log('state', state)
+
   return (
     <div className=" h-full max-w-screen w-full flex flex-col items-center bg-gray-200 ">
       <Header />
-      <div className="w-full flex flex-col items-center     mt-4">
+      <div className="w-full flex flex-col items-center  h-full p-3 space-y-2 lg:space-y-4  mt-4">
         <div className=" w-full flex flex-col lg:grid lg:grid-cols-4 boder-2 gap-2">
-          <div className=" flex flex-col lg:flex-row lg:col-span-2 ">
+          <div className=" flex flex-col lg:flex-row lg:col-span-2 gap-2">
             <Button
               fullWidth={true}
               radius="md"
@@ -109,7 +109,7 @@ export default function Marketplace() {
           </div>
 
           <div className="  lg:col-span-2 flex flex-col lg:flex-row justify-center items-center     lg:justify-end">
-            <div className="col-span-1 w-full lg:w-1/2  flex flex-col lg:flex-row gap-2 lg:gap-1">
+            <div className="col-span-1 lg:w-1/2  w-full flex flex-row gap-2 lg:gap-1">
               <Dropdown>
                 <DropdownTrigger>
                   <Button
@@ -147,7 +147,7 @@ export default function Marketplace() {
           {!resData ? (
             <Spinner size="lg" color="primary" />
           ) : (
-            <div className=" max-w-screen w-full h-full  space-y-4     ">
+            <div className=" max-w-screen w-full h-full       ">
               <TableTestes marketplace={resData} />
             </div>
           )}

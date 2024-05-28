@@ -20,7 +20,7 @@ export default function FilterEstabeleciments(
         />
       </div>
       <div className=" col-span-2 flex flex-col lg:flex-row  lg:items-end lg:justify-end p-3 gap-2">
-        <div className="col-span-1 lg:w-1/2  flex flex-col lg:flex-row gap-2 lg:gap-1 ">
+        <div className="col-span-1 lg:w-1/2  flex flex-row gap-2 lg:gap-1 ">
           <Button onClick={props.limparFiltro} color="danger" fullWidth={true}>
             Limpar Filtro
           </Button>
