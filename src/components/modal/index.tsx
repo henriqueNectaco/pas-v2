@@ -6,16 +6,14 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  useDisclosure,
 } from '@nextui-org/react'
-
-export default function App() {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure()
-
+type typeProps = {
+  onClick: () => void
+}
+export default function ModalMine(props: typeProps) {
   return (
     <>
-      <Button onPress={onOpen}>Open Modal</Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal isOpen={props.isOpen} onOpenChange={props.onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
@@ -46,7 +44,7 @@ export default function App() {
                 <Button color="danger" variant="light" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="primary" onPress={onClose}>
+                <Button color="primary" onClick={props.onClick}>
                   Action
                 </Button>
               </ModalFooter>

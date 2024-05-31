@@ -13,9 +13,9 @@ type marketplaceProps = {
 }
 export default function TableTestes(props: marketplaceProps) {
   return (
-    <div className="max-w-screen  w-full   h-screen bg-white">
-      <div className=" p-2 overflow-auto rounded-lg shadow hidden md:hidden lg:hidden xl:block border  max-w-screen">
-        <table className="w-full max-w-screen ">
+    <div className="max-w-screen  w-full   h-screen ">
+      <div className=" p-2 overflow-auto rounded-2xl bg-white shadow hidden md:hidden lg:hidden xl:block border  max-w-screen">
+        <table className="w-full max-w-screen  ">
           <thead className="w-full  border-b-2  border-black ">
             <tr className=" w-full   ">
               <th className=" w-1/6 p-3 text-sm font-semibold tracking-wide text-left">

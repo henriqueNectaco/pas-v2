@@ -74,9 +74,9 @@ export default function Marketplace() {
   }, [resData])
 
   return (
-    <div className=" h-full max-w-screen w-full flex flex-col items-center bg-gray-200 ">
+    <div className="  max-w-screen w-full flex flex-col items-center bg-gray-200 ">
       <Header />
-      <div className="w-full flex flex-col items-center  h-full p-3 space-y-2 lg:space-y-4  mt-4">
+      <div className="w-full flex flex-col items-center  h-full p-2 space-y-2 lg:space-y-4  mt-4">
         <div className=" w-full flex flex-col lg:grid lg:grid-cols-4 boder-2 gap-2">
           <div className=" flex flex-col lg:flex-row lg:col-span-2 gap-2">
             <Button
@@ -115,7 +115,8 @@ export default function Marketplace() {
                   <Button
                     className=""
                     size="md"
-                    variant="solid"
+                    variant="flat"
+                    color="default"
                     fullWidth={true}
                   >
                     {state}
