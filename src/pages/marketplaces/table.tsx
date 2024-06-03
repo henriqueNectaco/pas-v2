@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { Spinner } from '@nextui-org/react'
-import DropdownButton from '../marketplaces/dropdown'
+
+import DropdownButton from './dropdown'
 type mktProps = {
   id: number
   mainECId: number

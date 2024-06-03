@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie'
+
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header/index'
 import {
@@ -9,9 +10,9 @@ import {
   Button,
   Spinner,
 } from '@nextui-org/react'
-import ListMarketplaces from './listMarketplaces'
+
 import axios from 'axios'
-import TableTestes from '../tablemarketplaces/table'
+import TableTestes from './table'
 
 import { CaretDown } from 'phosphor-react'
 import { toast } from 'sonner'

@@ -1,5 +1,6 @@
-import React from 'react'
 import {
+  DateValue,
+  RangeValue,
   Modal,
   ModalContent,
   ModalHeader,
@@ -7,45 +8,52 @@ import {
   ModalFooter,
   Button,
 } from '@nextui-org/react'
+
+import DateRangePickerComponent from '../rangedatepicker'
 type typeProps = {
   onClick: () => void
+  onOpenChange: () => void
+  isOpen: boolean
+  action: string
+  setValue: (value: RangeValue<DateValue>) => void
+  value: RangeValue<DateValue> | null | undefined
 }
 export default function ModalMine(props: typeProps) {
   return (
     <>
-      <Modal isOpen={props.isOpen} onOpenChange={props.onOpenChange}>
+      <Modal
+        className="h-[30vh]"
+        isOpen={props.isOpen}
+        onOpenChange={props.onOpenChange}
+      >
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">
-                Modal Title
+              <ModalHeader className="flex flex-col items-start justify-center gap-1">
+                Selecione um intervalo
               </ModalHeader>
-              <ModalBody>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Magna exercitation reprehenderit magna aute tempor cupidatat
-                  consequat elit dolor adipisicing. Mollit dolor eiusmod sunt ex
-                  incididunt cillum quis. Velit duis sit officia eiusmod Lorem
-                  aliqua enim laboris do dolor eiusmod. Et mollit incididunt
-                  nisi consectetur esse laborum eiusmod pariatur proident Lorem
-                  eiusmod et. Culpa deserunt nostrud ad veniam.
-                </p>
+              <ModalBody className="flex flex-col items-center justify-center">
+                <DateRangePickerComponent
+                  variant="underlined"
+                  value={props.value}
+                  setValue={props.setValue}
+                />
               </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Close
+              <ModalFooter className="flex flex-col lg:flex-row">
+                <Button
+                  color="danger"
+                  variant="light"
+                  onPress={onClose}
+                  fullWidth={true}
+                >
+                  Fechar
                 </Button>
-                <Button color="primary" onClick={props.onClick}>
-                  Action
+                <Button
+                  color="primary"
+                  onPress={() => props.onClick(onClose)}
+                  fullWidth={true}
+                >
+                  {props.action}
                 </Button>
               </ModalFooter>
             </>
