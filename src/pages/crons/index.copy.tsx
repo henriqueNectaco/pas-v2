@@ -8,7 +8,6 @@ import { Spinner } from '@nextui-org/react'
 import { CardCron } from './items'
 import Router from 'next/router'
 import { formatarData } from '@/utils/dates'
-import TableCrons from '@/components/table'
 type CronProps = {
   slug: string
   id: string
@@ -17,7 +16,7 @@ type CronProps = {
   cron: string
   interval: string
 }
-const Array = ['Cron', 'Scheduled', 'Mensagem', 'Data']
+
 export default function Crons() {
   const [crons, setCrons] = useState<CronProps[] | undefined>([])
 
@@ -52,16 +51,17 @@ export default function Crons() {
           {!crons ? (
             <Spinner color="primary" size="lg" />
           ) : (
-            <div className="   space-y-4  lg:grid-cols-1">
-              <TableCrons
-                array={['crons', 'Scheduled', 'Mensagem', 'Data']}
-                id={crons.id}
-                marketplace={crons}
-                rowOne={crons.slug}
-                rowTwo={crons.interval}
-                rowThree={crons.message}
-                rowFour={'teste'}
-              />
+            <div className="  border-2 border-red-500 space-y-4  lg:grid-cols-1">
+              {crons.map((crons: CronProps) => (
+                <div key={crons.id}>
+                  <CardCron
+                    Cron={crons.slug}
+                    Scheduled={crons.interval}
+                    Mensagem={crons.message}
+                    date={formatarData(crons.start_date)}
+                  />
+                </div>
+              ))}
             </div>
           )}
         </>

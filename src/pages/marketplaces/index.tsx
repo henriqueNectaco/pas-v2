@@ -13,7 +13,7 @@ import {
 
 import axios from 'axios'
 import TableTestes from './table'
-
+import { getServerSideDate } from '@/utils/reqs.js'
 import { CaretDown } from 'phosphor-react'
 import { toast } from 'sonner'
 import Router from 'next/router'
@@ -37,19 +37,7 @@ export default function Marketplace() {
       console.error(error)
     }
   }
-  const getServerSideDate = async () => {
-    try {
-      const res = await axios.get(
-        `https://api.zsystems.com.br/z1/marketplaces?status=ativo`,
-        { headers: { Authorization: `Bearer ${token}` } },
-      )
 
-      setResData(res.data.marketplaces)
-      console.log('res.data sem filtro', res.data.marketplaces)
-    } catch (error) {
-      console.error(error)
-    }
-  }
   useEffect(() => {
     const auth = async () => {
       try {
@@ -58,7 +46,7 @@ export default function Marketplace() {
           { token },
         )
         if (res.data.success === true) {
-          getServerSideDate()
+          getServerSideDate(setResData, token)
         } else {
           toast.error('Sua sessão expirou faça login novamente')
           Router.push('/')
@@ -70,9 +58,6 @@ export default function Marketplace() {
 
     auth()
   }, [])
-  useEffect(() => {
-    console.log('resData useeffect', resData)
-  }, [resData])
 
   return (
     <div className="  max-w-screen w-full flex flex-col items-center bg-gray-200 ">

@@ -12,9 +12,21 @@ export const getCrons = async (setCrons, token) => {
 
   if (res.data.success === true) {
     setCrons(res.data.cronsLogs)
-
-    console.log()
   } else {
     toast.error(res.data.error)
+  }
+}
+
+export const getServerSideDate = async (setResData, token) => {
+  try {
+    const res = await axios.get(
+      `https://api.zsystems.com.br/z1/marketplaces?status=ativo`,
+      { headers: { Authorization: `Bearer ${token}` } },
+    )
+
+    setResData(res.data.marketplaces)
+    console.log('res.data sem filtro', res.data.marketplaces)
+  } catch (error) {
+    console.error(error)
   }
 }

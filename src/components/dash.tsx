@@ -12,6 +12,7 @@ import DateRangePickerComponent from '../components/rangedatepicker/index'
 import { Spinner } from '@nextui-org/react'
 import { formatarData } from '@/utils/dates'
 import React, { ChangeEvent } from 'react'
+import { CurrencyDollar } from 'phosphor-react'
 export default function DashComponent(props: PropsType) {
   return (
     <>
@@ -68,8 +69,10 @@ export default function DashComponent(props: PropsType) {
                 {!props.processadosOntem || !props.naoProcessadosHoje ? (
                   <Spinner size="sm" />
                 ) : (
-                  <span className="text-gray-500">
-                    {props.processadosHoje}/{props.processadosOntem}
+                  <span className="text-gray-500 flex lg:flex-row ">
+                    <p>{props.processadosHoje}</p>
+                    <p>/</p>
+                    <p>{props.processadosOntem}</p>
                   </span>
                 )}
               </div>
@@ -80,8 +83,10 @@ export default function DashComponent(props: PropsType) {
                 {!props.processadosMesAtual || !props.processadosMesAnterior ? (
                   <Spinner size="sm" />
                 ) : (
-                  <span className="text-gray-500">
-                    {props.processadosMesAtual}/{props.processadosMesAnterior}
+                  <span className="text-gray-500 flex lg:flex-row   ">
+                    <p>{props.processadosMesAtual}</p>
+                    <p>/</p>
+                    <p>{props.processadosMesAnterior}</p>
                   </span>
                 )}
               </div>
@@ -104,13 +109,13 @@ export default function DashComponent(props: PropsType) {
                 {!props.naoProcessadosHoje || !props.naoProcessadosOntem ? (
                   <Spinner size="sm" />
                 ) : (
-                  <div className="flex flex-row">
+                  <div className="flex flex-row lg:gap-1 ">
                     <p
                       className={`${props.naoProcessadosHoje > 0 ? 'text-yellow-400' : 'text-gray-50'}`}
                     >
                       {props.naoProcessadosHoje}
                     </p>
-                    /
+                    <p>/</p>
                     <span
                       className={`${props.naoProcessadosOntem > 0 ? 'text-yellow-400' : 'text-gray-50'}`}
                     >
@@ -125,7 +130,7 @@ export default function DashComponent(props: PropsType) {
             <CardHeader>
               <CardTitle>
                 <div className="flex items-center gap-2">
-                  <PizzaIcon className="h-6 w-6 text-indigo-600" />
+                  <CurrencyDollar color="green" size={32} />
                   <span>Vendas & Registros</span>
                 </div>
               </CardTitle>
@@ -285,29 +290,6 @@ function CodeIcon(props: React.SVGProps<SVGSVGElement>) {
   )
 }
 
-function PizzaIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M15 11h.01" />
-      <path d="M11 15h.01" />
-      <path d="M16 16h.01" />
-      <path d="m2 16 20 6-6-20A20 20 0 0 0 2 16" />
-      <path d="M5.71 17.11a17.04 17.04 0 0 1 11.4-11.4" />
-    </svg>
-  )
-}
-
 function ShoppingCartIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -331,7 +313,7 @@ function ShoppingCartIcon(props: React.SVGProps<SVGSVGElement>) {
 
 /*
   <CardContent className="grid grid-cols-1 gap-4 p-4">
-
+<PizzaIcon className="h-6 w-6 text-indigo-600" />
 
             {props.servicesStatus.map(() => ( 
                 <div key={props.id}>
@@ -342,4 +324,30 @@ function ShoppingCartIcon(props: React.SVGProps<SVGSVGElement>) {
 
                 </div>
               ))}
-            </CardContent> */
+            </CardContent>
+            
+            
+            function PizzaIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M15 11h.01" />
+      <path d="M11 15h.01" />
+      <path d="M16 16h.01" />
+      <path d="m2 16 20 6-6-20A20 20 0 0 0 2 16" />
+      <path d="M5.71 17.11a17.04 17.04 0 0 1 11.4-11.4" />
+    </svg>
+  )
+}
+            
+            */

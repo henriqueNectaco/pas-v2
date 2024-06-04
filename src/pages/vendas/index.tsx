@@ -164,50 +164,75 @@ export default function Vendas() {
           <div className="p-2 lg:pr-0">
             <div className="w-full flex flex-col items-center lg:items-start justify-center gap-2  bg-white shadow-lg border-2 p-4  ">
               <h1 className="font-bold">Pagamentos</h1>
+              {responseData.pagamentos.length >= 1 ? (
+                <div className="lg:grid lg:grid-cols-5 flex flex-col items-center justify-center  w-full space-y-2 space-x-2">
+                  <div className="flex flex-col space-y-2 items-center lg:items-start justify-center p-4 lg:pl-0">
+                    <p className="font-bold">ID {responseData.id}</p>
 
-              <div className="lg:grid lg:grid-cols-5 flex flex-col items-center justify-center  w-full space-y-2 space-x-2">
-                <div className="flex flex-col space-y-2 items-center lg:items-start justify-center p-4 lg:pl-0">
-                  <p className="font-bold">ID {responseData.id}</p>
+                    <div className="gap-1 flex flex-row items-center  justify-center lg:justify-between">
+                      <p>Status:</p>
+                      <p
+                        className={`${responseData.status_pedido.titulo === 'Aprovado' ? 'text-green-500' : responseData.status_pedido.titulo === 'Pendente ' ? 'text-yellow-500' : 'text-red-500'}`}
+                      >
+                        {responseData.status_pedido.titulo}{' '}
+                      </p>
+                    </div>
 
-                  <div className="gap-1 flex flex-row items-center  justify-center lg:justify-between">
-                    <p>Status:</p>
-                    <p
-                      className={`${responseData.status_pedido.titulo === 'Aprovado' ? 'text-green-500' : responseData.status_pedido.titulo === 'Pendente ' ? 'text-yellow-500' : 'text-red-500'}`}
-                    >
-                      {responseData.status_pedido.titulo}{' '}
+                    <p>Valor</p>
+                    <p>R$ {responseData.pagamentos[0].valor}</p>
+                    <p>Data Recebimento</p>
+                    <p>
+                      {' '}
+                      {new Date(
+                        responseData.pagamentos[0].data_recebimento,
+                      ).toLocaleString('pt-BR', { timeZone: 'UTC' })}
                     </p>
                   </div>
 
-                  <p>Valor</p>
-                  <p>R$ {responseData.pagamentos[0].valor}</p>
-                  <p>Data Recebimento</p>
-                  <p>
-                    {' '}
-                    {new Date(
-                      responseData.pagamentos[0].data_recebimento,
-                    ).toLocaleString('pt-BR', { timeZone: 'UTC' })}
-                  </p>
-                </div>
+                  <div className="flex flex-col  items-center justify-center  w-full h-full p-4">
+                    <p>Taxa</p>
+                    <p>R$ {responseData.pagamentos[0].taxa}</p>
+                  </div>
+                  <div className="flex flex-col  items-center justify-center  h-full w-full">
+                    <p>Recebido </p>
+                    <p>R$ {responseData.pagamentos[0].valor_recebido}</p>
+                  </div>
 
-                <div className="flex flex-col  items-center justify-center  w-full h-full p-4">
-                  <p>Taxa</p>
-                  <p>R$ {responseData.pagamentos[0].taxa}</p>
+                  <div className="flex flex-col  items-center justify-center  h-full w-full">
+                    <p>DP</p>
+                    <p>-</p>
+                  </div>
+                  <div className="flex flex-col  items-center lg:justify-end  h-full w-full p-4">
+                    <Button
+                      color="danger"
+                      size="md"
+                      onClick={async () => {
+                        try {
+                          const res = await axios.get(
+                            `https://api.zsystems.com.br/z1/vendas/${responseData.id}/reprocessar`,
+                            {
+                              headers: { Authorization: `Bearer ${token}` },
+                            },
+                          )
+                          if (res.data.success === true) {
+                            toast.success(
+                              'Adicionado a fila de reprocessamento',
+                            )
+                          } else {
+                            toast.warning(res.data.error)
+                          }
+                        } catch (error) {
+                          console.error(error)
+                        }
+                      }}
+                    >
+                      Reprocessar venda
+                    </Button>
+                  </div>
                 </div>
-                <div className="flex flex-col  items-center justify-center  h-full w-full">
-                  <p>Recebido </p>
-                  <p>R$ {responseData.pagamentos[0].valor_recebido}</p>
-                </div>
-
-                <div className="flex flex-col  items-center justify-center  h-full w-full">
-                  <p>DP</p>
-                  <p>-</p>
-                </div>
-                <div className="flex flex-col  items-center lg:justify-end  h-full w-full p-4">
-                  <Button color="danger" size="md">
-                    Reprocessar venda
-                  </Button>
-                </div>
-              </div>
+              ) : (
+                <p>teste</p>
+              )}
             </div>
           </div>
         ) : null}

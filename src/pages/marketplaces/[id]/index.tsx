@@ -5,7 +5,7 @@ import { toast } from 'sonner'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import { Spinner } from '@nextui-org/react'
-import TableTestes from '@/pages/tablemarketplaces/table'
+import TableTestes from '../table'
 export default function IdMarketplaces() {
   const router = useRouter()
   const token = Cookies.get('token')
