@@ -4,6 +4,7 @@ import { datePickerProps } from '@/types/dashboard'
 // Função para obter o último dia do mês atual
 
 export default function DateRangePickerComponent(props: datePickerProps) {
+  console.log(props)
   return (
     <div className="flex flex-row gap-2 w-full">
       <div className="w-full flex flex-col gap-y-2">
@@ -12,7 +13,7 @@ export default function DateRangePickerComponent(props: datePickerProps) {
           value={props.value}
           onChange={props.setValue}
           fullWidth={true}
-          variant="underlined"
+          variant={props.variant}
         />
       </div>
     </div>

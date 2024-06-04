@@ -27,7 +27,10 @@ export default function Mteste(props: typeProps) {
                 Selecione um intervalo
               </ModalHeader>
               <ModalBody className="flex flex-col items-center justify-center lg:p-12">
-                <DateRangePickerComponent />
+                <DateRangePickerComponent
+                  setValue={props.setValue}
+                  value={props.value}
+                />
               </ModalBody>
               <ModalFooter className="flex flex-row items-center justify-center">
                 <Button color="danger" variant="light" onPress={props.onClose}>

@@ -18,13 +18,11 @@ import { getLastDayOfMonth, format } from '@/utils/dates'
 type TypeProps = {
   id: number
 }
-
+const token = Cookies.get('token')
 export default function DropdownButton(props: TypeProps) {
   const [action, setAction] = useState('')
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
-  const [myFunction, setMyFunction] = useState<(onClose: () => void) => void>(
-    () => () => {},
-  )
+
   const todaydp = new Date()
   const lastDayOfMonth = getLastDayOfMonth(todaydp)
   const [value, setValue] = useState({
@@ -32,7 +30,70 @@ export default function DropdownButton(props: TypeProps) {
     end: parseDate('2024-04-30'), // Último dia do mês
   })
   const router = useRouter()
-  const token = Cookies.get('token')
+  const importarECs = async () => {
+    try {
+      await axios.post(
+        `https://pas-aps.up.railway.app/marketplace/import-establishment`,
+        {
+          startDate: format(value.start.toDate()),
+          endDate: format(value.end.toDate()),
+          marketplaceId: props.id,
+        },
+        { headers: { Authorization: `Bearer ${token}` } },
+      )
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  const importarVendas = async () => {
+    try {
+      const res = await axios.post(
+        `https://api.zsystems.com.br/marketplaces/${props.id}/importar-pedidos`,
+        {
+          startDate: format(value.start.toDate()),
+          endDate: format(value.end.toDate()),
+        },
+        { headers: { Authorization: `Bearer ${token}` } },
+      )
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const reprocessarVendas = async () => {
+    try {
+      const res = await axios.post(
+        `https://api.zsystems.com.br/marketplaces/reprocessar-pedidos/${props.id}`,
+        {
+          startDate: format(value.start.toDate()),
+          endDate: format(value.end.toDate()),
+        },
+        { headers: { Authorization: `Bearer ${token}` } },
+      )
+      console.log(value)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const handleFuncoes = async () => {
+    console.log(action)
+    switch (action) {
+      case 'Reprocessar Vendas':
+        reprocessarVendas()
+        break
+      case 'Importar Vendas':
+        importarVendas()
+        break
+      case `Importar EC's`:
+        importarECs()
+        break
+      case 'Adicionar SSL':
+      default:
+        console.log('outro')
+        break
+    }
+  }
 
   return (
     <>
@@ -50,34 +111,30 @@ export default function DropdownButton(props: TypeProps) {
             } else if (key === 'showestabelecimentschilds') {
               router.push(`/marketplaces/${props.id}/estabelecimentos`)
             } else if (key === 'reprocessSales') {
-              onOpen()
               setAction('Reprocessar Vendas')
-              setMyFunction(() => async (onClose) => {
-                await onClose()
-                try {
-                  const res = await axios.post(
-                    `https://api.zsystems.com.br/marketplaces/reprocessar-pedidos/${props.id}`,
-                    {
-                      startDate: format(value.start.toDate()),
-                      endDate: format(value.end.toDate()),
-                    },
-                    { headers: { Authorization: `Bearer ${token}` } },
-                  )
-                  console.log(res.data)
-                } catch (error) {
-                  console.error(error)
-                }
-              })
+              // setMyFunction(() => async (onClose) => {
+              // try {
+              //   const res = await axios.post(
+              //     `https://api.zsystems.com.br/marketplaces/reprocessar-pedidos/${props.id}`,
+              //     {
+              //       startDate: format(value.start.toDate()),
+              //       endDate: format(value.end.toDate()),
+              //     },
+              //     { headers: { Authorization: `Bearer ${token}` } },
+              //   )
+              //   console.log(value)
+              // } catch (error) {
+              //   console.error(error)
+              // }
+              // onClose()
+              // })
+              onOpen()
             } else if (key === 'importEc') {
               onOpen()
               setAction(`Importar EC's`)
             } else if (key === 'importSales') {
               onOpen()
               setAction('Importar Vendas')
-              setMyFunction(() => async (onClose) => {
-                onClose()
-                alert('importando vendas')
-              })
             }
           }}
           color="primary"
@@ -105,7 +162,7 @@ export default function DropdownButton(props: TypeProps) {
       </Dropdown>
       <ModalMine
         action={action}
-        onClick={myFunction}
+        onClick={handleFuncoes}
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         value={value}
