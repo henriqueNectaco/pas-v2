@@ -226,7 +226,7 @@ export default function Vendas() {
                         }
                       }}
                     >
-                      Reprocessar venda
+                      Reprocessar vendas
                     </Button>
                   </div>
                 </div>
