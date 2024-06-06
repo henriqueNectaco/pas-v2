@@ -59,7 +59,16 @@ export default function Vendas() {
     }
     auth()
   }, [])
-
+  function status_payment(statusPaymentId: number) {
+    switch (statusPaymentId) {
+      case 1:
+        return 'Aprovado'
+      case 2:
+        return 'Pendente'
+      case 3:
+        return 'Negado'
+    }
+  }
   return (
     <div className="flex flex-col items-center  h-screen max-w-screen w-full ">
       <Header />
@@ -164,7 +173,7 @@ export default function Vendas() {
           <div className="p-2 lg:pr-0">
             <div className="w-full flex flex-col items-center lg:items-start justify-center gap-2  bg-white shadow-lg border-2 p-4  ">
               <h1 className="font-bold">Pagamentos</h1>
-              {responseData.pagamentos.length >= 1 ? (
+              {responseData.pagamentos.length <= 1 ? (
                 <div className="lg:grid lg:grid-cols-5 flex flex-col items-center justify-center  w-full space-y-2 space-x-2">
                   <div className="flex flex-col space-y-2 items-center lg:items-start justify-center p-4 lg:pl-0">
                     <p className="font-bold">ID {responseData.id}</p>
@@ -231,7 +240,11 @@ export default function Vendas() {
                   </div>
                 </div>
               ) : (
-                <p>teste</p>
+                <p>
+                  {status_payment(
+                    responseData.pagamentos[0].status_pagamento_id,
+                  )}
+                </p>
               )}
             </div>
           </div>
