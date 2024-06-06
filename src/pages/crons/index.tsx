@@ -55,12 +55,12 @@ export default function Crons() {
             <div className="   space-y-4  lg:grid-cols-1">
               <TableCrons
                 array={['crons', 'Scheduled', 'Mensagem', 'Data']}
-                id={crons.id}
-                marketplace={crons}
-                rowOne={crons.slug}
-                rowTwo={crons.interval}
-                rowThree={crons.message}
-                rowFour={'teste'}
+                data={crons}
+                primeiro={'slug'}
+                segundo={'interval'}
+                terceiro={'message'}
+                quarto={'start_date'}
+                ColsBody={4}
               />
             </div>
           )}
