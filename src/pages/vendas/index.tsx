@@ -171,7 +171,9 @@ export default function Vendas() {
         </div>
         {responseData ? (
           <div className="p-2 lg:pr-0">
-            <div className="w-full flex flex-col items-center lg:items-start justify-center gap-2  bg-white shadow-lg border-2 p-4  ">
+            <div
+              className={`"w-full flex flex-col items-center ${responseData.pagamentos.length >= 3 ? 'lg:items-center' : 'lg:items-start'} justify-center gap-2  bg-white shadow-lg border-2 p-4  "`}
+            >
               <h1 className="font-bold">Pagamentos</h1>
               {responseData.pagamentos.length <= 1 ? (
                 <div className="lg:grid lg:grid-cols-5 flex flex-col items-center justify-center  w-full space-y-2 space-x-2">
@@ -240,11 +242,39 @@ export default function Vendas() {
                   </div>
                 </div>
               ) : (
-                <p>
-                  {status_payment(
-                    responseData.pagamentos[0].status_pagamento_id,
-                  )}
-                </p>
+                <div
+                  className={`flex flex-col  lg:grid ${responseData.pagamentos.length >= 3 ? 'lg:grid-cols-3' : 'grid-cols-2'} w-full gap-4`}
+                >
+                  {responseData.pagamentos.map((pagamento) => (
+                    <div
+                      key={pagamento.id}
+                      className="border bg-gray-50 p-3 lg:pl-1 rounded-xl flex flex-col lg:items-start sm:items-center"
+                    >
+                      <p>ID: {pagamento.id}</p>
+                      <div className="flex flex-row gap-1">
+                        <p>Status:</p>
+                        <p
+                          className={`${
+                            pagamento.status_pagamento_id === 1
+                              ? 'text-green-500'
+                              : pagamento.status_pagamento_id === 2
+                                ? 'text-yellow-500'
+                                : 'text-red-500'
+                          }`}
+                        >
+                          {status_payment(pagamento.status_pagamento_id)}
+                        </p>
+                      </div>
+                      <p> R$ {pagamento.valor}</p>
+                      <p>Taxa: R$ {pagamento.taxa}</p>
+                      <p>Recebido: R$ {pagamento.valor_recebido}</p>
+                      <p>
+                        Data Recebimento:{' '}
+                        {formatarData(pagamento.data_recebimento)}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               )}
             </div>
           </div>
@@ -271,6 +301,12 @@ export default function Vendas() {
 }
 
 /*
+    <p>
+                  {status_payment(
+                    responseData.pagamentos[0].status_pagamento_id,
+                  )}
+                </p>
+
   <div className="rounded-lg  bg-gray-500 h-full  flex flex-col lg:flex-row   items-center lg:items-start p-4 lg:pt-8 justify-center ">
             <div className=" w-2/6 flex flex-col items-center justify-center lg:gap-2 ">
               <p>Marketplace: {responseData.pedido.estabelecimento.marketplace.nome}</p>

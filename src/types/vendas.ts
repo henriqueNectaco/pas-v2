@@ -11,14 +11,16 @@ export interface Pedido {
   }
   valor_bruto: number
   valor_liquido: number
-  pagamentos: {
-    taxa: number
-    markup: number
-    data_recebimento: string
-    valor_recebido: number
-    valor: number
-    // Outras propriedades se necessário0,,,,,,,,,,,,,,,,,,
-  }[]
+  pagamentos: [
+    {
+      taxa: number
+      markup: number
+      data_recebimento: string
+      valor_recebido: number
+      valor: number
+      // Outras propriedades se necessário0,,,,,,,,,,,,,,,,,,
+    },
+  ]
   parcelas: number
   // Outras propriedades se necessário
 }
@@ -31,4 +33,7 @@ export interface ZoopTransaction {
   }
   payment_type: string
   // Outras propriedades se necessário
+}
+export interface typePagament {
+  status_pagamento_id: string
 }
