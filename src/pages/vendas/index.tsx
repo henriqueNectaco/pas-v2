@@ -11,6 +11,7 @@ import Router from 'next/router'
 import { ZoopTransaction, Pedido } from '@/types/vendas'
 
 export default function Vendas() {
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [vendaId, setVendaId] = useState('')
   const [responseData, setResponseData] = useState<Pedido | null>(null)
   const [responseZoopTransaction, setResponseZoopTransaction] =
@@ -24,6 +25,7 @@ export default function Vendas() {
     setVendaId(e.target.value)
   }
   const handleSearch = async () => {
+    setIsLoading(true)
     try {
       const response = await axios.get(
         `https://api.zsystems.com.br/z1/vendas/${vendaId}`,
@@ -33,8 +35,10 @@ export default function Vendas() {
       if (response.data.success === true) {
         setResponseData(response.data.pedido)
         setResponseZoopTransaction(response.data.zoopTransaction)
+        setIsLoading(false)
       } else {
         toast.error('Id não encontrado')
+        setIsLoading(false)
       }
     } catch (error) {
       console.error(error)
@@ -85,7 +89,12 @@ export default function Vendas() {
               value={vendaId}
             />
             <div className="flex  items-center justify-center lg:justify-around gap-2   w-2/6  mt-4 lg:mt-6">
-              <Button onClick={handleSearch} color="primary" variant="shadow">
+              <Button
+                onClick={handleSearch}
+                color="primary"
+                variant="shadow"
+                isLoading={isLoading}
+              >
                 Consultar
               </Button>
               {vendaId ? (

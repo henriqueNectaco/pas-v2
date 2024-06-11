@@ -202,6 +202,7 @@ export default function DashComponent(props: PropsType) {
                   variant={'underlined'}
                 />
                 <Button
+                  isLoading={props.isLoadingReprocessarVenda}
                   className=""
                   fullWidth
                   color="primary"
@@ -235,6 +236,7 @@ export default function DashComponent(props: PropsType) {
 
                 <Button
                   className=" text-white "
+                  isLoading={props.isLoadingReprocessarSaldo}
                   color="primary"
                   fullWidth={true}
                   onClick={props.reprocessarSaldo}

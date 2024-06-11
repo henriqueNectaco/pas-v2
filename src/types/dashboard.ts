@@ -27,6 +27,8 @@ export type PropsType = {
 
   setValue: (value: RangeValue<DateValue>) => void
   value: RangeValue<DateValue> | null | undefined
+  isLoadingReprocessarSaldo: boolean
+  isLoadingReprocessarVenda: boolean
 }
 
 export type typeServices = {

@@ -23,7 +23,10 @@ export default function DashBoard() {
   const [servicesStatus, setServicesStatus] = useState()
 
   const [totalMKT, setTotalMKT] = useState(null)
-
+  const [isLoadingReprocessarSaldo, setIsLoadingReprocessarSaldo] =
+    useState<boolean>(false)
+  const [isLoadingReprocessarVenda, setIsLoadingReprocessarVenda] =
+    useState<boolean>(false)
   const [totalProcessedToday, setTotalProcessedToday] = useState(null)
   const [totalProcessedYesterday, setTotalProcessedYesterday] = useState(null)
   const [totalProcessedLastMonth, setTotalProcessedLastMonth] = useState(null)
@@ -94,7 +97,9 @@ export default function DashBoard() {
 
   const previousMonthFormatted = `${yearPreviousMonth}-${monthPreviousMonth}-${dayPreviousMonth}`
   const reprocessarSaldo = async () => {
+    setIsLoadingReprocessarSaldo(true)
     try {
+      setIsLoadingReprocessarSaldo(true)
       const res = await axios.get(
         `
       https://api.zsystems.com.br/z1/reprocessar-saldo/${idEstabelecimentoReprocessarSaldo}/${daysReprocessarSaldo}`,
@@ -103,13 +108,16 @@ export default function DashBoard() {
         },
       )
       if (res.data.success === true) {
-        toast.success('reprocessando')
+        toast.success('Reprocessando saldo')
+        setIsLoadingReprocessarSaldo(false)
       }
     } catch (error) {
       console.error(error)
+      setIsLoadingReprocessarVenda(false)
     }
   }
   const reprocessSale = async () => {
+    setIsLoadingReprocessarVenda(true)
     try {
       const res = await axios.get(
         `https://api.zsystems.com.br/z1/reprocessar-vendas/${idEstabelecimentoReprocessarVenda}/${formatDate(value.start.toDate())}/${formatDate(value.end.toDate())}`,
@@ -119,9 +127,11 @@ export default function DashBoard() {
       )
       if (res.data.success === true) {
         toast.success(res.data.message)
+        setIsLoadingReprocessarVenda(false)
       }
     } catch (error) {
       console.error(error)
+      setIsLoadingReprocessarVenda(false)
     }
   }
   const fecthTotalMarketplaceChildResgistredPreviousMonth = async () => {
@@ -333,6 +343,8 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
       <Header />
       <div className=" h-screen    w-full  max-w-screen flex flex-col items-center justify-start  lg:pt-10 ">
         <DashComponent
+          isLoadingReprocessarVenda={isLoadingReprocessarVenda}
+          isLoadingReprocessarSaldo={isLoadingReprocessarSaldo}
           setValue={setValue}
           value={value}
           processadosHoje={totalProcessedToday}
