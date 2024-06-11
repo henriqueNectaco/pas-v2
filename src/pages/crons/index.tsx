@@ -54,6 +54,7 @@ export default function Crons() {
           ) : (
             <div className="   space-y-4  lg:grid-cols-1">
               <Table
+                currentPage="crons"
                 array={['crons', 'Scheduled', 'Mensagem', 'Data']}
                 data={crons}
                 ColsBody={4}

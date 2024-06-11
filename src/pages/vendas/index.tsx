@@ -170,9 +170,9 @@ export default function Vendas() {
           ) : null}
         </div>
         {responseData ? (
-          <div className="p-2 lg:pr-0">
+          <div className="p-2 lg:pr-0 ">
             <div
-              className={`"w-full flex flex-col items-center ${responseData.pagamentos.length >= 3 ? 'lg:items-center' : 'lg:items-start'} justify-center gap-2  bg-white  p-4  "`}
+              className={`"w-full flex lg:border-2 flex-col items-center ${responseData.pagamentos.length >= 3 ? 'lg:items-center' : 'lg:items-start'} justify-center gap-2  bg-white  p-4  "`}
             >
               <h1 className="font-bold">Pagamentos</h1>
               {responseData.pagamentos.length <= 1 ? (
@@ -213,7 +213,7 @@ export default function Vendas() {
                     <p>DP</p>
                     <p>-</p>
                   </div>
-                  <div className="flex flex-col  items-center lg:justify-end  h-full w-full p-4">
+                  <div className="flex flex-col  items-center lg:justify-center  h-full w-full p-4">
                     <Button
                       color="danger"
                       size="md"
@@ -274,34 +274,39 @@ export default function Vendas() {
                       </p>
                     </div>
                   ))}
+                  <>
+                    {' '}
+                    <div className="  h-full w-full   ">
+                      <Button
+                        fullWidth={true}
+                        color="danger"
+                        size="md"
+                        onClick={async () => {
+                          try {
+                            const res = await axios.get(
+                              `https://api.zsystems.com.br/z1/vendas/${responseData.id}/reprocessar`,
+                              {
+                                headers: { Authorization: `Bearer ${token}` },
+                              },
+                            )
+                            if (res.data.success === true) {
+                              toast.success(
+                                'Adicionado a fila de reprocessamento',
+                              )
+                            } else {
+                              toast.warning(res.data.error)
+                            }
+                          } catch (error) {
+                            console.error(error)
+                          }
+                        }}
+                      >
+                        Reprocessar vendas
+                      </Button>
+                    </div>
+                  </>
                 </div>
               )}
-              <div className="lg:grid lg:grid-cols-3  h-full w-full lg:pr-6  ">
-                <Button
-                  fullWidth={true}
-                  color="danger"
-                  size="md"
-                  onClick={async () => {
-                    try {
-                      const res = await axios.get(
-                        `https://api.zsystems.com.br/z1/vendas/${responseData.id}/reprocessar`,
-                        {
-                          headers: { Authorization: `Bearer ${token}` },
-                        },
-                      )
-                      if (res.data.success === true) {
-                        toast.success('Adicionado a fila de reprocessamento')
-                      } else {
-                        toast.warning(res.data.error)
-                      }
-                    } catch (error) {
-                      console.error(error)
-                    }
-                  }}
-                >
-                  Reprocessar vendas
-                </Button>
-              </div>
             </div>
           </div>
         ) : null}

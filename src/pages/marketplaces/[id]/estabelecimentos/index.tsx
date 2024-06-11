@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 import axios from 'axios'
 import { toast } from 'sonner'
+import Table from '@/components/table'
 export default function Estabelecimentos() {
   const [token] = useState(Cookies.get('token'))
   const [estabeleciments, setEstabeleciments] = useState()
@@ -18,7 +19,7 @@ export default function Estabelecimentos() {
   https://api.zsystems.com.br/z1/marketplace/${id}/estabelecimentos?limit=30&page=1`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
-      setEstabeleciments(res.data)
+      setEstabeleciments(res.data.estabelecimentos)
     } catch (error) {
       console.error(error)
     }
@@ -58,10 +59,20 @@ export default function Estabelecimentos() {
     auth()
   }, [])
   return (
-    <div className="max-w-screen w-ful h-full bg-gray-50 ">
+    <div className="max-w-screen w-full">
       <Header />
-      <div className="w-full h-full">
-        <FilterEstabeleciments filtrar={handleFilter} />
+      <div className="w-full  p-4 bg-gray-200">
+        <Table
+          array={['Id', 'Nome', 'Nome na Fatura', ' Data de criação']}
+          contentArray={[
+            'id',
+            'nome_fantasia',
+            'identificacao_fatura',
+            'created',
+          ]}
+          currentPage="estebelecimentosFilhos"
+          data={estabeleciments}
+        />
       </div>
     </div>
   )
