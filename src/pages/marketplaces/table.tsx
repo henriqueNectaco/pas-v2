@@ -52,7 +52,10 @@ export default function TableTestes(props: marketplaceProps) {
                       {mkt.mainECEmail}
                     </td>
                     <td className=" text-sm text-gray-700 whitespace-nowrap p-3">
-                      <DropdownButton id={mkt.id} />
+                      <DropdownButton
+                        nomeFantasia={mkt.mainECNomeFantasia}
+                        id={mkt.id}
+                      />
                     </td>
                   </tr>
                 ))}
@@ -90,7 +93,10 @@ export default function TableTestes(props: marketplaceProps) {
                   <p>{mkt.mainECEmail}</p>
                 </div>
                 <div className="w-1/4  flex flex-col items-center justify-center">
-                  <DropdownButton id={mkt.id} />
+                  <DropdownButton
+                    id={mkt.id}
+                    nomeFantasia={mkt.mainECNomeFantasia}
+                  />
                 </div>
               </div>
             ))}

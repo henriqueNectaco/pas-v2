@@ -1,11 +1,15 @@
+import { formatarData } from '@/utils/dates'
 import { Spinner } from '@nextui-org/react'
-
 // import DropdownButton from '../../pages/marketplaces/dropdown'
 type mktProps = {}
+
 type marketplaceProps = {
   array: Array
+  contentArray: Array
 }
 export default function TableCrons(props: marketplaceProps) {
+  const arrayLengh = props.array.length
+
   return (
     <div className="max-w-screen  w-full   h-screen ">
       <div className=" p-4 overflow-auto rounded-2xl bg-white shadow hidden md:hidden lg:hidden xl:block border  max-w-screen">
@@ -24,16 +28,48 @@ export default function TableCrons(props: marketplaceProps) {
           <div
             className={`flex flex-col lg:grid lg:grid-cols-${props.ColsBody}`}
           >
-            {props.data.map((dados: tring) => (
+            {props.data.map((dados) => (
               <>
-                <p>{dados[props.primeiro]}</p>
-                <p>{dados[props.segundo]}</p>
-                <p>{dados[props.terceiro]}</p>
-                <p>{dados[props.quarto]}</p>
+                <p>{dados[props.contentArray[0]]}</p>
+                <p>{dados[props.contentArray[1]]}</p>
+                <p>{dados[props.contentArray[2]]}</p>
+                <p>{dados[props.contentArray[3]]}</p>
               </>
             ))}
           </div>
         )}
+      </div>
+
+      <div className="xl:hidden max-w-screen w-full h-full space-y-3  ">
+        {props.data.map((dados) => (
+          <>
+            <div className="border-b border-sky-400 shadow-md  w-full flex flex-col items-center justify-center gap-2 rounded-md bg-white p-4">
+              <div className="flex flex-col items-center justify-center">
+                <p>{props.array[0]}</p>
+                <p>{dados[props.contentArray[0]]}</p>
+              </div>
+              <div className="flex flex-col items-center justify-center">
+                <p>{props.array[1]}</p>
+                <p>{dados[props.contentArray[1]]}</p>
+              </div>
+              <div className="flex flex-col items-center justify-center">
+                <p>{props.array[2]}</p>
+                <p>{dados[props.contentArray[2]]}</p>
+              </div>
+              <div className="flex flex-col items-center justify-center">
+                <p>{props.array[3]}</p>
+                <p>{formatarData(dados[props.contentArray[3]])}</p>
+              </div>
+
+              {arrayLengh >= 5 ? (
+                <div className="flex flex-col items-center justify-center">
+                  <p>{props.array[4]}</p>
+                  <p>{dados[props.contentArray[4]]}</p>
+                </div>
+              ) : null}
+            </div>
+          </>
+        ))}
       </div>
     </div>
   )

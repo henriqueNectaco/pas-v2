@@ -74,7 +74,7 @@ export default function Vendas() {
       <Header />
       <div className="w-full max-w-screen flex flex-col space-y-2 ">
         <div className="w-full lg:p-4 p-2 lg:pr-0 flex lg:flex-row flex-col items-center lg:gap-4  justify-center h-full">
-          <form className=" h-full  w-full lg:w-2/6 p-6 flex flex-col items-center justify-around  lg:px-8 sm:rounded-xl  my-4  shadow-md border-2">
+          <form className=" h-full  w-full lg:w-2/6 p-6 flex flex-col items-center justify-around  lg:px-8 sm:rounded-xl  my-4  lg:shadow-md lg:border-2">
             <label className=" font-bold">Vendas:</label>
             <Input
               type="text"
@@ -172,7 +172,7 @@ export default function Vendas() {
         {responseData ? (
           <div className="p-2 lg:pr-0">
             <div
-              className={`"w-full flex flex-col items-center ${responseData.pagamentos.length >= 3 ? 'lg:items-center' : 'lg:items-start'} justify-center gap-2  bg-white shadow-lg border-2 p-4  "`}
+              className={`"w-full flex flex-col items-center ${responseData.pagamentos.length >= 3 ? 'lg:items-center' : 'lg:items-start'} justify-center gap-2  bg-white  p-4  "`}
             >
               <h1 className="font-bold">Pagamentos</h1>
               {responseData.pagamentos.length <= 1 ? (
@@ -276,6 +276,32 @@ export default function Vendas() {
                   ))}
                 </div>
               )}
+              <div className="lg:grid lg:grid-cols-3  h-full w-full lg:pr-6  ">
+                <Button
+                  fullWidth={true}
+                  color="danger"
+                  size="md"
+                  onClick={async () => {
+                    try {
+                      const res = await axios.get(
+                        `https://api.zsystems.com.br/z1/vendas/${responseData.id}/reprocessar`,
+                        {
+                          headers: { Authorization: `Bearer ${token}` },
+                        },
+                      )
+                      if (res.data.success === true) {
+                        toast.success('Adicionado a fila de reprocessamento')
+                      } else {
+                        toast.warning(res.data.error)
+                      }
+                    } catch (error) {
+                      console.error(error)
+                    }
+                  }}
+                >
+                  Reprocessar vendas
+                </Button>
+              </div>
             </div>
           </div>
         ) : null}

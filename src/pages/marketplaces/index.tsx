@@ -32,7 +32,6 @@ export default function Marketplace() {
       )
 
       setResData(res.data.marketplaces)
-      console.log('res com filtro', res.data)
     } catch (error) {
       console.error(error)
     }
@@ -60,7 +59,7 @@ export default function Marketplace() {
   }, [])
 
   return (
-    <div className="  max-w-screen w-full flex flex-col items-center bg-gray-200 ">
+    <div className="  max-w-screen w-full h-screen  flex flex-col items-center bg-gray-200 ">
       <Header />
       <div className="w-full flex flex-col items-center  h-full p-2 space-y-2 lg:space-y-4  mt-4">
         <div className=" w-full flex flex-col lg:grid lg:grid-cols-4 boder-2 gap-2">

@@ -25,7 +25,6 @@ export const getServerSideDate = async (setResData, token) => {
     )
 
     setResData(res.data.marketplaces)
-    console.log('res.data sem filtro', res.data.marketplaces)
   } catch (error) {
     console.error(error)
   }

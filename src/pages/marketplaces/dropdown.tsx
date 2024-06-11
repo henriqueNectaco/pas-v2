@@ -17,6 +17,7 @@ import { getLastDayOfMonth, format } from '@/utils/dates'
 
 type TypeProps = {
   id: number
+  nomeFantasia: string
 }
 const token = Cookies.get('token')
 export default function DropdownButton(props: TypeProps) {
@@ -135,6 +136,10 @@ export default function DropdownButton(props: TypeProps) {
             } else if (key === 'importSales') {
               onOpen()
               setAction('Importar Vendas')
+            } else if (key === 'addssl') {
+              router.push(
+                `/marketplaces/${props.id}/${props.nomeFantasia}/adicionar-ssl`,
+              )
             }
           }}
           color="primary"

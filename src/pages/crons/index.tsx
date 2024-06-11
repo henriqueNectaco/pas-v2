@@ -5,9 +5,9 @@ import { getCrons } from '@/utils/reqs.js'
 import { toast } from 'sonner'
 import Cookies from 'js-cookie'
 import { Spinner } from '@nextui-org/react'
-import { CardCron } from './items'
+// import { CardCron } from './items'
 import Router from 'next/router'
-import { formatarData } from '@/utils/dates'
+
 import TableCrons from '@/components/table'
 type CronProps = {
   slug: string
@@ -17,7 +17,7 @@ type CronProps = {
   cron: string
   interval: string
 }
-const Array = ['Cron', 'Scheduled', 'Mensagem', 'Data']
+
 export default function Crons() {
   const [crons, setCrons] = useState<CronProps[] | undefined>([])
 
@@ -45,9 +45,9 @@ export default function Crons() {
   }, [])
 
   return (
-    <div className="  max-w-screen w-full   text-black-500 ">
+    <div className="h-full  max-w-screen w-full   text-black-500 ">
       <Header />
-      <div className="lg:p-4  p-3  max-w-screen  space-y-2  flex flex-col">
+      <div className="lg:p-4  p-3  max-w-screen  space-y-2  flex flex-col h-full bg-gray-200">
         <>
           {!crons ? (
             <Spinner color="primary" size="lg" />
@@ -56,11 +56,8 @@ export default function Crons() {
               <TableCrons
                 array={['crons', 'Scheduled', 'Mensagem', 'Data']}
                 data={crons}
-                primeiro={'slug'}
-                segundo={'interval'}
-                terceiro={'message'}
-                quarto={'start_date'}
                 ColsBody={4}
+                contentArray={['slug', 'interval', 'message', 'start_date']}
               />
             </div>
           )}
