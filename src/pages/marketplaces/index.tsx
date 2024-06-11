@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie'
-
+import Router, { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header/index'
 import {
@@ -16,11 +16,10 @@ import TableTestes from './table'
 import { getServerSideDate } from '@/utils/reqs.js'
 import { CaretDown } from 'phosphor-react'
 import { toast } from 'sonner'
-import Router from 'next/router'
 
 export default function Marketplace() {
   const token = Cookies.get('token')
-
+  const router = useRouter()
   const [resData, setResData] = useState<Object>()
   const [state, setState] = useState('ativos')
 
@@ -79,6 +78,7 @@ export default function Marketplace() {
               size="md"
               variant="solid"
               color="primary"
+              onClick={() => Router.push('/marketplaces/cadastrar')}
             >
               Novo Marketplace
             </Button>
