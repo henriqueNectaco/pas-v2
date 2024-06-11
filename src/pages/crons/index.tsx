@@ -8,7 +8,7 @@ import { Spinner } from '@nextui-org/react'
 // import { CardCron } from './items'
 import Router from 'next/router'
 
-import TableCrons from '@/components/table'
+import Table from '@/components/table'
 type CronProps = {
   slug: string
   id: string
@@ -53,7 +53,7 @@ export default function Crons() {
             <Spinner color="primary" size="lg" />
           ) : (
             <div className="   space-y-4  lg:grid-cols-1">
-              <TableCrons
+              <Table
                 array={['crons', 'Scheduled', 'Mensagem', 'Data']}
                 data={crons}
                 ColsBody={4}

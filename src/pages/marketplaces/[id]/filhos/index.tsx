@@ -6,7 +6,7 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import { Spinner } from '@nextui-org/react'
 
-import ListChilds from './listChilds'
+import Table from '@/components/table'
 export default function IdMarketplaces() {
   const router = useRouter()
   const token = Cookies.get('token')
@@ -51,8 +51,20 @@ https://api.zsystems.com.br/marketplaces/${id}/filhos`,
         {!marketplacesChilds ? (
           <Spinner size="lg" color="primary" />
         ) : (
-          <div className=" max-w-screen w-full h-full  space-y-4    p-4 ">
-            <ListChilds marketplace={marketplacesChilds} />
+          <div className=" max-w-screen w-full h-full  space-y-4 p-4 bg-gray-200    ">
+            <Table
+              currentPage="filhos"
+              array={['ID', 'Nome', 'Status', 'Data de criação', 'E-mail']}
+              ColsBody={5}
+              data={marketplacesChilds}
+              contentArray={[
+                'id',
+                'nome_fantasia',
+                'status_estabelecimento_id',
+                'created',
+                'usuarios_estabelecimentos.usuario.email',
+              ]}
+            />
           </div>
         )}
       </>

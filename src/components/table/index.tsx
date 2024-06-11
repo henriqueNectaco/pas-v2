@@ -6,8 +6,11 @@ type mktProps = {}
 type marketplaceProps = {
   array: Array
   contentArray: Array
+  data: any
+  ColsBody: number
+  currentPage: string
 }
-export default function TableCrons(props: marketplaceProps) {
+export default function Table(props: marketplaceProps) {
   const arrayLengh = props.array.length
 
   return (
@@ -45,26 +48,39 @@ export default function TableCrons(props: marketplaceProps) {
           <>
             <div className="border-b border-sky-400 shadow-md  w-full flex flex-col items-center justify-center gap-2 rounded-md bg-white p-4">
               <div className="flex flex-col items-center justify-center">
-                <p>{props.array[0]}</p>
+                <p className="font-bold">{props.array[0]}</p>
                 <p>{dados[props.contentArray[0]]}</p>
               </div>
               <div className="flex flex-col items-center justify-center">
-                <p>{props.array[1]}</p>
+                <p className="font-bold">{props.array[1]}</p>
                 <p>{dados[props.contentArray[1]]}</p>
               </div>
               <div className="flex flex-col items-center justify-center">
-                <p>{props.array[2]}</p>
+                <p className="font-bold">{props.array[2]}</p>
                 <p>{dados[props.contentArray[2]]}</p>
               </div>
               <div className="flex flex-col items-center justify-center">
-                <p>{props.array[3]}</p>
+                <p className="font-bold">{props.array[3]}</p>
                 <p>{formatarData(dados[props.contentArray[3]])}</p>
               </div>
 
               {arrayLengh >= 5 ? (
                 <div className="flex flex-col items-center justify-center">
                   <p>{props.array[4]}</p>
-                  <p>{dados[props.contentArray[4]]}</p>
+                  {props.currentPage === 'filhos' ? (
+                    <>
+                      {' '}
+                      {dados.usuarios_estabelecimentos.map(
+                        (usuarioEstabelecimento: Array, idx: string) => (
+                          <p key={idx}>
+                            {usuarioEstabelecimento.usuario.email}
+                          </p>
+                        ),
+                      )}
+                    </>
+                  ) : (
+                    <p>{dados[props.contentArray[4]]}</p>
+                  )}
                 </div>
               ) : null}
             </div>
