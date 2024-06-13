@@ -1,86 +1,34 @@
-import React from 'react'
-import { Stepper, Step, Button, Typography } from '@material-tailwind/react'
-import {
-  CogIcon,
-  UserIcon,
-  BuildingLibraryIcon,
-} from '@heroicons/react/24/outline'
+import { Stepper } from 'react-form-stepper'
+import { StepperTypes } from '@/types/marketplaces/stepper'
 
-export default function Steper() {
-  const [activeStep, setActiveStep] = React.useState(0)
-  const [isLastStep, setIsLastStep] = React.useState(false)
-  const [isFirstStep, setIsFirstStep] = React.useState(false)
-
-  const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1)
-  const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1)
+export default function Stepperr(props: StepperTypes) {
+  const stepsData = [
+    { label: 'Step 1', active: true },
+    { label: 'Step 2', active: true },
+    { label: 'Step 3', active: true },
+    { label: 'Step 4', active: true },
+    { label: 'Step 5', active: true },
+  ]
 
   return (
-    <div className="w-full ">
-      <Stepper
-        activeStep={activeStep}
-        isLastStep={(value) => setIsLastStep(value)}
-        isFirstStep={(value) => setIsFirstStep(value)}
-      >
-        <Step onClick={() => setActiveStep(0)}>
-          <UserIcon className="" />
-          <div className="absolute -bottom-[4.5rem] w-max text-center">
-            <Typography
-              variant="h6"
-              color={activeStep === 0 ? 'blue-gray' : 'gray'}
-            >
-              Step 1
-            </Typography>
-            <Typography
-              color={activeStep === 0 ? 'blue-gray' : 'gray'}
-              className="font-normal"
-            >
-              Details about yout account.
-            </Typography>
-          </div>
-        </Step>
-        <Step onClick={() => setActiveStep(1)}>
-          <CogIcon className="" />
-          <div className="absolute -bottom-[4.5rem] w-max text-center">
-            <Typography
-              variant="h6"
-              color={activeStep === 1 ? 'blue-gray' : 'gray'}
-            >
-              Step 2
-            </Typography>
-            <Typography
-              color={activeStep === 1 ? 'blue-gray' : 'gray'}
-              className="font-normal"
-            >
-              Details about yout account.
-            </Typography>
-          </div>
-        </Step>
-        <Step onClick={() => setActiveStep(2)}>
-          <BuildingLibraryIcon className="" />
-          <div className="absolute -bottom-[4.5rem] w-max text-center">
-            <Typography
-              variant="h6"
-              color={activeStep === 2 ? 'blue-gray' : 'gray'}
-            >
-              Step 3
-            </Typography>
-            <Typography
-              color={activeStep === 2 ? 'blue-gray' : 'gray'}
-              className="font-normal"
-            >
-              Details about yout account.
-            </Typography>
-          </div>
-        </Step>
-      </Stepper>
-      <div className="mt-32 flex justify-between">
-        <Button onClick={handlePrev} disabled={isFirstStep}>
-          Prev
-        </Button>
-        <Button onClick={handleNext} disabled={isLastStep}>
-          Next
-        </Button>
-      </div>
-    </div>
+    <Stepper
+      steps={props.stepsData.map((step) => ({
+        label: step.label,
+        active: step.active,
+      }))}
+      activeStep={props.activeStep}
+    />
   )
 }
+
+/*
+ steps={[
+        { label: 'Step 1', active: props.isActive.isActiveStepOne },
+        { label: 'Step 2', active: props.isActive.isActiveStepTwo },
+        { label: 'Step 3', active: props.isActive.isActiveStepThree },
+        { label: 'Step 4', active: props.isActive.isActiveStepFour },
+        { label: 'Step 5', active: props.isActive.isActiveStepFive },
+      ]}
+
+
+*/
