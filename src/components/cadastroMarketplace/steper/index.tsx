@@ -1,18 +1,10 @@
 import { Stepper } from 'react-form-stepper'
-import { StepperTypes } from '@/types/marketplaces/stepper'
+import { StepperTypes, typeStep } from '@/types/marketplaces/stepper'
 
 export default function Stepperr(props: StepperTypes) {
-  const stepsData = [
-    { label: 'Step 1', active: true },
-    { label: 'Step 2', active: true },
-    { label: 'Step 3', active: true },
-    { label: 'Step 4', active: true },
-    { label: 'Step 5', active: true },
-  ]
-
   return (
     <Stepper
-      steps={props.stepsData.map((step) => ({
+      steps={props.stepsData.map((step: typeStep) => ({
         label: step.label,
         active: step.active,
       }))}

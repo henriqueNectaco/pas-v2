@@ -157,7 +157,7 @@ export default function Header() {
                 <ModalHeader className="border-2 h-[7vh] flex flex-col items-center justify-start gap-1">
                   <p className="text-yellow-400">Warning!</p>
                 </ModalHeader>
-                <ModalBody className="h-[15vh] flex flex-col items-center justify-center border-2">
+                <ModalBody className="h-[15vh] flex flex-col items-center justify-center ">
                   <p className="text-xl">Deseja Efetuar o LogOut?</p>
                 </ModalBody>
                 <ModalFooter className="flex flex-row items-center justify-evenly bg-blue-500">

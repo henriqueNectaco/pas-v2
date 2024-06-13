@@ -12,7 +12,7 @@ import DateRangePickerComponent from '../components/rangedatepicker/index'
 import { Spinner } from '@nextui-org/react'
 import { formatarData } from '@/utils/dates'
 import React, { ChangeEvent } from 'react'
-import { CurrencyDollar } from 'phosphor-react'
+import { Article, CurrencyDollar } from 'phosphor-react'
 export default function DashComponent(props: PropsType) {
   return (
     <>
@@ -56,7 +56,8 @@ export default function DashComponent(props: PropsType) {
             <CardHeader>
               <CardTitle>
                 <div className="flex items-center gap-2">
-                  <ShoppingCartIcon className="h-6 w-6 text-indigo-600" />
+                  <Article size={32} />
+
                   <span>Pedidos & Pagamentos</span>
                 </div>
               </CardTitle>
@@ -328,7 +329,7 @@ function ShoppingCartIcon(props: React.SVGProps<SVGSVGElement>) {
               ))}
             </CardContent>
             
-            
+            <ShoppingCartIcon className="h-6 w-6 text-indigo-600" />
             function PizzaIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg

@@ -15,3 +15,7 @@ export type StepperTypes = {
   }
   activeStep: number
 }
+export type typeStep = {
+  label: string
+  active: boolean
+}

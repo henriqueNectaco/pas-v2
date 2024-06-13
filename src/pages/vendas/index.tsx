@@ -181,7 +181,7 @@ export default function Vendas() {
         {responseData ? (
           <div className="p-2 lg:pr-0 ">
             <div
-              className={`"w-full flex lg:border-2 flex-col items-center ${responseData.pagamentos.length >= 3 ? 'lg:items-center' : 'lg:items-start'} justify-center gap-2  bg-white  p-4  "`}
+              className={`"w-full flex ${responseData.pagamentos.length >= 3 ? '' : 'lg:border-2'}  flex-col items-center ${responseData.pagamentos.length >= 3 ? 'lg:items-center' : 'lg:items-start'} justify-center gap-2  bg-white  p-4  "`}
             >
               <h1 className="font-bold">Pagamentos</h1>
               {responseData.pagamentos.length <= 1 ? (

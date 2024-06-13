@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { toast } from 'sonner'
-
+import Router from 'next/router'
+import Cookies from 'js-cookie'
+const token = Cookies.get('token')
 export const getCrons = async (setCrons, token) => {
   const res = await axios.get(
     `https://api.zsystems.com.br/z1/crons/logs
@@ -29,3 +31,35 @@ export const getServerSideDate = async (setResData, token) => {
     console.error(error)
   }
 }
+export const auth = async (...reqs) => {
+  try {
+    const res = await axios.post(`https://api.zsystems.com.br/z1/autenticar`, {
+      token,
+    })
+    if (res.data.success === true) {
+      reqs()
+    } else {
+      toast.error('Sua sessão expirou faça login novamente')
+      Router.push('/')
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
+/* 
+  const auth = async () => {
+    try {
+      const res = await axios.post(
+        `https://api.zsystems.com.br/z1/autenticar`,
+        { token },
+      )
+      if (res.data.success === true) {
+        getCrons(setCrons, token)
+      } else {
+        toast.error('Sua sessão expirou faça login novamente')
+        Router.push('/')
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  } */
