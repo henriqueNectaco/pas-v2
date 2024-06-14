@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react'
 export interface Pedido {
   id: string
   status_pedido: {
@@ -36,4 +37,11 @@ export interface ZoopTransaction {
 }
 export interface typePagament {
   status_pagamento_id: string
+}
+export type FormVendasTypes = {
+  Isloading: boolean
+  setInputIdDaVenda: Dispatch<SetStateAction<string | undefined>>
+  vendaId: string | undefined
+  handleSearch: () => void
+  handleCleanInput: () => void
 }

@@ -6,13 +6,14 @@ import { useEffect, useState, ChangeEvent } from 'react'
 import Cookies from 'js-cookie'
 import JSONPrettyMon from 'react-json-pretty/themes/monikai.css'
 import JSONPretty from 'react-json-pretty'
+import FormVendas from './form'
 import { toast } from 'sonner'
 import Router from 'next/router'
 import { ZoopTransaction, Pedido } from '@/types/vendas'
 
 export default function Vendas() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [vendaId, setVendaId] = useState('')
+  const [vendaId, setVendaId] = useState<string | undefined>(undefined)
   const [responseData, setResponseData] = useState<Pedido | null>(null)
   const [responseZoopTransaction, setResponseZoopTransaction] =
     useState<ZoopTransaction>(null)
@@ -21,9 +22,7 @@ export default function Vendas() {
     setVendaId('')
     setResponseData(null)
   }
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setVendaId(e.target.value)
-  }
+
   const handleSearch = async () => {
     setIsLoading(true)
     try {
@@ -37,11 +36,16 @@ export default function Vendas() {
         setResponseZoopTransaction(response.data.zoopTransaction)
         setIsLoading(false)
       } else {
+        setIsLoading(false)
         toast.error('Id não encontrado')
         setIsLoading(false)
       }
     } catch (error) {
       console.error(error)
+      setIsLoading(false)
+      if (vendaId === '') {
+        toast.error('Preencha o  campo ID da venda')
+      }
     }
   }
   useEffect(() => {
@@ -78,32 +82,13 @@ export default function Vendas() {
       <Header />
       <div className="w-full max-w-screen flex flex-col space-y-2 ">
         <div className="w-full lg:p-3 p-2 lg:pr-0 flex lg:flex-row flex-col items-center lg:gap-4  justify-center h-full">
-          <form className=" h-full  w-full lg:w-2/6 p-6 flex flex-col items-center justify-around  lg:px-8 sm:rounded-xl  my-4  lg:shadow-md lg:border-2">
-            <label className=" font-bold">Vendas:</label>
-            <Input
-              type="text"
-              placeholder="ID da venda ou zoop transaction ID"
-              variant="underlined"
-              className="w-5/6 lg:w-3/6"
-              onChange={handleChange}
-              value={vendaId}
-            />
-            <div className="flex  items-center justify-center lg:justify-around gap-2   w-2/6  mt-4 lg:mt-6">
-              <Button
-                onClick={handleSearch}
-                color="primary"
-                variant="shadow"
-                isLoading={isLoading}
-              >
-                Consultar
-              </Button>
-              {vendaId ? (
-                <Button onClick={handleCleanInput} color="danger">
-                  Limpar
-                </Button>
-              ) : null}
-            </div>
-          </form>
+          <FormVendas
+            Isloading={isLoading}
+            handleCleanInput={handleCleanInput}
+            vendaId={vendaId}
+            setInputIdDaVenda={setVendaId}
+            handleSearch={handleSearch}
+          />
           {responseData ? (
             <div className=" bg-mygray p-4 lg:w-4/6 gap-4 w-full h-full flex flex-col lg:grid lg:grid-cols-2">
               <div className=" h-full w-full space-y-4  text-white">
@@ -341,36 +326,29 @@ export default function Vendas() {
 }
 
 /*
-    <p>
-                  {status_payment(
-                    responseData.pagamentos[0].status_pagamento_id,
-                  )}
-                </p>
-
-  <div className="rounded-lg  bg-gray-500 h-full  flex flex-col lg:flex-row   items-center lg:items-start p-4 lg:pt-8 justify-center ">
-            <div className=" w-2/6 flex flex-col items-center justify-center lg:gap-2 ">
-              <p>Marketplace: {responseData.pedido.estabelecimento.marketplace.nome}</p>
-              <p>Valor: {responseData.pedido.valor_bruto}</p>
-              <p>Valor liquido: {responseData.pedido.valor_liquido}</p>
-              <p>Taxa Custo: {responseData.pedido.pagamentos[0].taxa}</p>
-              <p>Markup: {responseData.pedido.pagamentos[0].markup}</p>
+       <form className=" h-full  w-full lg:w-2/6 p-6 flex flex-col items-center justify-around  lg:px-8 sm:rounded-xl  my-4  lg:shadow-md lg:border-2">
+            <label className=" font-bold">Vendas:</label>
+            <Input
+              type="text"
+              placeholder="ID da venda ou zoop transaction ID"
+              variant="underlined"
+              className="w-5/6 lg:w-3/6"
+              onChange={handleChange}
+              value={vendaId}
+            />
+            <div className="flex  items-center justify-center lg:justify-around gap-2   w-2/6  mt-4 lg:mt-6">
+              <Button
+                onClick={handleSearch}
+                color="primary"
+                variant="shadow"
+                isLoading={isLoading}
+              >
+                Consultar
+              </Button>
+              {vendaId ? (
+                <Button onClick={handleCleanInput} color="danger">
+                  Limpar
+                </Button>
+              ) : null}
             </div>
-            <div className="w-2/6 flex flex-col items-center justify-center lg:gap-2">
-              <h1>Pagamentos</h1>
-              <p>Id: {responseData.pedido.pagamentos[0].id}</p>
-              <p>Status: {responseData.pedido.status_pedido.titulo}</p>
-              <p>Valor: {responseData.pedido.pagamentos[0].valor}</p>
-              <p>Taxa: {responseData.pedido.pagamentos[0].taxa}</p>
-              <p>Recebido: {responseData.pedido.pagamentos[0].valor_recebido}</p>
-              <Button color="warning">Reprocessar venda</Button>
-            </div>
-            <div className="w-2/6 flex flex-col items-center justify-center lg:gap-2">
-              <h1>Estabelecimento</h1>
-              <p>{responseData.pedido.estabelecimento.razao_social}</p>
-              <p>Bandeira: {responseData.zoopTransaction.payment_method.card_brand}</p>
-              <p>Parcelas: {responseData.pedido.parcelas}</p>
-              <p>Forma de pagamento: {responseData.zoopTransaction.payment_type}</p>
-
-            </div>
-
-          </div > */
+          </form> */
