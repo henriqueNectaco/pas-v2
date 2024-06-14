@@ -77,7 +77,7 @@ export default function Vendas() {
     <div className="flex flex-col items-center  h-screen max-w-screen w-full ">
       <Header />
       <div className="w-full max-w-screen flex flex-col space-y-2 ">
-        <div className="w-full lg:p-4 p-2 lg:pr-0 flex lg:flex-row flex-col items-center lg:gap-4  justify-center h-full">
+        <div className="w-full lg:p-3 p-2 lg:pr-0 flex lg:flex-row flex-col items-center lg:gap-4  justify-center h-full">
           <form className=" h-full  w-full lg:w-2/6 p-6 flex flex-col items-center justify-around  lg:px-8 sm:rounded-xl  my-4  lg:shadow-md lg:border-2">
             <label className=" font-bold">Vendas:</label>
             <Input
@@ -179,14 +179,14 @@ export default function Vendas() {
           ) : null}
         </div>
         {responseData ? (
-          <div className="p-2 lg:pr-0 ">
+          <div className=" ">
             <div
-              className={`"w-full flex ${responseData.pagamentos.length >= 3 ? '' : 'lg:border-2'}  flex-col items-center ${responseData.pagamentos.length >= 3 ? 'lg:items-center' : 'lg:items-start'} justify-center gap-2  bg-white  p-4  "`}
+              className={`"w-full flex  ${responseData.pagamentos.length >= 3 ? '' : 'lg:border-2'}  flex-col items-center ${responseData.pagamentos.length >= 3 ? 'lg:items-center' : 'lg:items-start'} justify-center gap-2    p-4  "`}
             >
               <h1 className="font-bold">Pagamentos</h1>
               {responseData.pagamentos.length <= 1 ? (
-                <div className="lg:grid lg:grid-cols-5 flex flex-col items-center justify-center  w-full space-y-2 space-x-2">
-                  <div className="flex flex-col space-y-2 items-center lg:items-start justify-center p-4 lg:pl-0">
+                <div className="lg:grid lg:grid-cols-5 flex flex-col items-center justify-center  w-full space-y-2  space-x-2">
+                  <div className="flex flex-col space-y-2 items-center lg:items-start justify-center p-4 lg:pl-0 ">
                     <p className="font-bold">ID {responseData.id}</p>
 
                     <div className="gap-1 flex flex-row items-center  justify-center lg:justify-between">
@@ -252,7 +252,7 @@ export default function Vendas() {
                 </div>
               ) : (
                 <div
-                  className={`flex flex-col  lg:grid ${responseData.pagamentos.length >= 3 ? 'lg:grid-cols-3' : 'grid-cols-2'} w-full gap-4`}
+                  className={`flex flex-col   lg:grid ${responseData.pagamentos.length >= 3 ? 'lg:grid-cols-3' : 'grid-cols-2'} w-full gap-4`}
                 >
                   {responseData.pagamentos.map((pagamento) => (
                     <div
