@@ -1,8 +1,9 @@
 import Header from '../../components/Header/index'
 import { useEffect, useState } from 'react'
-
-import { getCrons, auth } from '@/utils/reqs.js'
-
+import axios from 'axios'
+import { getCrons } from '@/utils/reqs.js'
+import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 import Cookies from 'js-cookie'
 import { Spinner } from '@nextui-org/react'
 // import { CardCron } from './items'
@@ -18,11 +19,29 @@ type CronProps = {
 }
 
 export default function Crons() {
+  const router = useRouter()
   const [crons, setCrons] = useState<CronProps[] | undefined>([])
   const token = Cookies.get('token')
-
+  const auth = async () => {
+    try {
+      const res = await axios.post(
+        `https://api.zsystems.com.br/z1/autenticar`,
+        {
+          token,
+        },
+      )
+      if (res.data.success === false) {
+        toast.error('Sua sessão expirou faça login novamente')
+        router.push('/')
+      } else if (res.data.success === true) {
+        getCrons(setCrons, token)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
   useEffect(() => {
-    auth(getCrons(setCrons, token))
+    auth()
   }, [])
 
   return (
