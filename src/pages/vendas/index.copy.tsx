@@ -9,7 +9,7 @@ import JSONPretty from 'react-json-pretty'
 import FormVendas from './form'
 import { toast } from 'sonner'
 import Router from 'next/router'
-import { ZoopTransaction, Pedido } from '@/types/vendas'
+import { ZoopTransaction, Pedido } from '@/types/vendas/vendas'
 import SplitsCards from './splits'
 
 export default function Vendas() {

@@ -9,8 +9,9 @@ import JSONPretty from 'react-json-pretty'
 import FormVendas from './form'
 import { toast } from 'sonner'
 import Router from 'next/router'
-import { ZoopTransaction, Pedido } from '@/types/vendas'
+import { ZoopTransaction, Pedido } from '@/types/vendas/vendas'
 import SplitsCards from './splits'
+import PagamentosCards from './pagamentosCards'
 
 export default function Vendas() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -166,11 +167,11 @@ export default function Vendas() {
         {responseData ? (
           <div className=" ">
             <div
-              className={`"w-full flex  ${responseData.pagamentos.length >= 3 ? '' : 'lg:border-2'}  flex-col items-center ${responseData.pagamentos.length >= 3 ? 'lg:items-center' : 'lg:items-start'} justify-center gap-2    p-4  "`}
+              className={`"w-full flex  ${responseData.pagamentos.length >= 3 ? '' : 'lg:border-2'}  flex-col items-center ${responseData.pagamentos.length >= 3 ? 'lg:items-center' : 'lg:items-start'} justify-center gap-2      "`}
             >
               <h1 className="font-bold">Pagamentos</h1>
               {responseData.pagamentos.length <= 1 ? (
-                <div className="lg:grid lg:grid-cols-5 flex flex-col items-center justify-center  w-full space-y-2  space-x-2">
+                <div className="lg:grid lg:grid-cols-5 flex flex-col items-center justify-center  w-full space-y-2   space-x-2">
                   <div className="flex flex-col space-y-2 items-center lg:items-start justify-center p-4 lg:pl-0 ">
                     <p className="font-bold">ID {responseData.id}</p>
 
@@ -301,9 +302,54 @@ export default function Vendas() {
                   </>
                 </div>
               )}
-              {responseData.pedidos_splits.length >= 1 ? (
-                <SplitsCards splits={responseData.pedidos_splits} />
-              ) : null}
+              <div className="w-full ">
+                {responseData.pagamentos.length > 1 ? (
+                  <PagamentosCards
+                    currentComponent={'pagamentos'}
+                    titulo={'Pagamentos'}
+                    arrayTittles={[
+                      'Id',
+                      'Status',
+                      'Valor',
+                      'Taxa',
+                      'Recebido',
+                      'Data Recebimento',
+                      'DP',
+                    ]}
+                    dados={responseData.pagamentos}
+                    contentArray={[
+                      'id',
+                      'status_pagamento_id',
+                      'valor',
+                      'taxa',
+                      'valor_recebido',
+                      'data_recebimento',
+                    ]}
+                  />
+                ) : null}
+
+                {responseData.pedidos_splits.length >= 1 ? (
+                  <PagamentosCards
+                    currentComponent={'splits'}
+                    titulo={'Splits'}
+                    arrayTittles={[
+                      'Id',
+                      'Estabelecimento',
+                      'Tipo',
+                      'Categoria',
+                      'Valor',
+                    ]}
+                    contentArray={[
+                      'id',
+                      'nome_fantasia',
+                      'id',
+                      'id',
+                      'valor  ',
+                    ]}
+                    dados={responseData.pedidos_splits}
+                  />
+                ) : null}
+              </div>
             </div>
           </div>
         ) : null}
