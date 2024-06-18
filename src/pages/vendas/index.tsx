@@ -302,7 +302,7 @@ export default function Vendas() {
                   </>
                 </div>
               )}
-              <div className="w-full ">
+              <div className="w-full lg:gap-0 gap-2">
                 {responseData.pagamentos.length > 1 ? (
                   <PagamentosCards
                     currentComponent={'pagamentos'}
@@ -339,13 +339,7 @@ export default function Vendas() {
                       'Categoria',
                       'Valor',
                     ]}
-                    contentArray={[
-                      'id',
-                      'nome_fantasia',
-                      'id',
-                      'id',
-                      'valor  ',
-                    ]}
+                    contentArray={['id', 'nome_fantasia', 'id', 'id', 'valor']}
                     dados={responseData.pedidos_splits}
                   />
                 ) : null}

@@ -1,8 +1,7 @@
-import Cookies from 'js-cookie'
-import Router, { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
-import Header from '../../components/Header/index'
+import { parseDate } from '@internationalized/date'
+import ModalMine from '@/components/modal'
 import {
+  useDisclosure,
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
@@ -10,6 +9,10 @@ import {
   Button,
   Spinner,
 } from '@nextui-org/react'
+import Cookies from 'js-cookie'
+import Router, { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
+import Header from '../../components/Header/index'
 
 import axios from 'axios'
 import TableTestes from './table'
@@ -18,6 +21,12 @@ import { CaretDown } from 'phosphor-react'
 import { toast } from 'sonner'
 
 export default function Marketplace() {
+  const [value, setValue] = useState({
+    start: parseDate('2024-04-01'), // Data inicial
+    end: parseDate('2024-04-30'), // Último dia do mês
+  })
+  const [action, setAction] = useState('Reprocessar todas as vendas')
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const token = Cookies.get('token')
   const router = useRouter()
   const [resData, setResData] = useState<Object>()
@@ -69,6 +78,7 @@ export default function Marketplace() {
               size="md"
               variant="solid"
               color="primary"
+              onClick={onOpen}
             >
               Reprocessar todas as vendas
             </Button>
@@ -139,6 +149,14 @@ export default function Marketplace() {
           )}
         </>
       </div>
+      <ModalMine
+        value={value}
+        setValue={setValue}
+        action={action}
+        onClick={() => alert('tessss')}
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      />
     </div>
   )
 }
