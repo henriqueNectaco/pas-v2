@@ -18,6 +18,7 @@ const Formschema = z.object({
 type FormschemaData = z.infer<typeof Formschema>
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isDisabled, setIsDisabled] = useState(true)
@@ -31,15 +32,23 @@ export default function Home() {
 
   const onSubmit = async (data: FormschemaData) => {
     try {
+      setIsLoading(true)
       const response = await axios.post(
         'https://api.zsystems.com.br/z1/login',
         data,
       )
+      if (response.data.success === true) {
+        setIsLoading(false)
+        Cookies.set('token', response.data.usuario.token)
+        toast.success('Login realizado com sucesso!')
 
-      Cookies.set('token', response.data.usuario.token)
-      toast.success('Login realizado com sucesso!')
-      router.push('/dashboard')
+        router.push('/dashboard')
+      } else if (response.data.success === false) {
+        setIsLoading(false)
+        toast.error('Login não encontrado ')
+      }
     } catch (error) {
+      setIsLoading(false)
       console.log(error)
       toast.error('Login não encontrado ')
     }
@@ -121,6 +130,7 @@ export default function Home() {
                   variant="ghost"
                   color="primary"
                   fullWidth={true}
+                  isLoading={isLoading}
                   radius="sm"
                   disabled={isDisabled}
                   className="disabled:opacity-50 disabled:cursor-not-allowed"
