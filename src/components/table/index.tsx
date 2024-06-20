@@ -1,12 +1,12 @@
 import { formatarData } from '@/utils/dates'
 import { Spinner } from '@nextui-org/react'
 // import DropdownButton from '../../pages/marketplaces/dropdown'
-type mktProps = {}
+type Dados = { [key: string]: string | number | boolean | any }
 
 type marketplaceProps = {
-  array: Array
-  contentArray: Array
-  data: any
+  array: Array<string>
+  contentArray: string[]
+  data: Dados[]
   ColsBody: number
   currentPage: string
 }
@@ -34,7 +34,7 @@ export default function Table(props: marketplaceProps) {
           <div
             className={`flex flex-col lg:grid lg:grid-cols-${props.ColsBody}`}
           >
-            {props.data.map((dados) => (
+            {props.data.map((dados: Dados) => (
               <>
                 <div className="p-4 ">
                   <p>{dados[props.contentArray[0]]}</p>

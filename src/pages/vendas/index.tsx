@@ -10,7 +10,7 @@ import FormVendas from './form'
 import { toast } from 'sonner'
 import Router from 'next/router'
 import { ZoopTransaction, Pedido } from '@/types/vendas/vendas'
-import SplitsCards from './splits'
+
 import PagamentosCards from './pagamentosCards'
 
 export default function Vendas() {
@@ -68,16 +68,7 @@ export default function Vendas() {
     }
     auth()
   }, [])
-  function status_payment(statusPaymentId: number) {
-    switch (statusPaymentId) {
-      case 1:
-        return 'Aprovado'
-      case 2:
-        return 'Pendente'
-      case 3:
-        return 'Negado'
-    }
-  }
+
   return (
     <div className="flex flex-col items-center  h-screen max-w-screen w-full ">
       <Header />
@@ -169,73 +160,77 @@ export default function Vendas() {
             <div
               className={`"w-full flex  ${responseData.pagamentos.length >= 3 ? '' : 'lg:border-2'}  flex-col items-center ${responseData.pagamentos.length >= 3 ? 'lg:items-center' : 'lg:items-start'} justify-center gap-2      "`}
             >
-              <h1 className="font-bold">Pagamentos</h1>
               {responseData.pagamentos.length <= 1 ? (
-                <div className="lg:grid lg:grid-cols-5 flex flex-col items-center justify-center  w-full space-y-2   space-x-2">
-                  <div className="flex flex-col space-y-2 items-center lg:items-start justify-center p-4 lg:pl-0 ">
-                    <p className="font-bold">ID {responseData.id}</p>
+                <>
+                  <h1 className="font-bold w-full flex items-center justify-center pt-2">
+                    Pagamentos
+                  </h1>
+                  <div className="lg:grid lg:grid-cols-5 flex flex-col items-center justify-center  w-full space-y-2   space-x-2">
+                    <div className="flex flex-col space-y-2 items-center lg:items-start justify-center p-4 lg:pl-0 ">
+                      <p className="font-bold">ID {responseData.id}</p>
 
-                    <div className="gap-1 flex flex-row items-center  justify-center lg:justify-between">
-                      <p>Status:</p>
-                      <p
-                        className={`${responseData.status_pedido.titulo === 'Aprovado' ? 'text-green-500' : responseData.status_pedido.titulo === 'Pendente ' ? 'text-yellow-500' : 'text-red-500'}`}
-                      >
-                        {responseData.status_pedido.titulo}{' '}
+                      <div className="gap-1 flex flex-row items-center  justify-center lg:justify-between">
+                        <p>Status:</p>
+                        <p
+                          className={`${responseData.status_pedido.titulo === 'Aprovado' ? 'text-green-500' : responseData.status_pedido.titulo === 'Pendente ' ? 'text-yellow-500' : 'text-red-500'}`}
+                        >
+                          {responseData.status_pedido.titulo}{' '}
+                        </p>
+                      </div>
+
+                      <p>Valor</p>
+                      <p>R$ {responseData.pagamentos[0].valor}</p>
+                      <p>Data Recebimento</p>
+                      <p>
+                        {' '}
+                        {new Date(
+                          responseData.pagamentos[0].data_recebimento,
+                        ).toLocaleString('pt-BR', { timeZone: 'UTC' })}
                       </p>
                     </div>
 
-                    <p>Valor</p>
-                    <p>R$ {responseData.pagamentos[0].valor}</p>
-                    <p>Data Recebimento</p>
-                    <p>
-                      {' '}
-                      {new Date(
-                        responseData.pagamentos[0].data_recebimento,
-                      ).toLocaleString('pt-BR', { timeZone: 'UTC' })}
-                    </p>
-                  </div>
+                    <div className="flex flex-col  items-center justify-center  w-full h-full p-4">
+                      <p>Taxa</p>
+                      <p>R$ {responseData.pagamentos[0].taxa}</p>
+                    </div>
+                    <div className="flex flex-col  items-center justify-center  h-full w-full">
+                      <p>Recebido </p>
+                      <p>R$ {responseData.pagamentos[0].valor_recebido}</p>
+                    </div>
 
-                  <div className="flex flex-col  items-center justify-center  w-full h-full p-4">
-                    <p>Taxa</p>
-                    <p>R$ {responseData.pagamentos[0].taxa}</p>
-                  </div>
-                  <div className="flex flex-col  items-center justify-center  h-full w-full">
-                    <p>Recebido </p>
-                    <p>R$ {responseData.pagamentos[0].valor_recebido}</p>
-                  </div>
-
-                  <div className="flex flex-col  items-center justify-center  h-full w-full">
-                    <p>DP</p>
-                    <p>-</p>
-                  </div>
-                  <div className="flex flex-col  items-center lg:justify-center  h-full w-full p-4">
-                    <Button
-                      color="danger"
-                      size="md"
-                      onClick={async () => {
-                        try {
-                          const res = await axios.get(
-                            `https://api.zsystems.com.br/z1/vendas/${responseData.id}/reprocessar`,
-                            {
-                              headers: { Authorization: `Bearer ${token}` },
-                            },
-                          )
-                          if (res.data.success === true) {
-                            toast.success(
-                              'Adicionado a fila de reprocessamento',
+                    <div className="flex flex-col  items-center justify-center  h-full w-full">
+                      <p>DP</p>
+                      <p>-</p>
+                    </div>
+                    <div className="flex flex-col  items-center lg:justify-center  h-full w-full p-4">
+                      <Button
+                        color="danger"
+                        size="md"
+                        onClick={async () => {
+                          try {
+                            const res = await axios.get(
+                              `https://api.zsystems.com.br/z1/vendas/${responseData.id}/reprocessar`,
+                              {
+                                headers: { Authorization: `Bearer ${token}` },
+                              },
                             )
-                          } else {
-                            toast.warning(res.data.error)
+                            if (res.data.success === true) {
+                              toast.success(
+                                'Adicionado a fila de reprocessamento',
+                              )
+                            } else {
+                              toast.warning(res.data.error)
+                            }
+                          } catch (error) {
+                            console.error(error)
                           }
-                        } catch (error) {
-                          console.error(error)
-                        }
-                      }}
-                    >
-                      Reprocessar vendas
-                    </Button>
+                        }}
+                      >
+                        Reprocessar vendas
+                      </Button>
+                    </div>
                   </div>
-                </div>
+                </>
               ) : null}
               <div className="w-full lg:gap-0 gap-2">
                 {responseData.pagamentos.length > 1 ? (
@@ -303,5 +298,14 @@ export default function Vendas() {
   )
 }
 
-/*
+/*  function status_payment(statusPaymentId: number) {
+    switch (statusPaymentId) {
+      case 1:
+        return 'Aprovado'
+      case 2:
+        return 'Pendente'
+      case 3:
+        return 'Negado'
+    }
+  }
  */

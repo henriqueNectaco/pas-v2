@@ -4,6 +4,7 @@ export interface Pedido {
   status_pedido: {
     titulo: string
   }
+  pedidos_splits: Array<object>
   estabelecimento: {
     razao_social: string
     marketplace: {
