@@ -9,17 +9,19 @@
   CardContent,
   CardFooter,
 } from '@/components/ui/card'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import Stepperr from '../cadastroMarketplace/steper'
-type typeProps = {
-  data: {}
-}
+import { Checkbox } from '@nextui-org/checkbox'
+import { Button } from '@nextui-org/button'
+import { Input } from '@nextui-org/input'
 
+import { toast } from 'sonner'
+import { useState } from 'react'
+import StepperComponent from '../cadastroMarketplace/steper'
+type typeProps = {
+  isLoading: boolean
+}
 export function CadastrarMarketplace(props: typeProps) {
   const [activeStep, setActiveStep] = useState<number>(0)
+
   const [data, setData] = useState(null)
   const [stepsData] = useState([
     { label: 'Dados Marketplace', active: activeStep === 0 },
@@ -55,59 +57,106 @@ export function CadastrarMarketplace(props: typeProps) {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex justify-between items-center mb-8">
-            <Stepperr />
+          <div className=" hidden xl:flex md:flex lg:flex w-full border items-center justify-center lg:mb-6">
+            <StepperComponent stepsData={stepsData} activeStep={activeStep} />
           </div>
           <form className="space-y-4">
-            <div className="space-y-2">
-              <div className="flex items-center space-x-2">
-                <Checkbox id="transacao" />
-                <Label htmlFor="transacao">Cobrança por transação</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox id="taxa" />
-                <Label htmlFor="taxa">Taxa administrativa</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox id="carne" />
-                <Label htmlFor="carne">Carnê</Label>
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="cor">Cor*</Label>
-              <Input id="cor" placeholder="Escolha uma cor" />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="name1">Nome</Label>
-                <Input id="name1" placeholder="Digite o nome" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="name2">Nome</Label>
-                <Input id="name2" placeholder="Digite o nome" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="name3">Nome</Label>
-                <Input id="name3" placeholder="Digite o nome" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="name4">Nome</Label>
-                <Input id="name4" placeholder="Digite o nome" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="name5">Nome</Label>
-                <Input id="name5" placeholder="Digite o nome" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="name6">Nome</Label>
-                <Input id="name6" placeholder="Digite o nome" />
-              </div>
-            </div>
+            {activeStep === 0 ? (
+              <>
+                <div className="space-y-2">
+                  <label htmlFor="cor">Cor*</label>
+                  <Input id="cor" placeholder="Escolha uma cor" />
+                </div>
+                <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Input
+                      placeholder={'Nome'}
+                      required={true}
+                      variant="underlined"
+                      labelPlacement="inside"
+                      isClearable={true}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Input
+                      placeholder={'Zoop Marketplace Id'}
+                      required={true}
+                      variant="underlined"
+                      labelPlacement="inside"
+                      isClearable={true}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Input
+                      placeholder={'Dominio'}
+                      required={true}
+                      variant="underlined"
+                      labelPlacement="inside"
+                      isClearable={true}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Input
+                      placeholder={'Seller Id'}
+                      required={true}
+                      variant="underlined"
+                      labelPlacement="inside"
+                      isClearable={true}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Input
+                      placeholder={'Website'}
+                      required={true}
+                      variant="underlined"
+                      labelPlacement="inside"
+                      isClearable={true}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Input
+                      placeholder={'zpk'}
+                      required={true}
+                      variant="underlined"
+                      labelPlacement="inside"
+                      isClearable={true}
+                    />
+                  </div>
+                </div>
+                <div className="p-4 pl-0  flex flex-col justify-start lg:flex lg:flex-row gap-2 border">
+                  <div className="flex items-center lg:justify-center justify-start space-x-2 ">
+                    <Checkbox>Cobrança por transação</Checkbox>
+                  </div>
+                  <div className="flex items-center lg:justify-center space-x-2 justify-start">
+                    <Checkbox>Taxa Administrativa</Checkbox>
+                  </div>
+                  <div className="flex items-center lg:justify-center space-x-2 justify-start">
+                    <Checkbox>Carnê</Checkbox>
+                  </div>
+                </div>
+              </>
+            ) : null}
           </form>
         </CardContent>
-        <CardFooter className="flex justify-end space-x-4">
-          <Button variant="outline">Voltar</Button>
-          <Button>Próximo</Button>
+        <CardFooter className="flex justify-center lg:justify-end space-x-4">
+          <Button
+            variant="bordered"
+            radius="sm"
+            color="primary"
+            isLoading={props.isLoading}
+            onClick={handlePrevStep}
+          >
+            Voltar
+          </Button>
+          <Button
+            isLoading={props.isLoading}
+            onClick={handleNextStep}
+            variant="bordered"
+            radius="sm"
+            color="primary"
+          >
+            Próximo
+          </Button>
         </CardFooter>
       </Card>
     </div>

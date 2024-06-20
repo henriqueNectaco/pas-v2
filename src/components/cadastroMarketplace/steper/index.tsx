@@ -1,15 +1,17 @@
 import { Stepper } from 'react-form-stepper'
 import { StepperTypes, typeStep } from '@/types/marketplaces/stepper'
 
-export default function Stepperr(props: StepperTypes) {
+export default function StepperComponent(props: StepperTypes) {
   return (
-    <Stepper
-      steps={props.stepsData.map((step: typeStep) => ({
-        label: step.label,
-        active: step.active,
-      }))}
-      activeStep={props.activeStep}
-    />
+    <div className="w-full">
+      <Stepper
+        steps={props.stepsData.map((step: typeStep) => ({
+          label: step.label,
+          active: step.active,
+        }))}
+        activeStep={props.activeStep}
+      />
+    </div>
   )
 }
 
