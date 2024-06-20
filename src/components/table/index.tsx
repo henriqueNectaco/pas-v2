@@ -14,15 +14,15 @@ export default function Table(props: marketplaceProps) {
   const arrayLengh = props.array.length
 
   return (
-    <div className="max-w-screen  w-full   h-screen ">
+    <div className="max-w-screen  w-full   h-full ">
       <div className=" p-2 overflow-auto rounded-2xl bg-white shadow hidden md:hidden lg:hidden xl:block border  max-w-screen">
         <div
-          className={`border-b-3 border-b-black w-full flex flex-col lg:grid lg:grid-cols-${props.array.length} bg-gray-200 rounded-t-xl border`}
+          className={`border-b-3 border-b-black w-full flex flex-col lg:grid lg:grid-cols-${props.array.length}`}
         >
           {props.array.map((i: string) => (
             <div
               key={i}
-              className="w-full p-2 border-2 flex justify-start pl-0 items-center"
+              className="w-full p-4   rounded-md flex justify-start  items-center"
             >
               {i}
             </div>
@@ -36,16 +36,16 @@ export default function Table(props: marketplaceProps) {
           >
             {props.data.map((dados) => (
               <>
-                <div className="p-4 pl-0">
+                <div className="p-4 ">
                   <p>{dados[props.contentArray[0]]}</p>
                 </div>
-                <div className="p-4 pl-0">
+                <div className="p-4 ">
                   <p>{dados[props.contentArray[1]]}</p>
                 </div>
-                <div className="p-4 pl-0">
+                <div className="p-4 ">
                   <p>{dados[props.contentArray[2]]}</p>
                 </div>
-                <div className="p-4 pl-0">
+                <div className="p-4 ">
                   <p>{formatarData(dados[props.contentArray[3]])}</p>
                 </div>
               </>

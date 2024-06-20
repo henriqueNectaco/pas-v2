@@ -236,72 +236,7 @@ export default function Vendas() {
                     </Button>
                   </div>
                 </div>
-              ) : (
-                <div
-                  className={`flex flex-col   lg:grid ${responseData.pagamentos.length >= 3 ? 'lg:grid-cols-3' : 'grid-cols-2'} w-full gap-4`}
-                >
-                  {responseData.pagamentos.map((pagamento) => (
-                    <div
-                      key={pagamento.id}
-                      className="border bg-gray-50 p-3 lg:pl-1 rounded-xl flex flex-col lg:items-start sm:items-center"
-                    >
-                      <p>ID: {pagamento.id}</p>
-                      <div className="flex flex-row gap-1">
-                        <p>Status:</p>
-                        <p
-                          className={`${
-                            pagamento.status_pagamento_id === 1
-                              ? 'text-green-500'
-                              : pagamento.status_pagamento_id === 2
-                                ? 'text-yellow-500'
-                                : 'text-red-500'
-                          }`}
-                        >
-                          {status_payment(pagamento.status_pagamento_id)}
-                        </p>
-                      </div>
-                      <p> R$ {pagamento.valor}</p>
-                      <p>Taxa: R$ {pagamento.taxa}</p>
-                      <p>Recebido: R$ {pagamento.valor_recebido}</p>
-                      <p>
-                        Data Recebimento:{' '}
-                        {formatarData(pagamento.data_recebimento)}
-                      </p>
-                    </div>
-                  ))}
-                  <>
-                    {' '}
-                    <div className="  h-full w-full   ">
-                      <Button
-                        fullWidth={true}
-                        color="danger"
-                        size="md"
-                        onClick={async () => {
-                          try {
-                            const res = await axios.get(
-                              `https://api.zsystems.com.br/z1/vendas/${responseData.id}/reprocessar`,
-                              {
-                                headers: { Authorization: `Bearer ${token}` },
-                              },
-                            )
-                            if (res.data.success === true) {
-                              toast.success(
-                                'Adicionado a fila de reprocessamento',
-                              )
-                            } else {
-                              toast.warning(res.data.error)
-                            }
-                          } catch (error) {
-                            console.error(error)
-                          }
-                        }}
-                      >
-                        Reprocessar vendas
-                      </Button>
-                    </div>
-                  </>
-                </div>
-              )}
+              ) : null}
               <div className="w-full lg:gap-0 gap-2">
                 {responseData.pagamentos.length > 1 ? (
                   <PagamentosCards
@@ -369,29 +304,4 @@ export default function Vendas() {
 }
 
 /*
-       <form className=" h-full  w-full lg:w-2/6 p-6 flex flex-col items-center justify-around  lg:px-8 sm:rounded-xl  my-4  lg:shadow-md lg:border-2">
-            <label className=" font-bold">Vendas:</label>
-            <Input
-              type="text"
-              placeholder="ID da venda ou zoop transaction ID"
-              variant="underlined"
-              className="w-5/6 lg:w-3/6"
-              onChange={handleChange}
-              value={vendaId}
-            />
-            <div className="flex  items-center justify-center lg:justify-around gap-2   w-2/6  mt-4 lg:mt-6">
-              <Button
-                onClick={handleSearch}
-                color="primary"
-                variant="shadow"
-                isLoading={isLoading}
-              >
-                Consultar
-              </Button>
-              {vendaId ? (
-                <Button onClick={handleCleanInput} color="danger">
-                  Limpar
-                </Button>
-              ) : null}
-            </div>
-          </form> */
+ */
