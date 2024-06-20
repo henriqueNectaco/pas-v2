@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 import { Button } from '@nextui-org/button'
 import { Input } from '@nextui-org/input'
+import { CadastrarMarketplace } from '@/components/component/cadastrar-marketplace'
 
 export default function CadastrarMarketplaces() {
   const [activeStep, setActiveStep] = useState<number>(0)
@@ -35,9 +36,15 @@ export default function CadastrarMarketplaces() {
   }
 
   return (
-    <div className="max-w-screen   bg-gray-200 h-screen">
+    <div className="max-w-screen     bg-gray-200 h-screen">
       <Header />
-      <div className="w-full bg-gray-200 p-4 flex flex-col justify-center items-center max-h-screen h-full lg:h-[80vh] border-2 border-red-500  ">
+
+      <CadastrarMarketplace />
+    </div>
+  )
+}
+
+/*    <div className="w-full bg-gray-200 p-4 flex flex-col justify-center items-center max-h-screen h-full lg:h-[80vh] border-2 border-red-500  ">
         <div className="bg-white w-full h-3/4 max-w-screen">
           <div className="max-w-screen border-b border-gray-500 ">
             <Steperr activeStep={activeStep} stepsData={stepsData} />
@@ -61,32 +68,6 @@ export default function CadastrarMarketplaces() {
 
           <Button onClick={handleNextStep}>Avancar</Button>
           <Button onClick={handlePrevStep}>Voltar</Button>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-/*   <div className="bg-gray-200 max-h-screen h-screen  border border-red-500   max-w-screen">
-        <h1 className="font-bold">Cadastrar Marketplace(Zoop)</h1>
-        <div className="bg-white mex-h-screen w-full p-4 h-3/4 flex flex-col justify-start">
-          <Steperr activeStep={activeStep} stepsData={stepsData} />
-
-          {activeStep === 0 ? <p>step 1</p> : null}
-          {activeStep === 1 ? (
-            <div className="border bg-gray-200 h-full">
-              <form>
-                <Input variant="underlined" />
-              </form>
-            </div>
-          ) : null}
-          {activeStep === 2 ? <p>step 3</p> : null}
-          {activeStep === 3 ? <p>step 4</p> : null}
-          {activeStep === 4 ? <p>step 5</p> : null}
-          <div className="border w-full">
-            <Button onClick={handleNextStep}>Avancar</Button>
-            <Button onClick={handlePrevStep}>Voltar</Button>
-          </div>
         </div>
       </div>
 
