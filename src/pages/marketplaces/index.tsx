@@ -70,8 +70,8 @@ export default function Marketplace() {
     <div className="  max-w-screen w-full h-screen  flex flex-col items-center bg-gray-200 ">
       <Header />
       <div className="w-full flex flex-col items-center  h-full p-2 space-y-2 lg:space-y-4  mt-4">
-        <div className=" w-full flex flex-col lg:grid lg:grid-cols-4 boder-2 gap-2 ">
-          <div className=" flex flex-col lg:flex-row lg:col-span-2 gap-2">
+        <div className=" w-full flex flex-col lg:grid lg:grid-cols-4 boder-2 gap-2  ">
+          <div className=" flex flex-col lg:flex-row lg:col-span-2 gap-2 ">
             <Button
               fullWidth={true}
               radius="md"
@@ -104,13 +104,13 @@ export default function Marketplace() {
           </div>
 
           <div className="  lg:col-span-2 flex flex-col lg:flex-row justify-center items-center     lg:justify-end">
-            <div className="col-span-1 lg:w-1/2  w-full flex flex-row gap-2 lg:gap-1">
+            <div className="col-span-1 lg:w-1/2  w-full flex flex-row gap-2 lg:gap-1  rounded-md">
               <Dropdown>
                 <DropdownTrigger>
                   <Button
                     className=""
                     size="md"
-                    variant="light"
+                    variant="shadow"
                     color="default"
                     fullWidth={true}
                   >

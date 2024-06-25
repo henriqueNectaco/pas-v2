@@ -56,16 +56,12 @@ export function CadastrarMarketplace(props: typeProps) {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className=" hidden xl:flex md:flex lg:flex w-full border items-center justify-center lg:mb-6">
+          <div className=" hidden xl:flex md:flex lg:flex w-full border-b items-center justify-center lg:mb-6">
             <StepperComponent stepsData={stepsData} activeStep={activeStep} />
           </div>
           <form className="space-y-4">
             {activeStep === 0 ? (
               <>
-                <div className="space-y-2">
-                  <label htmlFor="cor">Cor*</label>
-                  <Input id="cor" placeholder="Escolha uma cor" />
-                </div>
                 <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Input
@@ -122,7 +118,7 @@ export function CadastrarMarketplace(props: typeProps) {
                     />
                   </div>
                 </div>
-                <div className="p-4 pl-0  flex flex-col justify-start lg:flex lg:flex-row gap-2 border">
+                <div className="p-4 pl-0  flex flex-col justify-start lg:flex lg:flex-row gap-4 ">
                   <div className="flex items-center lg:justify-center justify-start space-x-2 ">
                     <Checkbox>Cobrança por transação</Checkbox>
                   </div>
@@ -133,8 +129,22 @@ export function CadastrarMarketplace(props: typeProps) {
                     <Checkbox>Carnê</Checkbox>
                   </div>
                 </div>
+                <div className="  lg:grid lg:grid-cols-4">
+                  <Input
+                    className="col-span-1"
+                    id="cor"
+                    label="Escolha uma cor"
+                    type="color"
+                  />
+                  <Input type="file" />
+                </div>
               </>
             ) : null}
+            {activeStep === 1 ? (
+              <Input placeholder="teste" type="color" />
+            ) : null}
+            {activeStep === 2 ? <p>step 3</p> : null}
+            {activeStep === 3 ? <p>step 4</p> : null}
           </form>
         </CardContent>
         <CardFooter className="flex justify-center lg:justify-end space-x-4">
