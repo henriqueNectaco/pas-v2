@@ -208,6 +208,7 @@ export default function DashComponent(props: PropsType) {
                   fullWidth
                   color="primary"
                   onClick={props.reprocessarVenda}
+                  isDisabled={props.isDisabledReprocessSale}
                 >
                   Reprocessar Venda
                 </Button>
@@ -241,6 +242,7 @@ export default function DashComponent(props: PropsType) {
                   color="primary"
                   fullWidth={true}
                   onClick={props.reprocessarSaldo}
+                  isDisabled={props.isDisabledReprocessarSaldo}
                 >
                   Reprocessar Saldo
                 </Button>

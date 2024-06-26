@@ -2,6 +2,8 @@ import { DateValue, RangeValue } from '@nextui-org/react'
 import { Dispatch, SetStateAction } from 'react'
 
 export type PropsType = {
+  isDisabledReprocessSale: boolean
+  isDisabledReprocessarSaldo: boolean
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   servicesStatus: any | null
   processadosHoje: number | null

@@ -15,7 +15,7 @@ export default function Table(props: marketplaceProps) {
 
   return (
     <div className="max-w-screen  w-full   h-full ">
-      <div className=" p-2 overflow-auto rounded-2xl bg-white shadow hidden md:hidden lg:hidden xl:block border  max-w-screen">
+      <div className="  overflow-auto rounded-2xl bg-white shadow hidden md:hidden lg:hidden xl:block border  max-w-screen">
         <div
           className={`border-b-3 border-b-black w-full flex flex-col lg:grid lg:grid-cols-${props.array.length}`}
         >
@@ -32,20 +32,20 @@ export default function Table(props: marketplaceProps) {
           <Spinner />
         ) : (
           <div
-            className={`flex flex-col lg:grid lg:grid-cols-${props.ColsBody}`}
+            className={` flex flex-col lg:grid lg:grid-cols-${props.ColsBody}`}
           >
             {props.data.map((dados: Dados) => (
               <>
-                <div className="p-4 ">
+                <div className="p-4 border-b ">
                   <p>{dados[props.contentArray[0]]}</p>
                 </div>
-                <div className="p-4 ">
+                <div className="p-4 border-b">
                   <p>{dados[props.contentArray[1]]}</p>
                 </div>
-                <div className="p-4 ">
+                <div className="p-4 border-b">
                   <p>{dados[props.contentArray[2]]}</p>
                 </div>
-                <div className="p-4 ">
+                <div className="p-4 border-b">
                   <p>{formatarData(dados[props.contentArray[3]])}</p>
                 </div>
               </>

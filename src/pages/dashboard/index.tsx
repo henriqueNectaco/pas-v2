@@ -21,7 +21,9 @@ export default function DashBoard() {
 
   const [numVendas, setNumVendas] = useState()
   const [servicesStatus, setServicesStatus] = useState()
-
+  const [isDisabledReprocessSales, setIsDisabledReprocessSales] = useState(true)
+  const [isDisabledReprocessarSaldo, setIsDisabledReprocessarSaldo] =
+    useState(true)
   const [totalMKT, setTotalMKT] = useState(null)
   const [isLoadingReprocessarSaldo, setIsLoadingReprocessarSaldo] =
     useState<boolean>(false)
@@ -47,7 +49,14 @@ export default function DashBoard() {
     totalMarketplaceChildRegistredPreviousMonth,
     setTotalMarketplaceChildRegistredPreviousMonth,
   ] = useState(null)
-
+  const [
+    idEstabelecimentoReprocessarVenda,
+    setIdEstabelecimentoReprocessarVenda,
+  ] = useState<string | undefined>(undefined)
+  const [
+    idEstabelecimentoReprocessarSaldo,
+    setIdEstabelecimentoReprocessarSaldo,
+  ] = useState<string | undefined>(undefined)
   const token = Cookies.get('token')
 
   function formatDateToYYYYMMDD(date: Date) {
@@ -325,24 +334,32 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
     }
   }
   useEffect(() => {
+    if (!idEstabelecimentoReprocessarVenda) {
+      setIsDisabledReprocessSales(true)
+    } else {
+      setIsDisabledReprocessSales(false)
+    }
+    if (!idEstabelecimentoReprocessarSaldo || !daysReprocessarSaldo) {
+      setIsDisabledReprocessarSaldo(true)
+    } else {
+      setIsDisabledReprocessarSaldo(false)
+    }
+  }, [
+    idEstabelecimentoReprocessarVenda,
+    idEstabelecimentoReprocessarSaldo,
+    daysReprocessarSaldo,
+  ])
+  useEffect(() => {
     auth()
   }, [])
-
-  const [
-    idEstabelecimentoReprocessarVenda,
-    setIdEstabelecimentoReprocessarVenda,
-  ] = useState<string | undefined>(undefined)
-
-  const [
-    idEstabelecimentoReprocessarSaldo,
-    setIdEstabelecimentoReprocessarSaldo,
-  ] = useState<string | undefined>(undefined)
 
   return (
     <div className=" h-screen max-w-screen flex flex-col items-center  ">
       <Header />
       <div className=" h-screen    w-full  max-w-screen flex flex-col items-center justify-start  lg:pt-10 ">
         <DashComponent
+          isDisabledReprocessSale={isDisabledReprocessSales}
+          isDisabledReprocessarSaldo={isDisabledReprocessarSaldo}
           isLoadingReprocessarVenda={isLoadingReprocessarVenda}
           isLoadingReprocessarSaldo={isLoadingReprocessarSaldo}
           setValue={setValue}

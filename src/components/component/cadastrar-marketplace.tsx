@@ -129,15 +129,14 @@ export function CadastrarMarketplace(props: typeProps) {
                     <Checkbox>Carnê</Checkbox>
                   </div>
                 </div>
-                <div className="  lg:grid lg:grid-cols-4">
+                {/* <div className="  lg:grid lg:grid-cols-4">
                   <Input
                     className="col-span-1"
                     id="cor"
                     label="Escolha uma cor"
                     type="color"
                   />
-                  <Input type="file" />
-                </div>
+                </div> */}
               </>
             ) : null}
             {activeStep === 1 ? (
