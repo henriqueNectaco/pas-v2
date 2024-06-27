@@ -1,11 +1,14 @@
 import React from 'react'
 import { formatarData } from '@/utils/dates'
+import { Button } from '@nextui-org/button'
 type typeProps = {
   titulo: string
   currentComponent: string
   arrayTittles: Array<string>
   contentArray: Array<string>
   dados: Array<{ [key: string]: any }>
+  isLoadingReprocessSale: boolean
+  reprocessSale: () => void
 }
 
 export default function PagamentosCards(props: typeProps) {
@@ -68,6 +71,18 @@ export default function PagamentosCards(props: typeProps) {
                   ) : null}
                 </div>
               ))}
+              <div className="lg:grid xl:grid xl:grid-cols-6   lg:grid-cols-6 pt-2">
+                <Button
+                  fullWidth={true}
+                  color="danger"
+                  variant="ghost"
+                  className="flex items-center justify-start"
+                  isLoading={props.isLoadingReprocessSale}
+                  onClick={props.reprocessSale}
+                >
+                  Reprocessar Venda
+                </Button>
+              </div>
             </>
           ) : null}
         </div>
@@ -106,6 +121,20 @@ export default function PagamentosCards(props: typeProps) {
             </div>
           ))}
         </div>
+        {props.currentComponent === 'pagamentos' ? (
+          <div className="mt-1 w-full lg:grid xl:grid lg:grid-cols-3">
+            <Button
+              fullWidth={true}
+              color="danger"
+              variant="ghost"
+              className="flex lg:items-center lg:justify-start"
+              isLoading={props.isLoadingReprocessSale}
+              onClick={props.reprocessSale}
+            >
+              Reprocessar Venda
+            </Button>
+          </div>
+        ) : null}
       </div>
     </div>
   )

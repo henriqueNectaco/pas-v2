@@ -3,7 +3,11 @@
  * @see https://v0.dev/t/UF1GrtxcLqw
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
 } 
-*/ import {
+*/
+import { FilePond, registerPlugin } from 'react-filepond'
+import 'filepond/dist/filepond.min.css'
+
+import {
   Card,
   CardHeader,
   CardTitle,
@@ -17,6 +21,7 @@ import { Input } from '@nextui-org/input'
 import React, { Dispatch, SetStateAction, useState, ChangeEvent } from 'react'
 import { toast } from 'sonner'
 import StepperComponent from '../cadastroMarketplace/steper'
+
 export function CadastrarMarketplace(props: typeProps) {
   const [activeStep, setActiveStep] = useState<number>(0)
 
@@ -142,7 +147,9 @@ export function CadastrarMarketplace(props: typeProps) {
             {activeStep === 1 ? (
               <Input placeholder="teste" type="color" />
             ) : null}
-            {activeStep === 2 ? <p>step 3</p> : null}
+            {activeStep === 2 ? (
+              <FilePond allowMultiple={true} maxFiles={3} />
+            ) : null}
             {activeStep === 3 ? <p>step 4</p> : null}
           </form>
         </CardContent>
