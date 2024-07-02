@@ -31,7 +31,7 @@ export default function FilePonds(props:typeFilePond) {
         files={files}
         allowMultiple={true}
         allowReorder={true}
-        maxFiles={3}
+             maxFiles={3}
         server={{ process: null}}  
         name="files"
         oninit={handleInit}

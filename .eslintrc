@@ -1,0 +1,14 @@
+{
+    "extends": ["next/core-web-vitals", "@rocketseat-eslint-config"],
+    "plugins": ["prettier"],
+    "rules": {
+      "prettier/prettier": "error",
+      "react-hooks/exhaustive-deps": "off",
+      "no-restricted-syntax": [
+        "error",
+        "ForInStatement",
+        "LabeledStatement",
+        "WithStatement"
+      ]
+    }
+  }
