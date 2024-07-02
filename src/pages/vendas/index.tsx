@@ -14,7 +14,10 @@ import { ZoopTransaction, Pedido } from '@/types/vendas/vendas'
 import PagamentosCards from './pagamentosCards'
 
 export default function Vendas() {
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  require('dotenv').config()
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL
+  const [isLoadingSearchSale, setIsLoadingSearchSale] = useState<boolean>(false)
+  const [isLoadingReprocessSale, setIsLoadingReprocessSale] = useState<boolean>(false)
   const [vendaId, setVendaId] = useState<string | undefined>(undefined)
   const [responseData, setResponseData] = useState<Pedido | null>(null)
   const [responseZoopTransaction, setResponseZoopTransaction] =
@@ -24,38 +27,55 @@ export default function Vendas() {
     setVendaId('')
     setResponseData(null)
   }
-
-  const handleSearch = async () => {
-    setIsLoading(true)
+  const handleReprocessSale = async () => {
+    setIsLoadingReprocessSale(true)
     try {
-      const response = await axios.get(
-        `https://api.zsystems.com.br/z1/vendas/${vendaId}`,
-        { headers: { Authorization: `Bearer ${token}` } },
+      const response = await axios.get(`https://api.zsystems.com.br/z1/vendas/${responseData.id}/reprocessar`,
+        { headers: { Authorization: `Bearer ${token}` } }
       )
-
-      if (response.data.success === true) {
-        setResponseData(response.data.pedido)
-        setResponseZoopTransaction(response.data.zoopTransaction)
-        setIsLoading(false)
-      } else {
-        setIsLoading(false)
-        toast.error('Id não encontrado')
-        setIsLoading(false)
-      }
+      if (response.data.success === true) { toast.success('Pedido Adicionado a fila de reprocessamento') }
     } catch (error) {
       console.error(error)
-      setIsLoading(false)
-      if (vendaId === '') {
-        toast.error('Preencha o  campo ID da venda')
-      }
     }
+  }
+  const handleSearch = async () => {
+    setIsLoadingSearchSale(true)
+    try {
+      if (vendaId === undefined || '') {
+        toast.error('Preencha o  campo ID da venda')
+        setIsLoadingSearchSale(false)
+      } else {
+        const response = await axios.get(
+          `https://api.zsystems.com.br/z1/vendas/${vendaId}`,
+          { headers: { Authorization: `Bearer ${token}` } },
+        )
+
+        if (response.data.success === true) {
+          setResponseData(response.data.pedido)
+          setResponseZoopTransaction(response.data.zoopTransaction)
+          setIsLoadingSearchSale(false)
+        } else {
+          setIsLoadingSearchSale(false)
+          toast.error('Id não encontrado')
+          setIsLoadingSearchSale(false)
+        }
+      }
+
+    } catch (error) {
+      console.error(error)
+      setIsLoadingSearchSale(false)
+
+    }
+
+
   }
 
   useEffect(() => {
     const auth = async () => {
       try {
+        console.log(apiUrl)
         const res = await axios.post(
-          `https://api.zsystems.com.br/z1/autenticar`,
+          `${apiUrl}autenticar`,
           { token },
         )
         if (res.data.success === false) {
@@ -72,10 +92,10 @@ export default function Vendas() {
   return (
     <div className="flex flex-col items-center  h-screen max-w-screen w-full ">
       <Header />
-      <div className="w-full max-w-screen flex flex-col space-y-2 ">
+      <div className={`w-full max-w-screen flex flex-col space-y-2 ${responseData?.pagamentos.length >= 3 ? 'bg-gray-800' : ''}`}>
         <div className="w-full lg:p-3 p-2 lg:pr-0 flex lg:flex-row flex-col items-center lg:gap-4  justify-center h-full">
           <FormVendas
-            Isloading={isLoading}
+            Isloading={isLoadingSearchSale}
             handleCleanInput={handleCleanInput}
             vendaId={vendaId}
             setInputIdDaVenda={setVendaId}
@@ -156,9 +176,9 @@ export default function Vendas() {
           ) : null}
         </div>
         {responseData ? (
-          <div className=" ">
+          <div className="">
             <div
-              className={`"w-full flex  ${responseData.pagamentos.length >= 3 ? '' : 'lg:border-2'}  flex-col items-center ${responseData.pagamentos.length >= 3 ? 'lg:items-center' : 'lg:items-start'} justify-center gap-2      "`}
+              className={`"w-full flex bg-white ${responseData.pagamentos.length >= 3 ? '' : 'lg:border-2'}  flex-col items-center ${responseData.pagamentos.length >= 3 ? 'lg:items-center' : 'lg:items-start'} justify-center gap-2      "`}
             >
               {responseData.pagamentos.length <= 1 ? (
                 <>
@@ -278,7 +298,7 @@ export default function Vendas() {
           </div>
         ) : null}
         {responseData ? (
-          <div className=" bg-black  max-w-full text-sm  grid grid-cols-1 lg:grid-cols-2 lg:col-span-2 ">
+          <div className=" bg-gray-800  max-w-full text-sm  grid grid-cols-1 lg:grid-cols-2 lg:col-span-2 ">
             <div className=" w-full text-left p-2  space-y-2 lg:space-y-4">
               <p className="text-white">Vendas</p>
               <JSONPretty data={responseData} theme={{ JSONPrettyMon }} />

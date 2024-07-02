@@ -20,11 +20,10 @@ export default function PagamentosCards(props: typeProps) {
         <h1 className="text-white text-start w-full p-2 ">{props.titulo}</h1>
         <div className="xl:flex flex-col hidden md:hidden w-full">
           <div
-            className={`grid ${
-              props.currentComponent === 'pagamentos'
+            className={`grid ${props.currentComponent === 'pagamentos'
                 ? 'grid-cols-6'
                 : 'grid-cols-5'
-            } bg-gray-700 w-full `}
+              } bg-gray-700 w-full `}
           >
             <p className="p-2 text-white">{props.arrayTittles[0]}</p>
             <p className="p-2 text-white">{props.arrayTittles[1]}</p>
@@ -71,18 +70,20 @@ export default function PagamentosCards(props: typeProps) {
                   ) : null}
                 </div>
               ))}
-              <div className="lg:grid xl:grid xl:grid-cols-6   lg:grid-cols-6 pt-2">
-                <Button
-                  fullWidth={true}
-                  color="danger"
-                  variant="ghost"
-                  className="flex items-center justify-start"
-                  isLoading={props.isLoadingReprocessSale}
-                  onClick={props.reprocessSale}
-                >
-                  Reprocessar Venda
-                </Button>
-              </div>
+              {props.currentComponent === 'pagamentos' ? (
+                <div className="mt-1 w-full lg:grid xl:grid lg:grid-cols-3">
+                  <Button
+                    fullWidth={true}
+                    color="danger"
+                    variant="ghost"
+                    className="flex lg:items-center lg:justify-start"
+                    isLoading={props.isLoadingReprocessSale}
+                    onClick={props.reprocessSale}
+                  >
+                    Reprocessar Venda
+                  </Button>
+                </div>
+              ) : null}
             </>
           ) : null}
         </div>
