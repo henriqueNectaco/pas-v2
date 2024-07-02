@@ -21,6 +21,7 @@ import { Input } from '@nextui-org/input'
 import React, { Dispatch, SetStateAction, useState, ChangeEvent } from 'react'
 import { toast } from 'sonner'
 import StepperComponent from '../cadastroMarketplace/steper'
+import FilePonds from '../cadastroMarketplace/filepond'
 
 export function CadastrarMarketplace(props: typeProps) {
   const [activeStep, setActiveStep] = useState<number>(0)
@@ -54,14 +55,14 @@ export function CadastrarMarketplace(props: typeProps) {
 
   return (
     <div className="flex flex-col items-center mt-8 max-h-screen bg-gray-200 p-4">
-      <Card className="w-full max-w-7xl bg-white">
+      <Card className="w-full max-w-7xl bg-white ">
         <CardHeader className="pb-4">
           <CardTitle className="flex items-center justify-center">
             Cadastrar MarketPlace (Zoop)
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className=" hidden xl:flex md:flex lg:flex w-full border-b items-center justify-center lg:mb-6">
+          <div className=" hidden xl:flex md:flex lg:flex w-full border-b items-center  justify-center lg:mb-6">
             <StepperComponent stepsData={stepsData} activeStep={activeStep} />
           </div>
           <form className="space-y-4">
@@ -134,22 +135,26 @@ export function CadastrarMarketplace(props: typeProps) {
                     <Checkbox>Carnê</Checkbox>
                   </div>
                 </div>
-                {/* <div className="  lg:grid lg:grid-cols-4">
-                  <Input
-                    className="col-span-1"
-                    id="cor"
-                    label="Escolha uma cor"
-                    type="color"
-                  />
-                </div> */}
               </>
             ) : null}
             {activeStep === 1 ? (
               <Input placeholder="teste" type="color" />
             ) : null}
-            {activeStep === 2 ? (
-              <FilePond allowImagePreview={true} files={files} allowMultiple={true} maxFiles={3} onupdatefiles={setFiles} server="/api"
-              />
+            {activeStep === 2 ? (<div className='border-2 lg:grid-cols-3 lg:grid h-full'>
+              <div className='h-full'>
+                <h1 className='flex justify-center items-center font-bold'>Logo</h1>
+                <FilePonds titulo='teste bro'/>
+              </div>
+              <div className='h-full'>
+                <h1 className='flex justify-center items-center font-bold'>Logo</h1>
+                <FilePonds titulo='teste bro'/>
+              </div>
+              <div className='h-full'>
+                <h1 className='flex justify-center items-center font-bold'>Logo</h1>
+            <FilePonds titulo='teste bro'/>
+              </div>
+            </div>
+             
             ) : null}
             {activeStep === 3 ? <p>step 4</p> : null}
           </form>

@@ -1,36 +1,44 @@
-import React, { useState } from 'react'
-import ReactDOM from 'react-dom'
+import { useState } from 'react';
+import dynamic from 'next/dynamic';
+import 'filepond/dist/filepond.min.css';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import { typeFilePond } from '@/types/marketplaces/cadastrar';
+const FilePond = dynamic(() => import('react-filepond').then(module => {
+  const { registerPlugin } = module;
+  const FilePondPluginImageExifOrientation = require('filepond-plugin-image-exif-orientation');
+  const FilePondPluginImagePreview = require('filepond-plugin-image-preview');
+  registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
-// Import React FilePond
-import { FilePond, registerPlugin } from 'react-filepond'
+  return module.FilePond;
+}), { ssr: false });
 
-// Import FilePond styles
-import 'filepond/dist/filepond.min.css'
+export default function FilePonds(props:typeFilePond) {
+  const [files, setFiles] = useState([
+  
+  ]);
 
-// Import the Image EXIF Orientation and Image Preview plugins
-// Note: These need to be installed separately
-// `npm i filepond-plugin-image-preview filepond-plugin-image-exif-orientation --save`
-import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation'
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
+  const handleInit = () => {
+    console.log("FilePond instance has initialised");
+  };
 
-// Register the plugins
-registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
+  const handleUpdateFiles = (fileItems :File) => {
+    setFiles(fileItems.map(fileItem => fileItem.file));
+  };
 
-// Our app
-export default function FilePonds() {
-  const [files, setFiles] = useState([])
-  console.log(files)
   return (
-    <div className="App">
-      <FilePond
+    <div className="h-full">
+      <FilePond 
         files={files}
-        onupdatefiles={setFiles}
         allowMultiple={true}
+        allowReorder={true}
         maxFiles={3}
+        server={{ process: null}}  
         name="files"
-        labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
+        oninit={handleInit}
+        onupdatefiles={handleUpdateFiles}
+        labelIdle={`Arraste ou solte o arquivo de ${props.titulo} <span class="filepond--label-action">Navegar</span>`}
+
       />
     </div>
-  )
+  );
 }
