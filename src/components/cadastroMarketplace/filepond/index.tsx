@@ -20,7 +20,7 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 // Our app
 export default function FilePonds() {
   const [files, setFiles] = useState([])
-
+  console.log(files)
   return (
     <div className="App">
       <FilePond

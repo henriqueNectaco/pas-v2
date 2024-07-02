@@ -24,7 +24,7 @@ import StepperComponent from '../cadastroMarketplace/steper'
 
 export function CadastrarMarketplace(props: typeProps) {
   const [activeStep, setActiveStep] = useState<number>(0)
-
+  const [files, setFiles] = useState()
   const [data, setData] = useState(null)
   const [stepsData] = useState([
     { label: 'Dados Marketplace', active: activeStep === 0 },
@@ -148,7 +148,8 @@ export function CadastrarMarketplace(props: typeProps) {
               <Input placeholder="teste" type="color" />
             ) : null}
             {activeStep === 2 ? (
-              <FilePond allowMultiple={true} maxFiles={3} />
+              <FilePond allowImagePreview={true} files={files} allowMultiple={true} maxFiles={3} onupdatefiles={setFiles} server="/api"
+              />
             ) : null}
             {activeStep === 3 ? <p>step 4</p> : null}
           </form>
