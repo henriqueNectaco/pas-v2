@@ -95,7 +95,7 @@ export default function Vendas() {
   return (
     <div className="flex flex-col items-center  h-screen max-w-screen w-full ">
       <Header />
-      <div className={`w-full max-w-screen flex flex-col space-y-2 ${responseData?.pagamentos.length >= 3 ? 'bg-gray-800' : ''}`}>
+      <div className={`w-full max-w-screen flex flex-col space-y-2 ${responseData?.pagamentos.length >= 3 ? 'bg-gray-800' : ''} ${responseData !== null && responseData.pagamentos.length == 1 ? 'bg-gray-300' : ''}`}>
         <div className="w-full lg:p-3 p-2 lg:pr-0 flex lg:flex-row flex-col items-center lg:gap-4  justify-center h-full">
           <FormVendas
             Isloading={isLoadingSearchSale}
@@ -179,16 +179,16 @@ export default function Vendas() {
           ) : null}
         </div>
         {responseData ? (
-          <div className="">
+          <div className={`${responseData.pagamentos.length == 1 ? 'p-3 lg:pr-0' : ''}`}>
             <div
-              className={`"w-full flex bg-white ${responseData.pagamentos.length >= 3 ? '' : 'lg:border-2'}  flex-col items-center ${responseData.pagamentos.length >= 3 ? 'lg:items-center' : 'lg:items-start'} justify-center gap-2      "`}
+              className={`"w-full max-w-screen flex  ${responseData.pagamentos.length >= 3 ? '' : 'bg-white rounded-lg p-2'}    flex-col items-center  justify-center "`}
             >
               {responseData.pagamentos.length <= 1 ? (
                 <>
                   <h1 className="font-bold w-full flex items-center justify-center pt-2">
                     Pagamentos
                   </h1>
-                  <div className="lg:grid lg:grid-cols-5 flex flex-col items-center justify-center  w-full space-y-2   space-x-2">
+                  <div className="lg:grid lg:grid-cols-5 flex flex-col items-center justify-center  w-full ">
                     <div className="flex flex-col space-y-2 items-center lg:items-start justify-center p-4 lg:pl-0 ">
                       <p className="font-bold">ID {responseData.id}</p>
 
@@ -254,52 +254,54 @@ export default function Vendas() {
                     </div>
                   </div>
                 </>
-              ) : null}
-              <div className="w-full lg:gap-0 gap-2">
-                {responseData.pagamentos.length > 1 ? (
-                  <PagamentosCards reprocessSale={handleReprocessSale}
-                    isLoadingReprocessSale={isLoadingReprocessSale}
-                    currentComponent={'pagamentos'}
-                    titulo={'Pagamentos'}
-                    arrayTittles={[
-                      'Id',
-                      'Status',
-                      'Valor',
-                      'Taxa',
-                      'Recebido',
-                      'Data Recebimento',
-                      'DP',
-                    ]}
-                    dados={responseData.pagamentos}
-                    contentArray={[
-                      'id',
-                      'status_pagamento_id',
-                      'valor',
-                      'taxa',
-                      'valor_recebido',
-                      'data_recebimento',
-                    ]}
-                  />
-                ) : null}
 
-                {responseData.pedidos_splits.length >= 1 ? (
-                  <PagamentosCards
-                    currentComponent={'splits'}
-                    titulo={'Splits'}
-                    arrayTittles={[
-                      'Id',
-                      'Estabelecimento',
-                      'Tipo',
-                      'Categoria',
-                      'Valor',
-                    ]}
-                    contentArray={['id', 'nome_fantasia', 'id', 'id', 'valor']}
-                    dados={responseData.pedidos_splits}
-                  />
-                ) : null}
-              </div>
+              ) : null}
+            </div>
+            <div className="w-full lg:gap-0 gap-2">
+              {responseData.pagamentos.length > 1 ? (
+                <PagamentosCards reprocessSale={handleReprocessSale}
+                  isLoadingReprocessSale={isLoadingReprocessSale}
+                  currentComponent={'pagamentos'}
+                  titulo={'Pagamentos'}
+                  arrayTittles={[
+                    'Id',
+                    'Status',
+                    'Valor',
+                    'Taxa',
+                    'Recebido',
+                    'Data Recebimento',
+                    'DP',
+                  ]}
+                  dados={responseData.pagamentos}
+                  contentArray={[
+                    'id',
+                    'status_pagamento_id',
+                    'valor',
+                    'taxa',
+                    'valor_recebido',
+                    'data_recebimento',
+                  ]}
+                />
+              ) : null}
+
+              {responseData.pedidos_splits.length >= 1 ? (
+                <PagamentosCards
+                  currentComponent={'splits'}
+                  titulo={'Splits'}
+                  arrayTittles={[
+                    'Id',
+                    'Estabelecimento',
+                    'Tipo',
+                    'Categoria',
+                    'Valor',
+                  ]}
+                  contentArray={['id', 'nome_fantasia', 'id', 'id', 'valor']}
+                  dados={responseData.pedidos_splits}
+                />
+              ) : null}
             </div>
           </div>
+
         ) : null}
         {responseData ? (
           <div className=" bg-gray-800  max-w-full text-sm  grid grid-cols-1 lg:grid-cols-2 lg:col-span-2 ">
@@ -318,7 +320,7 @@ export default function Vendas() {
           </div>
         ) : null}
       </div>
-    </div>
+    </div >
   )
 }
 
