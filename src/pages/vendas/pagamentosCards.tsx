@@ -92,9 +92,9 @@ export default function PagamentosCards(props: typeProps) {
       </div>
       <div className="xl:hidden  w-full flex flex-col  bg-gray-800 p-2 ">
         <h1 className="text-white">{props.titulo}</h1>
-        <div className="flex flex-col md:grid md:grid-cols-2 lg:grid lg:grid-cols-3 gap-2">
+        <div className="flex flex-col md:grid md:grid-cols-2 lg:grid lg:grid-cols-3 gap-2 ">
           {props.dados.map((data) => (
-            <div className="bg-gray-700 rounded-md" key={data.id}>
+            <div className="bg-gray-700 rounded-md shadow-md" key={data.id}>
               <div className={Pstyles}>
                 <p>{props.arrayTittles[0]}</p>
                 <p> {data[props.contentArray[0]]}</p>
