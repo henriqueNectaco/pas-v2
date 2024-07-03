@@ -24,7 +24,7 @@ export default function Table(props: marketplaceProps) {
               key={i}
               className="w-full p-4   rounded-md flex justify-start  items-center"
             >
-              {i}
+              <p className='font-bold text-lg'>{i}</p>
             </div>
           ))}
         </div>
