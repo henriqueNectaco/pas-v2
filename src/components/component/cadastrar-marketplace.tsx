@@ -140,24 +140,24 @@ export function CadastrarMarketplace(props: typeProps) {
             {activeStep === 1 ? (
               <Input placeholder="teste" type="color" />
             ) : null}
-                  {activeStep === 2 ? (<>
+            {activeStep === 2 ? (<>
               <div className='border-2 lg:grid-cols-3 lg:grid h-full'>
                 <div className='h-full'>
                   <h1 className='flex justify-center items-center font-bold'>Logo</h1>
-                  <FilePonds titulo='teste bro'/>
+                  <FilePonds titulo='teste bro' />
+                </div>
+                <div className='h-full'>
+                  <h1 className='flex justify-center items-center font-bold'>Logo</h1>
+                  <FilePonds titulo='teste bro' />
+                </div>
+                <div className='h-full'>
+                  <h1 className='flex justify-center items-center font-bold'>Logo</h1>
+
+                  <FilePonds titulo='teste bro' />
+                </div>
               </div>
-              <div className='h-full'>
-                <h1 className='flex justify-center items-center font-bold'>Logo</h1>
-                <FilePonds titulo='teste bro'/>
-              </div>
-              <div className='h-full'>
-                <h1 className='flex justify-center items-center font-bold'>Logo</h1>
-            
-            <FilePonds titulo='teste bro'/>
-              </div>
-            </div>
-    <Button >teste</Button>
-    </>
+              <Button >teste</Button>
+            </>
             ) : null}
             {activeStep === 3 ? <p>step 4</p> : null}
           </form>

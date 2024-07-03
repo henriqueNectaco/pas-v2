@@ -33,7 +33,10 @@ export default function Vendas() {
       const response = await axios.get(`https://api.zsystems.com.br/z1/vendas/${responseData.id}/reprocessar`,
         { headers: { Authorization: `Bearer ${token}` } }
       )
-      if (response.data.success === true) { toast.success('Pedido Adicionado a fila de reprocessamento') }
+      if (response.data.success === true) {
+        toast.success('Pedido Adicionado a fila de reprocessamento')
+        setIsLoadingReprocessSale(false)
+      }
     } catch (error) {
       console.error(error)
     }
@@ -254,7 +257,8 @@ export default function Vendas() {
               ) : null}
               <div className="w-full lg:gap-0 gap-2">
                 {responseData.pagamentos.length > 1 ? (
-                  <PagamentosCards
+                  <PagamentosCards reprocessSale={handleReprocessSale}
+                    isLoadingReprocessSale={isLoadingReprocessSale}
                     currentComponent={'pagamentos'}
                     titulo={'Pagamentos'}
                     arrayTittles={[

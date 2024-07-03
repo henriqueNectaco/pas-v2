@@ -24,7 +24,7 @@ export default function CadastrarMarketplaces() {
   }
 
   const handleNextStep = () => {
-      setValidatedActiveStep(activeStep + 1)
+    setValidatedActiveStep(activeStep + 1)
   }
 
   const handlePrevStep = () => {
@@ -38,8 +38,8 @@ export default function CadastrarMarketplaces() {
   return (
     <div className="max-w-screen     bg-gray-200 h-screen">
       <Header />
-  
-                  <CadastrarMarketplace />
+
+      <CadastrarMarketplace />
     </div>
   )
 }
