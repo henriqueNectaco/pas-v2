@@ -18,7 +18,7 @@ export default function Table(props: marketplaceProps) {
     <div className="max-w-screen  w-full   h-full ">
       <div className="  overflow-auto rounded-2xl bg-white shadow hidden md:hidden lg:hidden xl:block border  max-w-screen">
         <div
-          className={`border-b-3 border-b-black w-full flex  lg:grid lg:grid-cols-${props.array.length}`}
+          className={`border-b-3 border-b-black w-full   lg:grid lg:grid-cols-${props.array.length}`}
         >
           {props.array.map((i: string) => (
             <div
@@ -49,11 +49,14 @@ export default function Table(props: marketplaceProps) {
                 <div className="p-4 border-b">
                   <p>{formatarData(dados[props.contentArray[3]])}</p>
                 </div>
-                {props.ColsBody >= 5 || props.currentPage === 'filhos ' ? (<div className=" text-blue-600 p-4 border-b">
+                {props.currentPage === 'filhos' ? (<div className=" text-blue-600 p-4 border-b">
                   <p>{dados.usuarios_estabelecimentos[0].usuario.email}</p>
                 </div>
                 ) : null}
-                {props.ColsBody > 5 ? (<div className="p-4 border-b">
+                {props.ColsBody > 5 && props.currentPage === 'filhos' ? (<div className="p-4 border-b">
+                  <p>teste</p>
+                </div>) : null}
+                {props.currentPage === 'estabelecimentosFilhos' ? (<div className="p-4 border-b">
                   <p>teste</p>
                 </div>) : null}
               </>

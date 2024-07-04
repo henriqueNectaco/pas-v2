@@ -26,6 +26,7 @@ export default function Vendas() {
   const handleCleanInput = () => {
     setVendaId('')
     setResponseData(null)
+    setIsLoadingSearchSale(false)
   }
   const handleReprocessSale = async () => {
     setIsLoadingReprocessSale(true)
@@ -285,18 +286,12 @@ export default function Vendas() {
               ) : null}
 
               {responseData.pedidos_splits.length >= 1 ? (
-                <PagamentosCards
+                <PagamentosCards isLoadingReprocessSale={isLoadingReprocessSale}
+                  reprocessSale={handleReprocessSale}
                   currentComponent={'splits'}
                   titulo={'Splits'}
-                  arrayTittles={[
-                    'Id',
-                    'Estabelecimento',
-                    'Tipo',
-                    'Categoria',
-                    'Valor',
-                  ]}
-                  contentArray={['id', 'nome_fantasia', 'id', 'id', 'valor']}
-                  dados={responseData.pedidos_splits}
+                  arrayTittles={['Id', 'Estabelecimento', 'Tipo', 'Categoria', 'Valor',]}
+                  contentArray={['id', 'nome_fantasia', 'id', 'id', 'valor']} dados={responseData.pedidos_splits}
                 />
               ) : null}
             </div>
