@@ -14,3 +14,8 @@ export const statusPayment = (statusPaymentId: number) => {
       return '-'
   }
 }
+export const statusMarketplacesChilds = (status: number) => {
+  switch (status) {
+    case 2: return "Aprovado"
+  }
+}

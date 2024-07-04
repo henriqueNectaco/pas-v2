@@ -304,7 +304,7 @@ export default function Vendas() {
 
         ) : null}
         {responseData ? (
-          <div className=" bg-gray-800  max-w-full text-sm  grid grid-cols-1 lg:grid-cols-2 lg:col-span-2 ">
+          <div className=" bg-gray-800    max-w-full text-sm  grid grid-cols-1 lg:grid-cols-2 lg:col-span-2 ">
             <div className=" w-full text-left p-2  space-y-2 lg:space-y-4">
               <p className="text-white">Vendas</p>
               <JSONPretty data={responseData} theme={{ JSONPrettyMon }} />

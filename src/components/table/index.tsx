@@ -1,5 +1,6 @@
 import { formatarData } from '@/utils/dates'
 import { Spinner } from '@nextui-org/react'
+import { statusMarketplacesChilds } from '@/utils/status'
 // import DropdownButton from '../../pages/marketplaces/dropdown'
 type Dados = { [key: string]: string | number | boolean | any }
 
@@ -11,20 +12,20 @@ type marketplaceProps = {
   currentPage: string
 }
 export default function Table(props: marketplaceProps) {
-  const arrayLengh = props.array.length
+
 
   return (
     <div className="max-w-screen  w-full   h-full ">
       <div className="  overflow-auto rounded-2xl bg-white shadow hidden md:hidden lg:hidden xl:block border  max-w-screen">
         <div
-          className={`border-b-3 border-b-black w-full flex flex-col lg:grid lg:grid-cols-${props.array.length}`}
+          className={`border-b-3 border-b-black w-full flex  lg:grid lg:grid-cols-${props.array.length}`}
         >
           {props.array.map((i: string) => (
             <div
               key={i}
-              className="w-full p-4   rounded-md flex justify-start  items-center"
+              className="w-full p-4   rounded-md  flex  justify-start flex-row  items-center"
             >
-              <p className='font-bold text-lg'>{i}</p>
+              <p className=' tracking-wide text-md font-semibold'>{i}</p>
             </div>
           ))}
         </div>
@@ -32,7 +33,7 @@ export default function Table(props: marketplaceProps) {
           <Spinner />
         ) : (
           <div
-            className={` flex flex-col lg:grid lg:grid-cols-${props.ColsBody}`}
+            className={` flex flex-col lg:grid lg:grid-cols-${props.ColsBody} max-w-screen`}
           >
             {props.data.map((dados: Dados) => (
               <>
@@ -43,11 +44,18 @@ export default function Table(props: marketplaceProps) {
                   <p>{dados[props.contentArray[1]]}</p>
                 </div>
                 <div className="p-4 border-b">
-                  <p>{dados[props.contentArray[2]]}</p>
+                  {props.currentPage === 'filhos' ? (<p>{statusMarketplacesChilds(dados[props.contentArray[2]])}</p>) : (<p>{dados[props.contentArray[2]]}</p>)}
                 </div>
                 <div className="p-4 border-b">
                   <p>{formatarData(dados[props.contentArray[3]])}</p>
                 </div>
+                {props.ColsBody >= 5 || props.currentPage === 'filhos ' ? (<div className=" text-blue-600 p-4 border-b">
+                  <p>{dados.usuarios_estabelecimentos[0].usuario.email}</p>
+                </div>
+                ) : null}
+                {props.ColsBody > 5 ? (<div className="p-4 border-b">
+                  <p>teste</p>
+                </div>) : null}
               </>
             ))}
           </div>
@@ -72,20 +80,21 @@ export default function Table(props: marketplaceProps) {
                   </div>
                   <div className="flex flex-col items-center justify-center">
                     <p className="font-bold">{props.array[2]}</p>
-                    <p>{dados[props.contentArray[2]]}</p>
+
+                    {props.currentPage === 'filhos' ? (<p>{statusMarketplacesChilds(dados[props.contentArray[2]])}</p>) : (<p>{dados[props.contentArray[2]]}</p>)}
                   </div>
                   <div className="flex flex-col items-center justify-center">
                     <p className="font-bold">{props.array[3]}</p>
                     <p>{formatarData(dados[props.contentArray[3]])}</p>
                   </div>
 
-                  {arrayLengh >= 5 ? (
+                  {props.array.length >= 5 ? (
                     <div className="flex flex-col items-center justify-center">
                       <p className="font-bold">{props.array[4]}</p>
                       {props.currentPage === 'filhos' ? (
                         <>
                           {dados.usuarios_estabelecimentos.map(
-                            (usuarioEstabelecimento: Array, idx: string) => (
+                            (usuarioEstabelecimento: Array<object>, idx: string) => (
                               <p key={idx}>
                                 {usuarioEstabelecimento.usuario.email}
                               </p>

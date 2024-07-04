@@ -45,7 +45,7 @@ https://api.zsystems.com.br/marketplaces/${id}/filhos`,
   }, [])
 
   return (
-    <div className="h-screen max-w-screen w-full bg-gray-50 flex flex-col items-center  border-2 border-red-400">
+    <div className="h-screen max-w-screen w-full bg-gray-50 flex flex-col items-center  border-2 ">
       <Header />
       <>
         {!marketplacesChilds ? (
@@ -54,15 +54,15 @@ https://api.zsystems.com.br/marketplaces/${id}/filhos`,
           <div className=" max-w-screen w-full h-full  space-y-4 p-4 bg-gray-200    ">
             <Table
               currentPage="filhos"
-              array={['ID', 'Nome', 'Status', 'Data de criação', 'E-mail']}
-              ColsBody={5}
+              array={['ID', 'Nome', 'Status', 'Data de criação', 'E-mail', '']}
+              ColsBody={6}
               data={marketplacesChilds}
               contentArray={[
                 'id',
                 'nome_fantasia',
                 'status_estabelecimento_id',
                 'created',
-                'usuarios_estabelecimentos.usuario.email',
+
               ]}
             />
           </div>
