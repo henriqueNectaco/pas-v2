@@ -44,7 +44,7 @@ export default function Table(props: marketplaceProps) {
                   <p>{dados[props.contentArray[1]]}</p>
                 </div>
                 <div className="p-4 border-b">
-                  {props.currentPage === 'filhos' ? (<p>{statusMarketplacesChilds(dados[props.contentArray[2]])}</p>) : (<p>{dados[props.contentArray[2]]}</p>)}
+                  {props.currentPage === 'filhos' ? (<p className={`${statusMarketplacesChilds(dados[props.contentArray[2]]) === 'Aprovado' ? 'text-green-500' : 'text-yellow-400'}`}>{statusMarketplacesChilds(dados[props.contentArray[2]])}</p>) : (<p>{dados[props.contentArray[2]]}</p>)}
                 </div>
                 <div className="p-4 border-b">
                   <p>{formatarData(dados[props.contentArray[3]])}</p>
@@ -81,7 +81,7 @@ export default function Table(props: marketplaceProps) {
                   <div className="flex flex-col items-center justify-center">
                     <p className="font-bold">{props.array[2]}</p>
 
-                    {props.currentPage === 'filhos' ? (<p>{statusMarketplacesChilds(dados[props.contentArray[2]])}</p>) : (<p>{dados[props.contentArray[2]]}</p>)}
+                    {props.currentPage === 'filhos' ? (<p className={`${statusMarketplacesChilds(dados[props.contentArray[2]]) === 'Aprovado' ? 'text-green-500' : 'text-yellow-400'}`}>{statusMarketplacesChilds(dados[props.contentArray[2]])}</p>) : (<p>{dados[props.contentArray[2]]}</p>)}
                   </div>
                   <div className="flex flex-col items-center justify-center">
                     <p className="font-bold">{props.array[3]}</p>
@@ -95,7 +95,7 @@ export default function Table(props: marketplaceProps) {
                         <>
                           {dados.usuarios_estabelecimentos.map(
                             (usuarioEstabelecimento: Array<object>, idx: string) => (
-                              <p key={idx}>
+                              <p className='text-blue-500' key={idx}>
                                 {usuarioEstabelecimento.usuario.email}
                               </p>
                             ),

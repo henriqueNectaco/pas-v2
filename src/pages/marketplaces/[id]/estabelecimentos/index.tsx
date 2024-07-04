@@ -63,14 +63,15 @@ export default function Estabelecimentos() {
       <Header />
       <div className="w-full  p-4 bg-gray-200">
         <Table
-          array={['Id', 'Nome', 'Nome na Fatura', ' Data de criação']}
+          array={['Id', 'Nome', 'Nome na Fatura', ' Data de criação', '']}
           contentArray={[
             'id',
             'nome_fantasia',
             'identificacao_fatura',
             'created',
           ]}
-          currentPage="estebelecimentosFilhos"
+          ColsBody={5}
+          currentPage="estabelecimentosFilhos"
           data={estabeleciments}
         />
       </div>
