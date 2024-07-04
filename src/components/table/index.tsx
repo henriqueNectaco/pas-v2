@@ -13,7 +13,6 @@ type marketplaceProps = {
 }
 export default function Table(props: marketplaceProps) {
 
-
   return (
     <div className="max-w-screen  w-full   h-full ">
       <div className="  overflow-auto rounded-2xl bg-white shadow hidden md:hidden lg:hidden xl:block border  max-w-screen">
