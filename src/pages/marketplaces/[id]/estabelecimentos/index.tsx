@@ -18,7 +18,6 @@ export default function Estabelecimentos() {
   })
   const router = useRouter()
   const { id } = router.query
-  const { idEsteleciments, setIdEstabeleciments } = useState()
   const Router = useRouter()
   const fetchEstabeleciments = async () => {
     try {
@@ -28,6 +27,10 @@ export default function Estabelecimentos() {
         { headers: { Authorization: `Bearer ${token}` } },
       )
       setEstabeleciments(res.data.estabelecimentos)
+      setData(prevData => ({
+        ...prevData,
+        dadosE: res.data // Supondo que "dadosE" seja uma propriedade válida do estado "data"
+      }))
     } catch (error) {
       console.error(error)
     }
@@ -74,10 +77,7 @@ export default function Estabelecimentos() {
   const handleCleanFilter = async () => {
     const res = await axios.get(`https://api.zsystems.com.br/z1/marketplace/${id}/estabelecimentos?limit=30&page=1&id_estabelecimento=&identificacao_fatura=&nome_fantasia=`)
   }
-  useEffect(() => {
-    auth()
-    console.log(idEsteleciments)
-  }, [])
+
   useEffect(() => {
     console.log(data)
   }, [data])
@@ -88,7 +88,7 @@ export default function Estabelecimentos() {
       <div className="w-full  p-4 bg-gray-200">
         <FilterEstabeleciments onChange={handleChange} />
         <Table
-          array={['Id', 'Nome', 'Nome na Fatura', ' Data de cr223iação', '']} nameFantasia
+          array={['Id', 'Nome', 'Nome na Fatura', ' Data de criação', '']} nameFantasia
           contentArray={[
             'id',
             'nome_fantasia',

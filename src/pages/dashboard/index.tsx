@@ -18,7 +18,17 @@ export default function DashBoard() {
   const [daysReprocessarSaldo, setDaysReprocessarSaldo] = useState<
     string | undefined
   >(undefined)
-
+  const [data, setData] = useState({
+    totalVendas: null,
+    totalMarketplaces: null,
+    totalSaled: null,
+    totalNotProcessedToday: null,
+    totalNotProcessedYesterday: null,
+    totalProcessedLastMonth: null,
+    totalProcessedThirtyDaysBefore: null,
+    amountSaled: null,
+    totalMarketPlaceChildRegisteredLastThirtyDays: null
+  })
   const [numVendas, setNumVendas] = useState()
   const [servicesStatus, setServicesStatus] = useState()
   const [isDisabledReprocessSales, setIsDisabledReprocessSales] = useState(true)
