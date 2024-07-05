@@ -7,10 +7,18 @@ import axios from 'axios'
 import { toast } from 'sonner'
 import Table from '@/components/table'
 export default function Estabelecimentos() {
+
   const [token] = useState(Cookies.get('token'))
   const [estabeleciments, setEstabeleciments] = useState()
+  const [data, setData] = useState({
+    id_estabelecimento: '',
+    identificacao_fatura: '',
+    nome_fantasia: ''
+
+  })
   const router = useRouter()
   const { id } = router.query
+  const { idEsteleciments, setIdEstabeleciments } = useState()
   const Router = useRouter()
   const fetchEstabeleciments = async () => {
     try {
@@ -33,6 +41,7 @@ export default function Estabelecimentos() {
       )
       if (res.data.success === true) {
         setEstabeleciments(res.data)
+        console.log('foi a reqs')
       }
     } catch (error) {
       console.error(error)
@@ -55,15 +64,31 @@ export default function Estabelecimentos() {
       console.error(error)
     }
   }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+  const handleCleanFilter = async () => {
+    const res = await axios.get(`https://api.zsystems.com.br/z1/marketplace/${id}/estabelecimentos?limit=30&page=1&id_estabelecimento=&identificacao_fatura=&nome_fantasia=`)
+  }
   useEffect(() => {
     auth()
+    console.log(idEsteleciments)
   }, [])
+  useEffect(() => {
+    console.log(data)
+  }, [data])
   return (
     <div className="max-w-screen w-full">
       <Header />
+
       <div className="w-full  p-4 bg-gray-200">
+        <FilterEstabeleciments onChange={handleChange} />
         <Table
-          array={['Id', 'Nome', 'Nome na Fatura', ' Data de criação', '']}
+          array={['Id', 'Nome', 'Nome na Fatura', ' Data de cr223iação', '']} nameFantasia
           contentArray={[
             'id',
             'nome_fantasia',

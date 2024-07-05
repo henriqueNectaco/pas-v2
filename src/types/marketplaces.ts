@@ -1,7 +1,11 @@
 export type propsFilterEstabeleciment = {
   limparFiltro: () => void
   filtrar: () => void
-  onChangeNomeFantasia: () => void
-  onChangeNomeFatura: () => void
-  onChangeId: () => void
+  nameFantasia: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+
+
+
+
+
 }

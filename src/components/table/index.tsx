@@ -32,7 +32,7 @@ export default function Table(props: marketplaceProps) {
           <Spinner />
         ) : (
           <div
-            className={` flex flex-col lg:grid lg:grid-cols-${props.ColsBody} max-w-screen`}
+            className={` flex flex-col lg:grid ${props.currentPage === 'filhos' ? 'lg:grid-cols-6' : `lg:grid-cols-${props.ColsBody}`} max-w-screen`}
           >
             {props.data.map((dados: Dados) => (
               <>
