@@ -4,11 +4,19 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 import { Button } from '@nextui-org/button'
 import { Input } from '@nextui-org/input'
-import { CadastrarMarketplace } from '@/components/component/cadastrar-marketplace'
+import { CadastrarMarketplace } from '@/components/cadastroMarketplace/cadastrar-marketplace'
 
 export default function CadastrarMarketplaces() {
   const [activeStep, setActiveStep] = useState<number>(0)
-  const [data, setData] = useState(null)
+  const [data, setData] = useState({
+    name: '',
+    dominio: '',
+    webiste: '',
+    zpk: '',
+    zoopId: ''
+
+
+  })
   const [stepsData] = useState([
     { label: 'Dados Marketplace', active: activeStep === 0 },
     { label: 'Arquivos', active: activeStep === 1 },

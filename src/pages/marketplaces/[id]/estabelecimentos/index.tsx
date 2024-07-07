@@ -35,11 +35,13 @@ export default function Estabelecimentos() {
       console.error(error)
     }
   }
+
   const handleFilter = async () => {
     try {
       const res = await axios.get(
         `
-    https://api.zsystems.com.br/z1/marketplace/${id}/estabelecimentos?limit=30&page=1&id_estabelecimento=id&identificacao_fatura=nomefatura&nome_fantasia=nomefantasia`,
+    
+https://api.zsystems.com.br/z1/marketplace/${id}/estabelecimentos?limit=30&page=1&id_estabelecimento=${data.id_estabelecimento}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
       if (res.data.success === true) {
@@ -74,19 +76,26 @@ export default function Estabelecimentos() {
       [name]: value
     }));
   };
-  const handleCleanFilter = async () => {
-    const res = await axios.get(`https://api.zsystems.com.br/z1/marketplace/${id}/estabelecimentos?limit=30&page=1&id_estabelecimento=&identificacao_fatura=&nome_fantasia=`)
-  }
 
+  const handleCleanFilter = () => {
+    setData({
+      id_estabelecimento: '',
+      identificacao_fatura: '',
+      nome_fantasia: ''
+    });
+  }
   useEffect(() => {
     console.log(data)
   }, [data])
+  useEffect(() => {
+    auth()
+  }, [])
   return (
     <div className="max-w-screen w-full">
       <Header />
 
       <div className="w-full  p-4 bg-gray-200">
-        <FilterEstabeleciments onChange={handleChange} />
+        <FilterEstabeleciments onChange={handleChange} f limparFiltro={handleCleanFilter} data={data} />
         <Table
           array={['Id', 'Nome', 'Nome na Fatura', ' Data de criação', '']} nameFantasia
           contentArray={[

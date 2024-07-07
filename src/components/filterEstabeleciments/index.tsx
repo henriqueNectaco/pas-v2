@@ -7,22 +7,24 @@ export default function FilterEstabeleciments(
   return (
     <div className="flex flex-col lg:grid lg:grid-cols-4 w-full rounded-2xl mb-2 bg-white">
       <div className=" col-span-2 flex flex-col lg:flex-row gap-2 p-3 lg:items-end lg:justify-end items-center justify-center">
-        <Input onChange={props.onChange} name='id_estabelecimento' variant="underlined" label="ID" type='number' />
+        <Input onChange={props.onChange} name='id_estabelecimento' variant="underlined" label="ID" type='number' value={props.data.id_estabelecimento} />
         <Input
           name='nome_fantasia'
           variant="underlined"
           onChange={props.onChange}
           label="Nome Fantasia"
+          value={props.data.nome_fantasia}
         />
         <Input
           variant="underlined"
           onChange={props.onChange}
-          name='identeficacao_fatura'
+          value={props.data.identificacao_fatura}
+          name='identificacao_fatura'
           label="Nome na Fatura"
         />
       </div>
       <div className=" col-span-2 flex flex-col lg:flex-row  lg:items-end lg:justify-end p-3 gap-2">
-        <div className="col-span-1 lg:w-1/2  flex flex-row gap-2 lg:gap-1 ">
+        <div className="col-span-1 lg:w-1/2  flex flex-row gap-2 lg:gnome_fantasia={data.nome_fantasia}ap-1 ">
           <Button onClick={props.limparFiltro} color="danger" fullWidth={true}>
             Limpar Filtro
           </Button>
