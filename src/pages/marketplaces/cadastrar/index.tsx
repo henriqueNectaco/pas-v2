@@ -13,9 +13,9 @@ export default function CadastrarMarketplaces() {
     dominio: '',
     webiste: '',
     zpk: '',
-    zoopId: ''
-
-
+    zoopId: '',
+    sellerId: '',
+    color: ''
   })
   const [stepsData] = useState([
     { label: 'Dados Marketplace', active: activeStep === 0 },
