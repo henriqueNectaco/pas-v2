@@ -1,79 +1,87 @@
-import FilterEstabeleciments from '@/components/filterEstabeleciments'
-import Header from '@/components/Header'
-import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
-import Cookies from 'js-cookie'
-import axios from 'axios'
-import { toast } from 'sonner'
-import Table from '@/components/table'
-export default function Estabelecimentos() {
+import FilterEstabeleciments from '@/components/marketplaces/filterEstabeleciments';
+import Header from '@/components/Header';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
+import axios from 'axios';
+import { toast } from 'sonner';
+import Table from '@/components/table';
+import { Button, Spinner } from '@nextui-org/react';
 
-  const [token] = useState(Cookies.get('token'))
-  const [estabeleciments, setEstabeleciments] = useState()
+export default function Estabelecimentos() {
+  const [token] = useState(Cookies.get('token'));
+  const [estabeleciments, setEstabeleciments] = useState(null);
   const [data, setData] = useState({
     id_estabelecimento: '',
     identificacao_fatura: '',
-    nome_fantasia: ''
+    nome_fantasia: '',
+    limit_page: 30,
+    page: 1
+  });
 
-  })
-  const router = useRouter()
-  const { id } = router.query
-  const Router = useRouter()
+  const router = useRouter();
+  const { id } = router.query;
+
   const fetchEstabeleciments = async () => {
     try {
       const res = await axios.get(
-        `
-  https://api.zsystems.com.br/z1/marketplace/${id}/estabelecimentos?limit=30&page=1`,
-        { headers: { Authorization: `Bearer ${token}` } },
-      )
-      setEstabeleciments(res.data.estabelecimentos)
-      setData(prevData => ({
-        ...prevData,
-        dadosE: res.data // Supondo que "dadosE" seja uma propriedade válida do estado "data"
-      }))
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  const handleFilter = async () => {
-    try {
-      const res = await axios.get(
-        `
-    
-https://api.zsystems.com.br/z1/marketplace/${id}/estabelecimentos?limit=30&page=1&id_estabelecimento=${data.id_estabelecimento}`,
-        { headers: { Authorization: `Bearer ${token}` } },
-      )
+        `https://api.zsystems.com.br/z1/marketplace/${id}/estabelecimentos?limit=30&page=1`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
       if (res.data.success === true) {
-        setEstabeleciments(res.data)
-        console.log('foi a reqs')
+        setEstabeleciments(res.data.estabelecimentos);
+      } else {
+        console.log(res.data.success);
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
+  };
+  const queryParams = {
+    limit: data.limit_page,
+    page: data.page,
+    id_estabelecimento: data.id_estabelecimento,
+    identificacao_fatura: data.identificacao_fatura,
+    nome_fantasia: data.nome_fantasia,
   }
+  const handleFilter = async () => {
+    try {
+      setEstabeleciments(null);
+      const res = await axios.get(
+        `https://api.zsystems.com.br/z1/marketplace/1/estabelecimentos`,
+        {
+          params: queryParams, headers: { Authorization: `Bearer ${token}` }
+        },
+
+      );
+      if (res.data.success === true) {
+        setEstabeleciments(res.data.estabelecimentos);
+        console.log('Requisição bem-sucedida');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const auth = async () => {
     try {
-      const res = await axios.post(
-        `https://api.zsystems.com.br/z1/autenticar`,
-        { token },
-      )
+      const res = await axios.post(`https://api.zsystems.com.br/z1/autenticar`, { token });
       if (res.data.success === false) {
-        toast.error('Sua sessão expirou faça login novamente')
-        Router.push('/')
+        toast.error('Sua sessão expirou, faça login novamente');
+        router.push('/');
       } else {
-        fetchEstabeleciments()
+        fetchEstabeleciments();
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setData(prevData => ({
+    setData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -81,34 +89,37 @@ https://api.zsystems.com.br/z1/marketplace/${id}/estabelecimentos?limit=30&page=
     setData({
       id_estabelecimento: '',
       identificacao_fatura: '',
-      nome_fantasia: ''
+      nome_fantasia: '',
     });
-  }
+    handleFilter()
+  };
+
   useEffect(() => {
-    console.log(data)
-  }, [data])
-  useEffect(() => {
-    auth()
-  }, [])
+    auth();
+  }, []);
+
   return (
     <div className="max-w-screen w-full">
       <Header />
-
-      <div className="w-full  p-4 bg-gray-200">
-        <FilterEstabeleciments onChange={handleChange} f limparFiltro={handleCleanFilter} data={data} />
-        <Table
-          array={['Id', 'Nome', 'Nome na Fatura', ' Data de criação', '']} nameFantasia
-          contentArray={[
-            'id',
-            'nome_fantasia',
-            'identificacao_fatura',
-            'created',
-          ]}
-          ColsBody={5}
-          currentPage="estabelecimentosFilhos"
-          data={estabeleciments}
+      <div className="w-full p-4 bg-gray-200">
+        <FilterEstabeleciments
+          onChange={handleChange}
+          filtrar={handleFilter}
+          limparFiltro={handleCleanFilter}
+          data={data}
         />
+        {estabeleciments !== null ? (
+          <Table
+            array={['Id', 'Nome', 'Nome na Fatura', 'Data de criação', '']}
+            contentArray={['id', 'nome_fantasia', 'identificacao_fatura', 'created']}
+            ColsBody={5}
+            currentPage="estabelecimentosFilhos"
+            data={estabeleciments}
+          />
+        ) : (
+          <Spinner />
+        )}
       </div>
     </div>
-  )
+  );
 }

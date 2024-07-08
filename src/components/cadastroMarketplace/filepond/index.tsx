@@ -3,6 +3,9 @@ import dynamic from 'next/dynamic';
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import { typeFilePond } from '@/types/marketplaces/cadastrar';
+import axios from 'axios';
+import { Button } from '@nextui-org/button';
+
 const FilePond = dynamic(() => import('react-filepond').then(module => {
   const { registerPlugin } = module;
   const FilePondPluginImageExifOrientation = require('filepond-plugin-image-exif-orientation');
@@ -12,33 +15,58 @@ const FilePond = dynamic(() => import('react-filepond').then(module => {
   return module.FilePond;
 }), { ssr: false });
 
-export default function FilePonds(props:typeFilePond) {
-  const [files, setFiles] = useState([
-  
-  ]);
+export default function FilePonds(props: typeFilePond) {
+  const [files, setFiles] = useState([]);
 
   const handleInit = () => {
     console.log("FilePond instance has initialised");
   };
 
-  const handleUpdateFiles = (fileItems :File) => {
+  const handleUpdateFiles = (fileItems) => {
     setFiles(fileItems.map(fileItem => fileItem.file));
+  };
+
+  const upload = async () => {
+    if (files.length === 0) {
+      console.error("No file selected");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('name', 'teste');
+    formData.append('file', files[0]);
+
+    try {
+      const res = await axios.post(
+        `https://zgs-image-production.up.railway.app/images/39ad2444-109a-4020-92cc-044926ab2b03`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjkwNDlkYWMxLWUyYjEtNGJjOC05NzQ2LWRmMmZhNmUxYWYyZSIsIm5hbWUiOiJOZWN0YSIsImVtYWlsIjoiYWRtaW5AenN5c3RlbXMuY29tLmJyIiwiaWF0IjoxNzIwNDQ5MzUzLCJleHAiOjE3MjA1MzU3NTMsInN1YiI6IjkwNDlkYWMxLWUyYjEtNGJjOC05NzQ2LWRmMmZhNmUxYWYyZSJ9.xDnx91DCiOTWnEfmDC_bzNbr2fJ85zMRQE28qo_ITVE`
+          }
+        }
+      );
+      console.log(res.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <div className="h-full">
-      <FilePond 
+      <FilePond
         files={files}
         allowMultiple={true}
         allowReorder={true}
-             maxFiles={3}
-        server={{ process: null}}  
+        maxFiles={1}
+        server={null}
         name="files"
         oninit={handleInit}
         onupdatefiles={handleUpdateFiles}
         labelIdle={`Arraste ou solte o arquivo de ${props.titulo} <span class="filepond--label-action">Navegar</span>`}
-
       />
+      <Button onClick={upload}>Upload</Button>
     </div>
   );
 }
