@@ -1,6 +1,16 @@
 import { formatarData } from '@/utils/dates'
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  Button,
+  useDisclosure,
+} from '@nextui-org/react'
+import { DotsThreeOutlineVertical } from 'phosphor-react'
 import { Spinner } from '@nextui-org/react'
 import { statusMarketplacesChilds } from '@/utils/status'
+import DropDownMenuFilhos from '../marketplaces/dropdown/filhos'
 // import DropdownButton from '../../pages/marketplaces/dropdown'
 type Dados = { [key: string]: string | number | boolean | any }
 
@@ -53,10 +63,10 @@ export default function Table(props: marketplaceProps) {
                 </div>
                 ) : null}
                 {props.ColsBody > 5 && props.currentPage === 'filhos' ? (<div className="p-4 border-b">
-                  <p>teste</p>
+                  <DropDownMenuFilhos items={['Adicionar SSL']} />
                 </div>) : null}
                 {props.currentPage === 'estabelecimentosFilhos' ? (<div className="p-4 border-b">
-                  <p>teste</p>
+                  <DropDownMenuFilhos items={['Trocar de parent', 'Reprocessar pedidos']} />
                 </div>) : null}
               </>
             ))}
@@ -106,6 +116,16 @@ export default function Table(props: marketplaceProps) {
                       ) : (
                         <p>{dados[props.contentArray[4]]}</p>
                       )}
+                    </div>
+                  ) : null}
+                  {props.array.length > 5 && props.currentPage === 'filhos' ? (
+                    <div className="flex flex-col items-center justify-center">
+                      <DropDownMenuFilhos items={['Adicionar SSl']} onAction={() => alert('teste')} />
+                    </div>
+                  ) : null}
+                  {props.currentPage === 'estabelecimentosFilhos' ? (
+                    <div className="flex flex-col items-center justify-center">
+                      <DropDownMenuFilhos items={['Trocar de parent', 'Reprocessar pedidos']} onAction={() => alert('teste')} />
                     </div>
                   ) : null}
                 </div>
