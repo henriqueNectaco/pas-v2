@@ -1,4 +1,5 @@
 import { parseDate } from '@internationalized/date'
+import { getLastDayOfMonth, format } from '@/utils/dates'
 import ModalMine from '@/components/modal'
 import {
   useDisclosure,
@@ -26,11 +27,41 @@ export default function Marketplace() {
     end: parseDate('2024-04-30'), // Último dia do mês
   })
   const [action, setAction] = useState('Reprocessar todas as vendas')
+  const [date, setDate] = useState({
+    startDate: format(value.start.toDate()),
+    endDate: format(value.end.toDate())
+  })
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const token = Cookies.get('token')
   const router = useRouter()
   const [resData, setResData] = useState<Object>()
   const [state, setState] = useState('ativos')
+  const handleReprocessAllSales = async () => {
+    try {
+      const res = await axios.post(`https://urltestepai`,
+        { startDate: date.startDate, endDate: date.endDate },
+        { headers: { Authorization: `Bearer ${token}` } },
+
+
+      )
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const handleTestes = async () => { console.log(`start: ${date.startDate} end: ${date.endDate}`) }
+  const handleFuncoes = async () => {
+    switch (action) {
+      case 'Reprocessar todas as vendas':
+        await handleReprocessAllSales()
+        break;
+      case 'Importar todas as vendas':
+        await handleImportAllSales();
+        break;
+      default:
+        console.log('outro');
+        break;
+    }
+  };
 
   const fetchFilteredData = async () => {
     try {
@@ -153,7 +184,7 @@ export default function Marketplace() {
         value={value}
         setValue={setValue}
         action={action}
-        onClick={() => alert('tessss')}
+        onClick={handleFuncoes}
         isOpen={isOpen}
         onOpenChange={onOpenChange}
       />

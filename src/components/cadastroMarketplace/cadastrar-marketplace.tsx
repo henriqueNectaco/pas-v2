@@ -20,8 +20,8 @@ import { Button } from '@nextui-org/button'
 import { Input } from '@nextui-org/input'
 import React, { Dispatch, SetStateAction, useState, ChangeEvent } from 'react'
 import { toast } from 'sonner'
-import StepperComponent from '../cadastroMarketplace/steper'
-import FilePonds from '../cadastroMarketplace/filepond'
+import StepperComponent from './steper'
+import FilePonds from './filepond'
 
 export function CadastrarMarketplace(props: typeProps) {
   const [activeStep, setActiveStep] = useState<number>(0)

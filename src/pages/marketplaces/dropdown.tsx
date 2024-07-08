@@ -78,7 +78,6 @@ export default function DropdownButton(props: TypeProps) {
   }
 
   const handleFuncoes = async () => {
-    console.log(action)
     switch (action) {
       case 'Reprocessar Vendas':
         reprocessarVendas()
@@ -140,12 +139,12 @@ export default function DropdownButton(props: TypeProps) {
               router.push(
                 `/marketplaces/${props.id}/${props.nomeFantasia}/adicionar-ssl`,
               )
-            }
+            } else if (key === 'cadastrarMarketplaceFilho') { router.push(`/marketplaces/${props.id}/cadastrar-filho`) }
           }}
           color="primary"
           variant="solid"
         >
-          <DropdownItem key={props.id}>
+          <DropdownItem key='cadastrarMarketplaceFilho'>
             Cadastrar Marketplace filho
           </DropdownItem>
           <DropdownItem key="showmarketplaceschilds">
