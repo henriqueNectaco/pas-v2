@@ -1,9 +1,10 @@
-export type typeFilePond={
+export type typeFilePond = {
 
-  titulo:string
+  titulo: string
 
 
 }
 export type typeProps = {
   isLoading: boolean
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }

@@ -10,7 +10,7 @@ type mktProps = {
 type marketplaceProps = {
   marketplace: Array | null
 }
-export default function TableTestes(props: marketplaceProps) {
+export default function TableMarketPlaces(props: marketplaceProps) {
   return (
     <div className="max-w-screen  w-full   h-screen ">
       <div className=" p-2 overflow-auto rounded-2xl bg-white shadow hidden md:hidden lg:hidden xl:block border  max-w-screen">

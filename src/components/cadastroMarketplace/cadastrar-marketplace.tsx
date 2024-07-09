@@ -71,68 +71,80 @@ export function CadastrarMarketplace(props: typeProps) {
                 <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Input
+                      onChange={props.onChange}
+                      name='nome'
+                      value={props.data.nome}
                       placeholder={'Nome'}
                       required={true}
                       variant="underlined"
                       labelPlacement="inside"
-                      isClearable={true}
                     />
                   </div>
                   <div className="space-y-2">
                     <Input
+                      value={props.data.zoopMarketplaceId}
+                      onChange={props.onChange}
+                      name='zoopMarketplaceId'
                       placeholder={'Zoop Marketplace Id'}
                       required={true}
                       variant="underlined"
                       labelPlacement="inside"
-                      isClearable={true}
                     />
                   </div>
                   <div className="space-y-2">
                     <Input
+                      onChange={props.onChange}
+                      name='dominio'
+                      value={props.data.dominio}
                       placeholder={'Dominio'}
                       required={true}
                       variant="underlined"
                       labelPlacement="inside"
-                      isClearable={true}
                     />
                   </div>
                   <div className="space-y-2">
                     <Input
+                      value={props.data.sellerId}
+                      onChange={props.onChange}
+                      name='sellerId'
                       placeholder={'Seller Id'}
                       required={true}
                       variant="underlined"
                       labelPlacement="inside"
-                      isClearable={true}
                     />
                   </div>
                   <div className="space-y-2">
                     <Input
+                      value={props.data.website}
+                      onChange={props.onChange}
+                      name='website'
                       placeholder={'Website'}
                       required={true}
                       variant="underlined"
                       labelPlacement="inside"
-                      isClearable={true}
                     />
                   </div>
                   <div className="space-y-2">
                     <Input
+                      value={props.data.zpk}
+                      onChange={props.onChange}
+                      name='zpk'
                       placeholder={'zpk'}
                       required={true}
                       variant="underlined"
                       labelPlacement="inside"
-                      isClearable={true}
                     />
                   </div>
                 </div>
                 <div className="p-4 pl-0  flex flex-col justify-start lg:flex lg:flex-row gap-4 ">
                   <div className="flex items-center lg:justify-center justify-start space-x-2 ">
-                    <Checkbox>Cobrança por transação</Checkbox>
+                    <Checkbox name='cobrancaPorTransacao' onChange={props.onChange}>Cobrança por transação</Checkbox>
                   </div>
                   <div className="flex items-center lg:justify-center space-x-2 justify-start">
-                    <Checkbox>Taxa Administrativa</Checkbox>
+                    <Checkbox name='taxaAdministrativa' onChange={props.onChange}>Taxa Administrativa</Checkbox>
                   </div>
                   <div className="flex items-center lg:justify-center space-x-2 justify-start">
-                    <Checkbox>Carnê</Checkbox>
+                    <Checkbox name='carne' onChange={props.onChange}>Carnê</Checkbox>
                   </div>
                 </div>
               </>

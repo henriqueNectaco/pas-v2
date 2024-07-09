@@ -1,6 +1,6 @@
 import { formatarData } from '@/utils/dates';
 import { Spinner } from '@nextui-org/react';
-import { statusMarketplacesChilds } from '@/utils/status';
+import { statusMarketplacesChilds, nullVerifiyer } from '@/utils/status';
 import DropDownMenuFilhos from '../marketplaces/dropdown/filhos';
 import React from 'react'
 type Dados = { [key: string]: string | number | boolean | any };
@@ -34,7 +34,7 @@ export default function Table(props: marketplaceProps) {
                   <p>{dados[props.contentArray[0]]}</p>
                 </div>
                 <div className="p-4 border-b">
-                  <p>{dados[props.contentArray[1]]}</p>
+                  <p>{nullVerifiyer(dados[props.contentArray[1]])}</p>
                 </div>
                 <div className="p-4 border-b">
                   {props.currentPage === 'filhos' ? (

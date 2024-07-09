@@ -47,7 +47,7 @@ export default function Crons() {
   return (
     <div className="h-full  max-w-screen w-full   text-black-500 ">
       <Header />
-      <div className="lg:p-4  p-3  max-w-screen  space-y-2  flex flex-col h-full bg-gray-200">
+      <div className="lg:p-6  p-3  max-w-screen  space-y-2  flex flex-col h-full bg-gray-200">
         <>
           {!crons ? (
             <Spinner color="primary" size="lg" />

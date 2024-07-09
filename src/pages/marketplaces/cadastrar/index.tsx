@@ -1,6 +1,6 @@
 import Header from '@/components/Header'
 import Steperr from '@/components/cadastroMarketplace/steper'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { Button } from '@nextui-org/button'
 import { Input } from '@nextui-org/input'
@@ -9,20 +9,30 @@ import { CadastrarMarketplace } from '@/components/cadastroMarketplace/cadastrar
 export default function CadastrarMarketplaces() {
   const [activeStep, setActiveStep] = useState<number>(0)
   const [data, setData] = useState({
-    name: '',
+    nome: '',
+    zoopMarketplaceId: '',
     dominio: '',
-    webiste: '',
-    zpk: '',
-    zoopId: '',
     sellerId: '',
-    color: ''
-  })
+    website: '',
+    zpk: '',
+    cobrancaPorTransacao: false,
+    carne: false,
+    taxaAdministrativa: false
+  });
   const [stepsData] = useState([
     { label: 'Dados Marketplace', active: activeStep === 0 },
     { label: 'Arquivos', active: activeStep === 1 },
     { label: 'Importar dados da zoop', active: activeStep === 2 },
     { label: 'Reiniciar Nginx', active: activeStep === 3 },
   ])
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target
+    setData((prevData) => ({
+      ...prevData,
+      [name]: type === 'checkbox' ? checked : value,
+    }))
+  }
   const setValidatedActiveStep = (step: number) => {
     if (step >= 0 && step < 4) {
       setActiveStep(step)
@@ -42,12 +52,14 @@ export default function CadastrarMarketplaces() {
       toast.warning('Cannot go below step 0')
     }
   }
-
+  useEffect(() => {
+    console.log(data)
+  }, [data])
   return (
     <div className="max-w-screen     bg-gray-200 h-screen">
       <Header />
 
-      <CadastrarMarketplace />
+      <CadastrarMarketplace data={data} onChange={handleChange} />
     </div>
   )
 }

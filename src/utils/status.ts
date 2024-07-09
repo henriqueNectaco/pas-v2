@@ -20,3 +20,12 @@ export const statusMarketplacesChilds = (status: number) => {
     case 4: return "Desabilitado";
   }
 }
+
+
+export const nullVerifiyer = (dataString: string) => {
+
+  switch (dataString) {
+    case '': return "Unknown"
+    default: return dataString
+  }
+}

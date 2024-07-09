@@ -14,13 +14,11 @@ import Cookies from 'js-cookie'
 import Router, { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header/index'
-
 import axios from 'axios'
-import TableTestes from './table'
 import { getServerSideDate } from '@/utils/reqs.js'
 import { CaretDown } from 'phosphor-react'
 import { toast } from 'sonner'
-
+import TableMarketPlaces from './table'
 export default function Marketplace() {
   const [value, setValue] = useState({
     start: parseDate('2024-04-01'), // Data inicial
@@ -100,7 +98,7 @@ export default function Marketplace() {
   return (
     <div className="  max-w-screen w-full h-screen  flex flex-col items-center bg-gray-200 ">
       <Header />
-      <div className="w-full flex flex-col items-center  h-full p-2 space-y-2 lg:space-y-4  mt-4">
+      <div className="w-full flex flex-col items-center  h-full lg:p-6 p-4 space-y-2 lg:space-y-4  mt-4">
         <div className=" w-full flex flex-col lg:grid lg:grid-cols-4 boder-2 gap-2  ">
           <div className=" flex flex-col lg:flex-row lg:col-span-2 gap-2 ">
             <Button
@@ -174,8 +172,8 @@ export default function Marketplace() {
           {!resData ? (
             <Spinner size="lg" color="primary" />
           ) : (
-            <div className=" max-w-screen w-full h-full       ">
-              <TableTestes marketplace={resData} />
+            <div className=" max-w-screen w-full h-full        ">
+              <TableMarketPlaces marketplace={resData} />
             </div>
           )}
         </>
@@ -192,14 +190,5 @@ export default function Marketplace() {
   )
 }
 
-/*
-   {resData.map((resData: ListProps) => (
-              <ListMarketplaces
-                id={resData.id}
-                key={resData.id}
-                mainECEmail={resData.mainECEmail}
-                mainECId={resData.mainECId}
-                mainECNomeFantasia={resData.mainECNomeFantasia}
-              />
-            ))}
-            */
+/*        
+*/

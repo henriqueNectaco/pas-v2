@@ -91,7 +91,7 @@ export default function Estabelecimentos() {
       identificacao_fatura: '',
       nome_fantasia: '',
     });
-    handleFilter()
+
   };
 
   useEffect(() => {
