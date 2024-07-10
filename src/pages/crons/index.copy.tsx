@@ -1,4 +1,4 @@
-import Header from '../../components/Header/index'
+import Header from '../../components/cadastroMarketplace/filepond/Header/index'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { getCrons } from '@/utils/reqs.js'

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import Header from '@/components/Header'
+import Header from '@/components/cadastroMarketplace/filepond/Header'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import axios from 'axios'

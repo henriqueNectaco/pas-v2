@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 import React, { useEffect, useState } from 'react'
-import Header from '../../components/Header/index'
+import Header from '../../components/cadastroMarketplace/filepond/Header/index'
 import {
   Dropdown,
   DropdownTrigger,

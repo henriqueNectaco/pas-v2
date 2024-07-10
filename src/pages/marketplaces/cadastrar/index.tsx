@@ -1,4 +1,4 @@
-import Header from '@/components/Header'
+import Header from '@/components/cadastroMarketplace/filepond/Header'
 import Steperr from '@/components/cadastroMarketplace/steper'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'

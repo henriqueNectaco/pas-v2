@@ -1,4 +1,4 @@
-import Header from '../../components/Header/index'
+import Header from '../../components/cadastroMarketplace/filepond/Header/index'
 import { Button } from '@nextui-org/react'
 import axios from 'axios'
 import { formatarData } from '@/utils/dates'
@@ -248,13 +248,12 @@ export default function Vendas() {
                       <div className="flex flex-row gap-1">
                         <p>Status:</p>
                         <p
-                          className={`${
-                            pagamento.status_pagamento_id === 1
+                          className={`${pagamento.status_pagamento_id === 1
                               ? 'text-green-500'
                               : pagamento.status_pagamento_id === 2
                                 ? 'text-yellow-500'
                                 : 'text-red-500'
-                          }`}
+                            }`}
                         >
                           {status_payment(pagamento.status_pagamento_id)}
                         </p>

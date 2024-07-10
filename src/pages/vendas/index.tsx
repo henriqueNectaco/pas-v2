@@ -1,4 +1,4 @@
-import Header from '../../components/Header/index'
+import Header from '../../components/cadastroMarketplace/filepond/Header/index'
 import { Button } from '@nextui-org/react'
 import axios from 'axios'
 import { formatarData } from '@/utils/dates'

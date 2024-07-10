@@ -1,15 +1,15 @@
 import { useRouter } from 'next/router'
-import Header from '@/components/Header'
+import Header from '@/components/cadastroMarketplace/filepond/Header'
 export default function Home() {
   const router = useRouter()
   const { id, nomefantasia } = router.query
   return (
-    <div className="max-w-screen w-full h-screen bg-gray-50 lg:overflow-y-hidden">
+    <div className="max-w-screen w-full max-h-screen h-[100vh]  bg-gray-50 lg:overflow-y-hidden overflow-y-hidden">
       <Header />
-      <div className='p-6 flex flex-col bg-red-300 h-screen items-center justify-start'>
+      <div className='p-6 lg:pt-20 flex flex-col bg-red-300 h-max-screen h-full items-center  justify-center lg:justify-start'>
 
 
-        <div className='bg-white border rounded-md h-2/4 w-full'>
+        <div className='bg-white border rounded-md   w-full'>
           <div className='w-full border-b'>teste</div>
 
         </div>

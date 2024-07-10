@@ -1,5 +1,5 @@
 import FilterEstabeleciments from '@/components/marketplaces/filterEstabeleciments';
-import Header from '@/components/Header';
+import Header from '@/components/cadastroMarketplace/filepond/Header';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';

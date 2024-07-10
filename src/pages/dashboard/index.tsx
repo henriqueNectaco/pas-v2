@@ -1,5 +1,5 @@
 import axios from 'axios'
-import Header from '../../components/Header/index'
+import Header from '../../components/cadastroMarketplace/filepond/Header/index'
 import React, { useEffect, useState } from 'react'
 import { getLastDayOfMonth, formatDate } from '@/utils/dates'
 import Cookies from 'js-cookie'
