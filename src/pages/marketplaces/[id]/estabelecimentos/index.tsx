@@ -1,5 +1,5 @@
 import FilterEstabeleciments from '@/components/marketplaces/filterEstabeleciments';
-import Header from '@/components/cadastroMarketplace/filepond/Header';
+import Header from '@/components/Header/index';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
@@ -116,6 +116,7 @@ export default function Estabelecimentos() {
             currentPage="estabelecimentosFilhos"
             data={estabeleciments}
           />
+
         ) : (
           <Spinner />
         )}

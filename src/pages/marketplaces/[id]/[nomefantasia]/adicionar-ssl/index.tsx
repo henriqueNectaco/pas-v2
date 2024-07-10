@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import Header from '@/components/cadastroMarketplace/filepond/Header'
+import Header from '@/components/Header/index'
 export default function Home() {
   const router = useRouter()
   const { id, nomefantasia } = router.query

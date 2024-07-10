@@ -13,7 +13,7 @@ import {
 import Cookies from 'js-cookie'
 import Router, { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import Header from '../../components/cadastroMarketplace/filepond/Header/index'
+import Header from '../../components/Header/index'
 import axios from 'axios'
 import { getServerSideDate } from '@/utils/reqs.js'
 import { CaretDown } from 'phosphor-react'
