@@ -19,6 +19,7 @@ import { getServerSideDate } from '@/utils/reqs.js'
 import { CaretDown } from 'phosphor-react'
 import { toast } from 'sonner'
 import TableMarketPlaces from './table'
+import { undefined } from 'zod'
 export default function Marketplace() {
   const [value, setValue] = useState({
     start: parseDate('2024-04-01'), // Data inicial
@@ -63,6 +64,9 @@ export default function Marketplace() {
 
   const fetchFilteredData = async () => {
     try {
+      if (resData !== null) {
+        setResData('')
+      }
       const res = await axios.get(
         `https://api.zsystems.com.br/z1/marketplaces?status=${state}`,
         { headers: { Authorization: `Bearer ${token}` } },

@@ -24,9 +24,9 @@ import StepperComponent from './steper'
 import FilePonds from './filepond'
 
 export function CadastrarMarketplace(props: typeProps) {
-  const [activeStep, setActiveStep] = useState<number>(0)
   const [files, setFiles] = useState()
   const [data, setData] = useState(null)
+  const [activeStep, setActiveStep] = useState<number>(0)
   const [stepsData] = useState([
     { label: 'Dados Marketplace', active: activeStep === 0 },
     { label: 'Arquivos', active: activeStep === 1 },

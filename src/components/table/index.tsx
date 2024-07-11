@@ -19,8 +19,8 @@ export default function Table(props: marketplaceProps) {
       <div className="overflow-auto rounded-2xl bg-white shadow hidden md:hidden lg:hidden xl:block border max-w-screen">
         <div className={`border-b-3 border-b-black w-full lg:grid lg:grid-cols-${props.array.length}`}>
           {props.array.map((i: string) => (
-            <div key={i} className="w-full p-4 rounded-md flex justify-start items-center">
-              <p className="tracking-wide text-md font-semibold">{i}</p>
+            <div key={i} className="w-full p-6  pb-4 rounded-md flex justify-start items-center">
+              <p className="tracking-wide text-lg font-semibold">{i}</p>
             </div>
           ))}
         </div>
@@ -30,13 +30,13 @@ export default function Table(props: marketplaceProps) {
           <div className={`flex flex-col lg:grid ${props.currentPage === 'filhos' ? 'lg:grid-cols-6' : `lg:grid-cols-${props.ColsBody}`} max-w-screen`}>
             {props.data.map((dados: Dados, index: number) => (
               <React.Fragment key={index}>
-                <div className="p-4 border-b">
+                <div className="p-4 pl-6 border-b">
                   <p>{dados[props.contentArray[0]]}</p>
                 </div>
-                <div className="p-4 border-b">
+                <div className="p-4 pl-6 border-b">
                   <p>{nullVerifiyer(dados[props.contentArray[1]])}</p>
                 </div>
-                <div className="p-4 border-b">
+                <div className="p-4 pl-6 border-b">
                   {props.currentPage === 'filhos' ? (
                     <p className={`${statusMarketplacesChilds(dados[props.contentArray[2]]) === 'Aprovado' ? 'text-green-500' : 'text-yellow-400'}`}>
                       {statusMarketplacesChilds(dados[props.contentArray[2]])}
@@ -45,21 +45,21 @@ export default function Table(props: marketplaceProps) {
                     <p>{dados[props.contentArray[2]]}</p>
                   )}
                 </div>
-                <div className="p-4 border-b">
+                <div className="p-4 pl-6 border-b">
                   <p>{formatarData(dados[props.contentArray[3]])}</p>
                 </div>
                 {props.currentPage === 'filhos' && (
-                  <div className="text-blue-600 p-4 border-b">
+                  <div className="text-blue-600 pl-6 p-4 border-b">
                     <p>{dados.usuarios_estabelecimentos[0]?.usuario.email}</p>
                   </div>
                 )}
                 {props.ColsBody > 5 && props.currentPage === 'filhos' && (
-                  <div className="p-4 border-b">
-                    <DropDownMenuFilhos items={['Adicionar SSL']} />
+                  <div className="p-4 border-b pl-6">
+                    <DropDownMenuFilhos items={['Adicionar SSL']} onAction={() => alert('teste po')} />
                   </div>
                 )}
                 {props.currentPage === 'estabelecimentosFilhos' && (
-                  <div className="p-4 border-b">
+                  <div className="p-4 border-b pl-6">
                     <DropDownMenuFilhos items={['Trocar de parent', 'Reprocessar pedidos']} />
                   </div>
                 )}

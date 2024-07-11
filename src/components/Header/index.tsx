@@ -154,20 +154,20 @@ export default function Header() {
           <ModalContent className="h-[25vh] border-2">
             {(onClose) => (
               <>
-                <ModalHeader className="border-2 h-[7vh] flex flex-col items-center justify-start gap-1">
+                <ModalHeader className="border-b h-[7vh] flex flex-col  p-2 items-center justify-center gap-1">
                   <p className="text-yellow-400">Warning!</p>
                 </ModalHeader>
-                <ModalBody className="h-[15vh] flex flex-col items-center justify-center ">
+                <ModalBody className="h-[15vh] flex flex-col items-center justify-center  border-b border-black">
                   <p className="text-xl">Deseja Efetuar o LogOut?</p>
                 </ModalBody>
-                <ModalFooter className="flex flex-row items-center justify-evenly bg-blue-500">
-                  <Button size="md" variant="light" onPress={onClose}>
+                <ModalFooter className="flex flex-row items-center justify-end">
+                  <Button size="md" variant="bordered" color='danger' onPress={onClose}>
                     Cancelar
                   </Button>
                   <Button
                     size="md"
                     color="success"
-                    variant="solid"
+                    variant="bordered"
                     onPress={LogOut}
                   >
                     Confirmar
