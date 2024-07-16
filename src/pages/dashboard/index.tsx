@@ -5,8 +5,9 @@ import { getLastDayOfMonth, formatDate } from '@/utils/dates'
 import Cookies from 'js-cookie'
 import { toast } from 'sonner'
 import Router from 'next/router'
-import DashComponent from '@/components/dash'
+import DashComponent from '@/components/dasboard/dashComponent'
 import { parseDate } from '@internationalized/date'
+import { typeDataDashboard, typeServices } from '@/types/dashboard'
 export default function DashBoard() {
   const todaydp = new Date()
   const lastDayOfMonth = getLastDayOfMonth(todaydp)
@@ -18,47 +19,35 @@ export default function DashBoard() {
   const [daysReprocessarSaldo, setDaysReprocessarSaldo] = useState<
     string | undefined
   >(undefined)
-  const [data, setData] = useState({
-    totalVendas: null,
-    totalMarketplaces: null,
-    totalSaled: null,
-    totalNotProcessedToday: null,
-    totalNotProcessedYesterday: null,
-    totalProcessedLastMonth: null,
-    totalProcessedThirtyDaysBefore: null,
-    amountSaled: null,
-    totalMarketPlaceChildRegisteredLastThirtyDays: null
-  })
-  const [numVendas, setNumVendas] = useState()
-  const [servicesStatus, setServicesStatus] = useState()
+  const initialData: typeDataDashboard = {
+    totalProcessadoHoje: 0,
+    totalProcessadoOntem: 0,
+    totalProcessadoMesAnterior: 0,
+    totalProcessadoMesAtual: 0,
+    totalEstabelecimentosFilhosRegistradosUltimosTrintaDias: 0,
+    totalMarketplaceChildResgiteredLastThirtyDays: 0,
+    numVendas: 0,
+    processadosHoje: null,
+    processadosOntem: null,
+    processadosMesAtual: null,
+    processadosMesAnterior: null,
+    totalNaoProcessadoOntem: undefined,
+    totalNaoProcessadoHoje: null,
+    vendas: undefined,
+    totalVendido: undefined,
+    marketplacesCadastradosUltimos30dias: undefined,
+    estabelecimentosFilhosRegistradosUltimos30dias: undefined,
+  };
+  const [data, setData] = useState<typeDataDashboard>(initialData)
+  const [servicesStatus, setServicesStatus] = useState<typeServices[]>([])
   const [isDisabledReprocessSales, setIsDisabledReprocessSales] = useState(true)
   const [isDisabledReprocessarSaldo, setIsDisabledReprocessarSaldo] =
     useState(true)
-  const [totalMKT, setTotalMKT] = useState(null)
   const [isLoadingReprocessarSaldo, setIsLoadingReprocessarSaldo] =
     useState<boolean>(false)
   const [isLoadingReprocessarVenda, setIsLoadingReprocessarVenda] =
     useState<boolean>(false)
-  const [totalProcessedToday, setTotalProcessedToday] = useState(null)
-  const [totalProcessedYesterday, setTotalProcessedYesterday] = useState(null)
-  const [totalProcessedLastMonth, setTotalProcessedLastMonth] = useState(null)
-  const [totalProcessedThirtyDaysBefore, setTotalProcessedThirtyDaysBefore] =
-    useState(null)
-  const [totalNotProcessedYesterday, setTotalNotProcessedYesterday] = useState()
-  const [totalVendido, setTotalVendido] = useState()
-  const [
-    totalMarketplaceChildRegistredLastThiryDays,
-    setTotalMarketplaceChildRegistredLastThirtyDays,
-  ] = useState()
-  const [
-    totalEstabelecimentsChildRegistredLastThirtyDays,
-    setTotalEstabelecimentsChildRegistredLastThirtyDays,
-  ] = useState()
-  const [totalNotProcessedToday, setTotalNotProcessedToday] = useState(null)
-  const [
-    totalMarketplaceChildRegistredPreviousMonth,
-    setTotalMarketplaceChildRegistredPreviousMonth,
-  ] = useState(null)
+
   const [
     idEstabelecimentoReprocessarVenda,
     setIdEstabelecimentoReprocessarVenda,
@@ -160,44 +149,10 @@ export default function DashBoard() {
       https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=${previousMonthFormatted}&endDate=${lastMonthFormatted}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
-      setTotalMarketplaceChildRegistredPreviousMonth(res.data)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-  const fetchTotanNotProcessedYesterday = async () => {
-    try {
-      const res = await axios.get(
-        `https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${yesterdayFormatted}&endDate=${yesterdayFormatted}`,
-        { headers: { Authorization: `Bearer ${token}` } },
-      )
-      setTotalNotProcessedYesterday(res.data.totalNotProcessed)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-  const fetchTotalNotProcessedToday = async () => {
-    try {
-      const res = await axios.get(
-        `
-https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDate=${today}`,
-        { headers: { Authorization: `Bearer ${token}` } },
-      )
-      setTotalNotProcessedToday(res.data.totalNotProcessed)
-    } catch (error) {
-      console.error(error)
-    }
-  }
+      setData(prevData => ({
+        ...prevData, totalMarketPlaceRegistredPreviousMonth: res.data.totalMarketplaceChild
+      }))
 
-  const fetchTotalEstabelecimentsChildRegistredLastThirtyDays = async () => {
-    try {
-      const res = await axios.get(
-        `https://pas-aps.up.railway.app/establishment/total-registered?startDate=${lastMonthFormatted}&endDate=${today}`,
-        { headers: { Authorization: `Bearer ${token}` } },
-      )
-      setTotalEstabelecimentsChildRegistredLastThirtyDays(
-        res.data.totalRegistered,
-      )
     } catch (error) {
       console.error(error)
     }
@@ -209,21 +164,63 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
         `https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=${lastMonthFormatted}&endDate=${formattedDate}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
-      setTotalMarketplaceChildRegistredLastThirtyDays(
-        res.data.totalMarketplaceChild,
+      setData(prevData => ({
+        ...prevData, totalMarketplaceChildResgiteredLastThirtyDays: res.data.totalMarketplaceChild
+      }))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  const fetchTotanNotProcessedYesterday = async () => {
+    try {
+      const res = await axios.get(
+        `https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${yesterdayFormatted}&endDate=${yesterdayFormatted}`,
+        { headers: { Authorization: `Bearer ${token}` } },
       )
+      setData(prevData => ({
+        ...prevData, totalNaoProcessadoOntem: res.data.totalNotProcessed
+      }))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  const fetchTotalNotProcessedToday = async () => {
+    try {
+      const res = await axios.get(
+        `
+https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDate=${today}`,
+        { headers: { Authorization: `Bearer ${token}` } },
+      )
+      setData(prevData => ({
+        ...prevData, totalNaoProcessadoHoje: res.data.totalNotProcessed
+      }))
     } catch (error) {
       console.error(error)
     }
   }
 
+  const fetchTotalEstabelecimentsChildRegistredLastThirtyDays = async () => {
+    try {
+      const res = await axios.get(
+        `https://pas-aps.up.railway.app/establishment/total-registered?startDate=${lastMonthFormatted}&endDate=${today}`,
+        { headers: { Authorization: `Bearer ${token}` } },
+      )
+      setData(prevData => ({
+        ...prevData, totalEstabelecimentosFilhosRegistradosUltimosTrintaDias: res.data.totalRegistered
+      }))
+    } catch (error) {
+      console.error(error)
+    }
+  }
   const fetchTotalProcessedThirtyDaysLater = async () => {
     try {
       const res = await axios.get(
         `https://pas-aps.up.railway.app/sale/total-processed?startDate=${previousMonthFormatted}&endDate=${lastMonthFormatted}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
-      setTotalProcessedThirtyDaysBefore(res.data.totalProcessed)
+      setData(prevData => ({
+        ...prevData, totalProcessadoMesAnterior: res.data.totalProcessed
+      }))
     } catch (error) {
       console.error(error)
     }
@@ -235,7 +232,9 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
         `https://pas-aps.up.railway.app/sale/total-processed?startDate=${lastMonthFormatted}&endDate=${today}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
-      setTotalProcessedLastMonth(res.data.totalProcessed)
+      setData(prevData => ({
+        ...prevData, totalProcessadoMesAtual: res.data.totalProcessed
+      }))
     } catch (error) {
       console.error(error)
     }
@@ -249,7 +248,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
           headers: { Authorization: `Bearer ${token}` },
         },
       )
-      setTotalProcessedYesterday(res.data.totalProcessed)
+      setData(prevData => ({ ...prevData, totalProcessadoOntem: res.data.totalProcessed }))
     } catch (error) {
       console.error(error)
     }
@@ -263,23 +262,13 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
           headers: { Authorization: `Bearer ${token}` },
         },
       )
-      setTotalProcessedToday(res.data.totalProcessed)
+      setData(prevData => ({
+        ...prevData, totalProcessadoHoje: res.data.totalProcessed
+      }))
     } catch (error) {
       console.error(error)
     }
   }
-
-  /*
-      const fetchTotalChild = async () => {
-        try {
-          const res = await axios.get(`https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=&endDate=`, {
-           
-            //setAlgumacoisa(res.data) 
-          })
-        }
-        catch (error) { console.error(error) }
-      } 
-  */
   const fetchDataServiceStatus = async () => {
     try {
       const response = await axios.get(
@@ -297,9 +286,11 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
         'https://api.zsystems.com.br/z1/indicadores',
         { headers: { Authorization: `Bearer ${token}` } },
       )
-
-      setTotalVendido(response.data.result.transacionadoHoje.valorTotal)
-      setNumVendas(response.data.result.transacionadoHoje.quantidade)
+      setData(prevData => ({
+        ...prevData,
+        totalVendido: response.data.result.transacionadoHoje.valorTotal,
+        numVendas: response.data.result.transacionadoHoje.quantidade
+      }))
     } catch (error) {
       console.error(error)
     }
@@ -311,7 +302,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
         `https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=${formattedPreviousDate}&endDate=${formattedDate}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
-      setTotalMKT(response.data)
+
     } catch (error) {
       console.error(error)
     }
@@ -362,33 +353,20 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
   useEffect(() => {
     auth()
   }, [])
-
+  useEffect(() => { console.log(data) }, [data])
   return (
     <div className=" h-screen max-w-screen flex flex-col items-center  ">
       <Header />
       <div className=" h-screen    w-full  max-w-screen flex flex-col items-center justify-start  lg:pt-10 ">
         <DashComponent
+          data={data}
           isDisabledReprocessSale={isDisabledReprocessSales}
           isDisabledReprocessarSaldo={isDisabledReprocessarSaldo}
           isLoadingReprocessarVenda={isLoadingReprocessarVenda}
           isLoadingReprocessarSaldo={isLoadingReprocessarSaldo}
           setValue={setValue}
           value={value}
-          processadosHoje={totalProcessedToday}
-          processadosOntem={totalProcessedYesterday}
           servicesStatus={servicesStatus}
-          processadosMesAtual={totalProcessedLastMonth}
-          processadosMesAnterior={totalProcessedThirtyDaysBefore}
-          naoProcessadosHoje={totalNotProcessedToday}
-          naoProcessadosOntem={totalNotProcessedYesterday}
-          totalVendido={totalVendido}
-          marketplacesCadastradosUltimos30dias={
-            totalMarketplaceChildRegistredLastThiryDays
-          }
-          vendas={numVendas}
-          estabelecimentosFilhosRegistradosUltimos30dias={
-            totalEstabelecimentsChildRegistredLastThirtyDays
-          }
           inputDias={setDaysReprocessarSaldo}
           idEstabelecimentoReprocessarSaldo={
             setIdEstabelecimentoReprocessarSaldo
@@ -405,64 +383,17 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
 }
 
 /*
- <>
-
-        {!servicesStatus ? (<Spinner color='primary' size='lg' />) : (
-          <>{
-            servicesStatus.map((servicesStatus: any) => (<div>
-
-
-              <p>{servicesStatus.service}</p>
-              <p>{formatarData(servicesStatus.last_update)}</p>
-              {servicesStatus.status ? (<>
-
-                <FaThumbsUp color='green' size={50} /></>
-              ) : (
-                <TiThumbsUp color='red' fill='red' />
-              )}
+   /*
+      const fetchTotalChild = async () => {
+        try {
+          const res = await axios.get(`https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=&endDate=`, {
+           
+            //setAlgumacoisa(res.data) 
+          })
+        }
+        catch (error) { console.error(error) }
+      } 
+  */
 
 
 
-            </div>))
-          }
-          </>
-        )}
-      </>
-
-*/
-
-/*
- <div className='border-2 border-blue-400 w-full lg:h-screen flex  flex-col items-center justify-center  p-4 gap-2'>
-      <div className=' h-2/4 lg:h-1/4 border-2 rounded-lg w-full flex flex-col  items-center  justify-center lg:justify-between '>
-        <p>Reprocessar venda</p>
-        <div className='border-2 w-full h-full flex  flex-col lg:flex-row lg:items-end items-center justify-between gap-2 p-4'>
-          <Input variant='underlined' placeholder='ID do estabelecimento' size='sm' className='w-[50vw] lg:w-[20vw]' />
-          <div className='border-2 flex flex-col lg:flex-row items-center gap-1  w-3/4 lg:w-1/4'> De: <DatePicker variant='underlined' label={'teste'} />
-            Até: <DatePicker variant='underlined' label={'teste'} />
-
-          </div>
-          <Button color='primary' variant='solid' className='' size='lg'>Enviar</Button>
-        </div>
-
-      </div>
-
-
-      <div className='h-2/4 lg:h-1/4 border-2 rounded-lg w-full flex flex-col  items-center justify-between p-4'>
-        <p>Reprocessar saldo</p>
-        <div className='border-2 w-full h-full flex flex-col lg:flex-row items-center justify-center lg:items-end lg:justify-between gap-2 p-4'>
-          <Input variant='underlined' placeholder='ID do estabelecimento' size='sm' className=' w-[50vw] lg:w-[20vw]' />
-          <div className='border-2  lg:w-2/4 flex flex-col items-center justify-center'>
-            <Input variant='underlined' placeholder='Dias' size='sm' className='w-[50vw]  lg:w-[20vw]' />
-          </div>
-          <Button color='primary' variant='solid' className='' size='lg'>Enviar</Button>
-        </div>
-
-      </div>
-
-
-
-
-    </div>
-  
-  
-*/

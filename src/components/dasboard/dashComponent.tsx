@@ -5,7 +5,7 @@
  */
 
 import { Button } from '@nextui-org/button'
-import { PropsType, typeServices } from '@/types/dashboard'
+import { PropsType, typeServices, TypePropsDashComponent } from '@/types/dashboard'
 import { CardTitle, CardHeader, CardContent, Card } from '@/components/ui/card'
 import { Input } from '@nextui-org/input'
 import DateRangePickerComponent from '../../components/rangedatepicker/index'
@@ -13,7 +13,7 @@ import { Spinner } from '@nextui-org/react'
 import { formatarData } from '@/utils/dates'
 import React, { ChangeEvent } from 'react'
 import { Article, CurrencyDollar } from 'phosphor-react'
-export default function DashComponent(props: PropsType) {
+export default function DashComponent(props: TypePropsDashComponent) {
   return (
     <>
       <div className="flex flex-col gap-6  p-2 lg:p-0 h-full   ">
@@ -67,27 +67,28 @@ export default function DashComponent(props: PropsType) {
                 <span className="font-semibold">
                   Pedidos Processados Hoje/Ontem
                 </span>
-                {!props.processadosOntem || !props.naoProcessadosHoje ? (
-                  <Spinner size="sm" />
-                ) : (
-                  <span className="text-gray-500 flex lg:flex-row ">
-                    <p>{props.processadosHoje}</p>
-                    <p>/</p>
-                    <p>{props.processadosOntem}</p>
-                  </span>
-                )}
+                {!props.data.totalProcessadoHoje || !props.data.totalProcessadoOntem
+                  ? (
+                    <Spinner size="sm" />
+                  ) : (
+                    <span className="text-gray-500 flex lg:flex-row ">
+                      <p>{props.data.totalProcessadoHoje}</p>
+                      <p>/</p>
+                      <p>{props.data.totalProcessadoOntem}</p>
+                    </span>
+                  )}
               </div>
               <div className="flex justify-between gap-2">
                 <span className="font-semibold">
                   Pedidos Processados Mês Atual/Mês Anterior
                 </span>
-                {!props.processadosMesAtual || !props.processadosMesAnterior ? (
+                {!props.data.totalProcessadoMesAtual || !props.data.totalProcessadoMesAnterior ? (
                   <Spinner size="sm" />
                 ) : (
                   <span className="text-gray-500 flex lg:flex-row   ">
-                    <p>{props.processadosMesAtual}</p>
+                    <p>{props.data.totalProcessadoMesAtual}</p>
                     <p>/</p>
-                    <p>{props.processadosMesAnterior}</p>
+                    <p>{props.data.totalProcessadoMesAnterior}</p>
                   </span>
                 )}
               </div>
@@ -107,20 +108,20 @@ export default function DashComponent(props: PropsType) {
                 <span className="font-semibold">
                   Pedidos Não Processados Hoje/Ontem
                 </span>
-                {!props.naoProcessadosHoje || !props.naoProcessadosOntem ? (
+                {!props.data.totalNaoProcessadoHoje || !props.data.totalNaoProcessadoOntem ? (
                   <Spinner size="sm" />
                 ) : (
                   <div className="flex flex-row lg:gap-1 ">
                     <p
-                      className={`${props.naoProcessadosHoje > 0 ? 'text-yellow-400' : 'text-gray-50'}`}
+                      className={`${props.data.totalNaoProcessadoHoje > 0 ? 'text-yellow-400' : 'text-gray-50'}`}
                     >
-                      {props.naoProcessadosHoje}
+                      {props.data.totalNaoProcessadoHoje}
                     </p>
                     <p>/</p>
                     <span
-                      className={`${props.naoProcessadosOntem > 0 ? 'text-yellow-400' : 'text-gray-50'}`}
+                      className={`${props.data.totalNaoProcessadoOntem > 0 ? 'text-yellow-400' : 'text-gray-50'}`}
                     >
-                      {props.naoProcessadosOntem}
+                      {props.data.totalNaoProcessadoOntem}
                     </span>{' '}
                   </div>
                 )}
@@ -139,18 +140,18 @@ export default function DashComponent(props: PropsType) {
             <CardContent className="grid grid-cols-1 gap-4 p-4">
               <div className="flex justify-between">
                 <span className="font-semibold">Vendas</span>
-                {!props.vendas ? (
+                {!props.data.numVendas ? (
                   <Spinner size="sm" />
                 ) : (
-                  <span className="text-gray-500">{props.vendas}</span>
+                  <span className="text-gray-500">{props.data.numVendas}</span>
                 )}
               </div>
               <div className="flex justify-between">
                 <span className="font-semibold">Valor Total de Vendas</span>
-                {!props.totalVendido ? (
+                {!props.data.totalVendido ? (
                   <Spinner size="sm" />
                 ) : (
-                  <span className="text-gray-500">{props.totalVendido}</span>
+                  <span className="text-gray-500">{props.data.totalVendido}</span>
                 )}
               </div>
               <div className="flex justify-between">
@@ -161,11 +162,11 @@ export default function DashComponent(props: PropsType) {
                 <span className="font-semibold">
                   Marketplaces filhos Registrados ultimos 30 dias
                 </span>
-                {!props.marketplacesCadastradosUltimos30dias ? (
+                {!props.data.totalMarketplaceChildResgiteredLastThirtyDays ? (
                   <Spinner size="sm" />
                 ) : (
                   <span className="text-gray-500">
-                    {props.marketplacesCadastradosUltimos30dias}
+                    {props.data.totalMarketplaceChildResgiteredLastThirtyDays}
                   </span>
                 )}
               </div>
@@ -173,11 +174,11 @@ export default function DashComponent(props: PropsType) {
                 <span className="font-semibold">
                   Estabelecimentos Filhos Registrados ultimos 30 dias
                 </span>
-                {!props.estabelecimentosFilhosRegistradosUltimos30dias ? (
+                {!props.data.totalEstabelecimentosFilhosRegistradosUltimosTrintaDias ? (
                   <Spinner size="sm" />
                 ) : (
                   <span className="text-gray-500">
-                    {props.estabelecimentosFilhosRegistradosUltimos30dias}
+                    {props.data.totalEstabelecimentosFilhosRegistradosUltimosTrintaDias}
                   </span>
                 )}
               </div>
