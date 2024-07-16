@@ -1,14 +1,14 @@
 import Header from '../../components/Header/index'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { getCrons } from '@/utils/reqs.js'
-import { toast } from 'sonner'
-import { useRouter } from 'next/navigation'
 import Cookies from 'js-cookie'
-import { Spinner } from '@nextui-org/react'
-// import { CardCron } from './items'
+import { useRouter } from 'next/navigation'
 
+import { Spinner } from '@nextui-org/react'
+import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import Table from '@/components/table'
+import nextCookies from 'next-cookies'
+
 type CronProps = {
   slug: string
   id: string
@@ -18,41 +18,48 @@ type CronProps = {
   interval: string
 }
 
-export default function Crons() {
-  const router = useRouter()
-  const [crons, setCrons] = useState<CronProps[] | undefined>([])
-  const token = Cookies.get('token')
-  const auth = async () => {
-    try {
-      const res = await axios.post(
-        `https://api.zsystems.com.br/z1/autenticar`,
-        {
-          token,
-        },
-      )
-      if (res.data.success === false) {
-        toast.error('Sua sessão expirou faça login novamente')
-        router.push('/')
-      } else if (res.data.success === true) {
-        getCrons(setCrons, token)
-      }
-    } catch (error) {
-      console.error(error)
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { token } = nextCookies(context)
+
+  const authRes = await axios.post(
+    `https://api.zsystems.com.br/z1/autenticar`,
+    { token }
+  )
+
+  if (authRes.data.success === false) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
     }
   }
-  useEffect(() => {
-    auth()
-  }, [])
 
+  const cronsRes = await axios.get(
+    'https://api.zsystems.com.br/z1/crons/logs',
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    },
+  )
+
+  return { props: { data: cronsRes.data.cronsLogs } }
+}
+
+export default function Crons({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const router = useRouter()
+  const [crons, setCrons] = useState<CronProps[]>(data)
+  useEffect(() => {
+    console.log(Cookies.get('token'))
+  }, [])
   return (
-    <div className="h-full  max-w-screen w-full   text-black-500 ">
+    <div className="h-full max-w-screen w-full text-black-500">
       <Header />
-      <div className="lg:p-6  p-3  max-w-screen  space-y-2  flex flex-col h-full bg-gray-200">
+      <div className="lg:p-6 p-3 max-w-screen space-y-2 flex flex-col h-full bg-gray-200">
         <>
-          {!crons ? (
+          {!crons.length ? (
             <Spinner color="primary" size="lg" />
           ) : (
-            <div className="   space-y-4  lg:grid-cols-1">
+            <div className="space-y-4 lg:grid-cols-1">
               <Table
                 currentPage="crons"
                 array={['crons', 'Scheduled', 'Mensagem', 'Data']}
@@ -67,23 +74,3 @@ export default function Crons() {
     </div>
   )
 }
-/*
-<div className='bg-white text-center px-8 rounded-xl mx-8 my-4 shadow-md border-2 lg:grid lg:grid-cols-5 '>
-<div className="p-4 lg:my-auto">
-  <p className="font-bold">Cron</p>
-  <p className="">??</p>
-</div>
-<div className="p-4 lg:my-auto">
-  <p className="font-bold">Schesduled</p>
-  <p className="">??</p>
-</div>
-<div className="p-4 col-span-2 ">
-  <p className="font-bold">Mensagens</p>
-  <p className="">??</p>
-</div>
-<div className="p-4 lg:my-auto">
-  <p className="font-bold">Data</p>
-  <p className="">s</p>
-</div>
-
-</div> */
