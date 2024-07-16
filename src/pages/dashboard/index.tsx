@@ -19,7 +19,7 @@ export default function DashBoard() {
   const [daysReprocessarSaldo, setDaysReprocessarSaldo] = useState<
     string | undefined
   >(undefined)
-  const initialData: typeDataDashboard = {
+  const [data, setData] = useState<typeDataDashboard>({
     totalProcessadoHoje: 0,
     totalProcessadoOntem: 0,
     totalProcessadoMesAnterior: 0,
@@ -37,8 +37,7 @@ export default function DashBoard() {
     totalVendido: undefined,
     marketplacesCadastradosUltimos30dias: undefined,
     estabelecimentosFilhosRegistradosUltimos30dias: undefined,
-  };
-  const [data, setData] = useState<typeDataDashboard>(initialData)
+  })
   const [servicesStatus, setServicesStatus] = useState<typeServices[]>([])
   const [isDisabledReprocessSales, setIsDisabledReprocessSales] = useState(true)
   const [isDisabledReprocessarSaldo, setIsDisabledReprocessarSaldo] =

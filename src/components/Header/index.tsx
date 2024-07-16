@@ -148,10 +148,11 @@ export default function Header() {
       <>
         <Modal
           isOpen={isOpen}
-          placement={modalPlacement}
+          //          placement={modalPlacement}
+          placement='top'
           onOpenChange={onOpenChange}
         >
-          <ModalContent className="h-[25vh] border-2">
+          <ModalContent className="h-[20vh] border-2 w-1/4">
             {(onClose) => (
               <>
                 <ModalHeader className="border-b h-[7vh] flex flex-col  p-2 items-center justify-center gap-1">
@@ -160,7 +161,7 @@ export default function Header() {
                 <ModalBody className="h-[15vh] flex flex-col items-center justify-center  border-b border-black">
                   <p className="text-xl">Deseja Efetuar o LogOut?</p>
                 </ModalBody>
-                <ModalFooter className="flex flex-row items-center justify-end">
+                <ModalFooter className="flex flex-row items-center justify-center">
                   <Button size="md" variant="bordered" color='danger' onPress={onClose}>
                     Cancelar
                   </Button>

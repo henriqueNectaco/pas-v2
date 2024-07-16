@@ -5,7 +5,7 @@
  */
 
 import { Button } from '@nextui-org/button'
-import { PropsType, typeServices, TypePropsDashComponent } from '@/types/dashboard'
+import { typeServices, TypePropsDashComponent } from '@/types/dashboard'
 import { CardTitle, CardHeader, CardContent, Card } from '@/components/ui/card'
 import { Input } from '@nextui-org/input'
 import DateRangePickerComponent from '../../components/rangedatepicker/index'

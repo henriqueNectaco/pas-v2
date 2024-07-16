@@ -4,7 +4,8 @@ import { DotsThreeOutlineVertical } from "phosphor-react";
 
 type typeProps = {
   items: Array<string>
-  onAction: () => void
+  onAction?: () => void
+  fullWidth?: boolean
 }
 
 export default function DropDownMenuFilhos(props: typeProps) {
@@ -15,7 +16,7 @@ export default function DropDownMenuFilhos(props: typeProps) {
           size="md"
           variant="light"
           color="default"
-          fullWidth={true}
+          fullWidth={props.fullWidth}
         >
           <DotsThreeOutlineVertical size={20} />
         </Button>

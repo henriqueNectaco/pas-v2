@@ -27,16 +27,16 @@ export default function Table(props: marketplaceProps) {
         {props.data.length === 0 ? (
           <Spinner />
         ) : (
-          <div className={`flex flex-col lg:grid ${props.currentPage === 'filhos' ? 'lg:grid-cols-6' : `lg:grid-cols-${props.ColsBody}`} max-w-screen`}>
+          <div className={`flex flex-col lg:grid ${props.currentPage === 'filhos' ? 'lg:grid-cols-6' : `lg:grid-cols-${props.ColsBody}`} max-w-screen `}>
             {props.data.map((dados: Dados, index: number) => (
               <React.Fragment key={index}>
-                <div className="p-4 pl-6 border-b">
+                <div className="p-4 pl-6 border-b border-gray-300">
                   <p>{dados[props.contentArray[0]]}</p>
                 </div>
-                <div className="p-4 pl-6 border-b">
+                <div className="p-4 pl-6 border-b border-gray-300">
                   <p>{nullVerifiyer(dados[props.contentArray[1]])}</p>
                 </div>
-                <div className="p-4 pl-6 border-b">
+                <div className="p-4 pl-6 border-b border-gray-300">
                   {props.currentPage === 'filhos' ? (
                     <p className={`${statusMarketplacesChilds(dados[props.contentArray[2]]) === 'Aprovado' ? 'text-green-500' : 'text-yellow-400'}`}>
                       {statusMarketplacesChilds(dados[props.contentArray[2]])}
@@ -45,22 +45,22 @@ export default function Table(props: marketplaceProps) {
                     <p>{dados[props.contentArray[2]]}</p>
                   )}
                 </div>
-                <div className="p-4 pl-6 border-b">
+                <div className="p-4 pl-6 border-b border-gray-300">
                   <p>{formatarData(dados[props.contentArray[3]])}</p>
                 </div>
                 {props.currentPage === 'filhos' && (
-                  <div className="text-blue-600 pl-6 p-4 border-b">
+                  <div className="text-blue-600 pl-6 p-4 border-b border-gray-300">
                     <p>{dados.usuarios_estabelecimentos[0]?.usuario.email}</p>
                   </div>
                 )}
                 {props.ColsBody > 5 && props.currentPage === 'filhos' && (
-                  <div className="p-4 border-b pl-6">
-                    <DropDownMenuFilhos items={['Adicionar SSL']} onAction={() => alert('teste po')} />
+                  <div className="p-4 border-b  flex items-center justify-end border-gray-300">
+                    <DropDownMenuFilhos fullWidth={false} items={['Adicionar SSL']} />
                   </div>
                 )}
                 {props.currentPage === 'estabelecimentosFilhos' && (
-                  <div className="p-4 border-b pl-6">
-                    <DropDownMenuFilhos items={['Trocar de parent', 'Reprocessar pedidos']} />
+                  <div className="p-4 border-b flex items-center justify-end border-gray-300">
+                    <DropDownMenuFilhos fullWidth={false} items={['Trocar de parent', 'Reprocessar pedidos']} />
                   </div>
                 )}
               </React.Fragment>
@@ -114,12 +114,12 @@ export default function Table(props: marketplaceProps) {
                 )}
                 {props.array.length > 5 && props.currentPage === 'filhos' && (
                   <div className="flex flex-col items-center justify-center">
-                    <DropDownMenuFilhos items={['Adicionar SSL']} onAction={() => alert('teste')} />
+                    <DropDownMenuFilhos items={['Adicionar SSL']} />
                   </div>
                 )}
                 {props.currentPage === 'estabelecimentosFilhos' && (
                   <div className="flex flex-col items-center justify-center">
-                    <DropDownMenuFilhos items={['Trocar de parent', 'Reprocessar pedidos']} onAction={() => alert('teste')} />
+                    <DropDownMenuFilhos items={['Trocar de parent', 'Reprocessar pedidos']} />
                   </div>
                 )}
               </div>

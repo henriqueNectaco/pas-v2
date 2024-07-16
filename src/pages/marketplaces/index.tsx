@@ -1,6 +1,8 @@
 import { parseDate } from '@internationalized/date'
 import { getLastDayOfMonth, format } from '@/utils/dates'
 import ModalMine from '@/components/modal'
+import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
+import nextCookies from 'next-cookies'
 import {
   useDisclosure,
   Dropdown,
@@ -19,8 +21,34 @@ import { getServerSideDate } from '@/utils/reqs.js'
 import { CaretDown } from 'phosphor-react'
 import { toast } from 'sonner'
 import TableMarketPlaces from './table'
-import { undefined } from 'zod'
-export default function Marketplace() {
+
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { token } = nextCookies(context)
+
+  const authRes = await axios.post(
+    `https://api.zsystems.com.br/z1/autenticar`,
+    { token }
+  )
+
+  if (authRes.data.success === false) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+
+  const fetchMarketplacesData = await axios.get(`https://api.zsystems.com.br/z1/marketplaces?status=ativo`, { headers: { Authorization: `Bearer ${token}` }, })
+  return { props: { data: fetchMarketplacesData.data.marketplaces } }
+}
+
+
+
+
+export default function Marketplace({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [value, setValue] = useState({
     start: parseDate('2024-04-01'), // Data inicial
     end: parseDate('2024-04-30'), // Último dia do mês
@@ -33,7 +61,7 @@ export default function Marketplace() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const token = Cookies.get('token')
   const router = useRouter()
-  const [resData, setResData] = useState<Object>()
+  const [resData, setResData] = useState<Object>(data)
   const [state, setState] = useState('ativos')
   const handleReprocessAllSales = async () => {
     try {
@@ -47,14 +75,14 @@ export default function Marketplace() {
       console.log(error)
     }
   }
-  const handleTestes = async () => { console.log(`start: ${date.startDate} end: ${date.endDate}`) }
+
   const handleFuncoes = async () => {
     switch (action) {
       case 'Reprocessar todas as vendas':
         await handleReprocessAllSales()
         break;
       case 'Importar todas as vendas':
-        await handleImportAllSales();
+        () => alert('impotar todas as vendas !');
         break;
       default:
         console.log('outro');
@@ -77,25 +105,23 @@ export default function Marketplace() {
       console.error(error)
     }
   }
-
-  useEffect(() => {
-    const auth = async () => {
-      try {
-        const res = await axios.post(
-          `https://api.zsystems.com.br/z1/autenticar`,
-          { token },
-        )
-        if (res.data.success === true) {
-          getServerSideDate(setResData, token)
-        } else {
-          toast.error('Sua sessão expirou faça login novamente')
-          Router.push('/')
-        }
-      } catch (error) {
-        console.error(error)
+  const auth = async () => {
+    try {
+      const res = await axios.post(
+        `https://api.zsystems.com.br/z1/autenticar`,
+        { token },
+      )
+      if (res.data.success === true) {
+        //        getServerSideDate(setResData, token)
+      } else {
+        toast.error('Sua sessão expirou faça login novamente')
+        Router.push('/')
       }
+    } catch (error) {
+      console.error(error)
     }
-
+  }
+  useEffect(() => {
     auth()
   }, [])
 

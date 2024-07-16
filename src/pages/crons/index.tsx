@@ -6,8 +6,9 @@ import { useRouter } from 'next/navigation'
 
 import { Spinner } from '@nextui-org/react'
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
-import Table from '@/components/table'
 import nextCookies from 'next-cookies'
+import Table from '@/components/table'
+
 
 type CronProps = {
   slug: string
