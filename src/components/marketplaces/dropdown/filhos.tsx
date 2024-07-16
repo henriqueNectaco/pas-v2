@@ -9,7 +9,7 @@ type typeProps = {
 }
 
 export default function DropDownMenuFilhos(props: typeProps) {
-  return (
+  return (<>
     <Dropdown>
       <DropdownTrigger>
         <Button
@@ -23,14 +23,19 @@ export default function DropDownMenuFilhos(props: typeProps) {
       </DropdownTrigger>
       <DropdownMenu
         aria-label="Action event example"
-        onAction={props.onAction} // Implementar lógica para ação aqui, se props.onAction}}
+        onAction={(key) => {
+          if (key === 'Trocar de parent') {
+            alert('testes ')
+          } else if (key === 'Reprocessar pedidos') { }
+        }
+        } // Implementar lógica para ação aqui, se props.onAction}}
         color="primary"
         variant="solid"
       >
-        {props.items.map((i: string, index) => (
-          <DropdownItem key={index}>{i}</DropdownItem>
+        {props.items.map((i: string) => (
+          <DropdownItem key={i}>{i}</DropdownItem>
         ))}
       </DropdownMenu>
     </Dropdown>
-  )
+  </>)
 }

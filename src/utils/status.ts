@@ -1,3 +1,5 @@
+import { toast } from "sonner";
+
 export const statusPayment = (statusPaymentId: number) => {
   switch (statusPaymentId) {
     case 1:
@@ -27,5 +29,13 @@ export const nullVerifiyer = (dataString: string) => {
   switch (dataString) {
     case '': return "Unknown"
     default: return dataString
+  }
+}
+
+export const responseDataResponse = (toastStringError: string, resData: any, toastStringSucces?: string) => {
+  if (resData === false) {
+    toast.warning(toastStringError)
+  } else if (resData === true) {
+    toast.success(toastStringSucces)
   }
 }

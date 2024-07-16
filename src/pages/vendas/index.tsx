@@ -45,7 +45,7 @@ export default function Vendas() {
   const handleSearch = async () => {
     setIsLoadingSearchSale(true)
     try {
-      if (vendaId === undefined || '') {
+      if (vendaId === '') {
         toast.error('Preencha o  campo ID da venda')
         setIsLoadingSearchSale(false)
       } else {
@@ -73,23 +73,21 @@ export default function Vendas() {
 
 
   }
-
-  useEffect(() => {
-    const auth = async () => {
-      try {
-        console.log(apiUrl)
-        const res = await axios.post(
-          `${apiUrl}autenticar`,
-          { token },
-        )
-        if (res.data.success === false) {
-          toast.error('Sua sessão expirou faça login novamente')
-          Router.push('/')
-        }
-      } catch (error) {
-        console.error(error)
+  const auth = async () => {
+    try {
+      const res = await axios.post(
+        `${apiUrl}autenticar`,
+        { token },
+      )
+      if (res.data.success === false) {
+        toast.error('Sua sessão expirou faça login novamente')
+        Router.push('/')
       }
+    } catch (error) {
+      console.error(error)
     }
+  }
+  useEffect(() => {
     auth()
   }, [])
 

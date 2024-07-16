@@ -6,11 +6,42 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import { toast } from 'sonner';
 import Table from '@/components/table';
-import { Button, Spinner } from '@nextui-org/react';
+import { Spinner } from '@nextui-org/react';
+import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
+import nextCookies from 'next-cookies'
 
-export default function Estabelecimentos() {
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { token } = nextCookies(context)
+
+  const authRes = await axios.post(
+    `https://api.zsystems.com.br/z1/autenticar`,
+    { token }
+  )
+
+  if (authRes.data.success === false) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+  const { id } = context.query
+  const res = await axios.get(
+    `https://api.zsystems.com.br/z1/marketplace/${id}/estabelecimentos?limit=30&page=1`,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    },
+  )
+
+  return { props: { dataEstabeleciments: res.data.estabelecimentos } }
+}
+
+
+export default function Estabelecimentos({ dataEstabeleciments }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [token] = useState(Cookies.get('token'));
-  const [estabeleciments, setEstabeleciments] = useState(null);
+  const [estabeleciments, setEstabeleciments] = useState(dataEstabeleciments);
   const [data, setData] = useState({
     id_estabelecimento: '',
     identificacao_fatura: '',

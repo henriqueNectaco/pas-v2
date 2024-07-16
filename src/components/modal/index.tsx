@@ -29,7 +29,7 @@ export default function ModalMine(props: typeProps) {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col items-start justify-center gap-1">
+              <ModalHeader className="flex flex-col items-center justify-center gap-1">
                 Selecione um intervalo
               </ModalHeader>
               <ModalBody className="flex flex-col items-center justify-center">

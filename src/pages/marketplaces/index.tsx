@@ -21,7 +21,7 @@ import { getServerSideDate } from '@/utils/reqs.js'
 import { CaretDown } from 'phosphor-react'
 import { toast } from 'sonner'
 import TableMarketPlaces from './table'
-
+import { responseDataResponse } from '@/utils/status'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { token } = nextCookies(context)
@@ -68,11 +68,22 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
       const res = await axios.post(`https://urltestepai`,
         { startDate: date.startDate, endDate: date.endDate },
         { headers: { Authorization: `Bearer ${token}` } },
-
-
       )
+      if (res.data.success === false) { }
     } catch (error) {
       console.log(error)
+    }
+  }
+  const handleImportAllSales = async () => {
+    try {
+      const res = await axios.post(`https://urldetestes`,
+        { startDate: date.startDate, endDate: date.endDate },
+        { headers: { Authorization: `Bearer ${token}` } },
+      )
+    }
+
+    catch (error) {
+      console.error(error)
     }
   }
 
@@ -82,7 +93,7 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
         await handleReprocessAllSales()
         break;
       case 'Importar todas as vendas':
-        () => alert('impotar todas as vendas !');
+        await handleImportAllSales()
         break;
       default:
         console.log('outro');
@@ -105,28 +116,29 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
       console.error(error)
     }
   }
-  const auth = async () => {
-    try {
-      const res = await axios.post(
-        `https://api.zsystems.com.br/z1/autenticar`,
-        { token },
-      )
-      if (res.data.success === true) {
-        //        getServerSideDate(setResData, token)
-      } else {
-        toast.error('Sua sessão expirou faça login novamente')
-        Router.push('/')
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
+
   useEffect(() => {
+    const auth = async () => {
+      try {
+        const res = await axios.post(
+          `https://api.zsystems.com.br/z1/autenticar`,
+          { token },
+        )
+        if (res.data.success === true) {
+          //        getServerSideDate(setResData, token)
+        } else {
+          toast.error('Sua sessão expirou faça login novamente')
+          Router.push('/')
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
     auth()
   }, [])
 
   return (
-    <div className="  max-w-screen w-full h-screen  flex flex-col items-center bg-gray-200 ">
+    <div className="  max-w-screen w-full   flex flex-col items-center bg-gray-200 ">
       <Header />
       <div className="w-full flex flex-col items-center  h-full lg:p-6 p-4 space-y-2 lg:space-y-4  mt-4">
         <div className=" w-full flex flex-col lg:grid lg:grid-cols-4 boder-2 gap-2  ">
@@ -152,6 +164,10 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
               Novo Marketplace
             </Button>
             <Button
+              onClick={() => {
+                setAction('Importar todas as vendas')
+                onOpen()
+              }}
               fullWidth={true}
               radius="md"
               size="md"
@@ -202,7 +218,7 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
           {!resData ? (
             <Spinner size="lg" color="primary" />
           ) : (
-            <div className=" max-w-screen w-full h-full        ">
+            <div className=" max-w-screen w-full  bg-gray-200">
               <TableMarketPlaces marketplace={resData} />
             </div>
           )}

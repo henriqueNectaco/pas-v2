@@ -5,7 +5,7 @@ import { FormVendasTypes } from '@/types/vendas/vendas'
 export default function FormVendas(props: FormVendasTypes) {
   return (
     <>
-      <form className=" h-full  w-full lg:w-2/6 p-6 flex flex-col items-center justify-around  lg:px-8 sm:rounded-xl  my-4  lg:shadow-md lg:border-2 bg-white">
+      <form className=" h-full  w-full lg:w-2/6  p-6 flex flex-col items-center justify-around  lg:px-8 sm:rounded-xl  my-4  lg:shadow-md border-2 bg-white">
         <label className=" font-bold">Vendas:</label>
         <Input
           type="text"
