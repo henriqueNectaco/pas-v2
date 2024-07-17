@@ -12,7 +12,7 @@ export default function Paginator() {
 
       <div className="flex gap-2 border w-full items-center justify-center flex-row ">
         <Button
-          size="sm"
+          size="lg"
           variant="bordered"
           color="primary"
           onPress={() => setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev))}
@@ -21,8 +21,8 @@ export default function Paginator() {
         </Button>
         <Pagination
           classNames={{
-            item: 'lg:w-12',
-            cursor: 'lg:w-12 bg-blue-500',
+            item: 'lg:w-14',
+            cursor: 'lg:w-14 bg-blue-500',
             wrapper: ''
           }}
           total={paginatorProps.total}
@@ -32,7 +32,7 @@ export default function Paginator() {
           onChange={setCurrentPage}
         />
         <Button
-          size="sm"
+          size="lg"
           variant="bordered"
           color="primary"
           onPress={() => setCurrentPage((prev) => (prev < paginatorProps.total ? prev + 1 : prev))}

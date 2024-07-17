@@ -60,7 +60,7 @@ export default function Table(props: marketplaceProps) {
                 )}
                 {props.currentPage === 'estabelecimentosFilhos' && (
                   <div className="p-4 border-b flex items-center justify-end border-gray-300">
-                    <DropDownMenuFilhos fullWidth={false} items={['Trocar de parent', 'Reprocessar pedidos']} />
+                    <DropDownMenuFilhos fullWidth={false} items={['Trocar de parent', 'Reprocessar pedidos']} id={dados.id} />
                   </div>
                 )}
               </React.Fragment>
@@ -119,7 +119,7 @@ export default function Table(props: marketplaceProps) {
                 )}
                 {props.currentPage === 'estabelecimentosFilhos' && (
                   <div className="flex flex-col items-center justify-center">
-                    <DropDownMenuFilhos items={['Trocar de parent', 'Reprocessar pedidos']} />
+                    <DropDownMenuFilhos items={['Trocar de parent', 'Reprocessar pedidos']} id={dados.id} />
                   </div>
                 )}
               </div>

@@ -9,6 +9,7 @@ import Table from '@/components/table';
 import { Spinner } from '@nextui-org/react';
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import nextCookies from 'next-cookies'
+import Paginator from '@/components/marketplaces/pagination';
 
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -140,14 +141,16 @@ export default function Estabelecimentos({ dataEstabeleciments }: InferGetServer
           data={data}
         />
         {estabeleciments !== null ? (
-          <Table
-            array={['Id', 'Nome', 'Nome na Fatura', 'Data de criação', '']}
-            contentArray={['id', 'nome_fantasia', 'identificacao_fatura', 'created']}
-            ColsBody={5}
-            currentPage="estabelecimentosFilhos"
-            data={estabeleciments}
-          />
-
+          <div className='gap-4 flex flex-col items-center justify-center'>
+            <Table
+              array={['Id', 'Nome', 'Nome na Fatura', 'Data de criação', '']}
+              contentArray={['id', 'nome_fantasia', 'identificacao_fatura', 'created']}
+              ColsBody={5}
+              currentPage="estabelecimentosFilhos"
+              data={estabeleciments}
+            />
+            <Paginator total={30} />
+          </div>
         ) : (
           <Spinner />
         )}
