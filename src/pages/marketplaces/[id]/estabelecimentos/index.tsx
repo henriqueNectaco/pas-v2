@@ -41,6 +41,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 
 export default function Estabelecimentos({ dataEstabeleciments }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const [page, setPage] = useState(1)
+  const [totalPages, setTotalPages] = useState()
   const [token] = useState(Cookies.get('token'));
   const [estabeleciments, setEstabeleciments] = useState(dataEstabeleciments);
   const [data, setData] = useState({
@@ -48,22 +50,37 @@ export default function Estabelecimentos({ dataEstabeleciments }: InferGetServer
     identificacao_fatura: '',
     nome_fantasia: '',
     limit_page: 30,
-    page: 1
   });
 
   const router = useRouter();
   const { id } = router.query;
 
-  const fetchEstabeleciments = async () => {
+  const fetchChilds = async () => {
     try {
       const res = await axios.get(
-        `https://api.zsystems.com.br/z1/marketplace/${id}/estabelecimentos?limit=30&page=1`,
+        `https://api.zsystems.com.br/marketplaces/${id}/filhos`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      if (res.data.success === true) {
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchEstabeleciments = async () => {
+    try {
+      setEstabeleciments(null)
+      const res = await axios.get(
+        `https://api.zsystems.com.br/z1/marketplace/${id}/estabelecimentos?limit=30&page=${page}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       if (res.data.success === true) {
+        setTotalPages(res.data.pagination.pages)
         setEstabeleciments(res.data.estabelecimentos);
       } else {
-        console.log(res.data.success);
+        toast.error(res.data.message)
       }
     } catch (error) {
       console.error(error);
@@ -71,7 +88,7 @@ export default function Estabelecimentos({ dataEstabeleciments }: InferGetServer
   };
   const queryParams = {
     limit: data.limit_page,
-    page: data.page,
+    page: page,
     id_estabelecimento: data.id_estabelecimento,
     identificacao_fatura: data.identificacao_fatura,
     nome_fantasia: data.nome_fantasia,
@@ -80,7 +97,7 @@ export default function Estabelecimentos({ dataEstabeleciments }: InferGetServer
     try {
       setEstabeleciments(null);
       const res = await axios.get(
-        `https://api.zsystems.com.br/z1/marketplace/1/estabelecimentos`,
+        `https://api.zsystems.com.br/z1/marketplace/${id}/estabelecimentos`,
         {
           params: queryParams, headers: { Authorization: `Bearer ${token}` }
         },
@@ -88,7 +105,7 @@ export default function Estabelecimentos({ dataEstabeleciments }: InferGetServer
       );
       if (res.data.success === true) {
         setEstabeleciments(res.data.estabelecimentos);
-        console.log('Requisição bem-sucedida');
+        setTotalPages(res.data.pagination.pages)
       }
     } catch (error) {
       console.error(error);
@@ -101,8 +118,6 @@ export default function Estabelecimentos({ dataEstabeleciments }: InferGetServer
       if (res.data.success === false) {
         toast.error('Sua sessão expirou, faça login novamente');
         router.push('/');
-      } else {
-        fetchEstabeleciments();
       }
     } catch (error) {
       console.error(error);
@@ -129,11 +144,14 @@ export default function Estabelecimentos({ dataEstabeleciments }: InferGetServer
   useEffect(() => {
     auth();
   }, []);
+  useEffect(() => {
+    fetchEstabeleciments();
+  }, [page]);
 
   return (
-    <div className="max-w-screen w-full">
+    <div className="max-w-screen w-full h-full bg-gray-300">
       <Header />
-      <div className="w-full p-4 bg-gray-200">
+      <div className="w-full p-4 bg-gray-200 h-full">
         <FilterEstabeleciments
           onChange={handleChange}
           filtrar={handleFilter}
@@ -141,7 +159,7 @@ export default function Estabelecimentos({ dataEstabeleciments }: InferGetServer
           data={data}
         />
         {estabeleciments !== null ? (
-          <div className='gap-4 flex flex-col items-center justify-center'>
+          <div className='gap-4 flex flex-col items-center justify-center  '>
             <Table
               array={['Id', 'Nome', 'Nome na Fatura', 'Data de criação', '']}
               contentArray={['id', 'nome_fantasia', 'identificacao_fatura', 'created']}
@@ -149,7 +167,7 @@ export default function Estabelecimentos({ dataEstabeleciments }: InferGetServer
               currentPage="estabelecimentosFilhos"
               data={estabeleciments}
             />
-            <Paginator total={30} />
+            <Paginator total={totalPages} onCickPrevious={() => setPage(page - 1)} onChageCurrentpage={setPage} page={page} onClickNext={() => setPage(page + 1)} />
           </div>
         ) : (
           <Spinner />
