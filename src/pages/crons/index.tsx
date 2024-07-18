@@ -9,6 +9,7 @@ import { Spinner } from '@nextui-org/react'
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import nextCookies from 'next-cookies'
 import Table from '@/components/table'
+import process from 'process'
 
 
 
@@ -20,11 +21,12 @@ type CronProps = {
   cron: string
   interval: string
 }
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { token } = nextCookies(context)
 
   const authRes = await axios.post(
-    `https://api.zsystems.com.br/z1/autenticar`,
+    `${process.env.NEXT_PUBLIC_API_URL}/autenticar`,
     { token }
   )
 
@@ -39,7 +41,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const cronsRes = await axios.get(
 
-    `https://api.zsystems.com.br/z1/crons/logs`,
+    `${process.env.NEXT_PUBLIC_API_URL}/crons/logs`,
     {
       headers: { Authorization: `Bearer ${token}` },
     },
@@ -53,8 +55,9 @@ export default function Crons({ data }: InferGetServerSidePropsType<typeof getSe
   const [crons, setCrons] = useState<CronProps[]>(data)
   useEffect(() => {
     console.log(Cookies.get('token'))
-    console.log(process.env.API_URL)
-    console.log(process.env.NEXT_PUBLIC_API_URL)
+    console.log('SEM NEXT PUBLIC ' + process.env.NEXT_PUBLIC_TESTE_URL)
+    console.log('com next ' + process.env.NEXT_PUBLIC_API_URL)
+    console.log(process.env)
 
   }, [])
   return (
