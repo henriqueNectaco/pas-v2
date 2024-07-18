@@ -1,3 +1,4 @@
+import { RangeValue, DateValue } from "@nextui-org/react"
 import { z } from "zod"
 
 export type propsFilterEstabeleciment = {
@@ -12,4 +13,17 @@ export type propsFilterEstabeleciment = {
 
 
 }
-z
+export type ModalTypes = {
+
+  useTaxForTransaction: boolean
+  useDropdownChangeParents: boolean
+  useDatePicker: boolean
+  onClick: () => void
+  onOpenChange: () => void
+  isOpen: boolean
+  action: string
+  setValue: (value: RangeValue<DateValue>) => void
+  value: RangeValue<DateValue> | null | undefined
+  MarketplacesArray?: null | Array<string>
+
+}

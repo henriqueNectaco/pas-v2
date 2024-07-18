@@ -53,7 +53,11 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
     start: parseDate('2024-04-01'), // Data inicial
     end: parseDate('2024-04-30'), // Último dia do mês
   })
-  const [action, setAction] = useState('Reprocessar todas as vendas')
+  const [modalProps, setModalProps] = useState({
+    useTaxForTransaction: false,
+    action: 'Confirmar'
+  })
+
   const [date, setDate] = useState({
     startDate: format(value.start.toDate()),
     endDate: format(value.end.toDate())
@@ -65,7 +69,7 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
   const [state, setState] = useState('ativos')
   const handleReprocessAllSales = async () => {
     try {
-      const res = await axios.post(`https://urltestepai`,
+      const res = await axios.post(`https://urltestepaireprocessartodas`,
         { startDate: date.startDate, endDate: date.endDate },
         { headers: { Authorization: `Bearer ${token}` } },
       )
@@ -76,7 +80,7 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
   }
   const handleImportAllSales = async () => {
     try {
-      const res = await axios.post(`https://urldetestes`,
+      const res = await axios.post(`https://urldetestesimportartodas`,
         { startDate: date.startDate, endDate: date.endDate },
         { headers: { Authorization: `Bearer ${token}` } },
       )
@@ -88,7 +92,7 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
   }
 
   const handleFuncoes = async () => {
-    switch (action) {
+    switch (modalProps.action) {
       case 'Reprocessar todas as vendas':
         await handleReprocessAllSales()
         break;
@@ -124,11 +128,10 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
           `https://api.zsystems.com.br/z1/autenticar`,
           { token },
         )
-        if (res.data.success === true) {
-          //        getServerSideDate(setResData, token)
-        } else {
+        if (res.data.success === false) {
           toast.error('Sua sessão expirou faça login novamente')
           Router.push('/')
+          //        getServerSideDate(setResData, token)
         }
       } catch (error) {
         console.error(error)
@@ -149,7 +152,13 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
               size="md"
               variant="solid"
               color="primary"
-              onClick={onOpen}
+              onClick={() => {
+                setModalProps(prev => ({
+                  ...prev,
+                  action: 'Reprocessar todas as vendas'
+                }))
+                onOpen()
+              }}
             >
               Reprocessar todas as vendas
             </Button>
@@ -165,7 +174,10 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
             </Button>
             <Button
               onClick={() => {
-                setAction('Importar todas as vendas')
+                setModalProps(prev => ({
+                  ...prev,
+                  action: 'Importar todas as vendas'
+                }))
                 onOpen()
               }}
               fullWidth={true}
@@ -227,7 +239,7 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
       <ModalMine useDatePicker={true}
         value={value}
         setValue={setValue}
-        action={action}
+        action={modalProps.action}
         onClick={handleFuncoes}
         isOpen={isOpen}
         onOpenChange={onOpenChange}

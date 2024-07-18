@@ -1,6 +1,4 @@
 import {
-  DateValue,
-  RangeValue,
   Modal,
   ModalContent,
   ModalHeader,
@@ -10,17 +8,9 @@ import {
 } from '@nextui-org/react'
 import { CaretDown } from 'phosphor-react'
 import DateRangePickerComponent from '../rangedatepicker'
-type typeProps = {
-  useDatePicker: boolean
-  onClick: () => void
-  onOpenChange: () => void
-  isOpen: boolean
-  action: string
-  setValue: (value: RangeValue<DateValue>) => void
-  value: RangeValue<DateValue> | null | undefined
-  MarketplacesArray?: null | Array<string>
-}
-export default function ModalMine(props: typeProps) {
+import { ModalTypes } from '@/types/marketplaces/marketplaces'
+
+export default function ModalMine(props: ModalTypes) {
   return (
     <>
       <Modal
@@ -35,34 +25,39 @@ export default function ModalMine(props: typeProps) {
                 Selecione um intervalo
               </ModalHeader>
               <ModalBody className={`flex flex-col items-center   ${props.useDatePicker === true ? 'justify-center' : 'justify-end'} `}>
-                {props.useDatePicker === true ? (<DateRangePickerComponent
+                {props.useDatePicker === true && (<DateRangePickerComponent
                   variant="underlined"
                   value={props.value}
                   setValue={props.setValue}
-                />) : (
-                  <Dropdown >
-                    <DropdownTrigger>
-                      <Button
-                        variant="flat"
-                        color='primary'
-                        fullWidth={true}
-                      >
-                        Open Menu
-                        <CaretDown size={18} />
-                      </Button>
-                    </DropdownTrigger>
-                    <DropdownMenu variant='bordered'
-                      aria-label="Action event example"
-                      onAction={(key) => alert(key)}
+                />)}
+                {props.useDropdownChangeParents === true && (<Dropdown >
+                  <DropdownTrigger>
+                    <Button
+                      variant="flat"
+                      color='primary'
+                      fullWidth={true}
                     >
+                      Open Menu
+                      <CaretDown size={18} />
+                    </Button>
+                  </DropdownTrigger>
+                  <DropdownMenu variant='bordered'
+                    aria-label="Action event example"
+                    onAction={(key) => alert(key)}
+                  >
 
-                      {props.MarketplacesArray.map((marketplace: any) => (
-                        <DropdownItem key={marketplace.nome_fantasia}>{marketplace.nome_fantasia}</DropdownItem>
-                      ))}
-                    </DropdownMenu>
-                  </Dropdown>
+                    {props.MarketplacesArray.map((marketplace: any) => (
+                      <DropdownItem key={marketplace.nome_fantasia}>{marketplace.nome_fantasia}</DropdownItem>
+                    ))}
+                  </DropdownMenu>
+                </Dropdown>)}
+                {props.useTaxForTransaction === true && (
+                  <div className='border'>
+                    teste
+
+
+                  </div>
                 )}
-
               </ModalBody>
               <ModalFooter className="flex flex-col lg:flex-row">
                 <Button

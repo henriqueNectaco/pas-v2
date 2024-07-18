@@ -68,7 +68,7 @@ export default function Crons({ data }: InferGetServerSidePropsType<typeof getSe
           {!crons.length ? (
             <Spinner color="primary" size="lg" />
           ) : (
-            <div className="space-y-4 lg:grid-cols-1">
+            <div className="p-4 lg:grid-cols-1">
               <Table
                 currentPage="crons"
                 array={['crons', 'Scheduled', 'Mensagem', 'Data']}

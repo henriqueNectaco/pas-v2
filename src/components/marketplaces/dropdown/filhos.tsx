@@ -15,6 +15,8 @@ type typeProps = {
 }
 
 export default function DropDownMenuFilhos(props: typeProps) {
+  const [useDatePicker, setUseDatePicker] = useState<boolean>()
+  const [useDropdownChangeParents, setUseDropdownChangeParents] = useState()
   const token = Cookies.get('token')
   const [value, setValue] = useState({
     start: parseDate('2024-04-01'), // Data inicial
@@ -48,8 +50,8 @@ export default function DropDownMenuFilhos(props: typeProps) {
     switch (action) {
       case 'Reprocessar pedidos':
         reprocessarPedidos()
-
-
+      case 'Trocar de parent':
+        alert('teste')
     }
   }
   return (<>
@@ -68,10 +70,15 @@ export default function DropDownMenuFilhos(props: typeProps) {
         aria-label="Action event example"
         onAction={(key) => {
           if (key === 'Trocar de parent') {
+            setAction('Confirmar')
+            setUseDatePicker(false)
+            setUseDropdownChangeParents(true)
             onOpen()
 
           } else if (key === 'Reprocessar pedidos') {
             setAction('Reprocessar pedidos')
+            setUseDropdownChangeParents(false)
+            setUseDatePicker(true)
             onOpen()
           }
         }
@@ -84,6 +91,6 @@ export default function DropDownMenuFilhos(props: typeProps) {
         ))}
       </DropdownMenu>
     </Dropdown>
-    <ModalMine action={action} onClick={handleFuncoes} value={value} setValue={setValue} isOpen={isOpen} onOpenChange={onOpenChange} MarketplacesArray={props.MarketplacesArray} />
+    <ModalMine action={action} useDatePicker={useDatePicker} useDropdownChangeParents={useDropdownChangeParents} onClick={handleFuncoes} value={value} setValue={setValue} isOpen={isOpen} onOpenChange={onOpenChange} MarketplacesArray={props.MarketplacesArray} />
   </>)
 }
