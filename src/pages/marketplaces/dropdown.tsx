@@ -165,6 +165,7 @@ export default function DropdownButton(props: TypeProps) {
         </DropdownMenu>
       </Dropdown>
       <ModalMine
+        useDatePicker={true}
         action={action}
         onClick={handleFuncoes}
         isOpen={isOpen}

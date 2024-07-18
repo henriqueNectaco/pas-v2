@@ -4,7 +4,7 @@ type paginatorProps = {
   onCickPrevious: () => void
   onClickNext: () => void
   page: number
-  total: number | undefined
+  total: number
 
 }
 export default function Paginator(props: paginatorProps) {

@@ -41,8 +41,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 
 export default function Estabelecimentos({ dataEstabeleciments }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const [marketplacesPai, setMarketplacesPai] = useState(null)
   const [page, setPage] = useState(1)
-  const [totalPages, setTotalPages] = useState()
+  const [totalPages, setTotalPages] = useState(1)
   const [token] = useState(Cookies.get('token'));
   const [estabeleciments, setEstabeleciments] = useState(dataEstabeleciments);
   const [data, setData] = useState({
@@ -63,6 +64,7 @@ export default function Estabelecimentos({ dataEstabeleciments }: InferGetServer
       );
 
       if (res.data.success === true) {
+        setMarketplacesPai(res.data.estabelecimentos)
       }
     } catch (error) {
       console.error(error);
@@ -118,6 +120,8 @@ export default function Estabelecimentos({ dataEstabeleciments }: InferGetServer
       if (res.data.success === false) {
         toast.error('Sua sessão expirou, faça login novamente');
         router.push('/');
+      } else {
+        fetchChilds()
       }
     } catch (error) {
       console.error(error);
@@ -166,6 +170,7 @@ export default function Estabelecimentos({ dataEstabeleciments }: InferGetServer
               ColsBody={5}
               currentPage="estabelecimentosFilhos"
               data={estabeleciments}
+              MarketplacesArray={marketplacesPai}
             />
             <Paginator total={totalPages} onCickPrevious={() => setPage(page - 1)} onChageCurrentpage={setPage} page={page} onClickNext={() => setPage(page + 1)} />
           </div>

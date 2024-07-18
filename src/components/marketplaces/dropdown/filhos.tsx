@@ -20,7 +20,7 @@ export default function DropDownMenuFilhos(props: typeProps) {
     start: parseDate('2024-04-01'), // Data inicial
     end: parseDate('2024-04-30'), // Último dia do mês
   })
-  const [action, setAction] = useState('Reprocessar todas as vendas')
+  const [action, setAction] = useState('Confirmar')
   const [date, setDate] = useState({
     startDate: format(value.start.toDate()),
     endDate: format(value.end.toDate())
@@ -68,7 +68,8 @@ export default function DropDownMenuFilhos(props: typeProps) {
         aria-label="Action event example"
         onAction={(key) => {
           if (key === 'Trocar de parent') {
-            alert('testes ')
+            onOpen()
+
           } else if (key === 'Reprocessar pedidos') {
             setAction('Reprocessar pedidos')
             onOpen()
@@ -83,6 +84,6 @@ export default function DropDownMenuFilhos(props: typeProps) {
         ))}
       </DropdownMenu>
     </Dropdown>
-    <ModalMine action={action} onClick={handleFuncoes} value={value} setValue={setValue} isOpen={isOpen} onOpenChange={onOpenChange} />
+    <ModalMine action={action} onClick={handleFuncoes} value={value} setValue={setValue} isOpen={isOpen} onOpenChange={onOpenChange} MarketplacesArray={props.MarketplacesArray} />
   </>)
 }

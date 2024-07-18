@@ -55,12 +55,12 @@ export default function Table(props: marketplaceProps) {
                 )}
                 {props.ColsBody > 5 && props.currentPage === 'filhos' && (
                   <div className="p-4 border-b  flex items-center justify-end border-gray-300">
-                    <DropDownMenuFilhos fullWidth={false} items={['Adicionar SSL']} />
+                    <DropDownMenuFilhos fullWidth={false} items={['Adicionar SSL']} MarketplacesArray={props.MarketplacesArray} />
                   </div>
                 )}
                 {props.currentPage === 'estabelecimentosFilhos' && (
                   <div className="p-4 border-b flex items-center justify-end border-gray-300">
-                    <DropDownMenuFilhos fullWidth={false} items={['Trocar de parent', 'Reprocessar pedidos']} id={dados.id} />
+                    <DropDownMenuFilhos fullWidth={false} items={['Trocar de parent', 'Reprocessar pedidos']} id={dados.id} MarketplacesArray={props.MarketplacesArray} />
                   </div>
                 )}
               </React.Fragment>
@@ -114,12 +114,12 @@ export default function Table(props: marketplaceProps) {
                 )}
                 {props.array.length > 5 && props.currentPage === 'filhos' && (
                   <div className="flex flex-col items-center justify-center">
-                    <DropDownMenuFilhos items={['Adicionar SSL']} />
+                    <DropDownMenuFilhos items={['Adicionar SSL']} MarketplacesArray={props.MarketplacesArray} />
                   </div>
                 )}
                 {props.currentPage === 'estabelecimentosFilhos' && (
                   <div className="flex flex-col items-center justify-center">
-                    <DropDownMenuFilhos items={['Trocar de parent', 'Reprocessar pedidos']} id={dados.id} />
+                    <DropDownMenuFilhos items={['Trocar de parent', 'Reprocessar pedidos']} id={dados.id} MarketplacesArray={props.MarketplacesArray} />
                   </div>
                 )}
               </div>

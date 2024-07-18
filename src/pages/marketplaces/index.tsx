@@ -224,7 +224,7 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
           )}
         </>
       </div>
-      <ModalMine
+      <ModalMine useDatePicker={true}
         value={value}
         setValue={setValue}
         action={action}
