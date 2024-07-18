@@ -4,10 +4,12 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
 
+
 import { Spinner } from '@nextui-org/react'
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import nextCookies from 'next-cookies'
 import Table from '@/components/table'
+
 
 
 type CronProps = {
@@ -18,7 +20,6 @@ type CronProps = {
   cron: string
   interval: string
 }
-
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { token } = nextCookies(context)
 
@@ -37,7 +38,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   const cronsRes = await axios.get(
-    'https://api.zsystems.com.br/z1/crons/logs',
+
+    `https://api.zsystems.com.br/z1/crons/logs`,
     {
       headers: { Authorization: `Bearer ${token}` },
     },
@@ -51,6 +53,9 @@ export default function Crons({ data }: InferGetServerSidePropsType<typeof getSe
   const [crons, setCrons] = useState<CronProps[]>(data)
   useEffect(() => {
     console.log(Cookies.get('token'))
+    console.log(process.env.API_URL)
+    console.log(process.env.NEXT_PUBLIC_API_URL)
+
   }, [])
   return (
     <div className="h-full max-w-screen w-full text-black-500">

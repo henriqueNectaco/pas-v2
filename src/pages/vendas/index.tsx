@@ -10,12 +10,12 @@ import FormVendas from './form'
 import { toast } from 'sonner'
 import Router from 'next/router'
 import { ZoopTransaction, Pedido } from '@/types/vendas/vendas'
-
+import { apiUrl } from '../api/useApi'
 import PagamentosCards from './pagamentosCards'
 
 export default function Vendas() {
-  require('dotenv').config()
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL
+  //require('dotenv').config()
+  //const apiUrl = process.env.NEXT_PUBLIC_API_URL
   const [isLoadingSearchSale, setIsLoadingSearchSale] = useState<boolean>(false)
   const [isLoadingReprocessSale, setIsLoadingReprocessSale] = useState<boolean>(false)
   const [vendaId, setVendaId] = useState<string | undefined>(undefined)
@@ -31,7 +31,7 @@ export default function Vendas() {
   const handleReprocessSale = async () => {
     setIsLoadingReprocessSale(true)
     try {
-      const response = await axios.get(`https://api.zsystems.com.br/z1/vendas/${responseData.id}/reprocessar`,
+      const response = await axios.get(`${apiUrl}/vendas/${responseData.id}/reprocessar`,
         { headers: { Authorization: `Bearer ${token}` } }
       )
       if (response.data.success === true) {
@@ -50,7 +50,7 @@ export default function Vendas() {
         setIsLoadingSearchSale(false)
       } else {
         const response = await axios.get(
-          `https://api.zsystems.com.br/z1/vendas/${vendaId}`,
+          `${apiUrl}/vendas/${vendaId}`,
           { headers: { Authorization: `Bearer ${token}` } },
         )
 
@@ -76,7 +76,7 @@ export default function Vendas() {
   const auth = async () => {
     try {
       const res = await axios.post(
-        `${apiUrl}autenticar`,
+        `${apiUrl}/autenticar`,
         { token },
       )
       if (res.data.success === false) {
