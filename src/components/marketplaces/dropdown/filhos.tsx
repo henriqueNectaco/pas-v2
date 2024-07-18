@@ -15,6 +15,7 @@ type typeProps = {
 }
 
 export default function DropDownMenuFilhos(props: typeProps) {
+  const [id, setId] = useState(null)
   const [useDatePicker, setUseDatePicker] = useState<boolean>()
   const [useDropdownChangeParents, setUseDropdownChangeParents] = useState()
   const token = Cookies.get('token')
@@ -28,16 +29,27 @@ export default function DropDownMenuFilhos(props: typeProps) {
     endDate: format(value.end.toDate())
   })
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const queryParamsReprocessarPedidos = {
+    startDate: date.startDate,
+    endDate: date.endDate
+  };
+  const changeParent = async () => {
+    try {
+      const res = await axios.put(`
+https://pas-aps.up.railway.app/establishment/${props.id}/change-parent`, { parentId: id }, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
   const reprocessarPedidos = async () => {
     try {
       const res = await axios.post(
-        `https://urltestedo/${props.id}`,
+        `https://api.zsystems.com.br/z1/estabelecimentos/${props.id}/reprocessar-pedidos?startDate=${date.startDate}&endDate=${date.endDate}`,
+        {}, // O corpo da requisição está vazio
         {
-          startDate: date.startDate,
-          endDate: date.endDate
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${token}` }
         }
       );
       // Faça algo com a resposta, se necessário
@@ -46,12 +58,15 @@ export default function DropDownMenuFilhos(props: typeProps) {
     }
   };
 
+
+
   const handleFuncoes = async () => {
     switch (action) {
       case 'Reprocessar pedidos':
         reprocessarPedidos()
       case 'Trocar de parent':
-        alert('teste')
+        changeParent()
+
     }
   }
   return (<>
@@ -70,7 +85,7 @@ export default function DropDownMenuFilhos(props: typeProps) {
         aria-label="Action event example"
         onAction={(key) => {
           if (key === 'Trocar de parent') {
-            setAction('Confirmar')
+            setAction('Trocar de parent')
             setUseDatePicker(false)
             setUseDropdownChangeParents(true)
             onOpen()
@@ -91,6 +106,6 @@ export default function DropDownMenuFilhos(props: typeProps) {
         ))}
       </DropdownMenu>
     </Dropdown>
-    <ModalMine action={action} useDatePicker={useDatePicker} useDropdownChangeParents={useDropdownChangeParents} onClick={handleFuncoes} value={value} setValue={setValue} isOpen={isOpen} onOpenChange={onOpenChange} MarketplacesArray={props.MarketplacesArray} />
+    <ModalMine setId={setId} action={action} useDatePicker={useDatePicker} useDropdownChangeParents={useDropdownChangeParents} onClick={handleFuncoes} value={value} setValue={setValue} isOpen={isOpen} onOpenChange={onOpenChange} MarketplacesArray={props.MarketplacesArray} />
   </>)
 }

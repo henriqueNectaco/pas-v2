@@ -4,7 +4,8 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem
+  Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem,
+  Input
 } from '@nextui-org/react'
 import { CaretDown } from 'phosphor-react'
 import DateRangePickerComponent from '../rangedatepicker'
@@ -14,9 +15,10 @@ export default function ModalMine(props: ModalTypes) {
   return (
     <>
       <Modal
-        className="h-[30vh]"
+        className={`h-[30vh] ${props.useTaxForTransaction === true && 'h-[60vh] lg:h-[45vh]'}`}
         isOpen={props.isOpen}
         onOpenChange={props.onOpenChange}
+        placement='top'
       >
         <ModalContent>
           {(onClose) => (
@@ -43,18 +45,30 @@ export default function ModalMine(props: ModalTypes) {
                   </DropdownTrigger>
                   <DropdownMenu variant='bordered'
                     aria-label="Action event example"
-                    onAction={(key) => alert(key)}
+                    onAction={(key) => props.setId(key)}
                   >
 
                     {props.MarketplacesArray.map((marketplace: any) => (
-                      <DropdownItem key={marketplace.nome_fantasia}>{marketplace.nome_fantasia}</DropdownItem>
+                      <DropdownItem key={marketplace.id}>{marketplace.nome_fantasia}</DropdownItem>
                     ))}
                   </DropdownMenu>
                 </Dropdown>)}
                 {props.useTaxForTransaction === true && (
-                  <div className='border'>
-                    teste
-
+                  <div className='border h-full w-full flex flex-col items-center p-4 gap-2'>
+                    <h1 className='font-semibold text-md'>Cobrança por transação</h1>
+                    <div className='flex w-full flex-col lg:flex-row gap-4'>
+                      <p>teste</p>
+                      <p>teste</p>
+                    </div>
+                    <div className='w-full gap-4 flex  flex-col lg:flex-row'>
+                      <p>teste</p>
+                      <p>teste</p>
+                    </div>
+                    <h1 className='font-semibold text-md'>Cadastrar cobrança</h1>
+                    <div className='w-full flex  flex-col  items-center justify-center'>
+                      <Input labelPlacement='inside' type='number' variant='underlined' label='Valor R$' />
+                      <Input labelPlacement='inside' variant='underlined' label='E-mail de recebimento' />
+                    </div>
 
                   </div>
                 )}

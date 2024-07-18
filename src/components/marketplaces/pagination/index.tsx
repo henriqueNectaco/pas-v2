@@ -16,7 +16,7 @@ export default function Paginator(props: paginatorProps) {
 
       <div className="flex gap-2 w-full items-center justify-center flex-row ">
         {props.page !== 1 && (<Button
-          size="lg"
+          size="md"
           variant="bordered"
           color="primary"
           onPress={() => {
@@ -41,7 +41,7 @@ export default function Paginator(props: paginatorProps) {
         />
         {props.page < props.total && (
           <Button
-            size="lg"
+            size="md"
             variant="bordered"
             color="primary"
             onClick={async () => {
