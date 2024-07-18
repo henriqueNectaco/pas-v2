@@ -71,15 +71,7 @@ https://api.zsystems.com.br/marketplaces/${id}/filhos`,
       console.error(error)
     }
   }
-  const dropDownFunctions = () => {
-    switch (key) {
-      case 'Trocar de parent':
-        alert(key);
-      default: alert('bosta nenhuma')
 
-    }
-
-  }
 
   return (
     <div className="h-full max-w-screen w-full bg-gray-200 flex flex-col items-center  border-2 ">
@@ -90,7 +82,7 @@ https://api.zsystems.com.br/marketplaces/${id}/filhos`,
         ) : (
           <div className=" max-w-screen w-full h-full  space-y-4 p-4">
             <Table
-              dropDownFunctions={dropDownFunctions}
+
               currentPage="filhos"
               array={['ID', 'Nome', 'Status', 'Data de criação', 'E-mail', '']}
               ColsBody={6}

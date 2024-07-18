@@ -15,7 +15,7 @@ export default function Paginator(props: paginatorProps) {
       {/* <p className="text-small text-default-500">Selected Page: {currentPage}</p> */}
 
       <div className="flex gap-2 w-full items-center justify-center flex-row ">
-        <Button
+        {props.page !== 1 && (<Button
           size="lg"
           variant="bordered"
           color="primary"
@@ -25,7 +25,8 @@ export default function Paginator(props: paginatorProps) {
           }}
         >
           Previous
-        </Button>
+        </Button>)}
+
         <Pagination
           classNames={{
             item: 'lg:w-14',
@@ -38,17 +39,20 @@ export default function Paginator(props: paginatorProps) {
           size="lg"
           onChange={props.onChageCurrentpage}
         />
-        <Button
-          size="lg"
-          variant="bordered"
-          color="primary"
-          onClick={async () => {
-            await setCurrentPage((prev) => (prev < props.total ? prev + 1 : prev));
-            props.onClickNext()
-          }}
-        >
-          Next
-        </Button>
+        {props.page < props.total && (
+          <Button
+            size="lg"
+            variant="bordered"
+            color="primary"
+            onClick={async () => {
+              await setCurrentPage((prev) => (prev < props.total ? prev + 1 : prev));
+              props.onClickNext()
+            }}
+          >
+            Next
+          </Button>
+        )}
+
       </div>
     </div>
   );
