@@ -97,6 +97,7 @@ export default function Estabelecimentos({ dataEstabeleciments }: InferGetServer
   }
   const handleFilter = async () => {
     try {
+      setPage(1)
       setEstabeleciments(null);
       const res = await axios.get(
         `https://api.zsystems.com.br/z1/marketplace/${id}/estabelecimentos`,
@@ -142,6 +143,7 @@ export default function Estabelecimentos({ dataEstabeleciments }: InferGetServer
       identificacao_fatura: '',
       nome_fantasia: '',
     });
+    setPage(1)
 
   };
 
