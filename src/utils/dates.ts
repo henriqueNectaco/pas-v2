@@ -36,9 +36,3 @@ export const format = (date: Date): string => {
 
 const dataAtual = new Date()
 
-const ano = dataAtual.getFullYear()
-const mes = String(dataAtual.getMonth() + 1).padStart(2, '0') // Adiciona zero à esquerda se o mês for menor que 10
-const diaa = String(dataAtual.getDate()).padStart(2, '0') // Adiciona zero à esquerda se o dia for menor que 10
-
-export const today = `${ano}-${mes}-${diaa}`
-export const yesterday = new Date(dataAtual)

@@ -1,8 +1,9 @@
 import axios from 'axios'
 import Header from '../../components/Header/index'
 import React, { useEffect, useState } from 'react'
-import { getLastDayOfMonth, formatDate, today, yesterday } from '@/utils/dates'
+import { getLastDayOfMonth, formatDate } from '@/utils/dates'
 import Cookies from 'js-cookie'
+import { today, yesterday } from '@/utils'
 import { toast } from 'sonner'
 import Router from 'next/router'
 import DashComponent from '@/components/dasboard/dashComponent'
@@ -73,11 +74,10 @@ export default function DashBoard() {
   const formattedPreviousDate = formatDateToYYYYMMDD(previousDate)
 
 
-  yesterday.setDate(currentDate.getDate() - 1)
-  const year = yesterday.getFullYear()
-  const month = String(yesterday.getMonth() + 1).padStart(2, '0') // Adiciona zero à esquerda se o mês for menor que 10
-  const day = String(yesterday.getDate()).padStart(2, '0') // Adiciona zero à esquerda se o dia for menor que 10
-  const yesterdayFormatted = `${year}-${month}-${day}`
+
+
+
+
 
   const lastMonth = new Date(currentDate)
   lastMonth.setMonth(currentDate.getMonth() - 1)
@@ -167,7 +167,7 @@ export default function DashBoard() {
   const fetchTotanNotProcessedYesterday = async () => {
     try {
       const res = await axios.get(
-        `https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${yesterdayFormatted}&endDate=${yesterdayFormatted}`,
+        `https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${yesterday}&endDate=${yesterday}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
       setData(prevData => ({
@@ -236,7 +236,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
   const FetchTotalProcessedYesterday = async () => {
     try {
       const res = await axios.get(
-        `https://pas-aps.up.railway.app/sale/total-processed?startDate=${yesterdayFormatted}&endDate=${yesterdayFormatted}`,
+        `https://pas-aps.up.railway.app/sale/total-processed?startDate=${yesterday}&endDate=${yesterday}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -344,6 +344,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
     daysReprocessarSaldo,
   ])
   console.log(today)
+  console.log('yesterdayvalue ' + yesterday)
   useEffect(() => {
     auth()
   }, [])
