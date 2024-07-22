@@ -11,6 +11,9 @@ type marketplaceProps = {
   data: Dados[];
   ColsBody: number;
   currentPage: string;
+  id: string;
+  MarketplacesArray: Array
+
 };
 
 export default function Table(props: marketplaceProps) {

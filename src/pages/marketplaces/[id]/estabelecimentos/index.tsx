@@ -36,14 +36,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   )
 
-  return { props: { dataEstabeleciments: res.data.estabelecimentos } }
+  return { props: { dataEstabeleciments: res.data.estabelecimentos, totalPages: res.data.pagination.pages } }
 }
 
 
-export default function Estabelecimentos({ dataEstabeleciments }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Estabelecimentos({ dataEstabeleciments, totalPages }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const [isFirstRenderization, setIsFirstRenderization] = useState(true)
   const [marketplacesPai, setMarketplacesPai] = useState(null)
   const [page, setPage] = useState(1)
-  const [totalPages, setTotalPages] = useState(1)
+  const [totalPagess, setTotalPagess] = useState(totalPages)
   const [token] = useState(Cookies.get('token'));
   const [estabeleciments, setEstabeleciments] = useState(dataEstabeleciments);
   const [data, setData] = useState({
@@ -55,7 +56,6 @@ export default function Estabelecimentos({ dataEstabeleciments }: InferGetServer
 
   const router = useRouter();
   const { id } = router.query;
-
   const fetchChilds = async () => {
     try {
       const res = await axios.get(
@@ -70,6 +70,20 @@ export default function Estabelecimentos({ dataEstabeleciments }: InferGetServer
       console.error(error);
     }
   };
+  const auth = async () => {
+    try {
+      const res = await axios.post(`https://api.zsystems.com.br/z1/autenticar`, { token });
+      if (res.data.success === false) {
+        toast.error('Sua sessão expirou, faça login novamente');
+        router.push('/');
+      } else {
+        fetchChilds()
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
 
   const fetchEstabeleciments = async () => {
     try {
@@ -79,7 +93,7 @@ export default function Estabelecimentos({ dataEstabeleciments }: InferGetServer
         { headers: { Authorization: `Bearer ${token}` } }
       );
       if (res.data.success === true) {
-        setTotalPages(res.data.pagination.pages)
+
         setEstabeleciments(res.data.estabelecimentos);
       } else {
         toast.error(res.data.message)
@@ -97,7 +111,6 @@ export default function Estabelecimentos({ dataEstabeleciments }: InferGetServer
   }
   const handleFilter = async () => {
     try {
-      setPage(1)
       setEstabeleciments(null);
       const res = await axios.get(
         `https://api.zsystems.com.br/z1/marketplace/${id}/estabelecimentos`,
@@ -108,27 +121,15 @@ export default function Estabelecimentos({ dataEstabeleciments }: InferGetServer
       );
       if (res.data.success === true) {
         setEstabeleciments(res.data.estabelecimentos);
-        setTotalPages(res.data.pagination.pages)
+        console.log('usou o handlefilter')
       }
     } catch (error) {
       console.error(error);
     }
   };
+  const handleFilterRules = () => {
 
-  const auth = async () => {
-    try {
-      const res = await axios.post(`https://api.zsystems.com.br/z1/autenticar`, { token });
-      if (res.data.success === false) {
-        toast.error('Sua sessão expirou, faça login novamente');
-        router.push('/');
-      } else {
-        fetchChilds()
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
+  }
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setData((prevData) => ({
@@ -148,19 +149,26 @@ export default function Estabelecimentos({ dataEstabeleciments }: InferGetServer
   };
 
   useEffect(() => {
-    auth();
-  }, []);
+    auth()
+  }, [])
   useEffect(() => {
-    fetchEstabeleciments();
+    if (isFirstRenderization === false) {
+      handleFilter();
+    }
   }, [page]);
-
+  useEffect(() => {
+    console.log('mudou o first ' + isFirstRenderization)
+  }, [isFirstRenderization])
   return (
-    <div className="max-w-screen w-full h-full bg-gray-300">
+    <div className="max-w-screen w-full  bg-gray-300">
       <Header />
-      <div className="w-full p-4 bg-gray-200 h-full">
+      <div className="w-full p-4 bg-gray-200 h-full ">
         <FilterEstabeleciments
           onChange={handleChange}
-          filtrar={handleFilter}
+          filtrar={() => {
+            setPage(1)
+            handleFilter()
+          }}
           limparFiltro={handleCleanFilter}
           data={data}
         />
@@ -174,7 +182,13 @@ export default function Estabelecimentos({ dataEstabeleciments }: InferGetServer
               data={estabeleciments}
               MarketplacesArray={marketplacesPai}
             />
-            <Paginator total={totalPages} onCickPrevious={() => setPage(page - 1)} onChageCurrentpage={setPage} page={page} onClickNext={() => setPage(page + 1)} />
+            <Paginator setIsFirstRenderization={setIsFirstRenderization} total={totalPagess} onCickPrevious={() => {
+              setIsFirstRenderization(false)
+              setPage(page - 1)
+            }} onChangeCurrentPage={setPage} page={page} onClickNext={() => {
+              setIsFirstRenderization(false)
+              setPage(page + 1)
+            }} />
           </div>
         ) : (
           <Spinner />

@@ -5,7 +5,7 @@ export default function FilterEstabeleciments(
   props: propsFilterEstabeleciment,
 ) {
   return (
-    <div className="flex flex-col lg:grid lg:grid-cols-5 w-full rounded-xl mb-2 bg-white">
+    <div className="flex flex-col lg:grid lg:grid-cols-5 w-full rounded-xl mb-4 bg-white">
       <div className=" col-span-3 flex flex-col lg:flex-row lg:gap-6 gap-2  p-3 lg:items-end  items-center justify-center">
         <Input onChange={props.onChange} name='id_estabelecimento' variant="underlined" label="ID" type='number' value={props.data.id_estabelecimento} />
         <Input

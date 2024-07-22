@@ -152,7 +152,7 @@ export default function Header() {
           placement='top'
           onOpenChange={onOpenChange}
         >
-          <ModalContent className="h-[20vh] border-2 w-1/4">
+          <ModalContent className="h-[30vh] border-2 w-1/4">
             {(onClose) => (
               <>
                 <ModalHeader className="border-b h-[7vh] flex flex-col  p-2 items-center justify-center gap-1">

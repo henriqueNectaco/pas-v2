@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import { useState, Dispatch, SetStateAction } from 'react';
 import { Pagination, Button } from "@nextui-org/react";
 type paginatorProps = {
   onCickPrevious: () => void
   onClickNext: () => void
   page: number
   total: number
-
+  onChangeCurrentPage: any
+  setIsFirstRenderization: any
 }
 export default function Paginator(props: paginatorProps) {
-  const [currentPage, setCurrentPage] = React.useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
 
   return (
-    <div className="flex flex-col w-full  items-center justify-center">
+    <div className="flex flex-col w-full items-center justify-center ">
       {/* <p className="text-small text-default-500">Selected Page: {currentPage}</p> */}
 
       <div className="flex gap-2 w-full items-center justify-center flex-row ">
@@ -37,7 +38,7 @@ export default function Paginator(props: paginatorProps) {
           color="secondary"
           page={props.page}
           size="lg"
-          onChange={props.onChageCurrentpage}
+          onChange={() => { props.onChangeCurrentPage, props.setIsFirstRenderization(false) }}
         />
         {props.page < props.total && (
           <Button

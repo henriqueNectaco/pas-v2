@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Header from '../../components/Header/index'
 import React, { useEffect, useState } from 'react'
-import { getLastDayOfMonth, formatDate } from '@/utils/dates'
+import { getLastDayOfMonth, formatDate, today, yesterday } from '@/utils/dates'
 import Cookies from 'js-cookie'
 import { toast } from 'sonner'
 import Router from 'next/router'
@@ -63,13 +63,7 @@ export default function DashBoard() {
     const day = String(date.getDate()).padStart(2, '0')
     return `${year}-${month}-${day}`
   }
-  const dataAtual = new Date()
 
-  const ano = dataAtual.getFullYear()
-  const mes = String(dataAtual.getMonth() + 1).padStart(2, '0') // Adiciona zero à esquerda se o mês for menor que 10
-  const dia = String(dataAtual.getDate()).padStart(2, '0') // Adiciona zero à esquerda se o dia for menor que 10
-
-  const today = `${ano}-${mes}-${dia}`
   // Exemplo de uso
   const currentDate = new Date() // Data atual
   const formattedDate = formatDateToYYYYMMDD(currentDate)
@@ -78,7 +72,7 @@ export default function DashBoard() {
   previousDate.setDate(currentDate.getDate() - 30)
   const formattedPreviousDate = formatDateToYYYYMMDD(previousDate)
 
-  const yesterday = new Date(dataAtual)
+
   yesterday.setDate(currentDate.getDate() - 1)
   const year = yesterday.getFullYear()
   const month = String(yesterday.getMonth() + 1).padStart(2, '0') // Adiciona zero à esquerda se o mês for menor que 10
@@ -349,6 +343,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
     idEstabelecimentoReprocessarSaldo,
     daysReprocessarSaldo,
   ])
+  console.log(today)
   useEffect(() => {
     auth()
   }, [])
