@@ -113,13 +113,14 @@ export default function DashComponent(props: TypePropsDashComponent) {
                 ) : (
                   <div className="flex flex-row lg:gap-1 ">
                     <p
-                      className={`${props.data.totalNaoProcessadoHoje > 0 ? 'text-yellow-400' : 'text-gray-50'}`}
+                      className={`${(props.data.totalNaoProcessadoHoje ?? 0) > 0 ? 'text-yellow-400' : 'text-gray-50'}`}
                     >
                       {props.data.totalNaoProcessadoHoje}
                     </p>
                     <p>/</p>
                     <span
-                      className={`${props.data.totalNaoProcessadoOntem > 0 ? 'text-yellow-400' : 'text-gray-50'}`}
+                      className={`${(props.data.totalNaoProcessadoOntem ?? 0) > 0 ? 'text-yellow-400' : 'text-gray-50'}`}
+
                     >
                       {props.data.totalNaoProcessadoOntem}
                     </span>

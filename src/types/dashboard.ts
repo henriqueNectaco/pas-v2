@@ -41,7 +41,7 @@ export type TypePropsDashComponent = {
     processadosOntem: number | null
     processadosMesAtual: number | null
     processadosMesAnterior: number | null
-    totalNaoProcessadoOntem: number | undefined
+    totalNaoProcessadoOntem: null | undefined | number
     totalNaoProcessadoHoje: number | null
     vendas: number | undefined
     totalVendido: number | undefined

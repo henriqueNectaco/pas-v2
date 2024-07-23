@@ -34,5 +34,4 @@ export const format = (date: Date): string => {
   return `${year}-${month}-${day}`
 }
 
-const dataAtual = new Date()
 

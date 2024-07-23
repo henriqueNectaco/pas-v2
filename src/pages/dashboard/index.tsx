@@ -58,45 +58,6 @@ export default function DashBoard() {
   ] = useState<string | undefined>(undefined)
   const token = Cookies.get('token')
 
-  function formatDateToYYYYMMDD(date: Date) {
-    const year = date.getFullYear()
-    const month = String(date.getMonth() + 1).padStart(2, '0') // O mês começa de 0 (janeiro é 0)
-    const day = String(date.getDate()).padStart(2, '0')
-    return `${year}-${month}-${day}`
-  }
-
-  // Exemplo de uso
-  const currentDate = new Date() // Data atual
-  const formattedDate = formatDateToYYYYMMDD(currentDate)
-
-  const previousDate = new Date()
-  previousDate.setDate(currentDate.getDate() - 30)
-  const formattedPreviousDate = formatDateToYYYYMMDD(previousDate)
-
-
-
-
-
-
-
-  const lastMonth = new Date(currentDate)
-  lastMonth.setMonth(currentDate.getMonth() - 1)
-  const yearlasmonth = lastMonth.getFullYear()
-  const monthlastMonth = String(lastMonth.getMonth() + 1).padStart(2, '0') // Adiciona zero à esquerda se o mês for menor que 10
-  const daylastMonth = String(lastMonth.getDate()).padStart(2, '0')
-  const lastMonthFormatted = `${yearlasmonth}-${monthlastMonth}-${daylastMonth}`
-
-  const previousMonth = new Date(lastMonth)
-  previousMonth.setMonth(lastMonth.getMonth() - 1) // Define a data para o mês anterior ao mês anterior
-
-  const yearPreviousMonth = previousMonth.getFullYear()
-  const monthPreviousMonth = String(previousMonth.getMonth() + 1).padStart(
-    2,
-    '0',
-  ) // Adiciona zero à esquerda se o mês for menor que 10
-  const dayPreviousMonth = String(previousMonth.getDate()).padStart(2, '0') // Adiciona zero à esquerda se o dia for menor que 10
-
-  const previousMonthFormatted = `${yearPreviousMonth}-${monthPreviousMonth}-${dayPreviousMonth}`
   const reprocessarSaldo = async () => {
     setIsLoadingReprocessarSaldo(true)
     try {
@@ -139,7 +100,7 @@ export default function DashBoard() {
     try {
       const res = await axios.get(
         `
-      https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=${previousMonthFormatted}&endDate=${lastMonthFormatted}`,
+      https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=${previousMonth}&endDate=${thirtyDaysAgo}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
       setData(prevData => ({
@@ -154,7 +115,7 @@ export default function DashBoard() {
   const fetchTotalMarketplaceChildRegistredLastThirtyDays = async () => {
     try {
       const res = await axios.get(
-        `https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=${lastMonthFormatted}&endDate=${formattedDate}`,
+        `https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=${thirtyDaysAgo}&endDate=${today}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
       setData(prevData => ({
@@ -195,7 +156,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
   const fetchTotalEstabelecimentsChildRegistredLastThirtyDays = async () => {
     try {
       const res = await axios.get(
-        `https://pas-aps.up.railway.app/establishment/total-registered?startDate=${lastMonthFormatted}&endDate=${today}`,
+        `https://pas-aps.up.railway.app/establishment/total-registered?startDate=${thirtyDaysAgo}&endDate=${today}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
       setData(prevData => ({
@@ -208,7 +169,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
   const fetchTotalProcessedThirtyDaysLater = async () => {
     try {
       const res = await axios.get(
-        `https://pas-aps.up.railway.app/sale/total-processed?startDate=${previousMonthFormatted}&endDate=${lastMonthFormatted}`,
+        `https://pas-aps.up.railway.app/sale/total-processed?startDate=${previousThirtyDays}&endDate=${thirtyDaysAgo}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
       setData(prevData => ({
@@ -222,7 +183,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
   const fetchTotalProcessedLastThirtyDays = async () => {
     try {
       const res = await axios.get(
-        `https://pas-aps.up.railway.app/sale/total-processed?startDate=${lastMonthFormatted}&endDate=${today}`,
+        `https://pas-aps.up.railway.app/sale/total-processed?startDate=${thirtyDaysAgo}&endDate=${today}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
       setData(prevData => ({
