@@ -19,7 +19,7 @@ export default function ModalMine(props: ModalTypes) {
   return (
     <>
       <Modal
-        className={`h-[35vh] ${props.useDropdownChangeParents === true && 'h-[30vh]'}  ${props.useTaxForTransaction === true && 'h-[90vh] lg:h-2/4'} max-w-[90vw] lg:max-w-[30vw]`}
+        className={`h-[35vh] ${props.useDropdownChangeParents === true && 'h-[30vh]'}  ${props.useTaxForTransaction === true && 'h-[90vh] lg:h-[40vh]'} max-w-[90vw] lg:max-w-[30vw]`}
         isOpen={props.isOpen}
         onOpenChange={props.onOpenChange}
         placement='center'
@@ -28,7 +28,7 @@ export default function ModalMine(props: ModalTypes) {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col items-center justify-center gap-1">
-                Selecione um intervalo
+                {props.useDatePicker === true ? 'Selecione um intervalo' : props.action}
               </ModalHeader>
               <ModalBody className={`flex flex-col items-center ${props.useDatePicker === true ? 'justify-center' : 'justify-end'}`}>
                 {props.useDatePicker === true && (
@@ -71,18 +71,19 @@ export default function ModalMine(props: ModalTypes) {
                 {props.useTaxForTransaction === true && (
                   <div className='border h-full w-full flex flex-col items-center p-4 gap-2'>
                     <h1 className='font-semibold text-md'>Cobrança por transação</h1>
-                    <div className='flex w-full flex-col lg:flex-row gap-4'>
-                      <p>teste</p>
-                      <p>teste</p>
-                    </div>
-                    <div className='w-full gap-4 flex flex-col lg:flex-row'>
-                      <p>teste</p>
-                      <p>teste</p>
-                    </div>
+                    <div className='flex flex-col lg:flex-row w-full'>
+                      <div className='flex w-full flex-col lg:flex-row gap-4'>
+                        <p className='font-semibold text-md'>Valor</p>
+                        <p>teste</p>
+                      </div>
+                      <div className='w-full gap-4 flex flex-col lg:flex-row'>
+                        <p className='font-semibold text-md'>Email de Recebimento:</p>
+                        <p>teste</p>
+                      </div></div>
                     <h1 className='font-semibold text-md'>Cadastrar cobrança</h1>
-                    <div className='w-full flex flex-col items-center justify-center'>
-                      <Input labelPlacement='inside' type='number' variant='underlined' label='Valor R$' />
-                      <Input labelPlacement='inside' variant='underlined' label='E-mail de recebimento' />
+                    <div className='w-full flex flex-col items-center justify-center '>
+                      <Input labelPlacement='inside' onChange={props.onChangeTaxTransaction} name='amount' type='number' variant='underlined' label='Valor R$' />
+                      <Input labelPlacement='inside' onChange={props.onChangeTaxTransaction} name='email' variant='underlined' label='E-mail de recebimento' />
                     </div>
                   </div>
                 )}
@@ -101,7 +102,9 @@ export default function ModalMine(props: ModalTypes) {
                   onPress={() => props.onClick(onClose)}
                   fullWidth={true}
                 >
-                  {props.action}
+
+                  {props.useDatePicker === true ? props.action : 'Confirmar'
+                  }
                 </Button>
               </ModalFooter>
             </>

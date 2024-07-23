@@ -21,7 +21,11 @@ type TypeProps = {
 }
 const token = Cookies.get('token')
 export default function DropdownButton(props: TypeProps) {
-  const [action, setAction] = useState('')
+  const [dataTaxTransaction, setDataTaxTransaction] = useState({
+    email: undefined,
+    amount: undefined,
+    cobrancaPorTransacao: undefined
+  })
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const [modalProps, setModalProps] = useState({
     action: 'Confirmar',
@@ -35,6 +39,29 @@ export default function DropdownButton(props: TypeProps) {
     end: parseDate('2024-04-30'), // Último dia do mês
   })
   const router = useRouter()
+  const handleChangeTaxTransaction = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setDataTaxTransaction(prevData => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+  const cobrancaTransacao = async () => {
+    try {
+      const res = await axios.post(`https://urlteste/${props.id}`,
+        {
+          amount: dataTaxTransaction.amount,
+          cobrancaPorTransacao: dataTaxTransaction.cobrancaPorTransacao,
+          email: dataTaxTransaction.email
+
+        },
+        { headers: { Authorization: `Bearer ${token}` } },
+      )
+      //https://api.zsystems.com.br/marketplaces/3/cobranca-por-transacao
+    } catch (error) {
+      console.error(error)
+    }
+  }
   const importarECs = async () => {
     try {
       await axios.post(
@@ -92,6 +119,9 @@ export default function DropdownButton(props: TypeProps) {
       case `Importar EC's`:
         importarECs()
         break
+      case 'Cobrança por transação':
+        cobrancaTransacao()
+        break
       case 'Adicionar SSL':
       default:
         console.log('outro')
@@ -140,11 +170,13 @@ export default function DropdownButton(props: TypeProps) {
             } else if (key === 'cadastrarMarketplaceFilho') { router.push(`/marketplaces/${props.id}/cadastrar-filho`) }
             else if (key === 'taxfortransaction') {
               setModalProps(prev => ({
-                ...prev, action: 'Confirmar',
+                ...prev, action: 'Cobrança por transação',
                 useDatePicker: false,
                 useTaxTransaction: true,
               }))
               onOpen()
+            } else if (key === 'renewcache') {
+              router.push(`/marketplaces/${props.id}/renovar-cache`)
             }
           }}
           color="primary"
@@ -179,7 +211,7 @@ export default function DropdownButton(props: TypeProps) {
         value={value}
         setValue={setValue}
         useTaxForTransaction={modalProps.useTaxTransaction}
-
+        onChangeTaxTransaction={handleChangeTaxTransaction}
       />
     </>
   )

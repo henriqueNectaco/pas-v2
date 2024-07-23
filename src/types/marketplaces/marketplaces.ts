@@ -14,7 +14,7 @@ export type propsFilterEstabeleciment = {
 
 }
 export type ModalTypes = {
-
+  onChangeTaxTransaction: (e: React.ChangeEvent<HTMLInputElement>) => void
   useTaxForTransaction: boolean
   useDropdownChangeParents: boolean
   useDatePicker: boolean

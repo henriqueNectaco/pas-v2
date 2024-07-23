@@ -1,16 +1,21 @@
 import { DateValue, RangeValue } from '@nextui-org/react'
 import { Dispatch, SetStateAction } from 'react'
+
+
 export type typeServices = {
   last_update: Date
   id: string
   service: string
   status: boolean
 }
+
+
 export type datePickerProps = {
   value: RangeValue<DateValue> | null | undefined
   variant: 'flat' | 'bordered' | 'faded' | 'underlined' | undefined
   setValue: (value: RangeValue<DateValue>) => void
 }
+
 
 export type TypePropsDashComponent = {
   reprocessarSaldo: () => void
@@ -49,6 +54,8 @@ export type TypePropsDashComponent = {
     estabelecimentosFilhosRegistradosUltimos30dias: number | undefined
   }
 }
+
+
 export type typeDataDashboard = {
 
   totalProcessadoHoje: number
