@@ -43,7 +43,7 @@ export default function FilePonds(props: typeFilePond) {
         {
           headers: {
             'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjkwNDlkYWMxLWUyYjEtNGJjOC05NzQ2LWRmMmZhNmUxYWYyZSIsIm5hbWUiOiJOZWN0YSIsImVtYWlsIjoiYWRtaW5AenN5c3RlbXMuY29tLmJyIiwiaWF0IjoxNzIwNDQ5MzUzLCJleHAiOjE3MjA1MzU3NTMsInN1YiI6IjkwNDlkYWMxLWUyYjEtNGJjOC05NzQ2LWRmMmZhNmUxYWYyZSJ9.xDnx91DCiOTWnEfmDC_bzNbr2fJ85zMRQE28qo_ITVE`
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjkwNDlkYWMxLWUyYjEtNGJjOC05NzQ2LWRmMmZhNmUxYWYyZSIsIm5hbWUiOiJOZWN0YSIsImVtYWlsIjoiYWRtaW5AenN5c3RlbXMuY29tLmJyIiwiaWF0IjoxNzIxNjgzOTE1LCJleHAiOjE3MjE3NzAzMTUsInN1YiI6IjkwNDlkYWMxLWUyYjEtNGJjOC05NzQ2LWRmMmZhNmUxYWYyZSJ9.-92rHMvieuCqu6LwcQi-7s4hgK-WZIvHBEa4yxojRt4`
           }
         }
       );

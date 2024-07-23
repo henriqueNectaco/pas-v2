@@ -108,7 +108,7 @@ export default function DashComponent(props: TypePropsDashComponent) {
                 <span className="font-semibold">
                   Pedidos Não Processados Hoje/Ontem
                 </span>
-                {!props.data.totalNaoProcessadoHoje || !props.data.totalNaoProcessadoOntem ? (
+                {!props.data.totalNaoProcessadoHoje && !props.data.totalNaoProcessadoOntem ? (
                   <Spinner size="sm" />
                 ) : (
                   <div className="flex flex-row lg:gap-1 ">
@@ -122,7 +122,7 @@ export default function DashComponent(props: TypePropsDashComponent) {
                       className={`${props.data.totalNaoProcessadoOntem > 0 ? 'text-yellow-400' : 'text-gray-50'}`}
                     >
                       {props.data.totalNaoProcessadoOntem}
-                    </span>{' '}
+                    </span>
                   </div>
                 )}
               </div>

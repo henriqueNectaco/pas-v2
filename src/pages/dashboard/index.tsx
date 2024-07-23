@@ -3,7 +3,7 @@ import Header from '../../components/Header/index'
 import React, { useEffect, useState } from 'react'
 import { getLastDayOfMonth, formatDate } from '@/utils/dates'
 import Cookies from 'js-cookie'
-import { today, yesterday } from '@/utils'
+import { today, yesterday, previousThirtyDays, thirtyDaysAgo } from '@/utils'
 import { toast } from 'sonner'
 import Router from 'next/router'
 import DashComponent from '@/components/dasboard/dashComponent'
@@ -343,12 +343,10 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
     idEstabelecimentoReprocessarSaldo,
     daysReprocessarSaldo,
   ])
-  console.log(today)
-  console.log('yesterdayvalue ' + yesterday)
   useEffect(() => {
     auth()
   }, [])
-  useEffect(() => { console.log(data) }, [data])
+
   return (
     <div className=" h-screen max-w-screen flex flex-col items-center  ">
       <Header />

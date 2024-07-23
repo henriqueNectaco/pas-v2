@@ -13,8 +13,12 @@ const newDate = new Date()
 
 export const today = format(newDate, 'yyyy-MM-dd')
 
-// Corrigir a subtração de dias
 const yesterdayGet = subDays(newDate, 1)
-
-// Remover o espaço extra antes do formato da data
 export const yesterday = format(yesterdayGet, 'yyyy-MM-dd')
+
+
+const thirtyDaysAgoGet = subDays(newDate, 30)
+export const thirtyDaysAgo = format(thirtyDaysAgoGet, 'yyyy-MM-dd')
+
+const previousThirtyDaysGet = subDays(newDate, 60)
+export const previousThirtyDays = format(previousThirtyDaysGet, 'yyyy-MM-dd') 
