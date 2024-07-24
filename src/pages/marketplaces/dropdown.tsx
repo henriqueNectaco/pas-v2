@@ -14,6 +14,7 @@ import { DotsThreeOutlineVertical } from 'phosphor-react'
 import ModalMine from '@/components/modal'
 import axios from 'axios'
 import { getLastDayOfMonth, format } from '@/utils/dates'
+import { today } from '@/utils'
 
 type TypeProps = {
   id: number
@@ -32,11 +33,9 @@ export default function DropdownButton(props: TypeProps) {
     useTaxTransaction: false,
     useDatePicker: true
   })
-  const todaydp = new Date()
-  const lastDayOfMonth = getLastDayOfMonth(todaydp)
   const [value, setValue] = useState({
-    start: parseDate('2024-04-01'), // Data inicial
-    end: parseDate('2024-04-30'), // Último dia do mês
+    start: parseDate(today),
+    end: parseDate(today),
   })
   const router = useRouter()
   const handleChangeTaxTransaction = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,14 +47,15 @@ export default function DropdownButton(props: TypeProps) {
   };
   const cobrancaTransacao = async () => {
     try {
-      const res = await axios.post(`https://urlteste/${props.id}`,
+      await axios.post(`https://httpbin.org/post/`,
         {
+          id: props.id,
           amount: dataTaxTransaction.amount,
           cobrancaPorTransacao: dataTaxTransaction.cobrancaPorTransacao,
           email: dataTaxTransaction.email
 
         },
-        { headers: { Authorization: `Bearer ${token}` } },
+        //  { headers: { Authorization: `Bearer ${token}` } },
       )
       //https://api.zsystems.com.br/marketplaces/3/cobranca-por-transacao
     } catch (error) {

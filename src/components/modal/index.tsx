@@ -19,7 +19,7 @@ export default function ModalMine(props: ModalTypes) {
   return (
     <>
       <Modal
-        className={`h-[35vh] ${props.useDropdownChangeParents === true && 'h-[30vh]'}  ${props.useTaxForTransaction === true && 'h-[90vh] lg:h-[40vh]'} max-w-[90vw] lg:max-w-[30vw]`}
+        className={`h-[35vh]  ${props.useDropdownChangeParents === true && 'h-[30vh]'}  ${props.useTaxForTransaction === true && 'h-[70vh] lg:h-[50vh]'} max-w-[90vw] lg:max-w-[30vw]`}
         isOpen={props.isOpen}
         onOpenChange={props.onOpenChange}
         placement='center'

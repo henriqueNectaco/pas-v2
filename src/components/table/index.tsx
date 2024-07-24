@@ -1,6 +1,6 @@
 import { formatarData } from '@/utils/dates';
 import { Spinner } from '@nextui-org/react';
-import { statusMarketplacesChilds, nullVerifiyer } from '@/utils/status';
+import { statusMarketplacesChilds, nullVerifiyer } from '@/utils/index';
 import DropDownMenuFilhos from '../marketplaces/dropdown/filhos';
 import React from 'react'
 type Dados = { [key: string]: string | number | boolean | any };

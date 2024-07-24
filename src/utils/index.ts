@@ -21,4 +21,39 @@ const thirtyDaysAgoGet = subDays(newDate, 30)
 export const thirtyDaysAgo = format(thirtyDaysAgoGet, 'yyyy-MM-dd')
 
 const previousThirtyDaysGet = subDays(newDate, 60)
-export const previousThirtyDays = format(previousThirtyDaysGet, 'yyyy-MM-dd') 
+export const previousThirtyDays = format(previousThirtyDaysGet, 'yyyy-MM-dd')
+
+
+
+
+export const statusPayment = (statusPaymentId: number) => {
+  switch (statusPaymentId) {
+    case 1:
+      return 'Pendente';
+    case 2:
+      return 'Pago';
+    case 3:
+      return 'Cancelado';
+    case 4:
+      return 'Estornado';
+    case 5:
+      return 'Pré Autorizado';
+    default:
+      return '-'
+  }
+}
+export const statusMarketplacesChilds = (status: number) => {
+  switch (status) {
+    case 2: return "Aprovado";
+    case 4: return "Desabilitado";
+  }
+}
+
+
+export const nullVerifiyer = (dataString: string) => {
+
+  switch (dataString) {
+    case '': return "Unknown"
+    default: return dataString
+  }
+}

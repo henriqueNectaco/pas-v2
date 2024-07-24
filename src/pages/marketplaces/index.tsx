@@ -1,5 +1,5 @@
 import { parseDate } from '@internationalized/date'
-import { getLastDayOfMonth, format } from '@/utils/dates'
+import { format } from '@/utils/dates'
 import ModalMine from '@/components/modal'
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import nextCookies from 'next-cookies'
@@ -17,11 +17,10 @@ import Router, { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header/index'
 import axios from 'axios'
-import { getServerSideDate } from '@/utils/reqs.js'
 import { CaretDown } from 'phosphor-react'
 import { toast } from 'sonner'
 import TableMarketPlaces from './table'
-import { responseDataResponse } from '@/utils/status'
+import { today } from '@/utils'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { token } = nextCookies(context)
@@ -49,9 +48,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 
 export default function Marketplace({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+
   const [value, setValue] = useState({
-    start: parseDate('2024-04-01'), // Data inicial
-    end: parseDate('2024-04-30'), // Último dia do mês
+    start: parseDate(today),
+    end: parseDate(today),
   })
   const [modalProps, setModalProps] = useState({
     useTaxForTransaction: false,
@@ -68,22 +68,28 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
   const [resData, setResData] = useState<Object>(data)
   const [state, setState] = useState('ativos')
   const handleReprocessAllSales = async () => {
-    try {
-      const res = await axios.post(`https://urltestepaireprocessartodas`,
+    try {//https://admin.zsystems.com.br/marketplaces
+      const res = await axios.post(`https://api.zsystems.com.br/marketplaces/reprocessar-pedidos`,
         { startDate: date.startDate, endDate: date.endDate },
         { headers: { Authorization: `Bearer ${token}` } },
       )
-      if (res.data.success === false) { }
+      if (res.data.success === true) {
+        toast.success('Adicionado a fila :)')
+      } else { toast.error('Algo de inesperado aconteceu') }
     } catch (error) {
       console.log(error)
     }
   }
+
   const handleImportAllSales = async () => {
-    try {
-      const res = await axios.post(`https://urldetestesimportartodas`,
+    try {//https://api.zsystems.com.br/marketplaces/importar-pedidos
+      const res = await axios.post(`https://api.zsystems.com.br/marketplaces/importar-pedidos`,
         { startDate: date.startDate, endDate: date.endDate },
         { headers: { Authorization: `Bearer ${token}` } },
       )
+      if (res.data.success === true) {
+        toast.success('Adicionado a fila :)')
+      } else { toast.error('Algo de inesperado aconteceu') }
     }
 
     catch (error) {
@@ -139,7 +145,12 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
     }
     auth()
   }, [])
-
+  useEffect(() => {
+    setDate({
+      startDate: format(value.start.toDate()),
+      endDate: format(value.end.toDate())
+    })
+  }, [value])
   return (
     <div className="  max-w-screen w-full   flex flex-col items-center bg-gray-200 ">
       <Header />

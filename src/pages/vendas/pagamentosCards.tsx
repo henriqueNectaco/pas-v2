@@ -1,5 +1,5 @@
 import React from 'react'
-import { statusPayment } from '@/utils/status'
+import { statusPayment } from '@/utils/index'
 import { formatarData } from '@/utils/dates'
 import { Button } from '@nextui-org/button'
 type typeProps = {

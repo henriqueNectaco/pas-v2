@@ -17,10 +17,6 @@ export const formatDate = (date: Date) => {
   const year = date.getFullYear()
   return `${day}-${month}-${year}`
 }
-export const formatDatePicker = (date: Date) => {
-  const options = { day: '2-digit', month: '2-digit', year: 'numeric' }
-  return new Intl.DateTimeFormat('pt-BR', options).format(date)
-}
 
 export const getLastDayOfMonth = (date: Date) => {
   const year = date.getFullYear()
