@@ -2,7 +2,7 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
-import { typeFilePond } from '@/types/marketplaces/cadastrar';
+import { typeFilePond } from '@/types/marketplaces/marketplaces';
 import axios from 'axios';
 import { Button } from '@nextui-org/button';
 
@@ -61,7 +61,7 @@ export default function FilePonds(props: typeFilePond) {
         allowReorder={true}
         maxFiles={1}
         server={null}
-        name="files"
+        name={props.name}
         oninit={handleInit}
         onupdatefiles={handleUpdateFiles}
         labelIdle={`Arraste ou solte o arquivo de ${props.titulo} <span class="filepond--label-action">Navegar</span>`}

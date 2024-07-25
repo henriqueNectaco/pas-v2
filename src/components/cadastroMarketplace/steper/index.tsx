@@ -1,5 +1,5 @@
 import { Stepper } from 'react-form-stepper'
-import { StepperTypes, typeStep } from '@/types/marketplaces/stepper'
+import { StepperTypes, typeStep } from '@/types/marketplaces/marketplaces'
 
 export default function StepperComponent(props: StepperTypes) {
   return (

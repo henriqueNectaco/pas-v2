@@ -68,7 +68,7 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
   const [resData, setResData] = useState<Object>(data)
   const [state, setState] = useState('ativos')
   const handleReprocessAllSales = async () => {
-    try {//https://admin.zsystems.com.br/marketplaces
+    try {
       const res = await axios.post(`https://api.zsystems.com.br/marketplaces/reprocessar-pedidos`,
         { startDate: date.startDate, endDate: date.endDate },
         { headers: { Authorization: `Bearer ${token}` } },
