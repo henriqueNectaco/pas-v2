@@ -219,7 +219,7 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
                 <DropdownMenu
                   aria-label="Action event example"
                   onAction={(key) => {
-                    setState(key:string)
+                    setState(key)
                   }}
                   color="primary"
                   variant="solid"
@@ -255,7 +255,7 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
         isOpen={isOpen}
         onOpenChange={onOpenChange}
       />
-    </div >
+    </div>
   )
 }
 

@@ -3,18 +3,16 @@ import logo from '../assets/logo.svg'
 import { Input, Button, Checkbox } from '@nextui-org/react'
 import { useForm } from 'react-hook-form'
 import React, { useState, useEffect } from 'react'
-import { z } from 'zod'
+import { toast } from 'sonner'
 import axios from 'axios'
-import { zodResolver } from '@hookform/resolvers/zod'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
-
-import { toast } from 'sonner'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 const Formschema = z.object({
   email: z.string().email(),
   senha: z.string(),
 })
-
 type FormschemaData = z.infer<typeof Formschema>
 
 export default function Home() {
