@@ -85,10 +85,10 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
     try {//https://api.zsystems.com.br/marketplaces/importar-pedidos
       const res = await axios.post(`https://api.zsystems.com.br/marketplaces/importar-pedidos`,
         { startDate: date.startDate, endDate: date.endDate },
-        { headers: { Authorization: `Bearer ${token}` } },
+        //{ headers: { Authorization: `Bearer ${token}` } },
       )
       if (res.data.success === true) {
-        toast.success('Adicionado a fila :)')
+        toast.success('Adicionado a fila ')
       } else { toast.error('Algo de inesperado aconteceu') }
     }
 
