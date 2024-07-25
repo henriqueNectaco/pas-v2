@@ -9,7 +9,7 @@ import JSONPretty from 'react-json-pretty'
 import FormVendas from './form'
 import { toast } from 'sonner'
 import Router from 'next/router'
-import { ZoopTransaction, Pedido } from '@/types/vendas/vendas'
+import { ZoopTransaction, Pedido } from '@/types/vendas'
 import { apiUrl } from '../api/useApi'
 import PagamentosCards from './pagamentosCards'
 
@@ -19,7 +19,7 @@ export default function Vendas() {
   const [isLoadingSearchSale, setIsLoadingSearchSale] = useState<boolean>(false)
   const [isLoadingReprocessSale, setIsLoadingReprocessSale] = useState<boolean>(false)
   const [vendaId, setVendaId] = useState<string | undefined>(undefined)
-  const [responseData, setResponseData] = useState<Pedido | null>(null)
+  const [responseData, setResponseData] = useState<Pedido | undefined>(null)
   const [responseZoopTransaction, setResponseZoopTransaction] =
     useState<ZoopTransaction>(null)
   const token = Cookies.get('token')

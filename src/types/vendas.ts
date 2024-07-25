@@ -1,4 +1,11 @@
 import { Dispatch, SetStateAction } from 'react'
+interface pagamento {
+  taxa: number
+  markup: number
+  data_recebimento: string
+  valor_recebido: number
+  valor: number
+}
 export interface Pedido {
   id: string
   status_pedido: {
@@ -13,27 +20,18 @@ export interface Pedido {
   }
   valor_bruto: number
   valor_liquido: number
-  pagamentos: [
-    {
-      taxa: number
-      markup: number
-      data_recebimento: string
-      valor_recebido: number
-      valor: number
-      // Outras propriedades se necessário0,,,,,,,,,,,,,,,,,,
-    },
-  ]
+  pagamentos: undefined | pagamento[]
   parcelas: number
   // Outras propriedades se necessário
 }
 
 export interface ZoopTransaction {
-  created_at: Date
+  created_at: Date; // A data é geralmente uma string no formato ISO
   payment_method: {
-    card_brand: string
+    card_brand: string;
     // Outras propriedades se necessário
-  }
-  payment_type: string
+  };
+  payment_type: string;
   // Outras propriedades se necessário
 }
 export interface typePagament {
