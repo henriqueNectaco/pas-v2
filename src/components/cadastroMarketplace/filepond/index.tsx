@@ -2,7 +2,7 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
-import { typeFilePond } from '@/types/marketplaces/marketplaces';
+import { typeFilePond } from '@/types/marketplaces';
 import axios from 'axios';
 import { Button } from '@nextui-org/button';
 
@@ -16,16 +16,23 @@ const FilePond = dynamic(() => import('react-filepond').then(module => {
 }), { ssr: false });
 
 export default function FilePonds(props: typeFilePond) {
-  const [files, setFiles] = useState([]);
+
 
   const handleInit = () => {
     console.log("FilePond instance has initialised");
   };
 
   const handleUpdateFiles = (fileItems) => {
-    setFiles(fileItems.map(fileItem => fileItem.file));
+    props.setFiles(fileItems.map(fileItem => fileItem.file));
   };
 
+  const uploadjson = async () => {
+    try {
+      await axios.post('http://localhost:4000/cadastromarketplace')
+    } catch (error) {
+      console.error(error)
+    }
+  }
   const upload = async () => {
     if (files.length === 0) {
       console.error("No file selected");
@@ -56,7 +63,7 @@ export default function FilePonds(props: typeFilePond) {
   return (
     <div className="h-full">
       <FilePond
-        files={files}
+        files={props.files}
         allowMultiple={true}
         allowReorder={true}
         maxFiles={1}
@@ -66,7 +73,7 @@ export default function FilePonds(props: typeFilePond) {
         onupdatefiles={handleUpdateFiles}
         labelIdle={`Arraste ou solte o arquivo de ${props.titulo} <span class="filepond--label-action">Navegar</span>`}
       />
-      <Button onClick={upload}>Upload</Button>
     </div>
   );
 }
+//

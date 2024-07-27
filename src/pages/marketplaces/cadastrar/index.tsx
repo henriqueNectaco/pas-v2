@@ -7,6 +7,9 @@ import axios from 'axios'
 
 export default function CadastrarMarketplaces() {
   const [activeStep, setActiveStep] = useState<number>(0)
+  const [filesLoader, setFilesLoader] = useState([])
+  const [filesLogo, setFilesLogo] = useState([])
+  const [filesFavIcon, setFilesFavIcon] = useState([])
   const [data, setData] = useState({
     nome: '',
     zoopMarketplaceId: '',
@@ -17,7 +20,8 @@ export default function CadastrarMarketplaces() {
     cobrancaPorTransacao: false,
     carne: false,
     taxaAdministrativa: false,
-    color: undefined
+    color: undefined,
+    logo: undefined,
   });
   const [stepsData] = useState([
     { label: 'Dados Marketplace', active: activeStep === 0 },
@@ -68,10 +72,10 @@ export default function CadastrarMarketplaces() {
         handleNextStep()
         break;
       case 1:
-        handleNextStep()
+        handleCadastrarMarketplace()
         break;
       case 2:
-        handleCadastrarMarketplace()
+        handleNext()
         break;
       default:
         toast.warning('Algo inesperado aconteceu')
@@ -80,10 +84,22 @@ export default function CadastrarMarketplaces() {
   useEffect(() => {
     console.log(data)
   }, [data])
+  useEffect(() => {
+    setData((prev) => ({
+      ...prev,
+      logo: filesLogo[0],
+      loader: filesLoader[0],
+      favIcon: filesFavIcon[0]
+
+    }))
+  }, [filesLogo, filesLoader, filesFavIcon])
   return (
     <div className="max-w-screen     bg-gray-200 h-screen">
       <Header />
-      <CadastrarMarketplace isLoading={false} onClickNext={handleNext} handlePrevStep={handlePrevStep} data={data} onChange={handleChange} activeStep={activeStep} stepsData={stepsData} />
+      <CadastrarMarketplace
+        filesLogo={filesLogo} setFilesLogo={setFilesLogo}
+        filesLoader={filesLoader} setFilesLoader={setFilesLoader} filesFavIcon={filesFavIcon} setFilesFavIcon={setFilesFavIcon}
+        isLoading={false} onClickNext={handleNext} handlePrevStep={handlePrevStep} data={data} onChange={handleChange} activeStep={activeStep} stepsData={stepsData} />
     </div>
   )
 }

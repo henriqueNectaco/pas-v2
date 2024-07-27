@@ -15,7 +15,7 @@ import {
   CardFooter,
 } from '@/components/ui/card'
 import { Checkbox } from '@nextui-org/checkbox'
-import { typeProps } from '@/types/marketplaces/marketplaces'
+import { typeProps } from '@/types/marketplaces'
 import { Button } from '@nextui-org/button'
 import { Input } from '@nextui-org/input'
 import React from 'react'
@@ -126,32 +126,38 @@ export function CadastrarMarketplace(props: typeProps) {
               </>
             ) : null}
             {props.activeStep === 1 ? (
-              <Input placeholder="teste" onChange={props.onChange} name='color' type="color" />
-            ) : null}
-            {props.activeStep === 2 ? (<>
-              <div className='border-2 lg:grid-cols-3 lg:grid h-full'>
-                <div className='h-full'>
-                  <h1 className='flex justify-center items-center font-bold'>Logo</h1>
-                  <FilePonds titulo='teste bro' />
-                </div>
-                <div className='h-full'>
-                  <h1 className='flex justify-center items-center font-bold'>Logo</h1>
-                  <FilePonds titulo='teste bro' />
-                </div>
-                <div className='h-full'>
-                  <h1 className='flex justify-center items-center font-bold'>Logo</h1>
+              <>
+                <div className=' lg:grid-cols-3 lg:grid h-full '>
+                  <div className='h-full p-2'>
+                    <h1 className='flex justify-center items-center font-bold'>Logo</h1>
+                    <FilePonds titulo=' Logo' files={props.filesLogo} setFiles={props.setFilesLogo} />
+                  </div>
+                  <div className='h-full p-2'>
+                    <h1 className='flex justify-center items-center font-bold'>Loader</h1>
+                    <FilePonds titulo='Loader' files={props.filesLoader} setFiles={props.setFilesLoader} />
+                  </div>
+                  <div className='h-full p-2'>
+                    <h1 className='flex justify-center items-center font-bold'>FavIcon</h1>
 
-                  <FilePonds titulo='teste bro' />
+                    <FilePonds titulo='FavIcon' files={props.filesFavIcon} setFiles={props.setFilesFavIcon} />
+                  </div>
+
                 </div>
-              </div>
-              <Button >teste</Button>
+                <div className=' lg:w-2/5 w-full'>
+                  <span>Cor do estabelecimento</span>
+                  <Input variant='flat' onChange={props.onChange} name='color' type="color" />
+                </div>
+              </>) : null}
+            {props.activeStep === 2 ? (<>
+
+
             </>
             ) : null}
             {props.activeStep === 3 ? <p>step 4</p> : null}
           </form>
         </CardContent>
         <CardFooter className="flex justify-center lg:justify-end space-x-4">
-          <Button
+          {props.activeStep !== 0 && (<Button
             variant="bordered"
             radius="sm"
             color="primary"
@@ -159,7 +165,8 @@ export function CadastrarMarketplace(props: typeProps) {
             onClick={props.handlePrevStep}
           >
             Voltar
-          </Button>
+          </Button>)}
+
           <Button
             isLoading={props.isLoading}
             onClick={props.onClickNext}

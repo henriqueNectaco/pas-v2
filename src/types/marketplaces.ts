@@ -44,6 +44,9 @@ export type typeFilePond = {
 
 }
 export type typeProps = {
+  setFilesLogo: any
+  setFilesFavIcon: any
+  setFilesLoader: any
   data: {
     nome: string
     zoopMarketplaceId: string
