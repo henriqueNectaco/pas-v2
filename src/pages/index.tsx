@@ -94,14 +94,14 @@ export default function Home() {
           />
         </div>
         <div className="border-l-2  border-gray-300 rounded-r-2xl lg:col-start-2 lg:col-end-3 bg-white max-w-screen-xl mx-auto w-full h-full lg:flex sm:flex sm:flex-col sm:items-center sm:justify-center lg:flex-col lg:items-center lg:justify-center lg:p-12 p-4">
-          <div className="flex flex-col items-center justify-center lg:w-full lg:h-full max-w-screen-xl mx-auto w-full m-0 h-full sm:h-full p-4 lg:pr-12 lg:pl-12">
+          <div className="flex flex-col items-center justify-center  lg:w-full lg:h-full max-w-screen-xl mx-auto w-full m-0 h-full sm:h-full p-4 ">
             <h1 className="text-3xl lg:text-4xl">Entrar</h1>
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="  mt-2 w-full p-4 lg:p-0 ml-0 mr-0 h-full flex flex-col items-center justify-start lg:justify-center"
+              className="  mt-2 w-full p-4   h-full flex flex-col items-center justify-start lg:justify-center "
             >
-              <div className=" w-full lg:p-4">
-                <label htmlFor="email" className="block mb-2 lg:text-base">
+              <div className=" w-full lg:p-4 flex flex-col gap-3">
+                <label htmlFor="email" className="block lg:text-base">
                   Email:
                 </label>
                 <Input
@@ -111,8 +111,8 @@ export default function Home() {
                   onChange={handleEmailChange}
                 />
               </div>
-              <div className="w-full lg:p-4">
-                <label htmlFor="password" className="block mb-2 lg:text-base">
+              <div className="w-full lg:p-4 flex flex-col gap-3 ">
+                <label htmlFor="password" className="  lg:text-base">
                   Senha:
                 </label>
                 <Input
@@ -122,7 +122,7 @@ export default function Home() {
                   onChange={handlePasswordChange}
                 />
               </div>
-              <div className=" lg:p-4 lg:h-[15vh] h-1/4 w-full flex flex-col items-center justify-center lg:justify-end  gap-2 lg:gap-4">
+              <div className=" lg:p-4 lg:h-[15vh] h-1/4 w-full flex flex-col items-center justify-center lg:justify-end  gap-2 lg:gap-4 border">
                 <Button
                   type="submit"
                   variant="ghost"

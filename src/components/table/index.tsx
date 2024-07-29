@@ -17,12 +17,13 @@ type marketplaceProps = {
 };
 
 export default function Table(props: marketplaceProps) {
+  const stylesRows = 'p-4 pl-6 border-b flex items-center justify-start'
   return (
     <div className="max-w-screen w-full h-full">
       <div className="overflow-auto rounded-2xl bg-white shadow hidden md:hidden lg:hidden xl:block border max-w-screen">
         <div className={`border-b-3 border-b-black w-full lg:grid lg:grid-cols-${props.array.length} `}>
           {props.array.map((i: string) => (
-            <div key={i} className="w-full p-6  pb-4 rounded-md flex justify-start items-center">
+            <div key={i} className="w-full p-6 pt-4 pb-4 rounded-md flex justify-start items-center">
               <p className="tracking-wide text-md font-semibold">{i}</p>
             </div>
           ))}
@@ -33,13 +34,13 @@ export default function Table(props: marketplaceProps) {
           <div className={`flex flex-col lg:grid ${props.currentPage === 'filhos' ? 'lg:grid-cols-6' : `lg:grid-cols-${props.ColsBody}`} max-w-screen `}>
             {props.data.map((dados: Dados, index: number) => (
               <React.Fragment key={index}>
-                <div className="p-4 pl-6 border-b ">
+                <div className={stylesRows}>
                   <p className='text-sm'>{dados[props.contentArray[0]]}</p>
                 </div>
-                <div className="p-4 pl-6 border-b ">
+                <div className={stylesRows}>
                   <p className='text-sm'>{nullVerifiyer(dados[props.contentArray[1]])}</p>
                 </div>
-                <div className="p-4 pl-6 border-b ">
+                <div className={stylesRows}>
                   {props.currentPage === 'filhos' ? (
                     <p className={` text-sm ${statusMarketplacesChilds(dados[props.contentArray[2]]) === 'Aprovado' ? 'text-green-500' : 'text-yellow-400'}`}>
                       {statusMarketplacesChilds(dados[props.contentArray[2]])}
@@ -48,11 +49,11 @@ export default function Table(props: marketplaceProps) {
                     <p>{dados[props.contentArray[2]]}</p>
                   )}
                 </div>
-                <div className="p-4 pl-6 border-b ">
+                <div className={stylesRows}>
                   <p className='text-sm'>{formatarData(dados[props.contentArray[3]])}</p>
                 </div>
                 {props.currentPage === 'filhos' && (
-                  <div className="text-blue-600 pl-6 p-4 border-b ">
+                  <div className="text-blue-600 pl-6 p-4 border-b flex items-center justify-start">
                     <p className='text-sm'>{dados.usuarios_estabelecimentos[0]?.usuario.email}</p>
                   </div>
                 )}
@@ -62,7 +63,7 @@ export default function Table(props: marketplaceProps) {
                   </div>
                 )}
                 {props.currentPage === 'estabelecimentosFilhos' && (
-                  <div className="p-4 border-b flex items-center justify-end border-gray-300">
+                  <div className="p-4 border-b flex items-start justify-end border-gray-300">
                     <DropDownMenuFilhos fullWidth={false} items={['Trocar de parent', 'Reprocessar pedidos']} id={dados.id} MarketplacesArray={props.MarketplacesArray} />
                   </div>
                 )}
