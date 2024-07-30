@@ -1,4 +1,3 @@
-import Header from '../../components/Header/index'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import Cookies from 'js-cookie'
@@ -62,7 +61,7 @@ export default function Crons({ data }: InferGetServerSidePropsType<typeof getSe
   }, [])
   return (
     <div className="h-full max-w-screen w-full text-black-500">
-      <Header />
+
       <div className="lg:p-6 p-3 max-w-screen space-y-2 flex flex-col h-full bg-gray-200">
         <>
           {!crons.length ? (

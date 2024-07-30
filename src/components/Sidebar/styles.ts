@@ -9,6 +9,7 @@ export const Container = styled.div`
   width: 300px;
   left: ${props => props.sidebar ? '0' : '-100%'};
   animation: showSidebar .4s;
+  z-index: 9999; /* Adicionei z-index ao Container */
 
   > svg {
     position: fixed;
@@ -18,6 +19,7 @@ export const Container = styled.div`
     margin-top: 32px;
     margin-left: 32px;
     cursor: pointer;
+    z-index: 10000; /* Mantenha z-index alto para o ícone também */
   }
 
   @keyframes showSidebar {

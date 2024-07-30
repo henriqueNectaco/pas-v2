@@ -1,12 +1,15 @@
 import React from 'react'
 import { Container } from './styles'
+import Link from 'next/link'
 
-const SidebarItem = ({ Icon, Text, onClick }) => {
+const SidebarItem = ({ Icon, Text, href }) => {
   return (
-    <Container onClick={onClick}>
-      <Icon />
-      {Text}
-    </Container>
+    <Link href={href || "#"} passHref>
+      <Container >
+        <Icon />
+        {Text}
+      </Container>
+    </Link>
   )
 }
 

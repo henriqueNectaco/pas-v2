@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router'
-import Header from '@/components/Header'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import axios from 'axios'
@@ -75,7 +74,6 @@ https://api.zsystems.com.br/marketplaces/${id}/filhos`,
 
   return (
     <div className="h-full max-w-screen w-full bg-gray-200 flex flex-col items-center  border-2 ">
-      <Header />
       <>
         {!marketplacesChilds ? (
           <Spinner size="lg" color="primary" />

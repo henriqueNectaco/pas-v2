@@ -1,5 +1,8 @@
 import { format, subDays } from "date-fns"
 import { toast } from "sonner"
+import { useRouter } from 'next/router'
+import Cookies from 'js-cookie'
+
 
 export const responseDataResponse = (toastStringError: string, resData: any, toastStringSucces?: string) => {
   if (resData === false) {
@@ -56,4 +59,10 @@ export const nullVerifiyer = (dataString: string) => {
     case '': return "Unknown"
     default: return dataString
   }
+}
+
+
+export const LogOut = () => {
+  Cookies.remove('token') // ou localStorage.removeItem('token');
+
 }

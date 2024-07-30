@@ -310,7 +310,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
 
   return (
     <div className=" h-screen max-w-screen flex flex-col items-center  ">
-      <Header />
+
       <div className=" h-screen    w-full  max-w-screen flex flex-col items-center justify-start  lg:pt-10 ">
         <DashComponent
           data={data}

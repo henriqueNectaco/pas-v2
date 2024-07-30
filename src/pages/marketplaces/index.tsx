@@ -15,7 +15,6 @@ import {
 import Cookies from 'js-cookie'
 import Router, { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import Header from '../../components/Header/index'
 import axios from 'axios'
 import { CaretDown } from 'phosphor-react'
 import { toast } from 'sonner'
@@ -153,7 +152,7 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
   }, [value])
   return (
     <div className="  max-w-screen w-full   flex flex-col items-center bg-gray-200 ">
-      <Header />
+
       <div className="w-full flex flex-col items-center  h-full lg:p-6 p-4 space-y-2 lg:space-y-4  mt-4">
         <div className=" w-full flex flex-col lg:grid lg:grid-cols-4 boder-2 gap-2  ">
           <div className=" flex flex-col lg:flex-row lg:col-span-2 gap-2 ">

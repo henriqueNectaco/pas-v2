@@ -1,5 +1,5 @@
 import FilterEstabeleciments from '@/components/marketplaces/filterEstabeleciments';
-import Header from '@/components/Header/index';
+
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
@@ -10,6 +10,7 @@ import { Spinner } from '@nextui-org/react';
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import nextCookies from 'next-cookies'
 import Paginator from '@/components/marketplaces/pagination';
+import NewHeader from '@/components/newHeader';
 
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -121,15 +122,13 @@ export default function Estabelecimentos({ dataEstabeleciments, totalPages }: In
       );
       if (res.data.success === true) {
         setEstabeleciments(res.data.estabelecimentos);
-        console.log('usou o handlefilter')
+
       }
     } catch (error) {
       console.error(error);
     }
   };
-  const handleFilterRules = () => {
 
-  }
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setData((prevData) => ({
@@ -161,7 +160,7 @@ export default function Estabelecimentos({ dataEstabeleciments, totalPages }: In
   }, [isFirstRenderization])
   return (
     <div className="max-w-screen w-full  bg-gray-300">
-      <Header />
+      <NewHeader />
       <div className="w-full p-4 bg-gray-200 h-full ">
         <FilterEstabeleciments
           onChange={handleChange}
