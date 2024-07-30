@@ -66,3 +66,4 @@ export const LogOut = () => {
   Cookies.remove('token') // ou localStorage.removeItem('token');
 
 }
+

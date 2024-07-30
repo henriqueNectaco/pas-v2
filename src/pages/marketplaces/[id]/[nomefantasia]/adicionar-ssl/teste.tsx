@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router'
-import Header from '@/components/Header/index'
 import { Input } from '@nextui-org/input'
 import { useEffect } from 'react'
 export default function Home() {
@@ -10,7 +9,7 @@ export default function Home() {
   })
   return (
     <div className="max-w-screen w-full max-h-screen h-[100vh]  bg-gray-50 lg:overflow-y-hidden overflow-y-hidden">
-      <Header />
+
       <div className='pb-16  p-6  lg:pb-8  lg:p-12 md:pb-8  flex flex-col bg-gray-300 h-screen max-h-screen items-center  justify-center lg:justify-start'>
 
 

@@ -4,8 +4,9 @@ import { parseDate } from "@internationalized/date";
 
 type typeProps = {
   value: any
-  setValue: any
   label: string
+  onChange: any
+  className: string
 }
 export default function DatePickerComponent(props: typeProps) {
 
@@ -15,7 +16,7 @@ export default function DatePickerComponent(props: typeProps) {
   return (
 
 
-    <DatePicker color="primary" variant="faded" labelPlacement="outside" size="lg" className="w-full lg:w-2/4" label={props.label} value={props.value} onChange={props.onChange} />
+    <DatePicker color="primary" variant="faded" labelPlacement="outside" size="lg" className={props.className} label={props.label} value={props.value} onChange={props.onChange} />
 
 
   );

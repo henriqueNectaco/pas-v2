@@ -38,7 +38,7 @@ export default function Paginator(props: paginatorProps) {
           color="secondary"
           page={props.page}
           size="lg"
-          onChange={() => { props.onChangeCurrentPage, props.setIsFirstRenderization(false) }}
+          onChange={props.onChangeCurrentPage}
         />
         {props.page < props.total && (
           <Button

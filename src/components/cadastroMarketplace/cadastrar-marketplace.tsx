@@ -30,7 +30,7 @@ export function CadastrarMarketplace(props: typeProps) {
 
 
   return (
-    <div className="flex flex-col items-center mt-8 max-h-screen bg-gray-200 p-4">
+    <div className="flex flex-col items-center  max-h-screen bg-gray-200 p-4 lg:pt-12">
       <Card className="w-full max-w-7xl bg-white ">
         <CardHeader className="pb-4">
           <CardTitle className="flex items-center justify-center">

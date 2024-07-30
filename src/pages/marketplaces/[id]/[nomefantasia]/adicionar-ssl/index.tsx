@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, CardHeader, CardBody, CardFooter, Divider, Link, Image, Button, Input } from "@nextui-org/react";
-import Header from "@/components/Header";
+
 import { Stepper } from "react-form-stepper";
 import StepperComponent from "@/components/cadastroMarketplace/steper";
 
@@ -11,7 +11,7 @@ export default function App() {
     { label: 'Arquivos', active: activeStep === 1 },
   ])
   return (<div className="max-w-screen w-full h-screen overflow-y-hidden">
-    <Header />
+
     <div className="bg-gray-200 h-full flex flex-col items-center justify-start lg:p-12 p-4 ">
       <Card className="lg:w-4/5 w-full  h-5/6 lg:h-4/6">
         <CardHeader className="flex items-center justify-center">

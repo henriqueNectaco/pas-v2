@@ -1,4 +1,4 @@
-import Header from '@/components/Header'
+
 import Steperr from '@/components/cadastroMarketplace/steper'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
@@ -95,7 +95,7 @@ export default function CadastrarMarketplaces() {
   }, [filesLogo, filesLoader, filesFavIcon])
   return (
     <div className="max-w-screen     bg-gray-200 h-screen">
-      <Header />
+
       <CadastrarMarketplace
         filesLogo={filesLogo} setFilesLogo={setFilesLogo}
         filesLoader={filesLoader} setFilesLoader={setFilesLoader} filesFavIcon={filesFavIcon} setFilesFavIcon={setFilesFavIcon}

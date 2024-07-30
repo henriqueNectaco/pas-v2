@@ -10,7 +10,6 @@ import { Spinner } from '@nextui-org/react';
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import nextCookies from 'next-cookies'
 import Paginator from '@/components/marketplaces/pagination';
-import NewHeader from '@/components/newHeader';
 
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -122,6 +121,7 @@ export default function Estabelecimentos({ dataEstabeleciments, totalPages }: In
       );
       if (res.data.success === true) {
         setEstabeleciments(res.data.estabelecimentos);
+        setTotalPagess(res.data.pagination.pages)
 
       }
     } catch (error) {
@@ -147,20 +147,16 @@ export default function Estabelecimentos({ dataEstabeleciments, totalPages }: In
 
   };
 
+
   useEffect(() => {
-    auth()
-  }, [])
-  useEffect(() => {
-    if (isFirstRenderization === false) {
-      handleFilter();
-    }
+
+    handleFilter();
   }, [page]);
   useEffect(() => {
     console.log('mudou o first ' + isFirstRenderization)
   }, [isFirstRenderization])
   return (
     <div className="max-w-screen w-full  bg-gray-300">
-      <NewHeader />
       <div className="w-full p-4 bg-gray-200 h-full ">
         <FilterEstabeleciments
           onChange={handleChange}
