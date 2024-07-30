@@ -13,7 +13,7 @@ import { FaBars, FaUserAlt } from 'react-icons/fa'
 import Sidebar from '../Sidebar'
 import { SignOut, TextAlignJustify, UserCircle } from 'phosphor-react'
 import { LogOut } from 'lucide-react'
-
+import Link from 'next/link'
 export default function NewHeader() {
   const [sidebar, setSidebar] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
@@ -21,10 +21,15 @@ export default function NewHeader() {
   const showSiderbar = () => setSidebar(!sidebar)
 
   return (<>
-    <div className={` flex bg-blue-600 shadow-[0_0_7px_3px] ${sidebar ? 'hidden' : 'block'}`}>
-      <div className=' text-white w-1/2 flex items-center p-6'><TextAlignJustify size={40} onClick={showSiderbar} className='hover:cursor-pointer' /></div>
-
-      <div className=' flex items-center w-1/2 justify-end p-6'>
+    <div className={`  bg-blue-600 grid grid-cols-5 shadow-[0_0_7px_3px] `}>
+      <div className=' text-white  flex items-center p-6 col-span-1'><TextAlignJustify size={40} onClick={showSiderbar} className='hover:cursor-pointer' /></div>
+      <div className='col-span-3 border flex flex-row p-6 items-center gap-4 justify-center'>
+        <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/dashboard`}>Dashboard</Link>
+        <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/vendas`}>Vendas</Link>
+        <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/marketplaces`}>Marketplaces</Link>
+        <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/crons`}>Crons</Link>
+      </div>
+      <div className=' flex col-span-1 items-center  justify-end p-6'>
         <SignOut color='white' size={32} className='hover:cursor-pointer' onClick={onOpen} />
         {/* <UserCircle color='white' size={32} className='hover:cursor-pointer' onClick={onOpen} /> */}
       </div>

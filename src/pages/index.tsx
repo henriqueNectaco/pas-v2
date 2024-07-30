@@ -122,7 +122,7 @@ export default function Home() {
                   onChange={handlePasswordChange}
                 />
               </div>
-              <div className=" lg:p-4 lg:h-[15vh] h-1/4 w-full flex flex-col items-center justify-center lg:justify-end  gap-2 lg:gap-4 border">
+              <div className=" lg:p-4 lg:h-[15vh] h-1/4 w-full flex flex-col items-center justify-center lg:justify-end  gap-2 lg:gap-4 ">
                 <Button
                   type="submit"
                   variant="ghost"
