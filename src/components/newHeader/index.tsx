@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Cookies from 'js-cookie'
 import {
   Button,
   useDisclosure,
@@ -14,21 +15,26 @@ import Sidebar from '../Sidebar'
 import { SignOut, TextAlignJustify, UserCircle } from 'phosphor-react'
 import { LogOut } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 export default function NewHeader() {
   const [sidebar, setSidebar] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const showSiderbar = () => setSidebar(!sidebar)
-
+  const router = useRouter()
+  const LogOut = () => {
+    Cookies.remove('token') // ou localStorage.removeItem('token');
+    router.push('/')
+  }
   return (
     <>
       <div className={`  bg-blue-600 flex flex-row lg:grid lg:grid-cols-5 shadow-[0_0_7px_3px] `}>
         <div className=' text-white  flex items-center p-6 lg:col-span-1 w-full'><TextAlignJustify size={40} onClick={showSiderbar} className='hover:cursor-pointer' /></div>
         <div className='hidden col-span-3  lg:flex flex-row p-6 items-center gap-6 justify-center'>
-          <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/dashboard`} className='text-lg'>Dashboard</Link>
-          <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/vendas`} className='text-lg'>Vendas</Link>
-          <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/marketplaces`} className='text-lg'>Marketplaces</Link>
-          <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/crons`} className='text-lg'>Crons</Link>
+          <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/dashboard`} className='text-lg text-white'>Dashboard</Link>
+          <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/vendas`} className='text-lg text-white'>Vendas</Link>
+          <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/marketplaces`} className='text-lg text-white'>Marketplaces</Link>
+          <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/crons`} className='text-lg text-white'>Crons</Link>
         </div>
         <div className=' flex col-span-1 items-center  justify-end  w-full  p-6'>
           <SignOut color='white' size={32} className='hover:cursor-pointer' onClick={onOpen} />
