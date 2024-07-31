@@ -9,7 +9,12 @@ import {
 import SidebarItem from '../SidebarItem'
 import { useRouter } from 'next/router'
 
-const Sidebar = ({ active, onClick }) => {
+type SidebarProps = {
+  active: boolean
+  onClick: () => void
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ active, onClick }) => {
   const router = useRouter();
 
   const closeSidebar = () => {

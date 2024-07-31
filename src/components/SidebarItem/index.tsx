@@ -1,8 +1,13 @@
 import React from 'react'
 import { Container } from './styles'
 import Link from 'next/link'
-
-const SidebarItem = ({ onClick, Icon, Text, href }) => {
+type SidebarItemProps = {
+  onClick: () => void
+  Text: string
+  href: string
+  Icon: any
+}
+const SidebarItem: React.FC<SidebarItemProps> = ({ onClick, Icon, Text, href }) => {
   return (
     <Link href={href || "#"} passHref onClick={onClick}>
       <Container >

@@ -21,7 +21,7 @@ export default function FormVendas(props: FormVendasTypes) {
 
         </div>
 
-        <div className="flex   items-center justify-center lg:justify-around gap-2   w-5/6 lg:w-3/6   mt-4 lg:mt-6">
+        <div className="flex   items-center justify-center  gap-2   w-5/6 lg:w-3/6   mt-4 lg:mt-6">
           <Button
             onClick={props.handleSearch}
             color="primary"

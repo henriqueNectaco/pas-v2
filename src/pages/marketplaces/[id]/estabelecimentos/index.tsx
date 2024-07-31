@@ -146,11 +146,11 @@ export default function Estabelecimentos({ dataEstabeleciments, totalPages }: In
     setPage(1)
 
   };
-
+  useEffect(() => { setIsFirstRenderization(false) }, [])
 
   useEffect(() => {
 
-    handleFilter();
+    if (isFirstRenderization === false) { handleFilter(); }
   }, [page]);
   useEffect(() => {
     console.log('mudou o first ' + isFirstRenderization)
