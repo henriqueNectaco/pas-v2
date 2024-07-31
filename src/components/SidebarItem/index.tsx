@@ -2,9 +2,9 @@ import React from 'react'
 import { Container } from './styles'
 import Link from 'next/link'
 
-const SidebarItem = ({ Icon, Text, href }) => {
+const SidebarItem = ({ onClick, Icon, Text, href }) => {
   return (
-    <Link href={href || "#"} passHref>
+    <Link href={href || "#"} passHref onClick={onClick}>
       <Container >
         <Icon />
         {Text}

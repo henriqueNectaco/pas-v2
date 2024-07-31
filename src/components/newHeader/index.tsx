@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Cookies from 'js-cookie'
+
 import {
   Button,
   useDisclosure,
@@ -41,7 +42,7 @@ export default function NewHeader() {
           {/* <UserCircle color='white' size={32} className='hover:cursor-pointer' onClick={onOpen} /> */}
         </div>
       </div>
-      {sidebar && <Sidebar active={setSidebar} />}
+      {sidebar && <Sidebar active={setSidebar} onClick={showSiderbar} />}
       <>
         <Modal
           isOpen={isOpen}

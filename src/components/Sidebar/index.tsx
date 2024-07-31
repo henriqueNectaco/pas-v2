@@ -9,7 +9,7 @@ import {
 import SidebarItem from '../SidebarItem'
 import { useRouter } from 'next/router'
 
-const Sidebar = ({ active }) => {
+const Sidebar = ({ active, onClick }) => {
   const router = useRouter();
 
   const closeSidebar = () => {
@@ -20,10 +20,10 @@ const Sidebar = ({ active }) => {
     <Container sidebar={active}>
       <FaTimes onClick={closeSidebar} />
       <Content>
-        <SidebarItem Icon={FaChartBar} Text="Dashboard" href={`${process.env.NEXT_PUBLIC_BASE_URL}/dashboard`} />
-        <SidebarItem Icon={FaCartPlus} Text="Vendas" href={`${process.env.NEXT_PUBLIC_BASE_URL}/vendas`} />
-        <SidebarItem Icon={FaLaptopHouse} Text="Marketplaces" href={`${process.env.NEXT_PUBLIC_BASE_URL}/marketplaces`} />
-        <SidebarItem Icon={FaFolderOpen} Text="Crons" href={`${process.env.NEXT_PUBLIC_BASE_URL}/crons`} />
+        <SidebarItem onClick={onClick} Icon={FaChartBar} Text="Dashboard" href={`${process.env.NEXT_PUBLIC_BASE_URL}/dashboard`} />
+        <SidebarItem onClick={onClick} Icon={FaCartPlus} Text="Vendas" href={`${process.env.NEXT_PUBLIC_BASE_URL}/vendas`} />
+        <SidebarItem onClick={onClick} Icon={FaLaptopHouse} Text="Marketplaces" href={`${process.env.NEXT_PUBLIC_BASE_URL}/marketplaces`} />
+        <SidebarItem onClick={onClick} Icon={FaFolderOpen} Text="Crons" href={`${process.env.NEXT_PUBLIC_BASE_URL}/crons`} />
       </Content>
     </Container>
   )
