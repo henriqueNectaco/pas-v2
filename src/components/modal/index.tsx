@@ -9,16 +9,17 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-  Input
+  Input,
+  Spinner
 } from '@nextui-org/react'
 import { CaretDown } from 'phosphor-react'
 import DateRangePickerComponent from '../rangedatepicker'
-import { ModalTypes } from '@/types/marketplaces'
+import { ModalTypes, objectMarketplace } from '@/types/marketplaces'
 import { useState } from 'react'
 
 
 export default function ModalMine(props: ModalTypes) {
-  const [selected, setSelected] = useState(null)
+  const [selected, setSelected] = useState<string>()
   return (
     <>
       <Modal
@@ -64,11 +65,19 @@ export default function ModalMine(props: ModalTypes) {
                           props.setId(key)
                         }}
                       >
-                        {props.MarketplacesArray.map((marketplace: any) => (
-                          <DropdownItem key={marketplace.id} className='max-w-[70vw]' onClick={() => setSelected(marketplace.nome_fantasia)}>
-                            {marketplace.nome_fantasia}
-                          </DropdownItem>
-                        ))}
+                        {props.MarketplacesArray ? (
+                          props.MarketplacesArray.map((marketplace: objectMarketplace) => (
+                            <DropdownItem
+                              key={marketplace.id}
+                              className='max-w-[70vw]'
+                              onClick={() => setSelected(marketplace.nome_fantasia)}
+                            >
+                              {marketplace.nome_fantasia}
+                            </DropdownItem>
+                          ))
+                        ) : (
+                          <Spinner />
+                        )}
                       </DropdownMenu>
                     </Dropdown>
                   </div>

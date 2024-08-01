@@ -17,6 +17,8 @@ import { SignOut, TextAlignJustify, UserCircle } from 'phosphor-react'
 import { LogOut } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+
+
 export default function NewHeader() {
   const [sidebar, setSidebar] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)

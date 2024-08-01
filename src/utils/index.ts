@@ -1,6 +1,5 @@
 import { format, subDays } from "date-fns"
 import { toast } from "sonner"
-import { useRouter } from 'next/router'
 import Cookies from 'js-cookie'
 
 export const localUrl = process.env.NEXT_PUBLIC_LOCAL

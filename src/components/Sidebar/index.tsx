@@ -12,13 +12,14 @@ import SidebarItem from '../SidebarItem'
 type SidebarProps = {
   active: boolean
   onClick: () => void
+  setActive: (value: boolean) => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ active, onClick }) => {
-  
+
 
   const closeSidebar = () => {
-    active(false)
+    setActive(false)
   }
 
   return (

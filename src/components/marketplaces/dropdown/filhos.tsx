@@ -3,9 +3,9 @@ import { format } from "@/utils/dates";
 import { Button } from "@nextui-org/button";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/dropdown";
 import { DotsThreeOutlineVertical } from "phosphor-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { parseDate } from '@internationalized/date';
-import { useDisclosure } from "@nextui-org/react";
+import { useDatePicker, useDisclosure } from "@nextui-org/react";
 import Cookies from 'js-cookie';
 import axios from "axios";
 
@@ -14,12 +14,17 @@ type typeProps = {
   onAction?: () => void
   fullWidth?: boolean
   MarketplacesArray: Array<any>
+  id?: string
 }
 
 export default function DropDownMenuFilhos(props: typeProps) {
   const [id, setId] = useState(null);
-  const [useDatePicker, setUseDatePicker] = useState<boolean>(false);
-  const [useDropdownChangeParents, setUseDropdownChangeParents] = useState<boolean>(false);
+
+  const [modalProps, setModalProps] = useState({
+    useDatePicker: false,
+
+
+  })
   const token = Cookies.get('token');
   const [value, setValue] = useState({
     start: parseDate('2024-04-01'), // Data inicial
@@ -46,11 +51,11 @@ export default function DropDownMenuFilhos(props: typeProps) {
   };
 
   const reprocessarPedidos = async () => {
+    //https://api.zsystems.com.br/z1/estabelecimentos/${props.id}/reprocessar-pedidos?startDate=${date.startDate}&endDate=${date.endDate}
     try {
       const res = await axios.post(
-        `https://api.zsystems.com.br/z1/estabelecimentos/${props.id}/reprocessar-pedidos?startDate=${date.startDate}&endDate=${date.endDate}`,
-        {}, // O corpo da requisição está vazio
-        { headers: { Authorization: `Bearer ${token}` } }
+        `https://urltesteefodace/z1/estabelecimentos/${props.id}/reprocessar-pedidos?startDate=${date.startDate}&endDate=${date.endDate}`,
+        // { headers: { Authorization: `Bearer ${token}` } }
       );
     } catch (error) {
       console.error(error);
@@ -69,7 +74,13 @@ export default function DropDownMenuFilhos(props: typeProps) {
         break;
     }
   };
-
+  useEffect(() => {
+    setDate(prev => ({
+      ...prev,
+      startDate: format(value.start.toDate()),
+      endDate: format(value.end.toDate())
+    }))
+  }, [value])
   return (
     <>
       <Dropdown shouldBlockScroll={true}>
@@ -89,13 +100,20 @@ export default function DropDownMenuFilhos(props: typeProps) {
           onAction={(key) => {
             if (key === 'Trocar de parent') {
               setAction('Trocar de parent');
-              setUseDatePicker(false);
-              setUseDropdownChangeParents(true);
+              setModalProps(prev => ({
+                ...prev,
+                useDropdownChangeParents: true,
+                useDatePicker: false
+              }))
               onOpen();
             } else if (key === 'Reprocessar pedidos') {
               setAction('Reprocessar pedidos');
-              setUseDropdownChangeParents(false);
-              setUseDatePicker(true);
+              setModalProps(prev => ({
+                ...prev,
+                useDropdownChangeParents: false,
+                useDatePicker: true
+              }))
+
               onOpen();
             }
           }}
@@ -108,10 +126,9 @@ export default function DropDownMenuFilhos(props: typeProps) {
         </DropdownMenu>
       </Dropdown>
       <ModalMine
+        modalProps={modalProps}
         setId={setId}
         action={action}
-        useDatePicker={useDatePicker}
-        useDropdownChangeParents={useDropdownChangeParents}
         onClick={handleFuncoes}
         value={value}
         setValue={setValue}

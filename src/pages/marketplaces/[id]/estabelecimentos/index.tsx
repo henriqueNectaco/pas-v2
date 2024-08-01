@@ -48,10 +48,9 @@ export default function Estabelecimentos({ dataEstabeleciments, totalPages }: In
   const [token] = useState(Cookies.get('token'));
   const [estabeleciments, setEstabeleciments] = useState(dataEstabeleciments);
   const [data, setData] = useState({
-    id_estabelecimento: '',
+    id_estabelecimento: undefined,
     identificacao_fatura: '',
     nome_fantasia: '',
-    limit_page: 30,
   });
 
   const router = useRouter();
@@ -104,7 +103,7 @@ export default function Estabelecimentos({ dataEstabeleciments, totalPages }: In
     }
   };
   const queryParams = {
-    limit: data.limit_page,
+    limit: 30,
     page: page,
     id_estabelecimento: data.id_estabelecimento,
     identificacao_fatura: data.identificacao_fatura,
@@ -144,13 +143,12 @@ export default function Estabelecimentos({ dataEstabeleciments, totalPages }: In
   };
 
   const handleCleanFilter = () => {
-    setData({
-      id_estabelecimento: '',
+    setData(prev => ({
+      ...prev, id_estabelecimento: undefined,
       identificacao_fatura: '',
       nome_fantasia: '',
-    });
+    }))
     setPage(1)
-
   };
   useEffect(() => {
     setIsFirstRenderization(false)
@@ -161,9 +159,6 @@ export default function Estabelecimentos({ dataEstabeleciments, totalPages }: In
 
     if (isFirstRenderization === false) { handleFilter(); }
   }, [page]);
-  useEffect(() => {
-    console.log('mudou o first ' + isFirstRenderization)
-  }, [isFirstRenderization])
   return (
     <div className="max-w-screen w-full  bg-gray-300">
       <div className={`w-full p-4 bg-gray-200 ${estabeleciments === null ? 'h-screen' : 'h-full'}`}>

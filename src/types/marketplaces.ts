@@ -1,4 +1,5 @@
 import { RangeValue, DateValue } from "@nextui-org/react"
+import { Dispatch, SetStateAction } from "react"
 
 
 export type propsFilterEstabeleciment = {
@@ -6,22 +7,30 @@ export type propsFilterEstabeleciment = {
   filtrar: () => void
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   data: {
-    id_estabelecimento: number
+    id_estabelecimento: number | undefined
     nome_fantasia: string
     identificacao_fatura: string
   }
-
-
 }
-type ModalProps = {
-  useDesativar: boolean
-  useTaxForTransaction: boolean
-  useDropdownChangeParents: boolean
 
-  action: string
+export type objectMarketplace = {
+  id: number
+  nome_fantasia: string
 }
+
 export type ModalTypes = {
-  modalProps: { useDatePicker: boolean, useDesativar: boolean, useTaxForTransaction: boolean, useDropdownChangeParents: boolean }
+
+  setId: Dispatch<
+    SetStateAction<string | undefined>
+  >
+  MarketplacesArray?: Array<objectMarketplace>
+  modalProps: {
+    useDatePicker: boolean,
+    useDesativar: boolean,
+    useTaxForTransaction: boolean,
+    useDropdownChangeParents: boolean
+    action: string
+  }
 
   onChangeTaxTransaction: (e: React.ChangeEvent<HTMLInputElement>) => void
   useDropdownChangeParents: boolean
@@ -31,7 +40,7 @@ export type ModalTypes = {
   action: string
   setValue: (value: RangeValue<DateValue>) => void
   value: RangeValue<DateValue> | null | undefined
-  MarketplacesArray?: null | Array<string>
+
 
 }
 export type StepperTypes = {
