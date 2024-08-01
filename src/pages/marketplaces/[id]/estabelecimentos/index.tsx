@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import { toast } from 'sonner';
 import Table from '@/components/table';
-import { Spinner } from '@nextui-org/react';
+import { pagination, Spinner } from '@nextui-org/react';
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import nextCookies from 'next-cookies'
 import Paginator from '@/components/marketplaces/pagination';
@@ -77,7 +77,7 @@ export default function Estabelecimentos({ dataEstabeleciments, totalPages }: In
         toast.error('Sua sessão expirou, faça login novamente');
         router.push('/');
       } else {
-        fetchChilds()
+
       }
     } catch (error) {
       console.error(error);
@@ -89,12 +89,13 @@ export default function Estabelecimentos({ dataEstabeleciments, totalPages }: In
     try {
       setEstabeleciments(null)
       const res = await axios.get(
-        `https://api.zsystems.com.br/z1/marketplace/${id}/estabelecimentos?limit=30&page=${page}`,
+        `https://api.zsystems.com.br/z1/marketplace/${id}/estabelecimentos?limit=30&page=1`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       if (res.data.success === true) {
 
         setEstabeleciments(res.data.estabelecimentos);
+        setTotalPagess(res.data.pagination.pages)
       } else {
         toast.error(res.data.message)
       }
@@ -119,10 +120,15 @@ export default function Estabelecimentos({ dataEstabeleciments, totalPages }: In
         },
 
       );
+      const totalEstabeleciments = res.data.estabelecimentos
       if (res.data.success === true) {
         setEstabeleciments(res.data.estabelecimentos);
         setTotalPagess(res.data.pagination.pages)
-
+      } else { toast.warning('algo inesperado aconteceu') }
+      if (totalEstabeleciments.length === 0) {
+        toast.warning('Nada encontrado baseado nos filtros')
+        handleCleanFilter()
+        fetchEstabeleciments()
       }
     } catch (error) {
       console.error(error);
@@ -146,7 +152,10 @@ export default function Estabelecimentos({ dataEstabeleciments, totalPages }: In
     setPage(1)
 
   };
-  useEffect(() => { setIsFirstRenderization(false) }, [])
+  useEffect(() => {
+    setIsFirstRenderization(false)
+    fetchChilds()
+  }, [])
 
   useEffect(() => {
 
@@ -157,7 +166,7 @@ export default function Estabelecimentos({ dataEstabeleciments, totalPages }: In
   }, [isFirstRenderization])
   return (
     <div className="max-w-screen w-full  bg-gray-300">
-      <div className="w-full p-4 bg-gray-200 h-full ">
+      <div className={`w-full p-4 bg-gray-200 ${estabeleciments === null ? 'h-screen' : 'h-full'}`}>
         <FilterEstabeleciments
           onChange={handleChange}
           filtrar={() => {

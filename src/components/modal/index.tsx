@@ -13,13 +13,16 @@ import {
 } from '@nextui-org/react'
 import { CaretDown } from 'phosphor-react'
 import DateRangePickerComponent from '../rangedatepicker'
-import { ModalTypes } from '@/types/marketplaces/marketplaces'
+import { ModalTypes } from '@/types/marketplaces'
+import { useState } from 'react'
+
 
 export default function ModalMine(props: ModalTypes) {
+  const [selected, setSelected] = useState(null)
   return (
     <>
       <Modal
-        className={`h-[40vh]  ${props.useDropdownChangeParents === true && 'h-[30vh]'}  ${props.useTaxForTransaction === true && 'h-[70vh] lg:h-[50vh]'} max-w-[90vw] lg:max-w-[30vw]`}
+        className={`h-[40vh] ${props.useDatePicker === true && 'lg:h-1/4 lg:w-1/4 h-2/5 w-full'} ${props.useDropdownChangeParents === true && 'lg:h-[20vh] lg:w-1/4'}  ${props.useTaxForTransaction === true && 'h-[70vh] lg:h-[50vh]'} max-w-[90vw] lg:max-w-[30vw]`}
         isOpen={props.isOpen}
         onOpenChange={props.onOpenChange}
         placement='center'
@@ -39,7 +42,7 @@ export default function ModalMine(props: ModalTypes) {
                   />
                 )}
                 {props.useDropdownChangeParents === true && (
-                  <div className="w-2/4 max-w-full">
+                  <div className="w-full max-w-full">
                     <Dropdown>
                       <DropdownTrigger>
                         <Button
@@ -47,7 +50,8 @@ export default function ModalMine(props: ModalTypes) {
                           color="primary"
                           fullWidth={true}
                         >
-                          Open Menu
+
+                          {selected ? (selected) : ('Selecione um markeplace')}
                           <CaretDown size={18} />
                         </Button>
                       </DropdownTrigger>
@@ -56,10 +60,12 @@ export default function ModalMine(props: ModalTypes) {
                         className="max-w-full max-h-56 overflow-auto"
                         variant="bordered"
                         aria-label="Action event example"
-                        onAction={(key) => props.setId(key)}
+                        onAction={(key) => {
+                          props.setId(key)
+                        }}
                       >
                         {props.MarketplacesArray.map((marketplace: any) => (
-                          <DropdownItem key={marketplace.id} className='max-w-[70vw]'>
+                          <DropdownItem key={marketplace.id} className='max-w-[70vw]' onClick={() => setSelected(marketplace.nome_fantasia)}>
                             {marketplace.nome_fantasia}
                           </DropdownItem>
                         ))}

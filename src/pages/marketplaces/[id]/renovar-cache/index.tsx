@@ -76,7 +76,7 @@ export default function RenovarCachePage() {
                 <Input name='ate' type="number" onChange={handleChange} label='ate' variant="underlined" />
               </div>
             </div>
-
+            ]k
 
           </div>
           <div className="pt-2 flex flex-col  lg:grid lg:grid-rows-4 gap-2">

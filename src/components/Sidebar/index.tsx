@@ -7,7 +7,7 @@ import {
 } from 'react-icons/fa'
 
 import SidebarItem from '../SidebarItem'
-import { useRouter } from 'next/router'
+
 
 type SidebarProps = {
   active: boolean
@@ -15,7 +15,7 @@ type SidebarProps = {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ active, onClick }) => {
-  const router = useRouter();
+  
 
   const closeSidebar = () => {
     active(false)

@@ -36,12 +36,9 @@ export default function CadastrarMarketplaces() {
       toast.warning('Cannot go below step 0')
     }
   }
-  const handleCadastrarMarketplace = async () => {
+  const handleCadastrarMarketplace = async (data: object) => {
     try {
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_LOCAL}/cadastromarketplace`, {
-
-        data
-      })
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_LOCAL}/cadastromarketplace`, data)
     } catch (error) {
       console.error(error)
     }
@@ -72,7 +69,7 @@ export default function CadastrarMarketplaces() {
         handleNextStep()
         break;
       case 1:
-        handleCadastrarMarketplace()
+        handleCadastrarMarketplace(data)
         break;
       case 2:
         handleNext()
