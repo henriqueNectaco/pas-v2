@@ -46,20 +46,3 @@ export const getCrons = async (setCrons, token) => {
     toast.error(res.data.error)
   }
 }
-/* 
-  const auth = async () => {
-    try {
-      const res = await axios.post(
-        `https://api.zsystems.com.br/z1/autenticar`,
-        { token },
-      )
-      if (res.data.success === true) {
-        getCrons(setCrons, token)
-      } else {
-        toast.error('Sua sessão expirou faça login novamente')
-        Router.push('/')
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  } */

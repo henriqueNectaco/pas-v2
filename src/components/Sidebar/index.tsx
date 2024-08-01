@@ -19,7 +19,7 @@ const Sidebar: React.FC<SidebarProps> = ({ active, onClick }) => {
 
 
   const closeSidebar = () => {
-    setActive(false)
+    active(false)
   }
 
   return (
