@@ -1,5 +1,4 @@
 import axios from 'axios'
-import Header from '../../components/Header/index'
 import React, { useEffect, useState } from 'react'
 import { getLastDayOfMonth, formatDate } from '@/utils/dates'
 import Cookies from 'js-cookie'
@@ -9,11 +8,12 @@ import Router from 'next/router'
 import DashComponent from '@/components/dasboard/dashComponent'
 import { parseDate } from '@internationalized/date'
 import { typeDataDashboard, typeServices } from '@/types/dashboard'
+import { RangeValue, DateValue } from '@nextui-org/react'
 export default function DashBoard() {
   const todaydp = new Date()
   const lastDayOfMonth = getLastDayOfMonth(todaydp)
 
-  const [value, setValue] = useState({
+  const [value, setValue] = useState<RangeValue<DateValue>>({
     start: parseDate(todaydp.toISOString().split('T')[0]), // Data atual
     end: parseDate(lastDayOfMonth.toISOString().split('T')[0]), // Último dia do mês
   })

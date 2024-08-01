@@ -3,7 +3,7 @@ import { toast } from "sonner"
 import { useRouter } from 'next/router'
 import Cookies from 'js-cookie'
 
-
+export const localUrl = process.env.NEXT_PUBLIC_LOCAL
 export const responseDataResponse = (toastStringError: string, resData: any, toastStringSucces?: string) => {
   if (resData === false) {
     toast.warning(toastStringError)

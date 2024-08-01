@@ -9,7 +9,6 @@ export type typeServices = {
   status: boolean
 }
 
-
 export type datePickerProps = {
   value: RangeValue<DateValue> | null | undefined
   variant: 'flat' | 'bordered' | 'faded' | 'underlined' | undefined

@@ -1,14 +1,14 @@
 import { Spinner } from '@nextui-org/react'
 
 import DropdownButton from './dropdown'
-type mktProps = {
+type marketplaceItemsTypes = {
   id: number
   mainECId: number
   mainECEmail: string
   mainECNomeFantasia: string
 }
 type marketplaceProps = {
-  marketplace: Array | null
+  marketplace: Array<marketplaceItemsTypes> | null
 }
 export default function TableMarketPlaces(props: marketplaceProps) {
   return (
@@ -36,7 +36,7 @@ export default function TableMarketPlaces(props: marketplaceProps) {
               <Spinner />
             ) : (
               <>
-                {props.marketplace.map((mkt: mktProps) => (
+                {props.marketplace.map((mkt: marketplaceItemsTypes) => (
                   <tr key={mkt.id} className="bg-white ">
                     <td className="  text-sm text-gray-700 whitespace-nowrap p-3">
                       {mkt.id}
@@ -70,7 +70,7 @@ export default function TableMarketPlaces(props: marketplaceProps) {
           <Spinner size="lg" />
         ) : (
           <div className="space-y-2">
-            {props.marketplace.map((mkt: mktProps) => (
+            {props.marketplace.map((mkt: marketplaceItemsTypes) => (
               <div
                 key={mkt.id}
                 className=" xl:hidden w-full border-b border-sky-400 shadow-md  rounded-md  flex flex-col   items-center justify-center lg:flex-row p-4 gap-2 bg-white"

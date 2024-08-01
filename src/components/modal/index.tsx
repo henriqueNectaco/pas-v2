@@ -22,7 +22,7 @@ export default function ModalMine(props: ModalTypes) {
   return (
     <>
       <Modal
-        className={`h-[40vh] ${props.useDatePicker === true && 'lg:h-1/4 lg:w-1/4 h-2/5 w-full'} ${props.useDropdownChangeParents === true && 'lg:h-[20vh] lg:w-1/4'}  ${props.useTaxForTransaction === true && 'h-[70vh] lg:h-[50vh]'} max-w-[90vw] lg:max-w-[30vw]`}
+        className={`lg:h-[40vh]  lg:w-1/4 w-full ${props.modalProps?.useDatePicker === true && '  lg:h-1/4  h-2/5 w-full'} ${props.modalProps?.useDropdownChangeParents === true && 'lg:h-[20vh] '} ${props.modalProps?.useDesativar === true && 'lg:h-[20vh] lg:w-[20vw] '} ${props.modalProps?.useTaxForTransaction === true && 'h-[80vh] lg:h-[50vh]'} max-w-[90vw] `}
         isOpen={props.isOpen}
         onOpenChange={props.onOpenChange}
         placement='center'
@@ -31,17 +31,17 @@ export default function ModalMine(props: ModalTypes) {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col items-center justify-center gap-1">
-                {props.useDatePicker === true ? 'Selecione um intervalo' : props.action}
+                {props.modalProps?.useDatePicker === true ? 'Selecione um intervalo' : props.modalProps?.action}
               </ModalHeader>
-              <ModalBody className={`flex flex-col items-center ${props.useDatePicker === true ? 'justify-center' : 'justify-end'}`}>
-                {props.useDatePicker === true && (
+              <ModalBody className={`flex flex-col items-center ${props.modalProps?.useDatePicker === true ? 'justify-center' : 'justify-end'}`}>
+                {props.modalProps?.useDatePicker === true && (
                   <DateRangePickerComponent
                     variant="underlined"
                     value={props.value}
                     setValue={props.setValue}
                   />
                 )}
-                {props.useDropdownChangeParents === true && (
+                {props.modalProps?.useDropdownChangeParents === true && (
                   <div className="w-full max-w-full">
                     <Dropdown>
                       <DropdownTrigger>
@@ -74,7 +74,7 @@ export default function ModalMine(props: ModalTypes) {
                   </div>
                 )}
 
-                {props.useTaxForTransaction === true && (
+                {props.modalProps?.useTaxForTransaction === true && (
                   <div className='border h-full w-full flex flex-col items-center p-4 gap-2'>
                     <h1 className='font-semibold text-md'>Cobrança por transação</h1>
                     <div className='flex flex-col lg:flex-row w-full'>
@@ -93,6 +93,9 @@ export default function ModalMine(props: ModalTypes) {
                     </div>
                   </div>
                 )}
+                {props.modalProps?.useDesativar === true && (
+                  <div className=' text-lg h-full flex items-center'>Desativar Marketplace?</div>
+                )}
               </ModalBody>
               <ModalFooter className="flex flex-col lg:flex-row">
                 <Button
@@ -109,7 +112,7 @@ export default function ModalMine(props: ModalTypes) {
                   fullWidth={true}
                 >
 
-                  {props.useDatePicker === true ? props.action : 'Confirmar'
+                  {props.modalProps?.useDatePicker === true ? props.action : 'Confirmar'
                   }
                 </Button>
               </ModalFooter>

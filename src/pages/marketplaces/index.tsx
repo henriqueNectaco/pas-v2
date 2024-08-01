@@ -19,7 +19,7 @@ import axios from 'axios'
 import { CaretDown } from 'phosphor-react'
 import { toast } from 'sonner'
 import TableMarketPlaces from './table'
-import { today } from '@/utils'
+import { localUrl, today } from '@/utils'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { token } = nextCookies(context)
@@ -67,10 +67,10 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
   const [resData, setResData] = useState<Object>(data)
   const [state, setState] = useState('ativos')
   const handleReprocessAllSales = async () => {
-    try {
-      const res = await axios.post(`https://api.zsystems.com.br/marketplaces/reprocessar-pedidos`,
+    try {//https://api.zsystems.com.br/marketplaces/reprocessar-pedidos
+      const res = await axios.post(`${localUrl}/reprocessar-pedidos`,
         { startDate: date.startDate, endDate: date.endDate },
-        { headers: { Authorization: `Bearer ${token}` } },
+        // { headers: { Authorization: `Bearer ${token}` } },
       )
       if (res.data.success === true) {
         toast.success('Adicionado a fila :)')
@@ -82,7 +82,7 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
 
   const handleImportAllSales = async () => {
     try {//https://api.zsystems.com.br/marketplaces/importar-pedidos
-      const res = await axios.post(`https://api.zsystems.com.br/marketplaces/importar-pedidos`,
+      const res = await axios.post(`${localUrl}/importar-pedidos`,
         { startDate: date.startDate, endDate: date.endDate },
         //{ headers: { Authorization: `Bearer ${token}` } },
       )
@@ -186,7 +186,8 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
               onClick={() => {
                 setModalProps(prev => ({
                   ...prev,
-                  action: 'Importar todas as vendas'
+                  action: 'Importar todas as vendas',
+                  useDatePicker: true, useTaxForTransaction: false, useDesativar: false
                 }))
                 onOpen()
               }}
@@ -246,7 +247,7 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
           )}
         </>
       </div>
-      <ModalMine useDatePicker={true}
+      <ModalMine modalProps={modalProps}
         value={value}
         setValue={setValue}
         action={modalProps.action}

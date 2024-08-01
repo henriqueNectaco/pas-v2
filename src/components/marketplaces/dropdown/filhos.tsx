@@ -35,9 +35,8 @@ export default function DropDownMenuFilhos(props: typeProps) {
   const changeParent = async () => {
     try {
       const res = await axios.put(
-        //`https://pas-aps.up.railway.app/establishment/${props.id}/change-parent`,
-        `${process.env.NEXT_PUBLIC_LOCAL}/posts
-`,
+        `https://pas-aps.up.railway.app/establishment/${props.id}/change-parent`,
+        //`${process.env.NEXT_PUBLIC_LOCAL}/posts`,
         { parentId: id },
         { headers: { Authorization: `Bearer ${token}` } }
       );

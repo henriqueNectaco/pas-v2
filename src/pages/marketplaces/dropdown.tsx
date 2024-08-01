@@ -31,7 +31,8 @@ export default function DropdownButton(props: TypeProps) {
   const [modalProps, setModalProps] = useState({
     action: 'Confirmar',
     useTaxTransaction: false,
-    useDatePicker: true
+    useDatePicker: true,
+    useDesativar: false
   })
   const [value, setValue] = useState({
     start: parseDate(today),
@@ -91,7 +92,11 @@ export default function DropdownButton(props: TypeProps) {
       console.error(error)
     }
   }
-
+  const handleTurnOffMarketplace = async () => {
+    try { const res = await axios.post(`${process.env.NEXT_PUBLIC_LOCAL}/posts`, { marketplaceId: props.id }) } catch (error) {
+      console.error(error)
+    }
+  }
   const reprocessarVendas = async () => {
     try {
       const res = await axios.post(
@@ -113,15 +118,18 @@ export default function DropdownButton(props: TypeProps) {
       case 'Reprocessar Vendas':
         reprocessarVendas()
         break
+      case 'Desativar':
+        handleTurnOffMarketplace()
+        break;
       case 'Importar Vendas':
         importarVendas()
-        break
+        break;
       case `Importar EC's`:
         importarECs()
-        break
+        break;
       case 'Cobrança por transação':
         cobrancaTransacao()
-        break
+        break;
       case 'Adicionar SSL':
       default:
         console.log('outro')
@@ -148,20 +156,20 @@ export default function DropdownButton(props: TypeProps) {
 
               setModalProps(prev => ({
                 ...prev, action: 'Reprocessar Vendas'
-                , useDatePicker: true, useTaxTransaction: false
+                , useDatePicker: true, useTaxTransaction: false, useDesativar: false
               }))
               onOpen()
             } else if (key === 'importEc') {
               setModalProps(prev => ({
                 ...prev, action: `Importar EC's`,
                 useDatePicker: true,
-                useTaxTransaction: false
+                useTaxTransaction: false, useDesativar: false
               }))
               onOpen()
             } else if (key === 'importSales') {
               onOpen()
               setModalProps(prev => ({
-                ...prev, action: 'Importar Vendas', useDatePicker: true, useTaxTransaction: false
+                ...prev, action: 'Importar Vendas', useDesativar: false, useDatePicker: true, useTaxTransaction: false
               }))
             } else if (key === 'addssl') {
               router.push(
@@ -172,11 +180,14 @@ export default function DropdownButton(props: TypeProps) {
               setModalProps(prev => ({
                 ...prev, action: 'Cobrança por transação',
                 useDatePicker: false,
-                useTaxTransaction: true,
+                useTaxTransaction: true, useDesativar: false
               }))
               onOpen()
             } else if (key === 'renewcache') {
               router.push(`/marketplaces/${props.id}/renovar-cache`)
+            } else if (key === 'desativar') {
+              setModalProps(prev => ({ ...prev, action: 'Desativar', useDesativar: true, useDatePicker: false, useTaxTransaction: false }))
+              onOpen()
             }
           }}
           color="primary"
@@ -199,18 +210,19 @@ export default function DropdownButton(props: TypeProps) {
           </DropdownItem>
           <DropdownItem key="importSales">Importar Vendas</DropdownItem>
           <DropdownItem key="renewcache">Renovar Cache</DropdownItem>
-          <DropdownItem key="turnOff">Desativar</DropdownItem>
+          <DropdownItem key="desativar">Desativar</DropdownItem>
         </DropdownMenu>
       </Dropdown>
       <ModalMine
-        useDatePicker={modalProps.useDatePicker}
+        modalProps={modalProps}
+
         action={modalProps.action}
         onClick={handleFuncoes}
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         value={value}
         setValue={setValue}
-        useTaxForTransaction={modalProps.useTaxTransaction}
+
         onChangeTaxTransaction={handleChangeTaxTransaction}
       />
     </>
