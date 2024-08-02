@@ -10,12 +10,12 @@ import { parseDate } from '@internationalized/date'
 import { typeDataDashboard, typeServices } from '@/types/dashboard'
 import { RangeValue, DateValue } from '@nextui-org/react'
 export default function DashBoard() {
-  const todaydp = new Date()
-  const lastDayOfMonth = getLastDayOfMonth(todaydp)
+  const newDate = new Date()
+
 
   const [value, setValue] = useState<RangeValue<DateValue>>({
-    start: parseDate(todaydp.toISOString().split('T')[0]), // Data atual
-    end: parseDate(lastDayOfMonth.toISOString().split('T')[0]), // Último dia do mês
+    start: parseDate(newDate.toISOString().split('T')[0]), // Data atual
+    end: parseDate(newDate.toISOString().split('T')[0]), // Último dia do mês
   })
   const [daysReprocessarSaldo, setDaysReprocessarSaldo] = useState<
     string | undefined
@@ -336,18 +336,6 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
   )
 }
 
-/*
-   /*
-      const fetchTotalChild = async () => {
-        try {
-          const res = await axios.get(`https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=&endDate=`, {
-           
-            //setAlgumacoisa(res.data) 
-          })
-        }
-        catch (error) { console.error(error) }
-      } 
-  */
 
 
 

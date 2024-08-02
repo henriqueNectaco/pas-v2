@@ -83,8 +83,8 @@ export default function Home() {
 
   return (
     <div className="bg-gradient-to-r from-cyan-500 to-blue-500 h-screen w-screen flex justify-center items-center">
-      <div className=" shadow-lg bg-white h-full sm:flex sm:flex-col sm:justify-center sm:items-center lg:w-4/6 lg:h-4/6 md:flex md:flex-col md:items-center md:justify-center md:h-5/6 sm:p-0 lg:grid lg:grid-cols-2  lg:rounded-2xl">
-        <div className=" lg:rounded-2xl lg:col-start-1 lg:col-end-2 flex justify-center items-center bg-white lg:h-full p-6  ">
+      <div className=" shadow-2xl bg-white h-full sm:flex sm:flex-col sm:justify-center sm:items-center lg:w-4/6 lg:h-4/6 md:flex md:flex-col md:items-center md:justify-center md:h-5/6 sm:p-0 lg:grid lg:grid-cols-2  lg:rounded-md">
+        <div className=" lg:rounded-2xl lg:col-start-1 lg:col-end-2 flex justify-center items-center bg-white lg:h-full p-4  ">
           <Image
             quality={100}
             alt="teste"
