@@ -5,7 +5,7 @@ import { FormVendasTypes } from '@/types/vendas'
 export default function FormVendas(props: FormVendasTypes) {
   return (
     <>
-      <form className=" h-full  w-full lg:w-2/6  p-6 flex flex-col items-center justify-around  lg:px-8 sm:rounded-xl  my-4  lg:shadow-md border-2 bg-white">
+      <form className=" h-full  w-full lg:w-2/6  p-6 flex flex-col items-center justify-around  lg:px-8 sm:rounded-xl  my-4  lg:shadow-md border-2 bg-white" onSubmit={props.onSubmit}>
         <div className='w-full gap-2 flex flex-col items-center justify-center'>
           <label className=" font-bold  w-5/6 lg:w-4/6 text-start">Vendas:</label>
           <Input

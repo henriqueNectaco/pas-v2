@@ -4,7 +4,7 @@
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
 } 
 */
-import { FilePond, registerPlugin } from 'react-filepond'
+
 import 'filepond/dist/filepond.min.css'
 
 import {

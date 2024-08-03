@@ -32,7 +32,7 @@ export default function NewHeader() {
   }
   return (
     <>
-      <div className={`  bg-blue-600 flex flex-row lg:grid lg:grid-cols-5 shadow-[0_0_7px_3px] `}>
+      <div className={`bg-blue-600 flex flex-row lg:grid lg:grid-cols-5 shadow-[0_0_7px_3px]  `}>
         <div className=' text-white  flex items-center p-6 lg:col-span-1 w-full'><TextAlignJustify size={40} onClick={showSiderbar} className='hover:cursor-pointer' /></div>
         <div className='hidden col-span-3  lg:flex flex-row p-6 items-center gap-6 justify-center'>
           <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/dashboard`} onClick={closeSideBar} className='text-lg text-white'>Dashboard</Link>
@@ -46,42 +46,42 @@ export default function NewHeader() {
         </div>
       </div>
       {sidebar && <Sidebar active={setSidebar} onClick={showSiderbar} />}
-      <>
-        <Modal
-          isOpen={isOpen}
-          //          placement={modalPlacement}
-          placement='top'
-          onOpenChange={onOpenChange}
-          radius='md'
-        >
-          <ModalContent className=" border-2 lg:w-1/4 w-2/3 md:w-2/4">
-            {(onClose) => (
-              <>
-                <ModalHeader className="  flex flex-col  p-4 items-start justify-center gap-1">
-                  <p className="text-yellow-400">LogOut</p>
-                </ModalHeader>
-                <ModalBody className=" flex flex-col items-center justify-center  border-b border-black p-6">
-                  <p className="text-xl">Deseja Efetuar o LogOut?</p>
-                </ModalBody>
-                <ModalFooter className="flex p-4 items-center justify-center">
 
-                  <Button
-                    radius='sm'
-                    fullWidth={true}
-                    size="md"
-                    color="primary"
-                    variant="solid"
-                    onPress={LogOut}
-                  >
-                    Confirmar
-                  </Button>
-                </ModalFooter>
-              </>
-            )}
-          </ModalContent>
-        </Modal>
-      </>
+      <Modal
+        isOpen={isOpen}
+        //          placement={modalPlacement}
+        placement='top'
+        onOpenChange={onOpenChange}
+        radius='md'
+      >
+        <ModalContent className=" border-2 lg:w-1/4 w-2/3 md:w-2/4">
+          {(onClose) => (
+            <>
+              <ModalHeader className="  flex flex-col  p-4 items-start justify-center gap-1">
+                <p className="text-yellow-400">LogOut</p>
+              </ModalHeader>
+              <ModalBody className=" flex flex-col items-center justify-center  border-b border-black p-6">
+                <p className="text-xl">Deseja Efetuar o LogOut?</p>
+              </ModalBody>
+              <ModalFooter className="flex p-4 items-center justify-center">
+
+                <Button
+                  radius='sm'
+                  fullWidth={true}
+                  size="md"
+                  color="primary"
+                  variant="solid"
+                  onPress={LogOut}
+                >
+                  Confirmar
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </>
+
 
   )
 }

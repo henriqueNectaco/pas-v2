@@ -142,6 +142,7 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
         console.error(error)
       }
     }
+
     auth()
   }, [])
   useEffect(() => {

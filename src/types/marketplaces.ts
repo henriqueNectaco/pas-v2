@@ -7,7 +7,7 @@ export type propsFilterEstabeleciment = {
   filtrar: () => void
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   data: {
-    id_estabelecimento: number | undefined
+    id_estabelecimento: string | undefined
     nome_fantasia: string
     identificacao_fatura: string
   }

@@ -48,7 +48,7 @@ export default function Estabelecimentos({ dataEstabeleciments, totalPages }: In
   const [token] = useState(Cookies.get('token'));
   const [estabeleciments, setEstabeleciments] = useState(dataEstabeleciments);
   const [data, setData] = useState({
-    id_estabelecimento: undefined,
+    id_estabelecimento: '',
     identificacao_fatura: '',
     nome_fantasia: '',
   });
@@ -144,7 +144,7 @@ export default function Estabelecimentos({ dataEstabeleciments, totalPages }: In
 
   const handleCleanFilter = () => {
     setData(prev => ({
-      ...prev, id_estabelecimento: undefined,
+      ...prev, id_estabelecimento: '',
       identificacao_fatura: '',
       nome_fantasia: '',
     }))

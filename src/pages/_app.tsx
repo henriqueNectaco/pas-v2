@@ -1,15 +1,54 @@
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
-import { NextUIProvider } from '@nextui-org/system'
-import { Open_Sans } from 'next/font/google'
-import { Toaster } from 'sonner'
+import '@/styles/globals.css';
+import type { AppProps } from 'next/app';
+import { NextUIProvider } from '@nextui-org/system';
+import { Open_Sans } from 'next/font/google';
+import { Toaster } from 'sonner';
 import { useRouter } from 'next/router';
-import NewHeader from '@/components/newHeader'
-const openSans = Open_Sans({ subsets: ['latin'], weight: '500' })
+import NewHeader from '@/components/newHeader';
+import { useEffect, useState } from 'react';
+
+const openSans = Open_Sans({ subsets: ['latin'], weight: '500' });
 
 export default function App({ Component, pageProps }: AppProps) {
+  const [isLg, setIsLg] = useState<boolean>(false);
   const router = useRouter();
   const noHeaderRoutes = ['/'];
+  const selectedRoutes = [
+    '/dashboard',
+    '/marketplaces/cadastrar',
+    /^\/marketplaces\/\d+\/cadastrar-filho$/,
+    '/marketplaces/[id]/[nomefantasia]/adicionar-ssl',
+    '/marketplaces/[id]/cadastrar-filho', '/marketplaces/[id]/renovar-cache'
+  ];
+  useEffect(() => {
+    const checkIsLg = () => {
+      setIsLg(window.innerWidth >= 1024);
+    };
+
+    // Verificar a largura da janela inicialmente
+    checkIsLg();
+
+    // Adicionar event listener para verificar a largura da janela
+    window.addEventListener('resize', checkIsLg);
+
+    // Limpar event listener ao desmontar o componente
+    return () => {
+      window.removeEventListener('resize', checkIsLg);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isLg && selectedRoutes.includes(router.pathname)) {
+      document.body.classList.add('overflow-y-hidden');
+    } else {
+      document.body.classList.remove('overflow-y-hidden');
+    }
+
+    return () => {
+      document.body.classList.remove('overflow-y-hidden');
+    };
+  }, [isLg, router.pathname]);
+
   return (
     <NextUIProvider>
       <main className={openSans.className}>
@@ -18,5 +57,5 @@ export default function App({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </main>
     </NextUIProvider>
-  )
+  );
 }

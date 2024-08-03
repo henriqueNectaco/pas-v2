@@ -95,7 +95,7 @@ export default function Vendas() {
 
       <div className={`w-full max-w-screen flex flex-col space-y-2 ${responseData?.pagamentos.length >= 3 ? 'bg-gray-800' : ''} ${responseData !== null && responseData.pagamentos.length == 1 ? 'bg-gray-300' : ''}`}>
         <div className="w-full lg:p-3 p-2 lg:pr-0 flex lg:flex-row flex-col items-center lg:gap-4  justify-center h-full">
-          <FormVendas
+          <FormVendas onSubmit={handleSearch}
             Isloading={isLoadingSearchSale}
             handleCleanInput={handleCleanInput}
             vendaId={vendaId}

@@ -7,9 +7,9 @@ type typeProps = {
 export default function DropDownMenuCache(props: typeProps) {
   const [selected, setSelected] = useState(null)
   return (
-    <Dropdown shouldBlockScroll={false} >
+    <Dropdown shouldBlockScroll={false}  >
       <DropdownTrigger>
-        <Button
+        <Button fullWidth={true}
           variant="ghost"
           color="primary"
         >

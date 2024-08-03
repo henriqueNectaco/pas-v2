@@ -11,7 +11,7 @@ import { typeDataDashboard, typeServices } from '@/types/dashboard'
 import { RangeValue, DateValue } from '@nextui-org/react'
 export default function DashBoard() {
   const newDate = new Date()
-
+  const [isLg, setIsLg] = useState<boolean>()
 
   const [value, setValue] = useState<RangeValue<DateValue>>({
     start: parseDate(newDate.toISOString().split('T')[0]), // Data atual
@@ -306,10 +306,12 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
   ])
   useEffect(() => {
     auth()
+
   }, [])
 
+
   return (
-    <div className=" h-screen max-w-screen flex flex-col items-center  ">
+    <div className=" h-screen max-w-screen flex flex-col items-center    ">
 
       <div className=" h-screen    w-full  max-w-screen flex flex-col items-center justify-start  lg:pt-10 ">
         <DashComponent

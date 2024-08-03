@@ -5,7 +5,7 @@ export const Container = styled.div`
   display: flex;
   background-color: #1A202C; 
   box-shadow: 0 0 20px 3px;
-
+overflow-y:hidden
   > svg {
     position: fixed;
     color: white;
