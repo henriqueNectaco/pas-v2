@@ -16,7 +16,7 @@ export default function DatePickerComponent(props: typeProps) {
   return (
 
 
-    <DatePicker color="primary" variant="faded" labelPlacement="outside" size="lg" className={props.className} label={props.label} value={props.value} onChange={props.onChange} />
+    <DatePicker radius="sm" color="primary" variant="faded" labelPlacement="inside" size="md" className={props.className} label={props.label} value={props.value} onChange={props.onChange} />
 
 
   );
