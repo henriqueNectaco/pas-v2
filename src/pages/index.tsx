@@ -9,6 +9,7 @@ import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { EyeSlash, Eye } from 'phosphor-react'
 const Formschema = z.object({
   email: z.string().email(),
   senha: z.string(),
@@ -16,6 +17,8 @@ const Formschema = z.object({
 type FormschemaData = z.infer<typeof Formschema>
 
 export default function Home() {
+  const [isVisible, setIsVisible] = useState(false);
+  const toggleVisibility = () => setIsVisible(!isVisible);
   const [isLoading, setIsLoading] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -116,7 +119,16 @@ export default function Home() {
                   Senha:
                 </label>
                 <Input
-                  type="password"
+                  endContent={
+                    <button className="focus:outline-none" type="button" onClick={toggleVisibility} aria-label="toggle password visibility">
+                      {isVisible ? (
+                        <EyeSlash size={30} className="text-2xl text-default-400 pointer-events-none" />
+                      ) : (
+                        <Eye size={30} className="text-2xl text-default-400 pointer-events-none" />
+                      )}
+                    </button>
+                  }
+                  type={isVisible ? "text" : "password"}
                   variant="underlined"
                   {...register('senha')}
                   onChange={handlePasswordChange}

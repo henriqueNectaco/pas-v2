@@ -51,7 +51,7 @@ export default function CadastrarFilho() {
   }, []);
 
   return (
-    <div className="max-w-screen max-h-screen w-full h-screen lg:overflow-y-hidden">
+    <div className="max-w-screen max-h-screen w-full h-screen ">
 
     </div>
   );
