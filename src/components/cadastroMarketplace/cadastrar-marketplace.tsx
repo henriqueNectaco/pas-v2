@@ -4,9 +4,7 @@
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
 } 
 */
-
 import 'filepond/dist/filepond.min.css'
-
 import {
   Card,
   CardHeader,
@@ -19,16 +17,10 @@ import { typeProps } from '@/types/marketplaces'
 import { Button } from '@nextui-org/button'
 import { Input } from '@nextui-org/input'
 import React from 'react'
-import { toast } from 'sonner'
 import StepperComponent from './steper'
 import FilePonds from './filepond'
 
 export function CadastrarMarketplace(props: typeProps) {
-
-
-
-
-
   return (
     <div className="flex flex-col items-center  max-h-screen bg-gray-200 p-4 lg:pt-12">
       <Card className="w-full max-w-7xl bg-white ">
@@ -58,9 +50,9 @@ export function CadastrarMarketplace(props: typeProps) {
                   </div>
                   <div className="space-y-2">
                     <Input
-                      value={props.data.zoopMarketplaceId}
+                      value={props.data.zoopMkId}
                       onChange={props.onChange}
-                      name='zoopMarketplaceId'
+                      name='zoopMkId'
                       placeholder={'Zoop Marketplace Id'}
                       required={true}
                       variant="underlined"

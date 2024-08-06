@@ -1,9 +1,8 @@
-
-import Steperr from '@/components/cadastroMarketplace/steper'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { CadastrarMarketplace } from '@/components/cadastroMarketplace/cadastrar-marketplace'
 import axios from 'axios'
+import { apiUrl, token } from '@/utils'
 
 export default function CadastrarMarketplaces() {
   const [activeStep, setActiveStep] = useState<number>(0)
@@ -12,7 +11,7 @@ export default function CadastrarMarketplaces() {
   const [filesFavIcon, setFilesFavIcon] = useState([])
   const [data, setData] = useState({
     nome: '',
-    zoopMarketplaceId: '',
+    zoopMkId: '',
     dominio: '',
     sellerId: '',
     website: '',
@@ -38,6 +37,7 @@ export default function CadastrarMarketplaces() {
   }
   const handleCadastrarMarketplace = async (data: object) => {
     try {
+      //const res = await axios.post(`${apiUrl}/marketplaces/add`, { headers: { "Content-Type": "multipart/form-data", 'Authorization': `Bearer ${token}` } })
       const res = await axios.post(`${process.env.NEXT_PUBLIC_LOCAL}/cadastromarketplace`, data)
     } catch (error) {
       console.error(error)

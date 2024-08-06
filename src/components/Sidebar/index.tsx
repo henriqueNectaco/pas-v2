@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { Container, Content } from './styles'
 import {
   FaTimes,
@@ -10,9 +10,9 @@ import SidebarItem from '../SidebarItem'
 
 
 type SidebarProps = {
-  active: boolean
+  active: Dispatch<SetStateAction<boolean>>
   onClick: () => void
-  setActive: (value: boolean) => void;
+  setActive?: (value: boolean) => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ active, onClick }) => {

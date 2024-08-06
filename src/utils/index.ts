@@ -1,7 +1,7 @@
 import { format, subDays } from "date-fns"
 import { toast } from "sonner"
 import Cookies from 'js-cookie'
-
+export const apiUrl = process.env.NEXT_PUBLIC_API_URL
 export const localUrl = process.env.NEXT_PUBLIC_LOCAL
 export const responseDataResponse = (toastStringError: string, resData: any, toastStringSucces?: string) => {
   if (resData === false) {
@@ -12,6 +12,8 @@ export const responseDataResponse = (toastStringError: string, resData: any, toa
 }
 
 const newDate = new Date()
+
+export const token = Cookies.get('token')
 
 export const today = format(newDate, 'yyyy-MM-dd')
 

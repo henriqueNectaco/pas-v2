@@ -18,6 +18,14 @@ export default function CadastrarFilho() {
     { label: 'Validar pki', active: activeStep === 0 },
     { label: 'Arquivos', active: activeStep === 1 },
   ]);
+  const handleSubmit = async () => {
+    try {
+      const res = await axios.post(``, data)
+
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   const fetchMarketplace = async () => {
     try {
@@ -51,8 +59,12 @@ export default function CadastrarFilho() {
   }, []);
 
   return (
-    <div className="max-w-screen max-h-screen w-full h-screen ">
-
+    <div className="max-w-screen max-h-screen w-full h-screen  pt-8  lg:pt-12 flex justify-center ">
+      <div className="w-full lg:w-3/4 bg-gray-200 max-h-screen lg:h-2/3 flex flex-col items-center">
+        <h1 className="text-lg font-bold">Cadastrar marketplace filho</h1>
+        <div></div>
+        <div><Button color="primary" variant="solid" onClick={handleSubmit}>Finalizar cadastro</Button></div>
+      </div>
     </div>
   );
 }

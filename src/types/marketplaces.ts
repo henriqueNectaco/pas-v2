@@ -65,7 +65,7 @@ export type typeProps = {
   setFilesLoader: any
   data: {
     nome: string
-    zoopMarketplaceId: string
+    zoopMkId: string
     dominio: string
     sellerId: string
     website: string
