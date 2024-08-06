@@ -13,14 +13,13 @@ type SidebarProps = {
   active: Dispatch<SetStateAction<boolean>>
   onClick: () => void
   setActive?: (value: boolean) => void;
+  closeSidebar: () => void
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ active, onClick }) => {
+const Sidebar: React.FC<SidebarProps> = ({ active, onClick, closeSidebar }) => {
 
 
-  const closeSidebar = () => {
-    active(false)
-  }
+
 
   return (
     <Container sidebar={active}>

@@ -6,10 +6,11 @@ import { Toaster } from 'sonner';
 import router, { useRouter } from 'next/router';
 import NewHeader from '@/components/newHeader';
 import { useEffect, useState } from 'react';
-
+import Sidebar from '../components/Sidebar'
 const openSans = Open_Sans({ subsets: ['latin'], weight: '500' });
 
 export default function App({ Component, pageProps }: AppProps) {
+  const [sidebar, setSidebar] = useState<boolean>()
   const [isLg, setIsLg] = useState<boolean>(false);
   const router = useRouter();
   const noHeaderRoutes = ['/'];
@@ -20,6 +21,8 @@ export default function App({ Component, pageProps }: AppProps) {
     '/marketplaces/[id]/[nomefantasia]/adicionar-ssl',
     '/marketplaces/[id]/cadastrar-filho', '/marketplaces/[id]/renovar-cache'
   ];
+  const showSiderbar = () => setSidebar(!sidebar)
+  const closeSideBar = () => setSidebar(false)
   useEffect(() => {
     const checkIsLg = () => {
       setIsLg(window.innerWidth >= 1024);
@@ -53,9 +56,11 @@ export default function App({ Component, pageProps }: AppProps) {
     <NextUIProvider>
       <main className={openSans.className}>
         <Toaster position="top-center" />
-        {!noHeaderRoutes.includes(router.pathname) && <NewHeader />}
-
-        <Component {...pageProps} />
+        {!noHeaderRoutes.includes(router.pathname) && <NewHeader closeSideBar={closeSideBar} showSiderbar={showSiderbar} />}
+        {sidebar && <Sidebar closeSidebar={closeSideBar} active={setSidebar} onClick={showSiderbar} />}
+        <div style={{ marginLeft: sidebar ? (isLg ? '300px' : window.innerWidth <= 768 ? '100px' : '250px') : '0', transition: 'margin-left 0.4s ease-in-out' }}>
+          <Component {...pageProps} />
+        </div>
       </main>
     </NextUIProvider>
   );

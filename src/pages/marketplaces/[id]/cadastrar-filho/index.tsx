@@ -59,10 +59,23 @@ export default function CadastrarFilho() {
   }, []);
 
   return (
-    <div className="max-w-screen max-h-screen w-full h-screen  pt-8  lg:pt-12 flex justify-center ">
-      <div className="w-full lg:w-3/4 bg-gray-200 max-h-screen lg:h-2/3 flex flex-col items-center">
-        <h1 className="text-lg font-bold">Cadastrar marketplace filho</h1>
-        <div></div>
+    <div className="max-w-screen max-h-screen w-full h-screen bg-gray-200  pt-8 p-4  lg:pt-12 flex justify-center ">
+      <div className="w-full lg:w-3/4 bg-white max-h-screen lg:h-2/3 flex flex-col items-center">
+        <h1 className="text-lg font-bold border-b border-black w-full flex items-center justify-center p-4">Cadastrar marketplace filho</h1>
+        <div className="p-4 lg:grid lg:grid-cols-3 h-full w-full">
+          <div className="border ">
+
+          </div>
+          <div className="border ">
+
+          </div>
+          <div className="border w-full h-full lg:p-8 p-4 ">
+            <div><FilePonds /></div>
+            <div><FilePonds /></div>
+            <div><FilePonds /></div>
+          </div>
+        </div>
+
         <div><Button color="primary" variant="solid" onClick={handleSubmit}>Finalizar cadastro</Button></div>
       </div>
     </div>
