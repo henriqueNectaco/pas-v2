@@ -91,7 +91,7 @@ export default function CadastrarMarketplaces() {
     }))
   }, [filesLogo, filesLoader, filesFavIcon])
   return (
-    <div className="max-w-screen     bg-gray-200 h-screen">
+    <div className="max-w-screen     bg-gray-200 h-full lg:h-screen">
 
       <CadastrarMarketplace
         filesLogo={filesLogo} setFilesLogo={setFilesLogo}

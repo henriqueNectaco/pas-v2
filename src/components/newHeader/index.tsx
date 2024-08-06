@@ -13,7 +13,7 @@ import {
 import { Container } from './styles'
 import { FaBars, FaUserAlt } from 'react-icons/fa'
 import Sidebar from '../Sidebar'
-import { SignOut, TextAlignJustify, UserCircle } from 'phosphor-react'
+import { SignOut, TextAlignJustify, UserCircle, Warning } from 'phosphor-react'
 import { LogOut } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -30,6 +30,7 @@ export default function NewHeader(props: header) {
     Cookies.remove('token') // ou localStorage.removeItem('token');
     router.push('/')
   }
+
   return (
     <>
       <div className={`bg-blue-600 flex flex-row lg:grid lg:grid-cols-5 shadow-[0_0_7px_3px]  `}>
@@ -53,15 +54,14 @@ export default function NewHeader(props: header) {
         //          placement={modalPlacement}
         placement='top'
         onOpenChange={onOpenChange}
-        radius='md'
+        radius='sm'
       >
         <ModalContent className=" border-2 lg:w-1/4 w-2/3 md:w-2/4">
           {(onClose) => (
             <>
-              <ModalHeader className="  flex flex-col  p-4 items-start justify-center gap-1">
-                <p className="text-yellow-400">LogOut</p>
-              </ModalHeader>
-              <ModalBody className=" flex flex-col items-center justify-center  border-b border-black p-6">
+
+              <ModalBody className=" flex flex-row items-center justify-center  border-b border-black p-6">
+                <Warning size={25} color="#e9ec41" />
                 <p className="text-xl">Deseja Efetuar o LogOut?</p>
               </ModalBody>
               <ModalFooter className="flex p-4 items-center justify-center">
