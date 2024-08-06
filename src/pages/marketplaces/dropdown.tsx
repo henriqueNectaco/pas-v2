@@ -14,7 +14,7 @@ import { DotsThreeOutlineVertical } from 'phosphor-react'
 import ModalMine from '@/components/modal'
 import axios from 'axios'
 import { getLastDayOfMonth, format } from '@/utils/dates'
-import { today } from '@/utils'
+import { localUrl, today } from '@/utils'
 
 type TypeProps = {
   id: number
@@ -30,7 +30,7 @@ export default function DropdownButton(props: TypeProps) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const [modalProps, setModalProps] = useState({
     action: 'Confirmar',
-    useTaxTransaction: false,
+    useTaxForTransaction: false,
     useDatePicker: true,
     useDesativar: false
   })
@@ -48,11 +48,10 @@ export default function DropdownButton(props: TypeProps) {
   };
   const cobrancaTransacao = async () => {
     try {
-      await axios.post(`https://httpbin.org/post/`,
+      await axios.post(`${localUrl}/cobrancaportransacao`,
         {
           id: props.id,
           amount: dataTaxTransaction.amount,
-          cobrancaPorTransacao: dataTaxTransaction.cobrancaPorTransacao,
           email: dataTaxTransaction.email
 
         },
@@ -181,7 +180,7 @@ export default function DropdownButton(props: TypeProps) {
               setModalProps(prev => ({
                 ...prev, action: 'Cobrança por transação',
                 useDatePicker: false,
-                useTaxTransaction: true, useDesativar: false
+                useTaxForTransaction: true, useDesativar: false
               }))
               onOpen()
             } else if (key === 'renewcache') {

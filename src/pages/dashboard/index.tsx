@@ -2,14 +2,40 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { getLastDayOfMonth, formatDate } from '@/utils/dates'
 import Cookies from 'js-cookie'
-import { today, yesterday, previousThirtyDays, thirtyDaysAgo } from '@/utils'
+import { today, yesterday, previousThirtyDays, thirtyDaysAgo, apiUrl } from '@/utils'
 import { toast } from 'sonner'
 import Router from 'next/router'
 import DashComponent from '@/components/dasboard/dashComponent'
 import { parseDate } from '@internationalized/date'
 import { typeDataDashboard, typeServices } from '@/types/dashboard'
 import { RangeValue, DateValue } from '@nextui-org/react'
-export default function DashBoard() {
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import nextCookies from 'next-cookies'
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { token } = nextCookies(context)
+
+  const authRes = await axios.post(
+    `${apiUrl}/autenticar`,
+    { token }
+  )
+
+  if (authRes.data.success === false) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+
+
+  return { props: { dados: authRes.data } }
+}
+
+
+export default function DashBoard({ dados }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const newDate = new Date()
   const [isLg, setIsLg] = useState<boolean>()
 
@@ -250,17 +276,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
     }
   }
 
-  const fechTotalMKT = async () => {
-    try {
-      const response = await axios.get(
-        `https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=${formattedPreviousDate}&endDate=${formattedDate}`,
-        { headers: { Authorization: `Bearer ${token}` } },
-      )
 
-    } catch (error) {
-      console.error(error)
-    }
-  }
   const auth = async () => {
     try {
       const res = await axios.post(
@@ -271,7 +287,6 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
         fecthTotalMarketplaceChildResgistredPreviousMonth()
         fetchDataServiceStatus()
         fechAmountData()
-        fechTotalMKT()
         FetchTotalProcessedYesterday()
         fetchsTotalProcessedToday()
         fetchTotalProcessedLastThirtyDays()

@@ -23,7 +23,7 @@ export default function ModalMine(props: ModalTypes) {
   return (
     <>
       <Modal
-        className={`lg:h-[40vh]  lg:w-1/4 w-full ${props.modalProps?.useDatePicker === true && '  lg:h-1/4  h-2/5 w-full'} ${props.modalProps?.useDropdownChangeParents === true && 'lg:h-[20vh] '} ${props.modalProps?.useDesativar === true && 'lg:h-[20vh] lg:w-[20vw] '} ${props.modalProps?.useTaxForTransaction === true && 'h-[80vh] lg:h-[50vh]'} max-w-[90vw] `}
+        className={`lg:h-[40vh]  lg:w-1/4 w-full ${props.modalProps?.useDatePicker === true && '  lg:h-1/4  h-2/5 w-full'} ${props.modalProps?.useDropdownChangeParents === true && 'lg:h-[20vh] '} ${props.modalProps?.useDesativar === true && 'lg:h-[20vh] lg:w-[20vw] '} ${props.modalProps?.useTaxForTransaction === true && 'h-[80vh] lg:h-[40vh]'} max-w-[90vw] `}
         isOpen={props.isOpen}
         onOpenChange={props.onOpenChange}
         placement='center'
@@ -84,8 +84,8 @@ export default function ModalMine(props: ModalTypes) {
                 )}
 
                 {props.modalProps?.useTaxForTransaction === true && (
-                  <div className='border h-full w-full flex flex-col items-center p-4 gap-2'>
-                    <h1 className='font-semibold text-md'>Cobrança por transação</h1>
+                  <div className=' h-full w-full flex flex-col items-center p-4 gap-2'>
+
                     <div className='flex flex-col lg:flex-row w-full'>
                       <div className='flex w-full flex-col lg:flex-row gap-4'>
                         <p className='font-semibold text-md'>Valor</p>
@@ -95,8 +95,9 @@ export default function ModalMine(props: ModalTypes) {
                         <p className='font-semibold text-md'>Email de Recebimento:</p>
                         <p>teste</p>
                       </div></div>
-                    <h1 className='font-semibold text-md'>Cadastrar cobrança</h1>
-                    <div className='w-full flex flex-col items-center justify-center '>
+
+                    <div className='w-full flex flex-col items-center justify-center  h-full'>
+                      <h1 className='font-semibold text-md'>Cadastrar cobrança</h1>
                       <Input labelPlacement='inside' onChange={props.onChangeTaxTransaction} name='amount' type='number' variant='underlined' label='Valor R$' />
                       <Input labelPlacement='inside' onChange={props.onChangeTaxTransaction} name='email' variant='underlined' label='E-mail de recebimento' />
                     </div>

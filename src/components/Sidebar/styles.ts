@@ -1,37 +1,41 @@
+import { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 
 type ContainerProps = {
-  sidebar: boolean;
+  sidebar: Dispatch<SetStateAction<boolean>>;
 };
 
 export const Container = styled.div<ContainerProps>`
-  background-color: #2372d0;
+  background-color: #2563eb;
   position: fixed;
   height: 100%;
-  top: 0;
-  left: 0;
+  top: 0px;
+  left: 0px;
   width: 300px;
-  transform: ${props => (props.sidebar ? 'translateX(0)' : 'translateX(-100%)')};
-  transition: transform 0.4s ease-in-out;
-  z-index: 9999;
-
-  @media (max-width: 1024px) {
-    width: 250px;
-  }
-
-  @media (max-width: 768px) {
-    width: 200px;
-  }
+  left: ${props => (props.sidebar ? '0' : '-100%')};
+  animation: showSidebar 0.4s;
+  z-index: 9999; /* Adicionei z-index ao Container */
 
   > svg {
-    position: absolute;
+    position: fixed;
     color: white;
     width: 30px;
     height: 30px;
     margin-top: 32px;
     margin-left: 32px;
     cursor: pointer;
-    z-index: 10000;
+    z-index: 10000; /* Mantenha z-index alto para o ícone também */
+  }
+
+  @keyframes showSidebar {
+    from {
+      opacity: 0;
+      width: 0;
+    }
+    to {
+      opacity: 1;
+      width: 300px;
+    }
   }
 `;
 

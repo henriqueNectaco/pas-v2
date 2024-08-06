@@ -1,6 +1,10 @@
 import { format, subDays } from "date-fns"
 import { toast } from "sonner"
 import Cookies from 'js-cookie'
+import { GetServerSideProps } from 'next';
+import nextCookies from 'next-cookies';
+import axios from "axios";
+
 export const apiUrl = process.env.NEXT_PUBLIC_API_URL
 export const localUrl = process.env.NEXT_PUBLIC_LOCAL
 export const responseDataResponse = (toastStringError: string, resData: any, toastStringSucces?: string) => {
@@ -68,3 +72,22 @@ export const LogOut = () => {
 
 }
 
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { token } = nextCookies(context);
+
+  const authRes = await axios.post(
+    `${apiUrl}/autenticar`,
+    { token }
+  );
+
+  if (authRes.data.success === false) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
+  return { props: { dados: authRes.data.usuario } };
+};
