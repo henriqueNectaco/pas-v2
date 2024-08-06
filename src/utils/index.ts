@@ -31,7 +31,28 @@ export const thirtyDaysAgo = format(thirtyDaysAgoGet, 'yyyy-MM-dd')
 const previousThirtyDaysGet = subDays(newDate, 60)
 export const previousThirtyDays = format(previousThirtyDaysGet, 'yyyy-MM-dd')
 
+interface DateObject {
+  day: number;
+  month: number;
+  year: number;
+  era: string;
+  [key: string]: any; // permite outras propriedades arbitrárias
+}
 
+const dateObject: DateObject = {
+  day: 8,
+  era: "AD",
+  month: 8,
+  year: 2024
+  // outras propriedades, se houver
+};
+
+export function formatDateToYYYYMMDD(dateObj: DateObject): string {
+  const year = dateObj.year;
+  const month = String(dateObj.month).padStart(2, '0');
+  const day = String(dateObj.day).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
 
 
 export const statusPayment = (statusPaymentId: number) => {

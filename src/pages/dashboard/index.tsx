@@ -1,8 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { getLastDayOfMonth, formatDate } from '@/utils/dates'
 import Cookies from 'js-cookie'
-import { today, yesterday, previousThirtyDays, thirtyDaysAgo, apiUrl } from '@/utils'
+import { today, yesterday, previousThirtyDays, thirtyDaysAgo, apiUrl, formatDateToYYYYMMDD } from '@/utils'
 import { toast } from 'sonner'
 import Router from 'next/router'
 import DashComponent from '@/components/dasboard/dashComponent'
@@ -108,7 +107,7 @@ export default function DashBoard({ dados }: InferGetServerSidePropsType<typeof 
     setIsLoadingReprocessarVenda(true)
     try {
       const res = await axios.get(
-        `https://api.zsystems.com.br/z1/reprocessar-vendas/${idEstabelecimentoReprocessarVenda}/${formatDate(value.start.toDate())}/${formatDate(value.end.toDate())}`,
+        `https://api.zsystems.com.br/z1/reprocessar-vendas/${idEstabelecimentoReprocessarVenda}/${formatDateToYYYYMMDD(value.start)}/${formatDateToYYYYMMDD(value.end)}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },

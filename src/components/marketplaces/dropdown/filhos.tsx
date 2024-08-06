@@ -9,6 +9,7 @@ import { DateValue, RangeValue, useDatePicker, useDisclosure } from "@nextui-org
 import Cookies from 'js-cookie';
 import axios from "axios";
 import { objectMarketplace } from "@/types/marketplaces";
+import router from "next/router";
 
 type typeProps = {
   items: Array<string>
@@ -16,6 +17,7 @@ type typeProps = {
   fullWidth?: boolean
   MarketplacesArray: Array<objectMarketplace> | undefined
   id?: string
+  nomefantasia: string
 }
 
 export default function DropDownMenuFilhos(props: typeProps) {
@@ -118,6 +120,8 @@ export default function DropDownMenuFilhos(props: typeProps) {
               }))
 
               onOpen();
+            } else if (key === 'Adicionar SSL') {
+              router.push(`/marketplaces/${props.id}/${props.nomefantasia}/adicionar-ssl`)
             }
           }}
           color="primary"

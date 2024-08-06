@@ -2,7 +2,7 @@ import DropDownMenuCache from "@/components/dropdownmenu"
 import { format, getLastDayOfMonth } from '@/utils/dates'
 import { parseDate } from "@internationalized/date";
 import Header from "@/components/Header";
-import { today } from "@/utils";
+import { formatDateToYYYYMMDD, today } from "@/utils";
 import { ChangeEvent, useEffect, useState } from "react";
 import DatePickerComponent from "@/components/date-picker";
 import { Input } from "@nextui-org/input";
@@ -48,13 +48,15 @@ export default function RenovarCachePage() {
     }
   }
 
+
+
   useEffect(() => {
     if (valueDataRecebimento && typeof valueDataRecebimento.toDate === 'function') {
       setData((prev) => ({
         ...prev,
-        date: format(valueDataRecebimento.toDate()),
-        startDate: format(valueDateRange.start.toDate()),
-        endDate: format(valueDateRange.end.toDate())
+        date: formatDateToYYYYMMDD(valueDataRecebimento),
+        startDate: formatDateToYYYYMMDD(valueDateRange.start),
+        endDate: formatDateToYYYYMMDD(valueDateRange.end)
       }));
     }
   }, [valueDataRecebimento, valueDateRange, setValueDateRange]);

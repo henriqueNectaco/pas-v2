@@ -60,7 +60,7 @@ export default function Table(props: marketplaceProps) {
                 )}
                 {props.ColsBody > 5 && props.currentPage === 'filhos' && (
                   <div className="p-4 border-b  flex items-center justify-end ">
-                    <DropDownMenuFilhos fullWidth={false} items={['Adicionar SSL']} MarketplacesArray={props.MarketplacesArray} />
+                    <DropDownMenuFilhos id={dados.id} nomefantasia={dados[props.contentArray[1]]} fullWidth={false} items={['Adicionar SSL']} MarketplacesArray={props.MarketplacesArray} />
                   </div>
                 )}
                 {props.currentPage === 'estabelecimentosFilhos' && (
