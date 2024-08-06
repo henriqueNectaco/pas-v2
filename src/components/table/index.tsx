@@ -13,7 +13,7 @@ type marketplaceProps = {
   ColsBody: number;
   currentPage: string;
   id?: string;
-  MarketplacesArray?: Array<objectMarketplace>
+  MarketplacesArray?: Array<objectMarketplace> | undefined
 
 };
 

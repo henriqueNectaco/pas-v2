@@ -64,37 +64,39 @@ export default function RenovarCachePage() {
     <div className="max-w-screen w-full max-h-screen h-screen lg:overflow-y-hidden bg-gray-200">
 
       <div className="w-full h-full border  lg:pt-16 flex flex-col items-center justify-start ">
-
-        <div className="w-full lg:w-2/3 flex flex-col lg:grid lg:grid-cols-2 bg-white h-full lg:h-3/5 p-4 lg:p-6 gap-4">
-          <div className="flex flex-col lg:grid lg:grid-rows-4  ">
-            <div className="row-span-1 flex items-start ">
-              <DateRangePicker size="md" variant="flat" color="default" label="Selecione um intervalo" onChange={setValueDateRange} value={valueDateRange} />
-            </div>
-            <div className=" row-span-3 gap-4 border border-red-600">
-              <Input name="cliente" label='Cliente' variant="underlined" onChange={handleChange} />
-              <Input name="estabelecimento" label='Estabelecimento' variant="underlined" onChange={handleChange} />
-              <div className="flex lg:flex-row lg:gap-6">
-                <Input name='de' type="number" onChange={handleChange} label='de' variant="underlined" />
-                <Input name='ate' type="number" onChange={handleChange} label='ate' variant="underlined" />
+        <div className="w-full lg:w-2/3 h-full lg:h-3/6 flex flex-col items-center justify-start bg-white rounded-md shadow-xl ">
+          <h1 className="border-b border-black w-full p-4 flex items-center justify-center text-xl font-semibold">Renovar Cache</h1>
+          <div className="w-full  flex flex-col lg:grid lg:grid-cols-2  h-full  p-4 lg:p-6 gap-4">
+            <div className="flex flex-col lg:grid lg:grid-rows-4  ">
+              <div className="row-span-1 flex items-start justify-center ">
+                <DateRangePicker radius="sm" size="md" variant="flat" color="default" label="Selecione um intervalo" onChange={setValueDateRange} value={valueDateRange} />
+              </div>
+              <div className=" row-span-3 gap-4 ">
+                <Input name="cliente" label='Cliente' variant="underlined" onChange={handleChange} />
+                <Input name="estabelecimento" label='Estabelecimento' variant="underlined" onChange={handleChange} />
+                <div className="flex lg:flex-row lg:gap-6">
+                  <Input name='de' type="number" onChange={handleChange} label='de' variant="underlined" />
+                  <Input name='ate' type="number" onChange={handleChange} label='ate' variant="underlined" />
+                </div>
               </div>
             </div>
-          </div>
-          <div className="pt-2 flex flex-col  lg:grid lg:grid-rows-4 gap-2 border-2 border-blue-800 ">
-            <div className="flex items-start row-span-1 border" >
-              <DatePickerComponent value={valueDataRecebimento} onChange={setValueDataRecebimento} label="Data de recebimento" />
-            </div>
-            <div className="row-span-2 border flex flex-col gap-4 " >
-              <div className="flex lg:flex-row flex-col w-full row-span-2 gap-1">
-                <DropDownMenuCache title={'Tipo de venda'} setData={setData} items={['Presencial', 'Online', 'Link de pagamento']} />
-                <DropDownMenuCache title="Status da Venda" setData={setData} items={['Pendente', 'Aprovado', 'Falhado', 'Cancelado', 'Estornado']} />
+            <div className="pt-2 flex flex-col  lg:grid lg:grid-rows-4 gap-2  ">
+              <div className="flex items-start justify-center row-span-1 " >
+                <DatePickerComponent value={valueDataRecebimento} onChange={setValueDataRecebimento} label="Data de recebimento" />
+              </div>
+              <div className="row-span-2  flex flex-col gap-4 " >
+                <div className="flex lg:flex-row flex-col w-full row-span-2 gap-1">
+                  <DropDownMenuCache title={'Tipo de venda'} setData={setData} items={['Presencial', 'Online', 'Link de pagamento']} />
+                  <DropDownMenuCache title="Status da Venda" setData={setData} items={['Pendente', 'Aprovado', 'Falhado', 'Cancelado', 'Estornado']} />
+                </div>
+
+                <DropDownMenuCache title="Bandeira" items={['American Express', 'Elo', 'Maestro', 'Mastercard', 'Visa', 'Visa electron', 'Diners Club', 'Hiper', 'Hipercard', 'Banescard']} setData={setData} />
+                <DropDownMenuCache title={'Formas Pagamentos'} setData={setData} items={['Boleto', 'Débito', 'Pix', 'Crédito à Vista', 'Crédito parcelado']} />
+
               </div>
 
-              <DropDownMenuCache title="Bandeira" items={['American Express', 'Elo', 'Maestro', 'Mastercard', 'Visa', 'Visa electron', 'Diners Club', 'Hiper', 'Hipercard', 'Banescard']} setData={setData} />
-              <DropDownMenuCache title={'Formas Pagamentos'} setData={setData} items={['Boleto', 'Débito', 'Pix', 'Crédito à Vista', 'Crédito parcelado']} />
-
+              <div className=" w-full row-span-1 flex items-end justify-center "><Button color="primary" fullWidth={true} onClick={handleSubmit}>ENVIAR</Button></div>
             </div>
-
-            <div className=" w-full row-span-1 flex items-end justify-center "><Button color="primary" fullWidth={true} onClick={handleSubmit}>ENVIAR</Button></div>
           </div>
         </div>
       </div>

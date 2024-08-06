@@ -5,28 +5,31 @@ import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-o
 import { DotsThreeOutlineVertical } from "phosphor-react";
 import { useEffect, useState } from "react";
 import { parseDate } from '@internationalized/date';
-import { useDatePicker, useDisclosure } from "@nextui-org/react";
+import { DateValue, RangeValue, useDatePicker, useDisclosure } from "@nextui-org/react";
 import Cookies from 'js-cookie';
 import axios from "axios";
+import { objectMarketplace } from "@/types/marketplaces";
 
 type typeProps = {
   items: Array<string>
   onAction?: () => void
   fullWidth?: boolean
-  MarketplacesArray: Array<any>
+  MarketplacesArray: Array<objectMarketplace> | undefined
   id?: string
 }
 
 export default function DropDownMenuFilhos(props: typeProps) {
-  const [id, setId] = useState(null);
+  const [id, setId] = useState<string | undefined>();
 
   const [modalProps, setModalProps] = useState({
     useDatePicker: false,
-
-
+    useDesativar: false,
+    useTaxForTransaction: false,
+    useDropdownChangeParents: false,
+    action: ''
   })
   const token = Cookies.get('token');
-  const [value, setValue] = useState({
+  const [value, setValue] = useState<RangeValue<DateValue>>({
     start: parseDate('2024-04-01'), // Data inicial
     end: parseDate('2024-04-30'), // Último dia do mês
   });

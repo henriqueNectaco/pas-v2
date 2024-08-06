@@ -17,23 +17,20 @@ export type objectMarketplace = {
   id: number
   nome_fantasia: string
 }
-
+export type modalObject = {
+  useDatePicker: boolean,
+  useDesativar: boolean,
+  useTaxForTransaction: boolean,
+  useDropdownChangeParents: boolean,
+  action: string
+}
 export type ModalTypes = {
-
-  setId: Dispatch<
-    SetStateAction<string | undefined>
-  >
+  setId: Dispatch<SetStateAction<string | undefined>>
   MarketplacesArray?: Array<objectMarketplace>
-  modalProps: {
-    useDatePicker: boolean,
-    useDesativar: boolean,
-    useTaxForTransaction: boolean,
-    useDropdownChangeParents: boolean
-    action: string
-  }
+  modalProps: modalObject
 
-  onChangeTaxTransaction: (e: React.ChangeEvent<HTMLInputElement>) => void
-  useDropdownChangeParents: boolean
+  onChangeTaxTransaction?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  useDropdownChangeParents?: boolean
   onClick: () => void
   onOpenChange: () => void
   isOpen: boolean
