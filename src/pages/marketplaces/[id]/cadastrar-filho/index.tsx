@@ -89,22 +89,22 @@ export default function CadastrarFilho() {
   return (
     <div className="max-w-screen w-full h-full lg:h-screen bg-gray-200 pt-8 lg:pt-16 p-4 flex flex-col lg:justify-start lg:items-center">
       <div className="w-full h-full lg:w-3/4 bg-white lg:max-h-screen lg:h-2/3 flex flex-col items-center shadow-2xl rounded-md">
-        <h1 className="text-lg font-bold border-b border-black w-full flex items-center justify-center p-4">
+        <h1 className=" text-lg lg:text-2xl font-bold border-b border-black w-full flex items-center justify-center p-4">
           {activeStep === 0 ? 'Cadastrar marketplace filho' : 'Reiniciar Nginx'}
         </h1>
         {activeStep === 0 && (
           <div className="p-4 lg:grid lg:grid-cols-3 flex flex-col h-full lg:h-3/4 w-full gap-4">
-            <div className="h-full p-4 flex flex-col items-center justify-start lg:justify-center space-y-4">
+            <div className="h-full p-4 flex flex-col items-center justify-start lg:justify-center space-y-4 lg:space-y-6">
               <Input variant="underlined" onChange={handleChange} name='marketplace_id' placeholder="Marketplace Id" fullWidth />
               <Input variant="underlined" onChange={handleChange} name='estabelecimento_id' placeholder="Estabelecimento id" fullWidth />
               <div className="w-full h-full"><FilePonds /></div>
             </div>
-            <div className="h-full p-4 flex flex-col items-center justify-start space-y-4">
+            <div className="h-full p-4 flex flex-col items-center justify-start space-y-4 lg:space-y-6">
               <Input variant="underlined" onChange={handleChange} name="nome" placeholder="Nome" fullWidth />
               <Input variant="flat" color="primary" onChange={handleChange} type="color" name="color" placeholder="Cor" fullWidth />
               <div className="w-full h-full"><FilePonds /></div>
             </div>
-            <div className="w-full h-full flex flex-col items-center justify-center space-y-4 p-4">
+            <div className="w-full h-full flex flex-col items-center justify-center space-y-4 p-4 lg:space-y-6">
               <Input variant="underlined" onChange={handleChange} name='dominio' placeholder="Dominio" fullWidth />
               <Input variant="underlined" onChange={handleChange} name='website' placeholder="Website" fullWidth />
               <div className="w-full h-full"><FilePonds /></div>
@@ -114,7 +114,7 @@ export default function CadastrarFilho() {
         {activeStep === 1 && (
           <div>tesadw</div>
         )}
-        <div className="border-t border-black p-4 w-full flex items-center justify-center lg:justify-end">
+        <div className="border-t p-4 border-black  w-full flex items-center justify-center lg:justify-end">
           <Button
             onAuxClick={handleNext}
             color="primary"

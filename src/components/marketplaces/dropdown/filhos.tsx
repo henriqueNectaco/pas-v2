@@ -10,6 +10,7 @@ import Cookies from 'js-cookie';
 import axios from "axios";
 import { objectMarketplace } from "@/types/marketplaces";
 import router from "next/router";
+import { today, formatDateToYYYYMMDD } from "@/utils";
 
 type typeProps = {
   items: Array<string>
@@ -17,7 +18,7 @@ type typeProps = {
   fullWidth?: boolean
   MarketplacesArray: Array<objectMarketplace> | undefined
   id?: string
-  nomefantasia: string
+  nomefantasia?: string
 }
 
 export default function DropDownMenuFilhos(props: typeProps) {
@@ -32,13 +33,13 @@ export default function DropDownMenuFilhos(props: typeProps) {
   })
   const token = Cookies.get('token');
   const [value, setValue] = useState<RangeValue<DateValue>>({
-    start: parseDate('2024-04-01'), // Data inicial
-    end: parseDate('2024-04-30'), // Último dia do mês
+    start: parseDate(today), // Data inicial
+    end: parseDate(today), // Último dia do mês
   });
   const [action, setAction] = useState('Confirmar');
   const [date, setDate] = useState({
-    startDate: format(value.start.toDate()),
-    endDate: format(value.end.toDate())
+    startDate: formatDateToYYYYMMDD(value.start),
+    endDate: formatDateToYYYYMMDD(value.end)
   });
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -82,8 +83,8 @@ export default function DropDownMenuFilhos(props: typeProps) {
   useEffect(() => {
     setDate(prev => ({
       ...prev,
-      startDate: format(value.start.toDate()),
-      endDate: format(value.end.toDate())
+      startDate: formatDateToYYYYMMDD(value.start),
+      endDate: formatDateToYYYYMMDD(value.end)
     }))
   }, [value])
   return (
@@ -108,7 +109,8 @@ export default function DropDownMenuFilhos(props: typeProps) {
               setModalProps(prev => ({
                 ...prev,
                 useDropdownChangeParents: true,
-                useDatePicker: false
+                useDatePicker: false,
+                action: 'Trocar de parent'
               }))
               onOpen();
             } else if (key === 'Reprocessar pedidos') {

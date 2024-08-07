@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import { toast } from 'sonner';
 import Table from '@/components/table';
-import { pagination, Spinner } from '@nextui-org/react';
+import { Spinner } from '@nextui-org/react';
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import nextCookies from 'next-cookies'
 import Paginator from '@/components/marketplaces/pagination';
@@ -109,6 +109,7 @@ export default function Estabelecimentos({ dataEstabeleciments, totalPages }: In
     identificacao_fatura: data.identificacao_fatura,
     nome_fantasia: data.nome_fantasia,
   }
+
   const handleFilter = async () => {
     try {
       setEstabeleciments(null);
@@ -124,11 +125,7 @@ export default function Estabelecimentos({ dataEstabeleciments, totalPages }: In
         setEstabeleciments(res.data.estabelecimentos);
         setTotalPagess(res.data.pagination.pages)
       } else { toast.warning('algo inesperado aconteceu') }
-      if (totalEstabeleciments.length === 0) {
-        toast.warning('Nada encontrado baseado nos filtros')
-        handleCleanFilter()
-        fetchEstabeleciments()
-      }
+
     } catch (error) {
       console.error(error);
     }
@@ -159,9 +156,10 @@ export default function Estabelecimentos({ dataEstabeleciments, totalPages }: In
 
     if (isFirstRenderization === false) { handleFilter(); }
   }, [page]);
+
   return (
     <div className="max-w-screen w-full  bg-gray-300">
-      <div className={`w-full p-4 bg-gray-200 ${estabeleciments === null ? 'h-screen' : 'h-full'}`}>
+      <div className={`w-full p-4 bg-gray-200 ${estabeleciments === null || estabeleciments.length <= 10 ? 'h-screen' : 'h-full'}`}>
         <FilterEstabeleciments
           onChange={handleChange}
           filtrar={() => {

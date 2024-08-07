@@ -1,9 +1,9 @@
 import { Stepper } from 'react-form-stepper'
-import { StepperTypes, typeStep } from '@/types/marketplaces/marketplaces'
+import { StepperTypes, typeStep } from '@/types/marketplaces'
 
 export default function StepperComponent(props: StepperTypes) {
   return (
-    <div className="w-full">
+    <div className="w-full ">
       <Stepper
         steps={props.stepsData.map((step: typeStep) => ({
           label: step.label,

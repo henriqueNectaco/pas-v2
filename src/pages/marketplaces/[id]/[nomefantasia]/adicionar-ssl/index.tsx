@@ -54,14 +54,15 @@ export default function App() {
   useEffect(() => { console.log(data) }, [data])
   return (<div className=" flex flex-col items-center bg-gray-300 max-w-screen w-full h-full lg:h-screen overflow-y-hidden p-6 lg:p-12 lg:pt-20">
 
-    <div className=" h-full flex flex-col items-center justify-start bg-white shadow-xl rounded-md w-full lg:w-2/4 border  lg:h-4/6">
+    <div className=" h-full flex flex-col items-center justify-start bg-white shadow-xl rounded-md w-full lg:w-2/4 border  lg:h-2/3">
       <div className="p-4 border-b  border-black font-bold flex items-center justify-center text-2xl w-full">Validar pki</div>
       {activeStep === 0 && (<div className="flex flex-col lg:grid lg:grid-cols-2 border w-full h-full p-4 gap-2">
         <div className="border h-full p-4 space-y-4">
-          <Input required={true} variant='underlined' name="dominio" onChange={handleChange} label='Dominio' />
+
           <FilePonds titulo=".pki" />
         </div>
         <div className="border space-y-4 p-4 h-full">
+          <Input required={true} variant='underlined' name="dominio" onChange={handleChange} label='Dominio' />
           <Input variant='underlined' name="nome" value={nomefantasia} disabled={true} label='Nome' />
           <Checkbox onChange={handleChange} size="lg" radius="lg" name="renovacao">Renovação?</Checkbox>
         </div>

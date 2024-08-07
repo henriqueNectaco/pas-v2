@@ -1,5 +1,5 @@
 import { RangeValue, DateValue } from "@nextui-org/react"
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, Key, SetStateAction } from "react"
 
 
 export type propsFilterEstabeleciment = {
@@ -25,7 +25,7 @@ export type modalObject = {
   action: string
 }
 export type ModalTypes = {
-  setId: Dispatch<SetStateAction<string | undefined>>
+  setId?: Dispatch<SetStateAction<string | undefined | Key>>
   MarketplacesArray?: Array<objectMarketplace>
   modalProps: modalObject
 
@@ -56,17 +56,21 @@ export type typeFilePond = {
 
 
 }
-export type typeProps = {
+export type typePropsCadastroMarketplace = {
   setFilesLogo: any
   setFilesFavIcon: any
   setFilesLoader: any
   data: {
     nome: string
-    zoopMkId: string
+    zoopMarketplaceId: string
     dominio: string
-    sellerId: string
+    mainSellerId: string
     website: string
     zpk: string
+    cobrancaPorTransacao: boolean
+    cobrancaValor: number
+    cobrancaEmail: string
+
   }
   isLoading: boolean
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void

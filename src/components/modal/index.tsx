@@ -33,6 +33,7 @@ export default function ModalMine(props: ModalTypes) {
             <>
               <ModalHeader className="flex flex-col items-center justify-center gap-1">
                 {props.modalProps?.useDatePicker === true ? 'Selecione um intervalo' : props.modalProps?.action}
+
               </ModalHeader>
               <ModalBody className={`flex flex-col items-center ${props.modalProps?.useDatePicker === true ? 'justify-center' : 'justify-end'}`}>
                 {props.modalProps?.useDatePicker === true && (
@@ -107,7 +108,7 @@ export default function ModalMine(props: ModalTypes) {
                   <div className=' text-lg h-full flex items-center'>Desativar Marketplace?</div>
                 )}
               </ModalBody>
-              <ModalFooter className="flex flex-col lg:flex-row">
+              <ModalFooter className={`flex flex-col lg:flex-row`}>
                 <Button
                   color="danger"
                   variant="light"

@@ -11,7 +11,6 @@ export default function CadastrarMarketplaces() {
   const [filesFavIcon, setFilesFavIcon] = useState([])
   const [data, setData] = useState({
     nome: '',
-    zoopMkId: '',
     dominio: '',
     sellerId: '',
     website: '',
@@ -91,7 +90,7 @@ export default function CadastrarMarketplaces() {
     }))
   }, [filesLogo, filesLoader, filesFavIcon])
   return (
-    <div className="max-w-screen     bg-gray-200 h-full lg:h-screen">
+    <div className="max-w-screen     bg-gray-200 h-full lg:h-screen lg:pt-12">
 
       <CadastrarMarketplace
         filesLogo={filesLogo} setFilesLogo={setFilesLogo}

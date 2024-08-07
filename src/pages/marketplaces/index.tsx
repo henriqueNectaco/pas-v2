@@ -1,5 +1,4 @@
 import { parseDate } from '@internationalized/date'
-import { format } from '@/utils/dates'
 import ModalMine from '@/components/modal'
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import nextCookies from 'next-cookies'
@@ -11,15 +10,17 @@ import {
   DropdownItem,
   Button,
   Spinner,
+  DateValue,
+  RangeValue,
 } from '@nextui-org/react'
 import Cookies from 'js-cookie'
 import Router, { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { Key, useEffect, useState } from 'react'
 import axios from 'axios'
 import { CaretDown } from 'phosphor-react'
 import { toast } from 'sonner'
 import TableMarketPlaces from './table'
-import { localUrl, today } from '@/utils'
+import { formatDateToYYYYMMDD, localUrl, today } from '@/utils'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { token } = nextCookies(context)
@@ -48,24 +49,27 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 export default function Marketplace({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) {
 
-  const [value, setValue] = useState({
+  const [value, setValue] = useState<RangeValue<DateValue>>({
     start: parseDate(today),
     end: parseDate(today),
   })
   const [modalProps, setModalProps] = useState({
     useTaxForTransaction: false,
-    action: 'Confirmar'
+    action: 'Confirmar',
+    useDesativar: false,
+    useDropdownChangeParents: false,
+    useDatePicker: false
   })
 
   const [date, setDate] = useState({
-    startDate: format(value.start.toDate()),
-    endDate: format(value.end.toDate())
+    startDate: formatDateToYYYYMMDD(value.start),
+    endDate: formatDateToYYYYMMDD(value.end)
   })
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const token = Cookies.get('token')
   const router = useRouter()
-  const [resData, setResData] = useState<Object>(data)
-  const [state, setState] = useState('ativos')
+  const [resData, setResData] = useState<Array<object> | null>(data)
+  const [statusMarketplace, setStatusMarketplace] = useState<Key | string>('ativos')
   const handleReprocessAllSales = async () => {
     try {//https://api.zsystems.com.br/marketplaces/reprocessar-pedidos
       const res = await axios.post(`${localUrl}/reprocessar-pedidos`,
@@ -116,7 +120,7 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
         setResData('')
       }
       const res = await axios.get(
-        `https://api.zsystems.com.br/z1/marketplaces?status=${state}`,
+        `https://api.zsystems.com.br/z1/marketplaces?status=${statusMarketplace}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
 
@@ -147,8 +151,9 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
   }, [])
   useEffect(() => {
     setDate({
-      startDate: format(value.start.toDate()),
-      endDate: format(value.end.toDate())
+      startDate: formatDateToYYYYMMDD(value.start)
+      ,
+      endDate: formatDateToYYYYMMDD(value.end)
     })
   }, [value])
   return (
@@ -213,20 +218,20 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
                     color="default"
                     fullWidth={true}
                   >
-                    {state}
+                    {statusMarketplace}
                     <CaretDown size={20} />
                   </Button>
                 </DropdownTrigger>
                 <DropdownMenu
                   aria-label="Action event example"
                   onAction={(key) => {
-                    setState(key)
+                    setStatusMarketplace(key)
                   }}
                   color="primary"
                   variant="solid"
                 >
                   <DropdownItem key="todos">todos</DropdownItem>
-                  <DropdownItem key="ativos">ativoss</DropdownItem>
+                  <DropdownItem key="ativos">ativos</DropdownItem>
                   <DropdownItem key="removido">desativados</DropdownItem>
                 </DropdownMenu>
               </Dropdown>

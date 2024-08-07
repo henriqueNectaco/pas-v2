@@ -9,6 +9,8 @@ import {
   DropdownItem,
   Button,
   useDisclosure,
+  DateValue,
+  RangeValue,
 } from '@nextui-org/react'
 import { DotsThreeOutlineVertical } from 'phosphor-react'
 import ModalMine from '@/components/modal'
@@ -34,7 +36,7 @@ export default function DropdownButton(props: TypeProps) {
     useDatePicker: true,
     useDesativar: false
   })
-  const [value, setValue] = useState({
+  const [value, setValue] = useState<RangeValue<DateValue>>({
     start: parseDate(today),
     end: parseDate(today),
   })

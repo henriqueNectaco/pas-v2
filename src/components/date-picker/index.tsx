@@ -1,6 +1,5 @@
 import React from "react";
 import { DatePicker } from "@nextui-org/react";
-import { parseDate } from "@internationalized/date";
 
 type typeProps = {
   value: any
