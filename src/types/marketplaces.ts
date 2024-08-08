@@ -48,7 +48,7 @@ export type typeStep = {
   label: string
   active: boolean
 }
-//cadastro
+
 
 export type typeFilePond = {
   name: string

@@ -18,8 +18,4 @@ export default function DateRangePickerComponent(props: datePickerProps) {
     </div>
   )
 }
-/*
-      <p>{formatDatePicker(value.start.toDate())}</p>
-<p>{formatDatePicker(value.end.toDate())}</p>
-console.log(formatDatePicker(value.start.toDate()))
-*/
+

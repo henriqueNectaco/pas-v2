@@ -16,7 +16,7 @@ import { DotsThreeOutlineVertical } from 'phosphor-react'
 import ModalMine from '@/components/modal'
 import axios from 'axios'
 import { getLastDayOfMonth, format } from '@/utils/dates'
-import { localUrl, today } from '@/utils'
+import { formatDateToYYYYMMDD, localUrl, today } from '@/utils'
 
 type TypeProps = {
   id: number
@@ -69,8 +69,8 @@ export default function DropdownButton(props: TypeProps) {
       await axios.post(
         `https://pas-aps.up.railway.app/marketplace/import-establishment`,
         {
-          startDate: format(value.start.toDate()),
-          endDate: format(value.end.toDate()),
+          startDate: formatDateToYYYYMMDD(value.start),
+          endDate: formatDateToYYYYMMDD(value.end),
           marketplaceId: props.id,
         },
         { headers: { Authorization: `Bearer ${token}` } },
@@ -84,8 +84,8 @@ export default function DropdownButton(props: TypeProps) {
       const res = await axios.post(
         `https://api.zsystems.com.br/marketplaces/${props.id}/importar-pedidos`,
         {
-          startDate: format(value.start.toDate()),
-          endDate: format(value.end.toDate()),
+          startDate: formatDateToYYYYMMDD(value.start),
+          endDate: formatDateToYYYYMMDD(value.end),
         },
         { headers: { Authorization: `Bearer ${token}` } },
       )
@@ -104,8 +104,8 @@ export default function DropdownButton(props: TypeProps) {
       const res = await axios.post(
         `https://api.zsystems.com.br/marketplaces/reprocessar-pedidos/${props.id}`,
         {
-          startDate: format(value.start.toDate()),
-          endDate: format(value.end.toDate()),
+          startDate: formatDateToYYYYMMDD(value.start),
+          endDate: formatDateToYYYYMMDD(value.end),
         },
         { headers: { Authorization: `Bearer ${token}` } },
       )

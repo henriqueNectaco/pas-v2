@@ -1,9 +1,8 @@
 import ModalMine from "@/components/modal";
-import { format } from "@/utils/dates";
 import { Button } from "@nextui-org/button";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/dropdown";
 import { DotsThreeOutlineVertical } from "phosphor-react";
-import { useEffect, useState } from "react";
+import { Key, useEffect, useState } from "react";
 import { parseDate } from '@internationalized/date';
 import { DateValue, RangeValue, useDatePicker, useDisclosure } from "@nextui-org/react";
 import Cookies from 'js-cookie';
@@ -22,7 +21,7 @@ type typeProps = {
 }
 
 export default function DropDownMenuFilhos(props: typeProps) {
-  const [id, setId] = useState<string | undefined>();
+  const [id, setId] = useState<Key | undefined>();
 
   const [modalProps, setModalProps] = useState({
     useDatePicker: false,

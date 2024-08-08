@@ -1,7 +1,6 @@
 
 import { useState } from 'react'
 import axios from 'axios'
-import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
 
 
@@ -11,17 +10,9 @@ import nextCookies from 'next-cookies'
 import Table from '@/components/table'
 import process from 'process'
 import { apiUrl } from '@/utils'
+import { CronProps } from '@/types/crons'
 
 
-
-type CronProps = {
-  slug: string
-  id: string
-  message: string
-  start_date: Date
-  cron: string
-  interval: string
-}
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { token } = nextCookies(context)
