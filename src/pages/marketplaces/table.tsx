@@ -1,7 +1,7 @@
 import { Spinner } from '@nextui-org/react'
 
 import DropdownButton from './dropdown'
-type marketplaceItemsTypes = {
+export type marketplaceItemsTypes = {
   id: number
   mainECId: number
   mainECEmail: string

@@ -117,7 +117,7 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
   const fetchFilteredData = async () => {
     try {
       if (resData !== null) {
-        setResData('')
+        setResData(null)
       }
       const res = await axios.get(
         `https://api.zsystems.com.br/z1/marketplaces?status=${statusMarketplace}`,
@@ -159,7 +159,7 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
   return (
     <div className={`max-w-screen w-full   flex flex-col items-center bg-gray-200 `}>
 
-      <div className={`w-full flex flex-col items-center  ${resData === '' ? 'h-screen' : 'h-full'}  lg:p-6 p-4 space-y-2 lg:space-y-4  mt-4`}>
+      <div className={`w-full flex flex-col items-center  ${resData === null ? 'h-screen' : 'h-full'}  lg:p-6 p-4 space-y-2 lg:space-y-4  mt-4`}>
         <div className=" w-full flex flex-col lg:grid lg:grid-cols-4 boder-2 gap-2  ">
           <div className=" flex flex-col lg:flex-row lg:col-span-2 gap-2 ">
             <Button

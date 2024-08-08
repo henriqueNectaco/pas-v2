@@ -10,9 +10,11 @@ import { useRouter } from 'next/router'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { EyeSlash, Eye } from 'phosphor-react'
+
+// Esquema de validação com Zod
 const Formschema = z.object({
-  email: z.string().email(),
-  senha: z.string(),
+  email: z.string().email("E-mail inválido"),
+  senha: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
 })
 type FormschemaData = z.infer<typeof Formschema>
 
@@ -20,16 +22,13 @@ export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
   const [isLoading, setIsLoading] = useState(false)
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [isDisabled, setIsDisabled] = useState(true)
 
-  const [token, setToken] = useState(Cookies.get('token'))
-  const { register, handleSubmit } = useForm<FormschemaData>({
+  const { register, handleSubmit, formState: { errors, isValid } } = useForm<FormschemaData>({
     resolver: zodResolver(Formschema),
+    mode: 'onChange' // Isso permitirá que a validação ocorra a cada mudança no formulário
   })
 
-  const router = useRouter() // Mova o useRouter para o início da função de componente
+  const router = useRouter()
 
   const onSubmit = async (data: FormschemaData) => {
     try {
@@ -44,21 +43,22 @@ export default function Home() {
         toast.success('Login realizado com sucesso!')
 
         router.push('/dashboard')
-      } else if (response.data.success === false) {
+      } else {
         setIsLoading(false)
-        toast.error('Login não encontrado ')
+        toast.error('Login não encontrado')
       }
     } catch (error) {
       setIsLoading(false)
       console.log(error)
-      toast.error('Login não encontrado ')
+      toast.error('Algo inesperado aconteceu')
     }
   }
+
   const auth = async () => {
     try {
       const response = await axios.post(
         'https://api.zsystems.com.br/z1/autenticar',
-        { token },
+        { token: Cookies.get('token') },
       )
       if (response.data.success === true) {
         toast.success('Login Encontrado')
@@ -72,17 +72,6 @@ export default function Home() {
   useEffect(() => {
     auth()
   }, [])
-  useEffect(() => {
-    setIsDisabled(!(email && password))
-  }, [email, password])
-
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value)
-  }
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value)
-  }
 
   return (
     <div className="bg-gradient-to-r from-cyan-500 to-blue-500 h-screen w-screen flex justify-center items-center">
@@ -111,14 +100,16 @@ export default function Home() {
                   type="email"
                   variant="underlined"
                   {...register('email')}
-                  onChange={handleEmailChange}
+                  required={true}
                 />
+                {errors.email && <span className="text-red-500 text-sm lg:text-md">{errors.email.message}</span>}
               </div>
-              <div className="w-full lg:p-4 flex flex-col gap-3 ">
+              <div className="w-full lg:p-4  flex flex-col gap-3 ">
                 <label htmlFor="password" className="  lg:text-base">
                   Senha:
                 </label>
                 <Input
+                  required={true}
                   endContent={
                     <button className="focus:outline-none" type="button" onClick={toggleVisibility} aria-label="toggle password visibility">
                       {isVisible ? (
@@ -131,8 +122,8 @@ export default function Home() {
                   type={isVisible ? "text" : "password"}
                   variant="underlined"
                   {...register('senha')}
-                  onChange={handlePasswordChange}
                 />
+                {errors.senha && <span className="text-red-500 text-sm lg:text-md">{errors.senha.message}</span>}
               </div>
               <div className=" lg:p-4 lg:h-[15vh] h-1/4 w-full flex flex-col items-center justify-center lg:justify-end  gap-2 lg:gap-4 ">
                 <Button
@@ -142,7 +133,7 @@ export default function Home() {
                   fullWidth={true}
                   isLoading={isLoading}
                   radius="sm"
-                  disabled={isDisabled}
+                  disabled={!isValid || isLoading}
                   className="disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Entrar

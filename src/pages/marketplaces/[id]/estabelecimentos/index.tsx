@@ -42,7 +42,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 export default function Estabelecimentos({ dataEstabeleciments, totalPages }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [isFirstRenderization, setIsFirstRenderization] = useState(true)
-  const [marketplacesPai, setMarketplacesPai] = useState(null)
+  const [marketplacesPai, setMarketplacesPai] = useState<Array<object> | null>(null)
   const [page, setPage] = useState(1)
   const [totalPagess, setTotalPagess] = useState(totalPages)
   const [token] = useState(Cookies.get('token'));

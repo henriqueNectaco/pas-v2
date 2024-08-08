@@ -8,7 +8,7 @@ import JSONPretty from 'react-json-pretty'
 import FormVendas from './form'
 import { toast } from 'sonner'
 import Router from 'next/router'
-import { ZoopTransaction, Pedido } from '@/types/vendas'
+import { typeResponseData, ZoopTransaction } from '@/types/vendas'
 import { apiUrl } from '../api/useApi'
 import PagamentosCards from './pagamentosCards'
 
@@ -18,7 +18,7 @@ export default function Vendas() {
   const [isLoadingSearchSale, setIsLoadingSearchSale] = useState<boolean>(false)
   const [isLoadingReprocessSale, setIsLoadingReprocessSale] = useState<boolean>(false)
   const [vendaId, setVendaId] = useState<string | undefined>(undefined)
-  const [responseData, setResponseData] = useState<Pedido | undefined>(null)
+  const [responseData, setResponseData] = useState<typeResponseData | null>(null)
   const [responseZoopTransaction, setResponseZoopTransaction] =
     useState<ZoopTransaction>(null)
   const token = Cookies.get('token')
@@ -30,7 +30,7 @@ export default function Vendas() {
   const handleReprocessSale = async () => {
     setIsLoadingReprocessSale(true)
     try {
-      const response = await axios.get(`${apiUrl}/vendas/${responseData.id}/reprocessar`,
+      const response = await axios.get(`${apiUrl}/vendas/${responseData?.id}/reprocessar`,
         { headers: { Authorization: `Bearer ${token}` } }
       )
       if (response.data.success === true) {
@@ -93,7 +93,7 @@ export default function Vendas() {
   return (
     <div className="flex flex-col items-center  h-screen max-w-screen w-full ">
 
-      <div className={`w-full max-w-screen flex flex-col space-y-2 ${responseData?.pagamentos.length >= 3 ? 'bg-gray-800' : ''} ${responseData !== null && responseData.pagamentos.length == 1 ? 'bg-gray-300' : ''}`}>
+      <div className={`w-full max-w-screen flex flex-col space-y-2 ${responseData?.pagamentos.length >= 3 && 'bg-gray-800'} ${responseData !== null && responseData.pagamentos.length == 1 ? 'bg-gray-300' : ''}`}>
         <div className="w-full lg:p-3 p-2 lg:pr-0 flex lg:flex-row flex-col items-center lg:gap-4  justify-center h-full">
           <FormVendas onSubmit={handleSearch}
             Isloading={isLoadingSearchSale}
@@ -133,7 +133,7 @@ export default function Vendas() {
                   </div>
                   <div className="   flex flex-row items-start justify-between">
                     <p>Splits</p>
-                    <p>?</p>
+                    <p>{responseData.pedidos_splits.length}</p>
                   </div>
                 </div>
 

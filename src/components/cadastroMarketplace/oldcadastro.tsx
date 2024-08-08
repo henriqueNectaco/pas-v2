@@ -23,33 +23,28 @@ import { zodResolver } from '@hookform/resolvers/zod'
 type FormschemaData = z.infer<typeof FormschemaCadastroMarketplace>
 
 export function CadastrarMarketplace(props: typePropsCadastroMarketplace) {
-  const { handleSubmit, register, formState: { errors, isValid } } = useForm<FormschemaData>({
+  const { register, formState: { errors, isValid } } = useForm<FormschemaData>({
     resolver: zodResolver(FormschemaCadastroMarketplace),
     mode: 'onChange' // Isso permitirá que a validação ocorra a cada mudança no formulário
   })
-
-
-
   return (
     <div className="flex flex-col items-center  h-full lg:max-h-screen bg-gray-200 p-4 ">
-      <form className="w-full max-w-7xl"  >
-        <Card className="w-full max-w-7xl bg-white ">
-          <CardHeader className="pb-4">
-            <CardTitle className="flex items-center justify-center ">
-              Cadastrar MarketPlace (Zoop)
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className=" hidden xl:flex md:flex lg:flex w-full border-b border-black  items-center  justify-center lg:mb-6">
-              <StepperComponent stepsData={props.stepsData} activeStep={props.activeStep} />
-            </div>
-
+      <Card className="w-full max-w-7xl bg-white ">
+        <CardHeader className="pb-4">
+          <CardTitle className="flex items-center justify-center ">
+            Cadastrar MarketPlace (Zoop)
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className=" hidden xl:flex md:flex lg:flex w-full border-b border-black  items-center  justify-center lg:mb-6">
+            <StepperComponent stepsData={props.stepsData} activeStep={props.activeStep} />
+          </div>
+          <form className="">
             {props.activeStep === 0 ? (
               <>
                 <div className="flex flex-col lg:grid lg:grid-cols-2  gap-6 p-6 pt-2 ">
 
                   <Input
-
                     onChange={props.onChange}
                     name='nome'
                     value={props.data.nome}
@@ -89,19 +84,17 @@ export function CadastrarMarketplace(props: typePropsCadastroMarketplace) {
                     variant="underlined"
                     labelPlacement="inside"
                   />
-                  <div>
-                    <Input
-                      {...register('website')}
-                      //value={props.data.website}
-                      //onChange={props.onChange}
-                      name='website'
-                      placeholder={'Website'}
-                      required={true}
-                      variant="underlined"
-                      labelPlacement="inside"
-                    />
-                    {errors.website && <span className="text-red-500 text-sm lg:text-md">{errors.website.message}</span>}
-                  </div>
+
+                  <Input
+                    value={props.data.website}
+                    onChange={props.onChange}
+                    name='website'
+                    placeholder={'Website'}
+                    required={true}
+                    variant="underlined"
+                    labelPlacement="inside"
+                  />
+
                   <Input
                     value={props.data.zpk}
                     onChange={props.onChange}
@@ -181,31 +174,30 @@ export function CadastrarMarketplace(props: typePropsCadastroMarketplace) {
             </>
             ) : null}
             {props.activeStep === 3 ? <p>step 4</p> : null}
+          </form>
+        </CardContent>
+        <CardFooter className="flex justify-center lg:justify-end space-x-4">
+          {props.activeStep !== 0 && (<Button
+            variant="bordered"
+            radius="sm"
+            color="primary"
+            isLoading={props.isLoading}
+            onClick={props.handlePrevStep}
+          >
+            Voltar
+          </Button>)}
 
-          </CardContent>
-          <CardFooter className="flex justify-center lg:justify-end space-x-4">
-            {props.activeStep !== 0 && (<Button
-              variant="bordered"
-              radius="sm"
-              color="primary"
-              isLoading={props.isLoading}
-              onClick={props.handlePrevStep}
-            >
-              Voltar
-            </Button>)}
-
-            <Button
-              isLoading={props.isLoading}
-              onClick={props.onClickNextStep}
-              variant="bordered"
-              radius="sm"
-              color="primary"
-              type={props.activeStep === 2 ? 'submit' : 'Next'}
-            >
-              Próximo
-            </Button>
-          </CardFooter>
-        </Card></form>
+          <Button
+            isLoading={props.isLoading}
+            onClick={props.onClickNext}
+            variant="bordered"
+            radius="sm"
+            color="primary"
+          >
+            Próximo
+          </Button>
+        </CardFooter>
+      </Card>
     </div >
   )
 }

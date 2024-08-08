@@ -18,10 +18,10 @@ export type objectMarketplace = {
   nome_fantasia: string
 }
 export type modalObject = {
-  useDatePicker: boolean,
-  useDesativar: boolean,
-  useTaxForTransaction: boolean,
-  useDropdownChangeParents: boolean,
+  useDatePicker?: boolean,
+  useDesativar?: boolean,
+  useTaxForTransaction?: boolean,
+  useDropdownChangeParents?: boolean,
   action: string
 }
 export type ModalTypes = {
