@@ -18,6 +18,9 @@ const FilePond = dynamic(() => import('react-filepond').then(module => {
 export default function FilePonds(props: typeFilePond) {
 
 
+  const handleInit = () => {
+    console.log("FilePond instance has initialised");
+  };
 
   const handleUpdateFiles = (fileItems) => {
     props.setFiles(fileItems.map(fileItem => fileItem.file));
@@ -66,8 +69,8 @@ export default function FilePonds(props: typeFilePond) {
         maxFiles={1}
         server={null}
         name={props.name}
-
-
+        oninit={handleInit}
+        onupdatefiles={handleUpdateFiles}
         labelIdle={`Arraste ou solte o arquivo de ${props.titulo} <span class="filepond--label-action">Navegar</span>`}
       />
     </div>

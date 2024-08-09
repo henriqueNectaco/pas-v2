@@ -6,34 +6,40 @@ import {
   CardTitle,
   CardContent,
   CardFooter,
-
-
 } from '@/components/ui/card'
 import axios from 'axios'
 import { Button } from '@nextui-org/button'
 import { Checkbox, Input } from '@nextui-org/react'
-
-import { apiUrl, token } from '@/utils'
-import { FormschemaCadastroMarketplace } from '@/types/vendas'
 import { z } from 'zod'
 import StepperComponent from '@/components/cadastroMarketplace/steper'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import FilePonds from '@/components/cadastroMarketplace/filepond'
+import { FormschemaCadastroMarketplace } from '@/types/vendas'
+
+import dynamic from 'next/dynamic';
+import 'filepond/dist/filepond.min.css';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+
 
 type FormschemaData = z.infer<typeof FormschemaCadastroMarketplace>
+type FormErrors = z.inferFlattenedErrors<typeof FormschemaCadastroMarketplace>
+
+const FilePond = dynamic(() => import('react-filepond').then(module => {
+  const { registerPlugin } = module;
+  const FilePondPluginImageExifOrientation = require('filepond-plugin-image-exif-orientation');
+  const FilePondPluginImagePreview = require('filepond-plugin-image-preview');
+  registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
+
+  return module.FilePond;
+}), { ssr: false });
 
 export default function CadastrarMarketplaces() {
-  const { handleSubmit, register, formState: { errors, isValid }, trigger } = useForm<FormschemaData>({
-    resolver: zodResolver(FormschemaCadastroMarketplace),
-    mode: 'onChange' // Isso permitirá que a validação ocorra a cada mudança no formulário
-  })
+  const [files, setFiles] = useState([])
+  const handleUpdateFiles = (fileItems) => {
+    setFiles(fileItems.map(fileItem => fileItem.file));
+  };
 
-
-  const [activeStep, setActiveStep] = useState<number>(0)
-  const [filesLoader, setFilesLoader] = useState<any[]>([])
-  const [filesLogo, setFilesLogo] = useState<any[]>([])
-  const [filesFavIcon, setFilesFavIcon] = useState<any[]>([])
   const [dataa, setDataa] = useState<FormschemaData>({
     nome: '',
     dominio: '',
@@ -46,82 +52,82 @@ export default function CadastrarMarketplaces() {
     color: undefined,
     logo: undefined,
   })
-  const [stepsData] = useState([
+  const { handleSubmit, register, formState: { errors }, trigger, watch } = useForm<FormschemaData>({
+    resolver: zodResolver(FormschemaCadastroMarketplace),
+    mode: 'onChange',
+  })
+  const cobrancaPorTransacao = watch('cobrancaPorTransacao', false);
+  const [activeStep, setActiveStep] = useState<number>(0)
+  const [filesLoader, setFilesLoader] = useState<any[]>([])
+  const [filesLogo, setFilesLogo] = useState<any[]>([])
+  const [filesFavIcon, setFilesFavIcon] = useState<any[]>([])
+
+  const stepsData = [
     { label: 'Dados Marketplace', active: activeStep === 0 },
     { label: 'Arquivos', active: activeStep === 1 },
-    { label: 'Importar dados da zoop', active: activeStep === 2 },
+    { label: 'Importar dados da Zoop', active: activeStep === 2 },
     { label: 'Reiniciar Nginx', active: activeStep === 3 },
-  ])
+  ]
 
   const handlePrevStep = () => {
     if (activeStep > 0) {
-      setValidatedActiveStep(activeStep - 1)
+      setActiveStep(activeStep - 1)
     } else {
       toast.warning('Cannot go below step 0')
     }
   }
 
   const handleCadastrarMarketplace = async (dados: FormschemaData) => {
+    const formData = new FormData();
+
+    // Add all form fields to FormData
+    formData.append('nome', dados.nome);
+    formData.append('dominio', dados.dominio);
+    formData.append('sellerId', dados.sellerId);
+    formData.append('website', dados.website || '');  // Handle optional fields
+    formData.append('zpk', dados.zpk);
+    formData.append('cobrancaPorTransacao', dados.cobrancaPorTransacao.toString());
+    formData.append('carne', dados.carne.toString());
+    formData.append('taxaAdministrativa', dados.taxaAdministrativa.toString());
+    formData.append('file', files[0])
+    // Add files to FormData
+
+
     try {
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_LOCAL}/cadastromarketplace`, dados)
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_LOCAL}/cadastromarketplace`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      toast.success('Marketplace cadastrado com sucesso!');
     } catch (error) {
-      console.error(error)
-    }
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target
-    setDataa((prevData) => ({
-      ...prevData,
-      [name]: type === 'checkbox' ? checked : value,
-    }))
-  }
-
-  const setValidatedActiveStep = (step: number) => {
-    if (step >= 0 && step < 4) {
-      setActiveStep(step)
-    } else {
-      toast.warning(`Step ${step} is out of range`)
+      console.error(error);
+      toast.error('Erro ao cadastrar Marketplace.');
     }
   }
 
   const handleNextStep = async () => {
-    // Valide os campos antes de permitir o avanço
-    // <-- Retorna true se não houver erros
+    const isValid = await trigger()
 
-    if (!isValid) {
-      toast.error('Campos Inválidos')
+    if (isValid) {
+      setActiveStep(activeStep + 1)
     } else {
-      setValidatedActiveStep(activeStep + 1)
+      toast.error('Campos inválidos. Corrija os erros antes de prosseguir.')
     }
   }
 
   const handleNext = () => {
-    switch (activeStep) {
-      case 0:
-
-        handleNextStep()
-        break;
-      case 1:
-        handleCadastrarMarketplace(dataa)
-        break;
-      case 2:
-        handleNextStep()
-        break;
-      default:
-        toast.warning('Algo inesperado aconteceu')
+    if (activeStep === 2) {
+      handleSubmit(handleCadastrarMarketplace)()
+    } else {
+      handleNextStep()
     }
   }
 
   useEffect(() => {
-    console.log(dataa)
-    console.log(activeStep)
-
-    console.log(errors.website)
-    if (errors !== undefined) {
-      console.log('tem algo errador')
-    }
-  }, [dataa, activeStep])
+    // Log errors for debugging
+    console.log(errors)
+  }, [errors])
 
   useEffect(() => {
     setDataa((prev) => ({
@@ -131,13 +137,7 @@ export default function CadastrarMarketplaces() {
       favIcon: filesFavIcon[0]
     }))
   }, [filesLogo, filesLoader, filesFavIcon])
-  const onError = (errors: any) => {
-    console.log('tem errors', errors)
-    // Aqui você pode tratar os erros individualmente, por exemplo:
-    Object.keys(errors).forEach((field) => {
-      console.log(`Erro no campo ${field}: ${errors[field]?.message}`)
-    })
-  }
+
   return (
     <div className="max-w-screen bg-gray-200 h-full lg:h-screen lg:pt-12">
       <div className="flex flex-col items-center h-full lg:max-h-screen bg-gray-200 p-4">
@@ -155,141 +155,133 @@ export default function CadastrarMarketplaces() {
 
               {activeStep === 0 && (
                 <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 p-6 pt-2">
-                  <Input
-                    onChange={handleChange}
-                    name='nome'
-                    value={dataa.nome}
-                    placeholder={'Nome'}
-                    required={true}
-                    variant="underlined"
-                    labelPlacement="inside"
-                  />
-                  <Input
-                    onChange={handleChange}
-                    name='zoopMarketplaceId'
-                    value={dataa.sellerId}
-                    placeholder={'Zoop Marketplace Id'}
-                    required={true}
-                    variant="underlined"
-                    labelPlacement="inside"
-                  />
-                  <Input
-                    onChange={handleChange}
-                    name='dominio'
-                    value={dataa.dominio}
-                    placeholder={'Dominio'}
-                    required={true}
-                    variant="underlined"
-                    labelPlacement="inside"
-                  />
-                  <Input
-                    onChange={handleChange}
-                    name='sellerId'
-                    value={dataa.sellerId}
-                    placeholder={'Main Seller Id'}
-                    required={true}
-                    variant="underlined"
-                    labelPlacement="inside"
-                  />
+                  <div>
+                    <Input
+                      {...register('nome')}
+                      name='nome'
+                      placeholder={'Nome'}
+                      required={true}
+                      variant="underlined"
+                      labelPlacement="inside"
+                    />
+                    {errors.nome && <span className="text-red-500 text-sm lg:text-md">{errors.nome.message}</span>}
+                  </div>
+                  <div>
+                    <Input
+                      {...register('zoopMarketplaceId')}
+                      name='zoopMarketplaceId'
+                      placeholder={'Zoop Marketplace Id'}
+                      required={true}
+                      variant="underlined"
+                      labelPlacement="inside"
+                    />
+                    {errors.zoopMarketplaceId && <span className="text-red-500 text-sm lg:text-md">{errors.zoopMarketplaceId.message}</span>}
+                  </div>
+                  <div>
+                    <Input
+                      {...register('dominio')}
+                      name='dominio'
+                      placeholder={'Dominio'}
+                      required={true}
+                      variant="underlined"
+                      labelPlacement="inside"
+                    />
+                    {errors.dominio && <span className="text-red-500 text-sm lg:text-md">{errors.dominio.message}</span>}
+                  </div>
+                  <div>
+                    <Input
+                      {...register('sellerId')}
+                      name='sellerId'
+                      placeholder={'Main Seller Id'}
+                      required={true}
+                      variant="underlined"
+                      labelPlacement="inside"
+                    />
+                    {errors.sellerId && <span className="text-red-500 text-sm lg:text-md">{errors.sellerId.message}</span>}
+                  </div>
                   <div>
                     <Input
                       {...register('website')}
-                      //value={props.data.website}
-                      //onChange={props.onChange}
                       name='website'
                       placeholder={'Website'}
-                      required={true}
                       variant="underlined"
                       labelPlacement="inside"
                     />
                     {errors.website && <span className="text-red-500 text-sm lg:text-md">{errors.website.message}</span>}
                   </div>
-                  <Input
-                    onChange={handleChange}
-                    name='zpk'
-                    value={dataa.zpk}
-                    placeholder={'ZPK'}
-                    required={true}
-                    variant="underlined"
-                    labelPlacement="inside"
-                  />
-                  {dataa.cobrancaPorTransacao && (
+                  <div>
+                    <Input
+                      {...register('zpk')}
+                      name='zpk'
+                      placeholder={'ZPK'}
+                      required={true}
+                      variant="underlined"
+                      labelPlacement="inside"
+                    />
+                    {errors.zpk && <span className="text-red-500 text-sm lg:text-md">{errors.zpk.message}</span>}
+                  </div>
+                  {cobrancaPorTransacao && (
                     <>
-                      <Input
-                        onChange={handleChange}
-                        name='cobrancaValor'
-                        value={dataa.cobrancaValor}
-                        placeholder={'Valor da Cobrança*'}
-                        required={true}
-                        variant="underlined"
-                        labelPlacement="inside"
-                        type='number'
-                      />
-                      <Input
-                        onChange={handleChange}
-                        name='cobrancaEmail'
-                        value={dataa.cobrancaEmail}
-                        placeholder={'Email da Cobrança*'}
-                        required={true}
-                        variant="underlined"
-                        labelPlacement="inside"
-                      />
-                    </>
+                      <div>
+                        <Input
+                          required={cobrancaPorTransacao}
+                          {...register('cobrancaValor')}
+                          name='cobrancaValor'
+                          placeholder={'Valor da Cobrança*'}
+                          variant="underlined"
+                          labelPlacement="inside"
+                          type='number'
+                        />
+                        {errors.cobrancaValor && <span className="text-red-500 text-sm lg:text-md">{errors.cobrancaValor.message}</span>}
+                      </div>
+                      <div>
+                        <Input
+                          required={cobrancaPorTransacao}
+                          {...register('cobrancaEmail')}
+                          name='cobrancaEmail'
+                          placeholder={'Email da Cobrança*'}
+                          variant="underlined"
+                          labelPlacement="inside"
+                        />
+                        {errors.cobrancaEmail && <span className="text-red-500 text-sm lg:text-md">{errors.cobrancaEmail.message}</span>}
+                      </div></>
                   )}
+                  <div className="p-4 pl-0 flex flex-col justify-start lg:flex lg:flex-row gap-4 ">
+                    <div className="flex items-center lg:justify-center justify-start space-x-2 ">
+                      <Checkbox {...register('cobrancaPorTransacao')} name='cobrancaPorTransacao'>Cobrança por transação</Checkbox>
+                    </div>
+                    <div className="flex items-center lg:justify-center space-x-2 justify-start">
+                      <Checkbox {...register('taxaAdministrativa')} name='taxaAdministrativa'>Taxa Administrativa</Checkbox>
+                    </div>
+                    <div className="flex items-center lg:justify-center space-x-2 justify-start">
+                      <Checkbox {...register('carne')} name='carne'>Carnê</Checkbox>
+                    </div>
+                  </div>
                 </div>
               )}
 
               {activeStep === 1 && (
-                <>
-                  <div className='lg:w-2/6 w-full'>
-                    <span>Cor do estabelecimento</span>
-                    <Input variant='flat' onChange={handleChange} name='color' type="color" />
+                <div className="flex flex-col lg:grid lg:grid-cols-3 gap-4">
+                  <div>
+                    <h1 className='font-semibold'>Logo</h1>
+                    <FilePond
+                      {...register('file')}
+                      maxFiles={1}
+                      server={null}
+                      name={'teste'}
+                      onupdatefiles={handleUpdateFiles}
+                    />
                   </div>
-                  <div className='lg:grid-cols-3 lg:grid h-full'>
-                    <div className='h-full p-2'>
-                      <h1 className='flex justify-center items-center font-bold'>Logo</h1>
-                      <FilePonds titulo=' Logo' files={filesLogo} setFiles={setFilesLogo} />
-                    </div>
-                    <div className='h-full p-2'>
-                      <h1 className='flex justify-center items-center font-bold'>Loader</h1>
-                      <FilePonds titulo='Loader' files={filesLoader} setFiles={setFilesLoader} />
-                    </div>
-                    <div className='h-full p-2'>
-                      <h1 className='flex justify-center items-center font-bold'>FavIcon</h1>
 
-                      <FilePonds titulo='FavIcon' files={filesFavIcon} setFiles={setFilesFavIcon} />
-                    </div>
-                  </div>
-                </>
-              )}
-
-              {activeStep === 2 && (
-                <div>Importar dados da Zoop</div>
-              )}
-
-              {activeStep === 3 && (
-                <div>Reiniciar Nginx</div>
+                  <FilePonds files={filesLogo} setFiles={setFilesLogo} label="Logo" />
+                  <FilePonds files={filesFavIcon} setFiles={setFilesFavIcon} label="Favicon" />
+                </div>
               )}
             </CardContent>
-            <CardFooter className="flex justify-center lg:justify-end space-x-4">
-              {activeStep !== 0 && (
-                <Button
-                  variant="bordered"
-                  radius="sm"
-                  color="primary"
-                  onClick={handlePrevStep}
-                >
-                  Voltar
-                </Button>
-              )}
-              <Button
-                variant="bordered"
-                radius="sm"
-                color="primary"
-                type={activeStep === 2 ? 'submit' : 'button'}
-                onClick={handleNext}
-              >
-                Próximo
+            <CardFooter className="flex border items-center justify-end gap-2">
+              {activeStep !== 0 && (<Button variant="bordered" color='danger' onPress={handlePrevStep} aria-label="previous step">Voltar</Button>)}
+              <Button variant="bordered" color='primary' onPress={handleNext} aria-label="next step">
+                {activeStep === 3 ? 'Finalizar' : 'Próximo'}
               </Button>
             </CardFooter>
           </Card>
@@ -298,3 +290,19 @@ export default function CadastrarMarketplaces() {
     </div>
   )
 }
+
+/*
+
+  const [dataa, setDataa] = useState<FormschemaData>({
+    nome: '',
+    dominio: '',
+    sellerId: '',
+    website: '',
+    zpk: '',
+    cobrancaPorTransacao: false,
+    carne: false,
+    taxaAdministrativa: false,
+    color: undefined,
+    logo: undefined,
+  })
+*/

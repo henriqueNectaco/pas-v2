@@ -201,3 +201,19 @@ export function CadastrarMarketplace(props: typePropsCadastroMarketplace) {
     </div >
   )
 }
+
+/*
+   <div className='h-full p-2'>
+                    <h1 className='flex justify-center items-center font-bold'>Logo</h1>
+                    <FilePonds titulo=' Logo' files={props.filesLogo} setFiles={props.setFilesLogo} />
+                  </div>
+                  <div className='h-full p-2'>
+                    <h1 className='flex justify-center items-center font-bold'>Loader</h1>
+                    <FilePonds titulo='Loader' files={props.filesLoader} setFiles={props.setFilesLoader} />
+                  </div>
+                  <div className='h-full p-2'>
+                    <h1 className='flex justify-center items-center font-bold'>FavIcon</h1>
+
+                    <FilePonds titulo='FavIcon' files={props.filesFavIcon} setFiles={props.setFilesFavIcon} />
+                  </div>
+                  */
