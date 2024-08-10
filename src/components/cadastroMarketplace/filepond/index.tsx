@@ -66,8 +66,7 @@ export default function FilePonds(props: typeFilePond) {
         maxFiles={1}
         server={null}
         name={props.name}
-
-
+        onupdatefiles={handleUpdateFiles}
         labelIdle={`Arraste ou solte o arquivo de ${props.titulo} <span class="filepond--label-action">Navegar</span>`}
       />
     </div>

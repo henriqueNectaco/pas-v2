@@ -15,7 +15,7 @@ import StepperComponent from '@/components/cadastroMarketplace/steper'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import FilePonds from '@/components/cadastroMarketplace/filepond'
-import { FormschemaCadastroMarketplace } from '@/types/vendas'
+import { FormschemaCadastroMarketplace } from '@/types/marketplaces'
 
 import dynamic from 'next/dynamic';
 import 'filepond/dist/filepond.min.css';
@@ -84,7 +84,7 @@ export default function CadastrarMarketplaces() {
     formData.append('nome', dados.nome);
     formData.append('dominio', dados.dominio);
     formData.append('sellerId', dados.sellerId);
-    formData.append('website', dados.website || '');  // Handle optional fields
+    formData.append('website', dados.website);  // Handle optional fields
     formData.append('zpk', dados.zpk);
     formData.append('cobrancaPorTransacao', dados.cobrancaPorTransacao.toString());
     formData.append('carne', dados.carne.toString());
