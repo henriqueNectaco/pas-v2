@@ -22,7 +22,7 @@ export const FormschemaCadastroMarketplace = z.object({
   cobrancaEmail: z.string().email().optional(),
   carne: z.boolean().optional(),
   taxaAdministrativa: z.boolean().optional(),
-  // color: z.string().regex(/^#[0-9A-Fa-f]{6}$/, "Cor hexadecimal inválida"),
+  color: z.string().regex(/^#[0-9A-Fa-f]{6}$/, "Cor hexadecimal inválida").optional(),
   zoopMarketplaceId: z.string().min(1, { message: 'Campo obrigatório' }),
 
   // Adicionando campo de arquivo
@@ -82,13 +82,6 @@ export type typeStep = {
   active: boolean
 }
 
-
-export type typeFilePond = {
-  name: string
-  titulo: string
-
-
-}
 export type typePropsCadastroMarketplace = {
   setFilesLogo: any
   setFilesFavIcon: any

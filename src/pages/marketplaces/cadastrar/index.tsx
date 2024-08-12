@@ -16,15 +16,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import FilePonds from '@/components/cadastroMarketplace/filepond'
 import { FormschemaCadastroMarketplace } from '@/types/marketplaces'
-
 import dynamic from 'next/dynamic';
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import { apiUrl, token } from '@/utils'
 
 
 type FormschemaData = z.infer<typeof FormschemaCadastroMarketplace>
-type FormErrors = z.inferFlattenedErrors<typeof FormschemaCadastroMarketplace>
-
 const FilePond = dynamic(() => import('react-filepond').then(module => {
   const { registerPlugin } = module;
   const FilePondPluginImageExifOrientation = require('filepond-plugin-image-exif-orientation');
@@ -57,6 +55,7 @@ export default function CadastrarMarketplaces() {
     mode: 'onChange',
   })
   const cobrancaPorTransacao = watch('cobrancaPorTransacao', false);
+  const [marketplaceId, setMarketplaceId] = useState(null)
   const [activeStep, setActiveStep] = useState<number>(0)
   const [filesLoader, setFilesLoader] = useState<any[]>([])
   const [filesLogo, setFilesLogo] = useState<any[]>([])
@@ -76,11 +75,41 @@ export default function CadastrarMarketplaces() {
       toast.warning('Cannot go below step 0')
     }
   }
+  const RestartNginx = async () => {
+
+    const res = await axios.post(
+      `${apiUrl}/marketplaces/restart-nginx`
+
+      , {}, {
+      headers: { "Authorization": `Bearer ${token}` }
+    })
+      .catch(res => {
+        if (res.code === "ERR_NETWORK") {
+          toast.success("NGINX reiniciado com sucesso!");
+        }
+        toast.error(res.response.data.message || 'Unknown');
+      })
+
+  }
+
+  const importarDadosZoop = async () => {
+    try {
+      const res = await axios.post(`${apiUrl}/marketplaces/${marketplaceId}/importar-dados-zoop`, {},
+        //{headers: { 'Authorization': `Bearer ${token}` }}
+      )
+      if (res.data.succes === true) {
+        toast.success('Rotina iniciada com sucesso!')
+        handleNextStep()
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   const handleCadastrarMarketplace = async (dados: FormschemaData) => {
     const formData = new FormData();
 
-    // Add all form fields to FormData
+    formData.append('cor', dados.color)
     formData.append('nome', dados.nome);
     formData.append('dominio', dados.dominio);
     formData.append('sellerId', dados.sellerId);
@@ -90,16 +119,26 @@ export default function CadastrarMarketplaces() {
     formData.append('carne', dados.carne.toString());
     formData.append('taxaAdministrativa', dados.taxaAdministrativa.toString());
     formData.append('file', files[0])
+    formData.append('logo', filesLogo[0])
     // Add files to FormData
 
 
     try {
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_LOCAL}/cadastromarketplace`, formData, {
+      const res = await axios.post(`
+        ${process.env.NEXT_PUBLIC_LOCAL}/cadastromarketplace`
+        //${apiUrl}/marketplaces/add  
+        , formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
+          //'Authorization': `Bearer ${token}`
         },
       });
-      toast.success('Marketplace cadastrado com sucesso!');
+      if (res.data.succes === true) {
+        toast.success('Marketplace cadastrado com sucesso!');
+        // setMarketplaceId(res.data.marketplace.id);
+        handleNextStep()
+      }
+
     } catch (error) {
       console.error(error);
       toast.error('Erro ao cadastrar Marketplace.');
@@ -112,24 +151,29 @@ export default function CadastrarMarketplaces() {
     if (isValid) {
       setActiveStep(activeStep + 1)
     } else {
-      toast.error('Campos inválidos. Corrija os erros antes de prosseguir.')
+      toast.error('Campos inválidos')
     }
   }
 
   const handleNext = () => {
-    if (activeStep === 2) {
+    if (activeStep === 1) {
       handleSubmit(handleCadastrarMarketplace)()
-    } else {
+      handleNextStep()
+    } else if (activeStep === 2) {
+      alert('Importando dados zoop')
+      handleNextStep()
+    }
+    else if (activeStep === 3) {
+      alert('Reiniciando nginx')
+    }
+
+    else {
       handleNextStep()
     }
   }
 
   useEffect(() => {
-    // Log errors for debugging
-    console.log(errors)
-  }, [errors])
-
-  useEffect(() => {
+    console.log(filesLogo)
     setDataa((prev) => ({
       ...prev,
       logo: filesLogo[0],
@@ -220,6 +264,7 @@ export default function CadastrarMarketplaces() {
                     />
                     {errors.zpk && <span className="text-red-500 text-sm lg:text-md">{errors.zpk.message}</span>}
                   </div>
+
                   {cobrancaPorTransacao && (
                     <>
                       <div>
@@ -246,7 +291,7 @@ export default function CadastrarMarketplaces() {
                         {errors.cobrancaEmail && <span className="text-red-500 text-sm lg:text-md">{errors.cobrancaEmail.message}</span>}
                       </div></>
                   )}
-                  <div className="p-4 pl-0 flex flex-col justify-start lg:flex lg:flex-row gap-4 ">
+                  <div className="p-2 pl-0 flex flex-col justify-start lg:flex lg:flex-row gap-4 ">
                     <div className="flex items-center lg:justify-center justify-start space-x-2 ">
                       <Checkbox {...register('cobrancaPorTransacao')} name='cobrancaPorTransacao'>Cobrança por transação</Checkbox>
                     </div>
@@ -260,7 +305,8 @@ export default function CadastrarMarketplaces() {
                 </div>
               )}
 
-              {activeStep === 1 && (
+              {activeStep === 1 && (<div className='w-full h-full'>
+                <Input type='color' {...register('color')} />
                 <div className="flex flex-col lg:grid lg:grid-cols-3 gap-4">
                   <div>
                     <h1 className='font-semibold'>Logo</h1>
@@ -276,12 +322,26 @@ export default function CadastrarMarketplaces() {
                   <FilePonds files={filesLogo} setFiles={setFilesLogo} label="Logo" />
                   <FilePonds files={filesFavIcon} setFiles={setFilesFavIcon} label="Favicon" />
                 </div>
+              </div>
+              )}
+              {activeStep === 2 && (
+                <div className=' p-4'>
+                  <h2 className='font-semibold'>Clique no botão para importar dados Zoop</h2>
+                </div>
+              )}
+              {activeStep === 3 && (
+                <p>step3</p>
               )}
             </CardContent>
-            <CardFooter className="flex border items-center justify-end gap-2">
-              {activeStep !== 0 && (<Button variant="bordered" color='danger' onPress={handlePrevStep} aria-label="previous step">Voltar</Button>)}
-              <Button variant="bordered" color='primary' onPress={handleNext} aria-label="next step">
-                {activeStep === 3 ? 'Finalizar' : 'Próximo'}
+            <CardFooter className=" flex items-center lg:justify-end gap-2">
+              {activeStep === 1 && (
+                <Button variant="bordered" size='lg' color='danger' onPress={handlePrevStep} aria-label="previous step">Voltar</Button>)}
+              <Button variant="bordered" size='lg' color='primary' onPress={handleNext} aria-label="next step">
+                {activeStep === 0 && 'Avançar'}
+                {activeStep === 1 && 'Finalizar cadastro'}
+                {activeStep === 2 && 'Importar dados zoop'}
+                {activeStep === 3 && 'Reiniciar nginx'}
+
               </Button>
             </CardFooter>
           </Card>

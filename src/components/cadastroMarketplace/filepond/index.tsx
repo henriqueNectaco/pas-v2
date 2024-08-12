@@ -15,6 +15,11 @@ const FilePond = dynamic(() => import('react-filepond').then(module => {
   return module.FilePond;
 }), { ssr: false });
 
+type typeFilePond = {
+  name: string
+  titulo: string
+}
+
 export default function FilePonds(props: typeFilePond) {
 
 
