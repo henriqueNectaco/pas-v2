@@ -11,6 +11,7 @@ import Router from 'next/router'
 import { typeResponseData, ZoopTransaction } from '@/lib/types/vendas'
 import { apiUrl } from '../api/useApi'
 import PagamentosCards from './pagamentosCards'
+import { arrayOfObjectsSum } from '@/lib'
 
 export default function Vendas() {
   //require('dotenv').config()
@@ -90,6 +91,13 @@ export default function Vendas() {
     auth()
   }, [])
 
+
+  const splits = responseData?.pedidos_splits || [];
+  const somaSplits = arrayOfObjectsSum(splits, 'valor');
+
+
+
+
   return (
     <div className="flex flex-col items-center  h-screen max-w-screen w-full ">
 
@@ -122,6 +130,7 @@ export default function Vendas() {
                   <div className="   flex  flex-row items-start justify-between">
                     <p>Taxa Custos</p>
                     <p>
+
                       {/* {responseData.pagamentos[0].taxa}</p> */}
                       teste
                     </p></div>
@@ -138,7 +147,11 @@ export default function Vendas() {
                   </div>
                   <div className="   flex flex-row items-start justify-between">
                     <p>Splits</p>
-                    <p>{responseData.pedidos_splits.length}</p>
+                    <p>{responseData.pedidos_splits.length === 0 ? 0 : (
+                      somaSplits
+                    )}
+                      {/* {responseData.pedidos_splits.length} */}
+                    </p>
                   </div>
                 </div>
 
@@ -200,7 +213,7 @@ export default function Vendas() {
                         <p
                           className={`${responseData.status_pedido.titulo === 'Aprovado' ? 'text-green-500' : responseData.status_pedido.titulo === 'Pendente ' ? 'text-yellow-500' : 'text-red-500'}`}
                         >
-                          {responseData.status_pedido.titulo}{' '}
+                          {responseData.status_pedido.titulo}
                         </p>
                       </div>
 
