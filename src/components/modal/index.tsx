@@ -14,7 +14,7 @@ import {
 } from '@nextui-org/react'
 import { CaretDown } from 'phosphor-react'
 import DateRangePickerComponent from '../rangedatepicker'
-import { ModalTypes, objectMarketplace } from '@/types/marketplaces'
+import { ModalTypes, objectMarketplace } from '@/lib/types/marketplaces'
 import { useState } from 'react'
 
 
@@ -23,7 +23,7 @@ export default function ModalMine(props: ModalTypes) {
   return (
     <>
       <Modal
-        className={`lg:h-[40vh]  lg:w-1/4 w-full ${props.modalProps?.useDatePicker === true && '  lg:h-1/4  h-2/5 w-full'} ${props.modalProps?.useDropdownChangeParents === true && 'lg:h-[20vh] '} ${props.modalProps?.useDesativar === true && 'lg:h-[20vh] lg:w-[20vw] '} ${props.modalProps?.useTaxForTransaction === true && 'h-[80vh] lg:h-[40vh]'} max-w-[90vw] `}
+        className={`lg:h-[40vh]  md:1/3 lg:w-1/4 w-full ${props.modalProps?.useDatePicker === true && '  lg:h-1/4  h-2/5 w-full'} ${props.modalProps?.useDropdownChangeParents === true && 'lg:h-[20vh] '} ${props.modalProps?.useDesativar === true && 'lg:h-[20vh] lg:w-[20vw] '} ${props.modalProps?.useTaxForTransaction === true && 'h-[80vh] lg:h-[40vh]'} max-w-[90vw] `}
         isOpen={props.isOpen}
         onOpenChange={props.onOpenChange}
         placement='center'

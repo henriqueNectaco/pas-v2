@@ -3,7 +3,7 @@ import { Button, Input } from "@nextui-org/react";
 import axios from "axios";
 import FilePonds from "@/components/cadastroMarketplace/filepond";
 import { useRouter } from "next/router";
-import { localUrl, token } from "@/utils";
+import { localUrl, token } from "@/lib";
 
 export default function CadastrarFilho() {
   const router = useRouter();

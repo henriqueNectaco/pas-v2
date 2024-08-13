@@ -7,9 +7,9 @@ import { parseDate } from '@internationalized/date';
 import { DateValue, RangeValue, useDatePicker, useDisclosure } from "@nextui-org/react";
 import Cookies from 'js-cookie';
 import axios from "axios";
-import { objectMarketplace } from "@/types/marketplaces";
+import { objectMarketplace } from "@/lib/types/marketplaces";
 import router from "next/router";
-import { today, formatDateToYYYYMMDD } from "@/utils";
+import { today, formatDateToYYYYMMDD, apiUrl } from "@/lib";
 
 type typeProps = {
   items: Array<string>
@@ -45,7 +45,7 @@ export default function DropDownMenuFilhos(props: typeProps) {
   const changeParent = async () => {
     try {
       const res = await axios.put(
-        `https://pas-aps.up.railway.app/establishment/${props.id}/change-parent`,
+        `${apiUrl}/${props.id}/change-parent`,
         //`${process.env.NEXT_PUBLIC_LOCAL}/posts`,
         { parentId: id },
         { headers: { Authorization: `Bearer ${token}` } }
@@ -56,7 +56,7 @@ export default function DropDownMenuFilhos(props: typeProps) {
   };
 
   const reprocessarPedidos = async () => {
-    //https://api.zsystems.com.br/z1/estabelecimentos/${props.id}/reprocessar-pedidos?startDate=${date.startDate}&endDate=${date.endDate}
+    //${apiUrl}/estabelecimentos/${props.id}/reprocessar-pedidos?startDate=${date.startDate}&endDate=${date.endDate}
     try {
       const res = await axios.post(
         `https://urltesteefodace/z1/estabelecimentos/${props.id}/reprocessar-pedidos?startDate=${date.startDate}&endDate=${date.endDate}`,
@@ -117,7 +117,9 @@ export default function DropDownMenuFilhos(props: typeProps) {
               setModalProps(prev => ({
                 ...prev,
                 useDropdownChangeParents: false,
-                useDatePicker: true
+                useDatePicker: true,
+                useDesativar: false,
+                useTaxForTransaction: false
               }))
 
               onOpen();

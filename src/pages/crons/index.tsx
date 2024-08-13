@@ -9,8 +9,8 @@ import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import nextCookies from 'next-cookies'
 import Table from '@/components/table'
 import process from 'process'
-import { apiUrl } from '@/utils'
-import { CronProps } from '@/types/crons'
+import { apiUrl } from '@/lib'
+import { CronProps } from '@/lib/types/crons'
 
 
 

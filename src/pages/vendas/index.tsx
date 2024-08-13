@@ -8,7 +8,7 @@ import JSONPretty from 'react-json-pretty'
 import FormVendas from './form'
 import { toast } from 'sonner'
 import Router from 'next/router'
-import { typeResponseData, ZoopTransaction } from '@/types/vendas'
+import { typeResponseData, ZoopTransaction } from '@/lib/types/vendas'
 import { apiUrl } from '../api/useApi'
 import PagamentosCards from './pagamentosCards'
 
@@ -121,15 +121,20 @@ export default function Vendas() {
                   </div>
                   <div className="   flex  flex-row items-start justify-between">
                     <p>Taxa Custos</p>
-                    <p>{responseData.pagamentos[0].taxa}</p>
-                  </div>
+                    <p>
+                      {/* {responseData.pagamentos[0].taxa}</p> */}
+                      teste
+                    </p></div>
                   <div className="   flex flex-row items-start justify-between">
                     <p>Markup</p>
                     <p>{responseZoopTransaction.payment_method.card_brand}</p>
                   </div>
                   <div className="   flex flex-row items-start justify-between">
                     <p>Tabela de Markup</p>
-                    <p>{responseData.pagamentos[0].markup}</p>
+                    <p>
+                      {/* {responseData.pagamentos[0].markup} */}
+                      teste
+                    </p>
                   </div>
                   <div className="   flex flex-row items-start justify-between">
                     <p>Splits</p>
@@ -200,23 +205,32 @@ export default function Vendas() {
                       </div>
 
                       <p>Valor</p>
-                      <p>R$ {responseData.pagamentos[0].valor}</p>
+                      <p>
+                        R$
+                        {/* {responseData.pagamentos[0].valor} */}
+                      </p>
                       <p>Data Recebimento</p>
                       <p>
-                        {' '}
-                        {new Date(
+                        teste
+                        {/* {new Date(
                           responseData.pagamentos[0].data_recebimento,
-                        ).toLocaleString('pt-BR', { timeZone: 'UTC' })}
+                        ).toLocaleString('pt-BR', { timeZone: 'UTC' })} */}
                       </p>
                     </div>
 
                     <div className="flex flex-col  items-center justify-center  w-full h-full p-4">
                       <p>Taxa</p>
-                      <p>R$ {responseData.pagamentos[0].taxa}</p>
+                      <p>R$
+                        {/* {responseData.pagamentos[0].taxa} */}
+                        teste
+                      </p>
                     </div>
                     <div className="flex flex-col  items-center justify-center  h-full w-full">
                       <p>Recebido </p>
-                      <p>R$ {responseData.pagamentos[0].valor_recebido}</p>
+                      <p>R$
+                        {/* {responseData.pagamentos[0].valor_recebido} */}
+                        teste
+                      </p>
                     </div>
 
                     <div className="flex flex-col  items-center justify-center  h-full w-full">

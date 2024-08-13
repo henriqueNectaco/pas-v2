@@ -5,7 +5,7 @@
  */
 
 import { Button } from '@nextui-org/button'
-import { PropsType, typeServices } from '@/types/dashboard'
+import { PropsType, typeServices } from '@/lib/types/dashboard'
 import { CardTitle, CardHeader, CardContent, Card } from '@/components/ui/card'
 import { Input } from '@nextui-org/input'
 import DateRangePickerComponent from '../components/rangedatepicker/index'
@@ -256,7 +256,7 @@ export default function DashComponent(props: PropsType) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, prettier/prettier
-function CheckIcon(props:any) {
+function CheckIcon(props: any) {
   return (
     <svg
       {...props}

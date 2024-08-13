@@ -1,5 +1,5 @@
 import FilePondss from '@/components/cadastroMarketplace/filepond/templateFilepond';
-import { getServerSideProps as authGetServerSideProps } from '@/utils/index'
+import { getServerSideProps as authGetServerSideProps } from '@/lib/index'
 import { GetServerSideProps } from 'next';
 
 

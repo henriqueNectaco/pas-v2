@@ -1,9 +1,9 @@
 import { formatarData } from '@/utils/dates';
 import { Spinner } from '@nextui-org/react';
-import { statusMarketplacesChilds, nullVerifiyer } from '@/utils/index';
+import { statusMarketplacesChilds, nullVerifiyer } from '@/lib/index';
 import DropDownMenuFilhos from '../marketplaces/dropdown/filhos';
 import React from 'react'
-import { objectMarketplace } from '@/types/marketplaces';
+import { objectMarketplace } from '@/lib/types/marketplaces';
 type Dados = { [key: string]: string | number | boolean | any };
 
 type marketplaceProps = {
@@ -18,7 +18,7 @@ type marketplaceProps = {
 };
 
 export default function Table(props: marketplaceProps) {
-  const stylesRows = 'p-4 pl-6 border-b flex items-center justify-start'
+  const stylesRows = 'p-4 pl-6 border-b flex items-center justify-start '
   return (
     <div className="max-w-screen w-full h-full">
       <div className="overflow-auto rounded-2xl bg-white shadow-3xl hidden md:hidden lg:hidden xl:block border max-w-screen">
@@ -34,7 +34,7 @@ export default function Table(props: marketplaceProps) {
         ) : (
           <div className={`flex flex-col lg:grid ${props.currentPage === 'filhos' ? 'lg:grid-cols-6' : `lg:grid-cols-${props.ColsBody}`} max-w-screen `}>
             {props.data.map((dados: Dados, index: number) => (
-              <React.Fragment key={index}>
+              <React.Fragment key={index} >
                 <div className={stylesRows}>
                   <p className='text-sm'>{dados[props.contentArray[0]]}</p>
                 </div>

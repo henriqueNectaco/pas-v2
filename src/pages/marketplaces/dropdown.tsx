@@ -16,7 +16,7 @@ import { DotsThreeOutlineVertical } from 'phosphor-react'
 import ModalMine from '@/components/modal'
 import axios from 'axios'
 import { getLastDayOfMonth, format } from '@/utils/dates'
-import { formatDateToYYYYMMDD, localUrl, today } from '@/utils'
+import { formatDateToYYYYMMDD, localUrl, today } from '@/lib'
 
 type TypeProps = {
   id: number

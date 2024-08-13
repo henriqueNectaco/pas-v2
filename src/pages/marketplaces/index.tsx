@@ -20,7 +20,7 @@ import axios from 'axios'
 import { CaretDown } from 'phosphor-react'
 import { toast } from 'sonner'
 import TableMarketPlaces from './table'
-import { formatDateToYYYYMMDD, localUrl, today } from '@/utils'
+import { formatDateToYYYYMMDD, localUrl, today } from '@/lib'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { token } = nextCookies(context)

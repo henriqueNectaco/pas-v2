@@ -78,7 +78,7 @@ https://api.zsystems.com.br/marketplaces/${id}/filhos`,
         {!marketplacesChilds ? (
           <Spinner size="lg" color="primary" />
         ) : (
-          <div className=" max-w-screen w-full h-full  space-y-4 p-4">
+          <div className=" max-w-screen w-full h-full  space-y-4 p-4 lg:pt-12">
             <Table
 
               currentPage="filhos"

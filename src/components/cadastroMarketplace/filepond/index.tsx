@@ -2,7 +2,7 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
-import { typeFilePond } from '@/types/marketplaces';
+import { typeFilePond } from '@/lib/types/marketplaces';
 import axios from 'axios';
 import { Button } from '@nextui-org/button';
 

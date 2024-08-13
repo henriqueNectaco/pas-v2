@@ -15,11 +15,11 @@ import StepperComponent from '@/components/cadastroMarketplace/steper'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import FilePonds from '@/components/cadastroMarketplace/filepond'
-import { FormschemaCadastroMarketplace } from '@/types/marketplaces'
+import { FormschemaCadastroMarketplace } from '@/lib/types/marketplaces'
 import dynamic from 'next/dynamic';
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
-import { apiUrl, token } from '@/utils'
+import { apiUrl, token } from '@/lib'
 
 
 type FormschemaData = z.infer<typeof FormschemaCadastroMarketplace>
@@ -305,9 +305,9 @@ export default function CadastrarMarketplaces() {
                 </div>
               )}
 
-              {activeStep === 1 && (<div className='w-full h-full'>
-                <Input type='color' {...register('color')} />
-                <div className="flex flex-col lg:grid lg:grid-cols-3 gap-4">
+              {activeStep === 1 && (<div className='w-full h-full space-y-2'>
+                <Input className='w-1/3' type='color' {...register('color')} />
+                <div className="flex flex-col lg:grid lg:grid-cols-3 gap-4 ">
                   <div>
                     <h1 className='font-semibold'>Logo</h1>
                     <FilePond
@@ -318,9 +318,28 @@ export default function CadastrarMarketplaces() {
                       onupdatefiles={handleUpdateFiles}
                     />
                   </div>
+                  <div>
+                    <h1 className='font-semibold'>Loader</h1>
+                    <FilePond
 
-                  <FilePonds files={filesLogo} setFiles={setFilesLogo} label="Logo" />
-                  <FilePonds files={filesFavIcon} setFiles={setFilesFavIcon} label="Favicon" />
+                      maxFiles={1}
+                      server={null}
+                      name={'teste'}
+                      onupdatefiles={handleUpdateFiles}
+                    />
+                  </div>
+                  <div >
+                    <h1 className='font-semibold'>FavIcon</h1>
+                    <FilePond
+                      {...register('file')}
+                      maxFiles={1}
+                      server={null}
+                      name={'teste'}
+                      onupdatefiles={handleUpdateFiles}
+                    />
+                  </div>
+
+                  {/* <FilePonds files={filesFavIcon} setFiles={setFilesFavIcon} label="Favicon" /> */}
                 </div>
               </div>
               )}

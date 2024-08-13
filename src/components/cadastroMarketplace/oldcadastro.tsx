@@ -9,7 +9,7 @@ import {
   CardFooter,
 } from '@/components/ui/card'
 import { Checkbox } from '@nextui-org/checkbox'
-import { typePropsCadastroMarketplace } from '@/types/marketplaces'
+import { typePropsCadastroMarketplace } from '@/lib/types/marketplaces'
 import { Button } from '@nextui-org/button'
 import { Input } from '@nextui-org/input'
 import React from 'react'
@@ -17,7 +17,7 @@ import StepperComponent from './steper'
 import FilePonds from './filepond'
 
 import { z } from 'zod'
-import { FormschemaCadastroMarketplace } from '@/types/vendas'
+import { FormschemaCadastroMarketplace } from '@/lib/types/vendas'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 type FormschemaData = z.infer<typeof FormschemaCadastroMarketplace>
