@@ -7,7 +7,7 @@ export const FormSchemaCadastroMarketplaceFilho = z.object({
   dominio: z.string().min(1, { message: 'URL inválida' }),
   website: z.string().min(1, { message: 'URL inválida' }),
   nome: z.string().min(1, { message: 'Campo obrigatório' }),
-  color: z.string().regex(/^#[0-9A-Fa-f]{6}$/, "Cor hexadecimal inválida"),
+  cor: z.string().regex(/^#[0-9A-Fa-f]{6}$/, "Cor hexadecimal inválida"),
 })
 
 
@@ -26,7 +26,21 @@ export const FormschemaCadastroMarketplace = z.object({
   zoopMarketplaceId: z.string().min(1, { message: 'Campo obrigatório' }),
 
   // Adicionando campo de arquivo
-  file: z.instanceof(File)
+  logo: z.instanceof(File)
+    .refine((file) => file.size <= 5 * 1024 * 1024, {
+      message: "O arquivo deve ter no máximo 5MB",
+    })
+    .refine((file) => ["image/jpeg", "image/png"].includes(file.type), {
+      message: "Somente arquivos JPEG ou PNG são permitidos",
+    }).optional(),
+  loader: z.instanceof(File)
+    .refine((file) => file.size <= 5 * 1024 * 1024, {
+      message: "O arquivo deve ter no máximo 5MB",
+    })
+    .refine((file) => ["image/jpeg", "image/png"].includes(file.type), {
+      message: "Somente arquivos JPEG ou PNG são permitidos",
+    }).optional(),
+  favIcon: z.instanceof(File)
     .refine((file) => file.size <= 5 * 1024 * 1024, {
       message: "O arquivo deve ter no máximo 5MB",
     })

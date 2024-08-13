@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
 import dynamic from 'next/dynamic';
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
-import { typeFilePond } from '@/lib/types/marketplaces';
 import axios from 'axios';
 import { Button } from '@nextui-org/button';
+import { FilePondFile, ActualFileObject, FilePondInitialFile } from 'filepond';
+import { toast } from 'sonner';
 
 const FilePond = dynamic(() => import('react-filepond').then(module => {
   const { registerPlugin } = module;
@@ -16,18 +17,46 @@ const FilePond = dynamic(() => import('react-filepond').then(module => {
 }), { ssr: false });
 
 type typeFilePond = {
-  name: string
+  setFiles: React.Dispatch<SetStateAction<File[]>>
+  files: (string | FilePondFile | Blob | ActualFileObject | FilePondInitialFile)[];
   titulo: string
+  name: string
+  required?: boolean
 }
 
-export default function FilePonds(props: typeFilePond) {
+export default function FilePondComponent(props: typeFilePond) {
 
+  const handleUpdateFiles = (fileItems: any[]) => {
+    const validFiles = fileItems.filter(fileItem => {
+      const file = fileItem.file;
+      if (file.type === 'image/png') {
+        return true;
+      } else {
+        toast.warning('Apenas arquivos PNG são permitidos');
+        return false;
+      }
+    });
 
-
-  const handleUpdateFiles = (fileItems) => {
-    props.setFiles(fileItems.map(fileItem => fileItem.file));
+    props.setFiles(validFiles.map(fileItem => fileItem.file));
   };
 
+
+  return (
+    <div className="h-full flex flex-col">
+      <FilePond
+        files={props.files}
+        allowMultiple={true}
+        allowReorder={true}
+        maxFiles={1}
+        server={null}
+        name={props.name}
+        onupdatefiles={handleUpdateFiles}
+        labelIdle={`Arraste ou solte o arquivo de ${props.titulo} <span class="filepond--label-action">Navegar</span>`}
+      />
+    </div>
+  );
+}
+/*
   const uploadjson = async () => {
     try {
       await axios.post('http://localhost:4000/cadastromarketplace')
@@ -60,21 +89,4 @@ export default function FilePonds(props: typeFilePond) {
     } catch (error) {
       console.error(error);
     }
-  };
-
-  return (
-    <div className="h-full">
-      <FilePond
-        files={props.files}
-        allowMultiple={true}
-        allowReorder={true}
-        maxFiles={1}
-        server={null}
-        name={props.name}
-        onupdatefiles={handleUpdateFiles}
-        labelIdle={`Arraste ou solte o arquivo de ${props.titulo} <span class="filepond--label-action">Navegar</span>`}
-      />
-    </div>
-  );
-}
-//
+  };*/

@@ -19,7 +19,8 @@ import { FormschemaCadastroMarketplace } from '@/lib/types/marketplaces'
 import dynamic from 'next/dynamic';
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
-import { apiUrl, token } from '@/lib'
+import { apiUrl, localUrl, token } from '@/lib'
+import FilePondComponent from '@/components/cadastroMarketplace/filepond'
 
 
 type FormschemaData = z.infer<typeof FormschemaCadastroMarketplace>
@@ -38,18 +39,7 @@ export default function CadastrarMarketplaces() {
     setFiles(fileItems.map(fileItem => fileItem.file));
   };
 
-  const [dataa, setDataa] = useState<FormschemaData>({
-    nome: '',
-    dominio: '',
-    sellerId: '',
-    website: '',
-    zpk: '',
-    cobrancaPorTransacao: false,
-    carne: false,
-    taxaAdministrativa: false,
-    color: undefined,
-    logo: undefined,
-  })
+
   const { handleSubmit, register, formState: { errors }, trigger, watch } = useForm<FormschemaData>({
     resolver: zodResolver(FormschemaCadastroMarketplace),
     mode: 'onChange',
@@ -118,14 +108,14 @@ export default function CadastrarMarketplaces() {
     formData.append('cobrancaPorTransacao', dados.cobrancaPorTransacao.toString());
     formData.append('carne', dados.carne.toString());
     formData.append('taxaAdministrativa', dados.taxaAdministrativa.toString());
-    formData.append('file', files[0])
+    formData.append('loader', filesLoader[0])
     formData.append('logo', filesLogo[0])
-    // Add files to FormData
+
 
 
     try {
       const res = await axios.post(`
-        ${process.env.NEXT_PUBLIC_LOCAL}/cadastromarketplace`
+        ${localUrl}/cadastromarketplace`
         //${apiUrl}/marketplaces/add  
         , formData, {
         headers: {
@@ -152,14 +142,17 @@ export default function CadastrarMarketplaces() {
       setActiveStep(activeStep + 1)
     } else {
       toast.error('Campos inválidos')
+      console.log(errors)
     }
   }
 
   const handleNext = () => {
-    if (activeStep === 1) {
+    if (activeStep === 0) { handleNextStep() }
+    if (activeStep === 1 && filesLogo.length > 0) {
       handleSubmit(handleCadastrarMarketplace)()
       handleNextStep()
-    } else if (activeStep === 2) {
+    }
+    else if (activeStep === 2) {
       alert('Importando dados zoop')
       handleNextStep()
     }
@@ -167,20 +160,13 @@ export default function CadastrarMarketplaces() {
       alert('Reiniciando nginx')
     }
 
-    else {
-      handleNextStep()
-    }
+
   }
 
   useEffect(() => {
     console.log(filesLogo)
-    setDataa((prev) => ({
-      ...prev,
-      logo: filesLogo[0],
-      loader: filesLoader[0],
-      favIcon: filesFavIcon[0]
-    }))
-  }, [filesLogo, filesLoader, filesFavIcon])
+    console.log(filesLoader)
+  }, [filesLogo, filesLoader])
 
   return (
     <div className="max-w-screen bg-gray-200 h-full lg:h-screen lg:pt-12">
@@ -306,36 +292,39 @@ export default function CadastrarMarketplaces() {
               )}
 
               {activeStep === 1 && (<div className='w-full h-full space-y-2'>
-                <Input className='w-1/3' type='color' {...register('color')} />
+                <Input
+                  {...register('color')}
+                  className='w-full lg:w-1/3'
+                  type='color'
+                />
                 <div className="flex flex-col lg:grid lg:grid-cols-3 gap-4 ">
                   <div>
                     <h1 className='font-semibold'>Logo</h1>
-                    <FilePond
-                      {...register('file')}
-                      maxFiles={1}
-                      server={null}
-                      name={'teste'}
-                      onupdatefiles={handleUpdateFiles}
+                    <FilePondComponent
+                      files={filesLogo}
+                      setFiles={setFilesLogo}
+                      titulo='Logo'
+                      name='logo'
+                      required={true}
                     />
                   </div>
                   <div>
                     <h1 className='font-semibold'>Loader</h1>
-                    <FilePond
-
-                      maxFiles={1}
-                      server={null}
-                      name={'teste'}
-                      onupdatefiles={handleUpdateFiles}
+                    <FilePondComponent
+                      titulo='Loader'
+                      name='loader'
+                      files={filesLoader}
+                      setFiles={setFilesLoader}
                     />
                   </div>
                   <div >
                     <h1 className='font-semibold'>FavIcon</h1>
                     <FilePond
-                      {...register('file')}
+                      {...register('favIcon')}
                       maxFiles={1}
                       server={null}
                       name={'teste'}
-                      onupdatefiles={handleUpdateFiles}
+                    //onupdatefiles={handleUpdateFiles}
                     />
                   </div>
 
