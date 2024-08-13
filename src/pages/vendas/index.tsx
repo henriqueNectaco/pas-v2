@@ -130,9 +130,7 @@ export default function Vendas() {
                   <div className="   flex  flex-row items-start justify-between">
                     <p>Taxa Custos</p>
                     <p>
-
-                      {/* {responseData.pagamentos[0].taxa}</p> */}
-                      teste
+                      {responseData.pagamentos[0].taxa}
                     </p></div>
                   <div className="   flex flex-row items-start justify-between">
                     <p>Markup</p>
@@ -217,18 +215,21 @@ export default function Vendas() {
                         </p>
                       </div>
 
-                      <p>Valor</p>
-                      <p>
-                        R$
-                        {/* {responseData.pagamentos[0].valor} */}
-                      </p>
-                      <p>Data Recebimento</p>
-                      <p>
-                        teste
-                        {/* {new Date(
-                          responseData.pagamentos[0].data_recebimento,
-                        ).toLocaleString('pt-BR', { timeZone: 'UTC' })} */}
-                      </p>
+                      <div className='flex flex-row gap-2'>
+                        <p>Valor</p>
+                        <p>
+                          R${responseData.pagamentos[0].valor}
+                        </p>
+                      </div>
+                      <div className='flex flex-row gap-2'>
+                        <p>Data Recebimento</p>
+                        <p>
+
+                          {new Date(
+                            responseData.pagamentos[0].data_recebimento,
+                          ).toLocaleString('pt-BR', { timeZone: 'UTC' })}
+                        </p>
+                      </div>
                     </div>
 
                     <div className="flex flex-col  items-center justify-center  w-full h-full p-4">
@@ -242,7 +243,7 @@ export default function Vendas() {
                       <p>Recebido </p>
                       <p>R$
                         {/* {responseData.pagamentos[0].valor_recebido} */}
-                        teste
+                        {responseData.pagamentos[0].valor_recebido}
                       </p>
                     </div>
 

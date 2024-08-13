@@ -3,7 +3,7 @@ import { Button, Input } from "@nextui-org/react";
 import axios from "axios";
 import FilePonds from "@/components/cadastroMarketplace/filepond";
 import { useRouter } from "next/router";
-import { localUrl, token } from "@/lib";
+import { apiUrl, localUrl, token } from "@/lib";
 import { FormSchemaCadastroMarketplaceFilho } from "@/lib/types/marketplaces";
 import z from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,13 +20,27 @@ export default function CadastrarFilho() {
     mode: 'onChange',
   })
   const router = useRouter();
+  const { id } = router.query;
   const [activeStep, setActiveStep] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [marketplaceId, setMarketplaceId] = useState(undefined)
   const [nome, setNome] = useState(undefined)
+  const queryParams = {
+    id_estabelecimento: id,
+    nome_fantaisa: ''
+  }
+  const searchEstabeleciment = async () => {
+    try {
+      const res = await axios.get(`${apiUrl}/marketplace/${id}/estabelecimentos`, { params: queryParams, headers: { Authorization: `Bearer ${token}` } })
+      console.log(res.data)
+    }
+    catch (error) {
+      console.error(error)
+    }
+  }
 
   const fetchMarketplace = async () => {
-    const { id } = router.query;
+
     try {
       const res = await axios.get(`https://api.zsystems.com.br/z1/marketplace/${id}`, { headers: { Authorization: `Bearer ${token}` } });
       setMarketplaceId(res.data.marketplace.id)
@@ -69,7 +83,7 @@ export default function CadastrarFilho() {
   };
   const handleRestartNginx = async () => {
     try {
-      // Implement your logic here
+
     } catch (error) {
       console.error(error);
     }
@@ -79,6 +93,7 @@ export default function CadastrarFilho() {
 
   useEffect(() => {
     fetchMarketplace();
+    searchEstabeleciment()
   }, []);
 
   return (
@@ -135,13 +150,15 @@ export default function CadastrarFilho() {
                   />
                   {errors.dominio && <span className="text-red-500 text-sm lg:text-md">{errors.dominio.message}</span>}
                 </div>
-
-                <Input
-                  {...register('website')}
-                  variant="underlined"
-                  name='website'
-                  placeholder="Website"
-                />
+                <div className="w-full flex flex-col">
+                  <Input
+                    {...register('website')}
+                    variant="underlined"
+                    name='website'
+                    placeholder="Website"
+                  />
+                  {errors.website && <span className="text-red-500 text-sm lg:text-md">{errors.website.message}</span>}
+                </div>
                 <div className="w-full h-full"><FilePonds /></div>
               </div>
             </div>
