@@ -10,7 +10,7 @@ import SidebarItem from '../SidebarItem'
 
 
 type SidebarProps = {
-  active: Dispatch<SetStateAction<boolean>>
+  active: boolean //Dispatch<SetStateAction<boolean>>
   onClick: () => void
   setActive?: (value: boolean) => void;
   closeSidebar: () => void

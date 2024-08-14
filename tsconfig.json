@@ -27,7 +27,8 @@
     "**/*.ts",
     "**/*.tsx",
     "src/utils/reqs.js",
-    "src/components/Sidebar/index.tsx"
+    "src/components/Sidebar/index.tsx",
+    "src/components/Sidebar/styles.js"
   ],
   "exclude": [
     "node_modules"

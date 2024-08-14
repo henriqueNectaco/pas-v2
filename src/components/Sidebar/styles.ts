@@ -2,10 +2,10 @@ import { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 
 type ContainerProps = {
-  sidebar: Dispatch<SetStateAction<boolean>>;
+  sidebar: boolean;
 };
-
-export const Container = styled.div<ContainerProps>`
+//Dispatch<SetStateAction<boolean>>
+export const Container = styled.div < ContainerProps > `
   background-color: #2563eb;
   position: fixed;
   height: 100%;

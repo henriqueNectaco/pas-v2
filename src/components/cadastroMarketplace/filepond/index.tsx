@@ -17,8 +17,8 @@ const FilePond = dynamic(() => import('react-filepond').then(module => {
 }), { ssr: false });
 
 type typeFilePond = {
-  setFiles: React.Dispatch<SetStateAction<File[]>>
-  files: (string | FilePondFile | Blob | ActualFileObject | FilePondInitialFile)[];
+  setFiles: React.Dispatch<SetStateAction<ActualFileObject[]>>
+  files: (string | Blob | ActualFileObject | FilePondInitialFile)[] | undefined;
   titulo: string
   name: string
   required?: boolean
@@ -26,7 +26,7 @@ type typeFilePond = {
 
 export default function FilePondComponent(props: typeFilePond) {
 
-  const handleUpdateFiles = (fileItems: any[]) => {
+  const handleUpdateFiles = (fileItems: FilePondFile[]) => { // Corrigido
     const validFiles = fileItems.filter(fileItem => {
       const file = fileItem.file;
       if (file.type === 'image/png') {
