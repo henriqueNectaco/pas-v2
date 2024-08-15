@@ -125,7 +125,7 @@ export default function DashBoard({ dados }: InferGetServerSidePropsType<typeof 
     try {
       const res = await axios.get(
         `
-      https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=${previousMonth}&endDate=${thirtyDaysAgo}`,
+      https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=${previousThirtyDays}&endDate=${thirtyDaysAgo}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
       setData(prevData => ({

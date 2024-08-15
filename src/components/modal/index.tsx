@@ -63,7 +63,13 @@ export default function ModalMine(props: ModalTypes) {
                         variant="bordered"
                         aria-label="Action event example"
                         onAction={(key) => {
-                          props.setId(key)
+                          const selectedKey = key as string
+                          if (props.setId) {
+                            props.setId(selectedKey)
+                          } else {
+                            alert('algo deu ruim')
+                          }
+
                         }}
                       >
                         {props.MarketplacesArray ? (

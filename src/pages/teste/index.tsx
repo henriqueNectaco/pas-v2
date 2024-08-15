@@ -1,4 +1,4 @@
-import FilePondss from '@/components/cadastroMarketplace/filepond/templateFilepond';
+import FilePondComponents from '@/components/cadastroMarketplace/filepond/old';
 import { getServerSideProps as authGetServerSideProps } from '@/lib/index'
 import { GetServerSideProps } from 'next';
 
@@ -21,7 +21,7 @@ export default function Teste({ dados }) {
     <div className="max-w-screen  h-screen bg-gray-50">
 
       <>
-        <FilePondss />
+        <FilePondComponents />
       </>
     </div>
   )

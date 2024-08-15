@@ -17,7 +17,8 @@ const FilePond = dynamic(() => import('react-filepond').then(module => {
 }), { ssr: false });
 
 type typeFilePond = {
-  setFiles: React.Dispatch<SetStateAction<ActualFileObject[]>>
+  handleUpdateFiles: (fileItems: FilePondFile[]) => void
+  //setFiles: React.Dispatch<SetStateAction<ActualFileObject[]>>
   files: (string | Blob | ActualFileObject | FilePondInitialFile)[] | undefined;
   titulo: string
   name: string
@@ -26,19 +27,19 @@ type typeFilePond = {
 
 export default function FilePondComponent(props: typeFilePond) {
 
-  const handleUpdateFiles = (fileItems: FilePondFile[]) => { // Corrigido
-    const validFiles = fileItems.filter(fileItem => {
-      const file = fileItem.file;
-      if (file.type === 'image/png') {
-        return true;
-      } else {
-        toast.warning('Apenas arquivos PNG são permitidos');
-        return false;
-      }
-    });
+  // const handleUpdateFiles = (fileItems: FilePondFile[]) => { // Corrigido
+  //   const validFiles = fileItems.filter(fileItem => {
+  //     const file = fileItem.file;
+  //     if (file.type === 'image/png') {
+  //       return true;
+  //     } else {
+  //       toast.warning('Apenas arquivos PNG são permitidos');
+  //       return false;
+  //     }
+  //   });
 
-    props.setFiles(validFiles.map(fileItem => fileItem.file));
-  };
+  //   props.setFiles(validFiles.map(fileItem => fileItem.file));
+  // };
 
 
   return (
@@ -50,7 +51,7 @@ export default function FilePondComponent(props: typeFilePond) {
         maxFiles={1}
         server={null}
         name={props.name}
-        onupdatefiles={handleUpdateFiles}
+        onupdatefiles={props.handleUpdateFiles}
         labelIdle={`Arraste ou solte o arquivo de ${props.titulo} <span class="filepond--label-action">Navegar</span>`}
       />
     </div>

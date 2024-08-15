@@ -14,30 +14,20 @@ import { z } from 'zod'
 import StepperComponent from '@/components/cadastroMarketplace/steper'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import FilePonds from '@/components/cadastroMarketplace/filepond'
 import { FormschemaCadastroMarketplace } from '@/lib/types/marketplaces'
-import dynamic from 'next/dynamic';
+
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import { apiUrl, localUrl, token } from '@/lib'
 import FilePondComponent from '@/components/cadastroMarketplace/filepond'
-
+import { FilePondFile } from 'filepond'
 
 type FormschemaData = z.infer<typeof FormschemaCadastroMarketplace>
-const FilePond = dynamic(() => import('react-filepond').then(module => {
-  const { registerPlugin } = module;
-  const FilePondPluginImageExifOrientation = require('filepond-plugin-image-exif-orientation');
-  const FilePondPluginImagePreview = require('filepond-plugin-image-preview');
-  registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
-  return module.FilePond;
-}), { ssr: false });
 
 export default function CadastrarMarketplaces() {
-  const [files, setFiles] = useState([])
-  const handleUpdateFiles = (fileItems) => {
-    setFiles(fileItems.map(fileItem => fileItem.file));
-  };
+
+
 
 
   const { handleSubmit, register, formState: { errors }, trigger, watch } = useForm<FormschemaData>({
@@ -47,9 +37,9 @@ export default function CadastrarMarketplaces() {
   const cobrancaPorTransacao = watch('cobrancaPorTransacao', false);
   const [marketplaceId, setMarketplaceId] = useState(null)
   const [activeStep, setActiveStep] = useState<number>(0)
-  const [filesLoader, setFilesLoader] = useState<any[]>([])
-  const [filesLogo, setFilesLogo] = useState<any[]>([])
-  const [filesFavIcon, setFilesFavIcon] = useState<any[]>([])
+  const [loader, setLoader] = useState<any[]>([])
+  const [logo, setLogo] = useState<any[]>([])
+  const [favicon, setFavIcon] = useState<any[]>([])
 
   const stepsData = [
     { label: 'Dados Marketplace', active: activeStep === 0 },
@@ -57,7 +47,17 @@ export default function CadastrarMarketplaces() {
     { label: 'Importar dados da Zoop', active: activeStep === 2 },
     { label: 'Reiniciar Nginx', active: activeStep === 3 },
   ]
+  const handleUpdateLogo = (fileItems: FilePondFile[]) => {
+    setLogo(fileItems.map((fileItem) => fileItem.file as File))
+  }
 
+  const handleUpdateLoader = (fileItems: FilePondFile[]) => {
+    setLoader(fileItems.map((fileItem) => fileItem.file as File))
+  }
+
+  const handleUpdateFavIcon = (fileItems: FilePondFile[]) => {
+    setFavIcon(fileItems.map((fileItem) => fileItem.file as File))
+  }
   const handlePrevStep = () => {
     if (activeStep > 0) {
       setActiveStep(activeStep - 1)
@@ -99,18 +99,20 @@ export default function CadastrarMarketplaces() {
   const handleCadastrarMarketplace = async (dados: FormschemaData) => {
     const formData = new FormData();
 
-    formData.append('cor', dados.color)
+    formData.append('cor', String(dados.color))
     formData.append('nome', dados.nome);
     formData.append('dominio', dados.dominio);
     formData.append('sellerId', dados.sellerId);
     formData.append('website', dados.website);  // Handle optional fields
     formData.append('zpk', dados.zpk);
-    formData.append('cobrancaPorTransacao', dados.cobrancaPorTransacao.toString());
-    formData.append('carne', dados.carne.toString());
-    formData.append('taxaAdministrativa', dados.taxaAdministrativa.toString());
-    formData.append('loader', filesLoader[0])
-    formData.append('logo', filesLogo[0])
-
+    formData.append('cobrancaValor', String(dados.cobrancaValor));
+    formData.append('cobrancaEmail', String(dados.cobrancaEmail))
+    formData.append('cobrancaPorTransacao', String(dados.cobrancaPorTransacao));
+    formData.append('carne', String(dados.carne));
+    formData.append('taxaAdministrativa', String(dados.taxaAdministrativa));
+    formData.append('loader', loader[0])
+    formData.append('logo', logo[0])
+    formData.append('favicon', favicon[0])
 
 
     try {
@@ -148,7 +150,7 @@ export default function CadastrarMarketplaces() {
 
   const handleNext = () => {
     if (activeStep === 0) { handleNextStep() }
-    if (activeStep === 1 && filesLogo.length > 0) {
+    if (activeStep === 1 && logo.length > 0) {
       handleSubmit(handleCadastrarMarketplace)()
       handleNextStep()
     }
@@ -163,10 +165,6 @@ export default function CadastrarMarketplaces() {
 
   }
 
-  useEffect(() => {
-    console.log(filesLogo)
-    console.log(filesLoader)
-  }, [filesLogo, filesLoader])
 
   return (
     <div className="max-w-screen bg-gray-200 h-full lg:h-screen lg:pt-12">
@@ -301,8 +299,8 @@ export default function CadastrarMarketplaces() {
                   <div>
                     <h1 className='font-semibold'>Logo</h1>
                     <FilePondComponent
-                      files={filesLogo}
-                      setFiles={setFilesLogo}
+                      files={logo}
+                      handleUpdateFiles={handleUpdateLogo}
                       titulo='Logo'
                       name='logo'
                       required={true}
@@ -313,18 +311,17 @@ export default function CadastrarMarketplaces() {
                     <FilePondComponent
                       titulo='Loader'
                       name='loader'
-                      files={filesLoader}
-                      setFiles={setFilesLoader}
+                      files={loader}
+                      handleUpdateFiles={handleUpdateLoader}
                     />
                   </div>
                   <div >
                     <h1 className='font-semibold'>FavIcon</h1>
-                    <FilePond
-                      {...register('favIcon')}
-                      maxFiles={1}
-                      server={null}
-                      name={'teste'}
-                    //onupdatefiles={handleUpdateFiles}
+                    <FilePondComponent
+                      titulo='FavIcon'
+                      name='favicon'
+                      files={favicon}
+                      handleUpdateFiles={handleUpdateFavIcon}
                     />
                   </div>
 

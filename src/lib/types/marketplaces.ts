@@ -18,7 +18,7 @@ export const FormschemaCadastroMarketplace = z.object({
   sellerId: z.string().min(1, { message: 'Campo obrigatório' }),
   zpk: z.string().min(1, { message: 'Campo obrigatório' }),
   cobrancaPorTransacao: z.boolean().optional(),
-  cobrancaValor: z.string().optional().transform(val => val ? Number(val) : undefined),
+  cobrancaValor: z.string().optional(), //.transform(val => val ? Number(val) : undefined),
   cobrancaEmail: z.string().email().optional(),
   carne: z.boolean().optional(),
   taxaAdministrativa: z.boolean().optional(),
@@ -72,7 +72,7 @@ export type modalObject = {
   action: string
 }
 export type ModalTypes = {
-  setId?: Dispatch<SetStateAction<string | undefined | Key>>
+  setId?: Dispatch<SetStateAction<string | Key>>
   MarketplacesArray?: Array<objectMarketplace>
   modalProps: modalObject
 
@@ -84,9 +84,8 @@ export type ModalTypes = {
   action: string
   setValue: (value: RangeValue<DateValue>) => void
   value: RangeValue<DateValue> | null | undefined
-
-
 }
+
 export type StepperTypes = {
   stepsData: Array
   activeStep: number

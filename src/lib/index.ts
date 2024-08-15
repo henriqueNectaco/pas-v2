@@ -80,12 +80,6 @@ export const nullVerifiyer = (dataString: string) => {
   }
 }
 
-
-export const LogOut = () => {
-  Cookies.remove('token') // ou localStorage.removeItem('token');
-
-}
-
 export function arrayOfObjectsSum(arr: Array<object>, key: string) {
   if (!Array.isArray(arr)) {
     throw new Error('O parâmetro "arr" deve ser um array.');
