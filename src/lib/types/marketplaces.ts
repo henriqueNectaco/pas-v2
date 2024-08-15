@@ -72,7 +72,7 @@ export type modalObject = {
   action: string
 }
 export type ModalTypes = {
-  setId?: Dispatch<SetStateAction<string | Key>>
+  setId?: Dispatch<SetStateAction<string | undefined>>
   MarketplacesArray?: Array<objectMarketplace>
   modalProps: modalObject
 

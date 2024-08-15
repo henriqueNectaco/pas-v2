@@ -21,7 +21,7 @@ type typeProps = {
 }
 
 export default function DropDownMenuFilhos(props: typeProps) {
-  const [id, setId] = useState<Key | undefined>();
+  const [id, setId] = useState<string | undefined>(undefined);
 
   const [modalProps, setModalProps] = useState({
     useDatePicker: false,

@@ -4,12 +4,15 @@ import StepperComponent from "@/components/cadastroMarketplace/steper";
 import axios from "axios";
 import { useRouter } from "next/router";
 import FilePonds from "@/components/cadastroMarketplace/filepond";
+import { FilePondFile } from "filepond";
+import { toast } from "sonner";
 type typeData = {
   nome: string | string[] | undefined
   dominio: string
 }
 
 export default function App() {
+  const [pki, setPki] = useState<File[]>([])
   const router = useRouter();
   const { id, nomefantasia } = router.query;
   const [data, setData] = useState<typeData>({
@@ -51,6 +54,25 @@ export default function App() {
 
     }
   }
+  const handleUpdatePki = (fileItems: FilePondFile[]) => {
+    const validFiles = fileItems.filter(fileItem => {
+      const file = fileItem.file as File; // Type casting here
+      const fileName = file.name.toLowerCase(); // Get file name and convert to lower case
+
+      // Check if the file has a .pki extension
+      if (fileName.endsWith('.pki')) {
+        return true;
+      } else {
+        toast.warning('Apenas arquivos com a extensão .pki são permitidos');
+        return false;
+      }
+    });
+
+    // Set the valid files to the loader
+    setPki(validFiles.map(fileItem => fileItem.file as File)); // Type casting here
+  };
+
+
   useEffect(() => { console.log(data) }, [data])
   return (<div className=" flex flex-col items-center bg-gray-300 max-w-screen w-full h-full lg:h-screen overflow-y-hidden p-6 lg:p-12 lg:pt-20">
 

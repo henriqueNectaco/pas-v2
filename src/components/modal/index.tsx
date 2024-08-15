@@ -125,7 +125,7 @@ export default function ModalMine(props: ModalTypes) {
                 </Button>
                 <Button
                   color="primary"
-                  onPress={() => props.onClick(onClose)}
+                  onPress={() => props.onClick()}
                   fullWidth={true}
                 >
 

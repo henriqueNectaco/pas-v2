@@ -9,6 +9,8 @@ import z from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import FilePondComponent from "@/components/cadastroMarketplace/filepond";
+import { FilePondFile } from "filepond";
 
 
 
@@ -25,6 +27,9 @@ export default function CadastrarFilho() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [marketplaceId, setMarketplaceId] = useState(undefined)
   const [nome, setNome] = useState(undefined)
+  const [logo, setLogo] = useState<File[]>([])
+  const [loader, setLoader] = useState<File[]>([])
+  const [favicon, setFavIcon] = useState<File[]>([])
   const queryParams = {
     id_estabelecimento: id,
     nome_fantaisa: ''
@@ -40,7 +45,6 @@ export default function CadastrarFilho() {
   }
 
   const fetchMarketplace = async () => {
-
     try {
       const res = await axios.get(`https://api.zsystems.com.br/z1/marketplace/${id}`, { headers: { Authorization: `Bearer ${token}` } });
       setMarketplaceId(res.data.marketplace.id)
@@ -89,8 +93,45 @@ export default function CadastrarFilho() {
     }
   };
 
+  const handleUpdateLogo = (fileItems: FilePondFile[]) => {
+    const validFiles = fileItems.filter(fileItem => {
+      const file = fileItem.file as File; // Type casting here
+      if (file.type === 'image/png') {
+        return true;
+      } else {
+        toast.warning('Apenas arquivos PNG são permitidos');
+        return false;
+      }
+    });
 
+    setLogo(validFiles.map(fileItem => fileItem.file as File)); // Type casting here
+  };
+  const handleUpdateLoader = (fileItems: FilePondFile[]) => {
+    const validFiles = fileItems.filter(fileItem => {
+      const file = fileItem.file as File; // Type casting here
+      if (file.type === 'image/png') {
+        return true;
+      } else {
+        toast.warning('Apenas arquivos PNG são permitidos');
+        return false;
+      }
+    });
+    setLoader(validFiles.map(fileItem => fileItem.file as File)); // Type casting here
+  };
 
+  const handleUpdateFavIcon = (fileItems: FilePondFile[]) => {
+    const validFiles = fileItems.filter(fileItem => {
+      const file = fileItem.file as File; // Type casting here
+      if (file.type === 'image/png') {
+        return true;
+      } else {
+        toast.warning('Apenas arquivos PNG são permitidos');
+        return false;
+      }
+    });
+
+    setFavIcon(validFiles.map(fileItem => fileItem.file as File)); // Type casting here
+  };
   useEffect(() => {
     fetchMarketplace();
     searchEstabeleciment()
@@ -124,7 +165,7 @@ export default function CadastrarFilho() {
                   />
                 </div>
                 <div className="w-full h-full">
-                  <FilePonds />
+                  <FilePondComponent />
                 </div>
               </div>
               <div className="h-full p-4 flex flex-col items-center justify-start space-y-4 lg:space-y-6">
