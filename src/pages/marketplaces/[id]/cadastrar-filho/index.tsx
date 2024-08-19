@@ -1,7 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { Button, Input } from '@nextui-org/react'
 import axios from 'axios'
-import FilePonds from '@/components/cadastroMarketplace/filepond'
 import { useRouter } from 'next/router'
 import { apiUrl, localUrl, token } from '@/lib'
 import { FormSchemaCadastroMarketplaceFilho } from '@/lib/types/marketplaces'
@@ -181,7 +180,7 @@ export default function CadastrarFilho() {
                 />
                 <Input {...register('cor')} variant="flat" type="color" />
                 <div className="w-full h-full">
-                  <FilePonds />
+                  <FilePondComponent />
                 </div>
               </div>
               <div className="w-full h-full flex flex-col items-center justify-center space-y-4 p-4 lg:space-y-6">
@@ -212,7 +211,7 @@ export default function CadastrarFilho() {
                   )}
                 </div>
                 <div className="w-full h-full">
-                  <FilePonds />
+                  <FilePondComponent />
                 </div>
               </div>
             </div>

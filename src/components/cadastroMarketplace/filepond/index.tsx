@@ -9,10 +9,15 @@ import { toast } from 'sonner'
 
 const FilePond = dynamic(
   () =>
-    import('react-filepond').then((module) => {
+    import('react-filepond').then(async (module) => {
       const { registerPlugin } = module
-      const FilePondPluginImageExifOrientation = require('filepond-plugin-image-exif-orientation')
-      const FilePondPluginImagePreview = require('filepond-plugin-image-preview')
+      const FilePondPluginImageExifOrientation = (
+        await import('filepond-plugin-image-exif-orientation')
+      ).default
+      const FilePondPluginImagePreview = (
+        await import('filepond-plugin-image-preview')
+      ).default
+
       registerPlugin(
         FilePondPluginImageExifOrientation,
         FilePondPluginImagePreview,
