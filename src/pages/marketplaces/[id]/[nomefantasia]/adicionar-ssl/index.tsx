@@ -79,9 +79,9 @@ export default function App() {
     <div className=" h-full flex flex-col items-center justify-start bg-white shadow-xl rounded-md w-full lg:w-2/4 border  lg:h-2/3">
       <div className="p-4 border-b  border-black font-bold flex items-center justify-center text-2xl w-full">Validar pki</div>
       {activeStep === 0 && (<div className="flex flex-col lg:grid lg:grid-cols-2 border w-full h-full p-4 gap-2">
-        <div className="border h-full p-4 space-y-4">
+        <div className="border h-full p-4 space-y-4"> 
 
-          <FilePonds titulo=".pki" />
+                    <FilePonds titulo=".pki" />
         </div>
         <div className="border space-y-4 p-4 h-full">
           <Input required={true} variant='underlined' name="dominio" onChange={handleChange} label='Dominio' />

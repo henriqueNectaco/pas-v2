@@ -48,7 +48,7 @@ export type FormVendasTypes = {
   handleCleanInput: () => void
 }
 
-export type splitsProps = { splits: Any | Array<string> }
+export type splitsProps = { splits: any | Array<string> }
 
 export type splits = {
   id: string

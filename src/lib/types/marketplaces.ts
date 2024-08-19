@@ -87,7 +87,7 @@ export type ModalTypes = {
 }
 
 export type StepperTypes = {
-  stepsData: Array
+  stepsData: Array<typeStep>
   activeStep: number
 }
 export type typeStep = {
