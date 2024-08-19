@@ -1,30 +1,34 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
-import { Button, Input } from "@nextui-org/react";
-import axios from "axios";
-import FilePonds from "@/components/cadastroMarketplace/filepond";
-import { useRouter } from "next/router";
-import { apiUrl, localUrl, token } from "@/lib";
-import { FormSchemaCadastroMarketplaceFilho } from "@/lib/types/marketplaces";
+import React, { ChangeEvent, useEffect, useState } from 'react'
+import { Button, Input } from '@nextui-org/react'
+import axios from 'axios'
+import FilePonds from '@/components/cadastroMarketplace/filepond'
+import { useRouter } from 'next/router'
+import { apiUrl, localUrl, token } from '@/lib'
+import { FormSchemaCadastroMarketplaceFilho } from '@/lib/types/marketplaces'
 import z from 'zod'
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import FilePondComponent from "@/components/cadastroMarketplace/filepond";
-import { FilePondFile } from "filepond";
-
-
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import FilePondComponent from '@/components/cadastroMarketplace/filepond'
+import { FilePondFile } from 'filepond'
 
 type FormschemaData = z.infer<typeof FormSchemaCadastroMarketplaceFilho>
 
 export default function CadastrarFilho() {
-  const { handleSubmit, register, formState: { errors }, trigger, watch } = useForm<FormschemaData>({
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    trigger,
+    watch,
+  } = useForm<FormschemaData>({
     resolver: zodResolver(FormSchemaCadastroMarketplaceFilho),
     mode: 'onChange',
   })
-  const router = useRouter();
-  const { id } = router.query;
-  const [activeStep, setActiveStep] = useState<number>(0);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter()
+  const { id } = router.query
+  const [activeStep, setActiveStep] = useState<number>(0)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [marketplaceId, setMarketplaceId] = useState(undefined)
   const [nome, setNome] = useState(undefined)
   const [logo, setLogo] = useState<File[]>([])
@@ -32,110 +36,111 @@ export default function CadastrarFilho() {
   const [favicon, setFavIcon] = useState<File[]>([])
   const queryParams = {
     id_estabelecimento: id,
-    nome_fantaisa: ''
+    nome_fantaisa: '',
   }
   const searchEstabeleciment = async () => {
     try {
-      const res = await axios.get(`${apiUrl}/marketplace/${id}/estabelecimentos`, { params: queryParams, headers: { Authorization: `Bearer ${token}` } })
+      const res = await axios.get(
+        `${apiUrl}/marketplace/${id}/estabelecimentos`,
+        { params: queryParams, headers: { Authorization: `Bearer ${token}` } },
+      )
       console.log(res.data)
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error)
     }
   }
 
   const fetchMarketplace = async () => {
     try {
-      const res = await axios.get(`https://api.zsystems.com.br/z1/marketplace/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+      const res = await axios.get(
+        `https://api.zsystems.com.br/z1/marketplace/${id}`,
+        { headers: { Authorization: `Bearer ${token}` } },
+      )
       setMarketplaceId(res.data.marketplace.id)
       setNome(res.data.marketplace.mainECNomeFantasia)
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-  };
-
-
+  }
 
   const handleRegisterMarketplaceChild = async (data: FormschemaData) => {
-    setIsLoading(true);
+    setIsLoading(true)
     const formData = new FormData()
     formData.append('cor', data.cor)
     formData.append('nome', data.nome)
     formData.append('website', data.website)
     formData.append('dominio', data.dominio)
 
-
     try {
-      const res = await axios.post(`${localUrl}/cadastromarketplace`, data);
-      console.log(res.data);
+      const res = await axios.post(`${localUrl}/cadastromarketplace`, data)
+      console.log(res.data)
       // Handle success (e.g., navigate to another page, show success message, etc.)
       setActiveStep(activeStep + 1)
     } catch (error) {
-      console.error(error);
+      console.error(error)
       // Handle error (e.g., show error message)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
   const onSubmit = async (data: FormschemaData) => {
-    const isValid = await trigger();
+    const isValid = await trigger()
     if (isValid) {
-      await handleRegisterMarketplaceChild(data);
+      await handleRegisterMarketplaceChild(data)
     } else {
-      toast.error('Campos Inválidos');
+      toast.error('Campos Inválidos')
     }
-  };
+  }
   const handleRestartNginx = async () => {
     try {
-
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-  };
+  }
 
   const handleUpdateLogo = (fileItems: FilePondFile[]) => {
-    const validFiles = fileItems.filter(fileItem => {
-      const file = fileItem.file as File; // Type casting here
+    const validFiles = fileItems.filter((fileItem) => {
+      const file = fileItem.file as File // Type casting here
       if (file.type === 'image/png') {
-        return true;
+        return true
       } else {
-        toast.warning('Apenas arquivos PNG são permitidos');
-        return false;
+        toast.warning('Apenas arquivos PNG são permitidos')
+        return false
       }
-    });
+    })
 
-    setLogo(validFiles.map(fileItem => fileItem.file as File)); // Type casting here
-  };
+    setLogo(validFiles.map((fileItem) => fileItem.file as File)) // Type casting here
+  }
   const handleUpdateLoader = (fileItems: FilePondFile[]) => {
-    const validFiles = fileItems.filter(fileItem => {
-      const file = fileItem.file as File; // Type casting here
+    const validFiles = fileItems.filter((fileItem) => {
+      const file = fileItem.file as File // Type casting here
       if (file.type === 'image/png') {
-        return true;
+        return true
       } else {
-        toast.warning('Apenas arquivos PNG são permitidos');
-        return false;
+        toast.warning('Apenas arquivos PNG são permitidos')
+        return false
       }
-    });
-    setLoader(validFiles.map(fileItem => fileItem.file as File)); // Type casting here
-  };
+    })
+    setLoader(validFiles.map((fileItem) => fileItem.file as File)) // Type casting here
+  }
 
   const handleUpdateFavIcon = (fileItems: FilePondFile[]) => {
-    const validFiles = fileItems.filter(fileItem => {
-      const file = fileItem.file as File; // Type casting here
+    const validFiles = fileItems.filter((fileItem) => {
+      const file = fileItem.file as File // Type casting here
       if (file.type === 'image/png') {
-        return true;
+        return true
       } else {
-        toast.warning('Apenas arquivos PNG são permitidos');
-        return false;
+        toast.warning('Apenas arquivos PNG são permitidos')
+        return false
       }
-    });
+    })
 
-    setFavIcon(validFiles.map(fileItem => fileItem.file as File)); // Type casting here
-  };
+    setFavIcon(validFiles.map((fileItem) => fileItem.file as File)) // Type casting here
+  }
   useEffect(() => {
-    fetchMarketplace();
+    fetchMarketplace()
     searchEstabeleciment()
-  }, []);
+  }, [])
 
   return (
     <div className="max-w-screen w-full h-full lg:h-screen bg-gray-200 pt-8 lg:pt-16 p-4 flex flex-col lg:justify-start lg:items-center">
@@ -149,18 +154,17 @@ export default function CadastrarFilho() {
               <div className="h-full p-4 flex flex-col items-center justify-start lg:justify-center space-y-4 lg:space-y-6">
                 <div className="w-full flex flex-col">
                   <Input
-
                     variant="underlined"
                     disabled={true}
                     value={`${marketplaceId} - ${nome}`}
-                    name='marketplace_id'
+                    name="marketplace_id"
                     placeholder="Marketplace Id"
                   />
                 </div>
                 <div className="w-full flex flex-col">
                   <Input
                     variant="underlined"
-                    name='estabelecimento_id'
+                    name="estabelecimento_id"
                     placeholder="Estabelecimento id"
                   />
                 </div>
@@ -169,47 +173,53 @@ export default function CadastrarFilho() {
                 </div>
               </div>
               <div className="h-full p-4 flex flex-col items-center justify-start space-y-4 lg:space-y-6">
-                <Input variant="underlined"
+                <Input
+                  variant="underlined"
                   {...register('nome')}
                   name="nome"
                   placeholder="Nome"
                 />
-                <Input
-                  {...register('cor')}
-                  variant="flat"
-                  type="color"
-                />
-                <div className="w-full h-full"><FilePonds /></div>
+                <Input {...register('cor')} variant="flat" type="color" />
+                <div className="w-full h-full">
+                  <FilePonds />
+                </div>
               </div>
               <div className="w-full h-full flex flex-col items-center justify-center space-y-4 p-4 lg:space-y-6">
                 <div className="w-full flex flex-col">
                   <Input
                     {...register('dominio')}
                     variant="underlined"
-                    name='dominio'
+                    name="dominio"
                     placeholder="Dominio"
                   />
-                  {errors.dominio && <span className="text-red-500 text-sm lg:text-md">{errors.dominio.message}</span>}
+                  {errors.dominio && (
+                    <span className="text-red-500 text-sm lg:text-md">
+                      {errors.dominio.message}
+                    </span>
+                  )}
                 </div>
                 <div className="w-full flex flex-col">
                   <Input
                     {...register('website')}
                     variant="underlined"
-                    name='website'
+                    name="website"
                     placeholder="Website"
                   />
-                  {errors.website && <span className="text-red-500 text-sm lg:text-md">{errors.website.message}</span>}
+                  {errors.website && (
+                    <span className="text-red-500 text-sm lg:text-md">
+                      {errors.website.message}
+                    </span>
+                  )}
                 </div>
-                <div className="w-full h-full"><FilePonds /></div>
+                <div className="w-full h-full">
+                  <FilePonds />
+                </div>
               </div>
             </div>
           )}
-          {activeStep === 1 && (
-            <div>tesadw</div>
-          )}
+          {activeStep === 1 && <div>tesadw</div>}
           <div className="border-t  border-black  w-full ">
             <Button
-
               color="primary"
               variant="solid"
               type="submit"
@@ -223,5 +233,5 @@ export default function CadastrarFilho() {
         </form>
       </div>
     </div>
-  );
+  )
 }

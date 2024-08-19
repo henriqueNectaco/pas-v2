@@ -1,32 +1,38 @@
-import { SetStateAction, useState } from 'react';
-import dynamic from 'next/dynamic';
-import 'filepond/dist/filepond.min.css';
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
-import axios from 'axios';
-import { Button } from '@nextui-org/button';
-import { FilePondFile, ActualFileObject, FilePondInitialFile } from 'filepond';
-import { toast } from 'sonner';
+import { SetStateAction, useState } from 'react'
+import dynamic from 'next/dynamic'
+import 'filepond/dist/filepond.min.css'
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
+import axios from 'axios'
+import { Button } from '@nextui-org/button'
+import { FilePondFile, ActualFileObject, FilePondInitialFile } from 'filepond'
+import { toast } from 'sonner'
 
-const FilePond = dynamic(() => import('react-filepond').then(module => {
-  const { registerPlugin } = module;
-  const FilePondPluginImageExifOrientation = require('filepond-plugin-image-exif-orientation');
-  const FilePondPluginImagePreview = require('filepond-plugin-image-preview');
-  registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
+const FilePond = dynamic(
+  () =>
+    import('react-filepond').then((module) => {
+      const { registerPlugin } = module
+      const FilePondPluginImageExifOrientation = require('filepond-plugin-image-exif-orientation')
+      const FilePondPluginImagePreview = require('filepond-plugin-image-preview')
+      registerPlugin(
+        FilePondPluginImageExifOrientation,
+        FilePondPluginImagePreview,
+      )
 
-  return module.FilePond;
-}), { ssr: false });
+      return module.FilePond
+    }),
+  { ssr: false },
+)
 
 type typeFilePond = {
   handleUpdateFiles: (fileItems: FilePondFile[]) => void
-  //setFiles: React.Dispatch<SetStateAction<ActualFileObject[]>>
-  files: (string | Blob | ActualFileObject | FilePondInitialFile)[] | undefined;
+  // setFiles: React.Dispatch<SetStateAction<ActualFileObject[]>>
+  files: (string | Blob | ActualFileObject | FilePondInitialFile)[] | undefined
   titulo: string
   name: string
   required?: boolean
 }
 
 export default function FilePondComponent(props: typeFilePond) {
-
   // const handleUpdateFiles = (fileItems: FilePondFile[]) => { // Corrigido
   //   const validFiles = fileItems.filter(fileItem => {
   //     const file = fileItem.file;
@@ -41,7 +47,6 @@ export default function FilePondComponent(props: typeFilePond) {
   //   props.setFiles(validFiles.map(fileItem => fileItem.file));
   // };
 
-
   return (
     <div className="h-full flex flex-col">
       <FilePond
@@ -55,7 +60,7 @@ export default function FilePondComponent(props: typeFilePond) {
         labelIdle={`Arraste ou solte o arquivo de ${props.titulo} <span class="filepond--label-action">Navegar</span>`}
       />
     </div>
-  );
+  )
 }
 /*
   const uploadjson = async () => {
@@ -90,4 +95,4 @@ export default function FilePondComponent(props: typeFilePond) {
     } catch (error) {
       console.error(error);
     }
-  };*/
+  }; */

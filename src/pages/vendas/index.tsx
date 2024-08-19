@@ -14,12 +14,15 @@ import PagamentosCards from './pagamentosCards'
 import { arrayOfObjectsSum } from '@/lib'
 
 export default function Vendas() {
-  //require('dotenv').config()
-  //const apiUrl = process.env.NEXT_PUBLIC_API_URL
+  // require('dotenv').config()
+  // const apiUrl = process.env.NEXT_PUBLIC_API_URL
   const [isLoadingSearchSale, setIsLoadingSearchSale] = useState<boolean>(false)
-  const [isLoadingReprocessSale, setIsLoadingReprocessSale] = useState<boolean>(false)
+  const [isLoadingReprocessSale, setIsLoadingReprocessSale] =
+    useState<boolean>(false)
   const [vendaId, setVendaId] = useState<string | undefined>(undefined)
-  const [responseData, setResponseData] = useState<typeResponseData | null>(null)
+  const [responseData, setResponseData] = useState<typeResponseData | null>(
+    null,
+  )
   const [responseZoopTransaction, setResponseZoopTransaction] =
     useState<ZoopTransaction>(null)
   const token = Cookies.get('token')
@@ -31,8 +34,9 @@ export default function Vendas() {
   const handleReprocessSale = async () => {
     setIsLoadingReprocessSale(true)
     try {
-      const response = await axios.get(`${apiUrl}/vendas/${responseData?.id}/reprocessar`,
-        { headers: { Authorization: `Bearer ${token}` } }
+      const response = await axios.get(
+        `${apiUrl}/vendas/${responseData?.id}/reprocessar`,
+        { headers: { Authorization: `Bearer ${token}` } },
       )
       if (response.data.success === true) {
         toast.success('Pedido Adicionado a fila de reprocessamento')
@@ -49,10 +53,9 @@ export default function Vendas() {
         toast.error('Preencha o  campo ID da venda')
         setIsLoadingSearchSale(false)
       } else {
-        const response = await axios.get(
-          `${apiUrl}/vendas/${vendaId}`,
-          { headers: { Authorization: `Bearer ${token}` } },
-        )
+        const response = await axios.get(`${apiUrl}/vendas/${vendaId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
 
         if (response.data.success === true) {
           setResponseData(response.data.pedido)
@@ -64,21 +67,14 @@ export default function Vendas() {
           setIsLoadingSearchSale(false)
         }
       }
-
     } catch (error) {
       console.error(error)
       setIsLoadingSearchSale(false)
-
     }
-
-
   }
   const auth = async () => {
     try {
-      const res = await axios.post(
-        `${apiUrl}/autenticar`,
-        { token },
-      )
+      const res = await axios.post(`${apiUrl}/autenticar`, { token })
       if (res.data.success === false) {
         toast.error('Sua sessão expirou faça login novamente')
         Router.push('/')
@@ -91,19 +87,17 @@ export default function Vendas() {
     auth()
   }, [])
 
-
-  const splits = responseData?.pedidos_splits || [];
-  const somaSplits = arrayOfObjectsSum(splits, 'valor');
-
-
-
+  const splits = responseData?.pedidos_splits || []
+  const somaSplits = arrayOfObjectsSum(splits, 'valor')
 
   return (
     <div className="flex flex-col items-center  h-screen max-w-screen w-full ">
-
-      <div className={`w-full max-w-screen flex flex-col space-y-2 ${responseData?.pagamentos.length > 1 && 'bg-gray-800'} ${responseData !== null && responseData.pagamentos.length == 1 ? 'bg-gray-300' : ''}`}>
+      <div
+        className={`w-full max-w-screen flex flex-col space-y-2 ${responseData?.pagamentos.length > 1 && 'bg-gray-800'} ${responseData !== null && responseData.pagamentos.length == 1 ? 'bg-gray-300' : ''}`}
+      >
         <div className="w-full lg:p-3 p-2 lg:pr-0 flex lg:flex-row flex-col items-center lg:gap-4  justify-center h-full">
-          <FormVendas onSubmit={handleSearch}
+          <FormVendas
+            onSubmit={handleSearch}
             Isloading={isLoadingSearchSale}
             handleCleanInput={handleCleanInput}
             vendaId={vendaId}
@@ -129,9 +123,8 @@ export default function Vendas() {
                   </div>
                   <div className="   flex  flex-row items-start justify-between">
                     <p>Taxa Custos</p>
-                    <p>
-                      {responseData.pagamentos[0].taxa}
-                    </p></div>
+                    <p>{responseData.pagamentos[0].taxa}</p>
+                  </div>
                   <div className="   flex flex-row items-start justify-between">
                     <p>Markup</p>
                     <p>{responseZoopTransaction.payment_method.card_brand}</p>
@@ -145,9 +138,10 @@ export default function Vendas() {
                   </div>
                   <div className="   flex flex-row items-start justify-between">
                     <p>Splits</p>
-                    <p>{responseData.pedidos_splits.length === 0 ? 0 : (
-                      somaSplits
-                    )}
+                    <p>
+                      {responseData.pedidos_splits.length === 0
+                        ? 0
+                        : somaSplits}
                       {/* {responseData.pedidos_splits.length} */}
                     </p>
                   </div>
@@ -193,7 +187,9 @@ export default function Vendas() {
           ) : null}
         </div>
         {responseData ? (
-          <div className={`${responseData.pagamentos.length == 1 ? 'p-3 lg:pr-0' : ''}`}>
+          <div
+            className={`${responseData.pagamentos.length == 1 ? 'p-3 lg:pr-0' : ''}`}
+          >
             <div
               className={`"w-full max-w-screen flex  ${responseData.pagamentos.length >= 3 ? '' : 'bg-white rounded-lg p-2'}    flex-col items-center  justify-center "`}
             >
@@ -215,16 +211,13 @@ export default function Vendas() {
                         </p>
                       </div>
 
-                      <div className='flex flex-row gap-2'>
+                      <div className="flex flex-row gap-2">
                         <p>Valor</p>
-                        <p>
-                          R${responseData.pagamentos[0].valor}
-                        </p>
+                        <p>R${responseData.pagamentos[0].valor}</p>
                       </div>
-                      <div className='flex flex-row gap-2'>
+                      <div className="flex flex-row gap-2">
                         <p>Data Recebimento</p>
                         <p>
-
                           {new Date(
                             responseData.pagamentos[0].data_recebimento,
                           ).toLocaleString('pt-BR', { timeZone: 'UTC' })}
@@ -234,14 +227,16 @@ export default function Vendas() {
 
                     <div className="flex flex-col  items-center justify-center  w-full h-full p-4">
                       <p>Taxa</p>
-                      <p>R$
+                      <p>
+                        R$
                         {/* {responseData.pagamentos[0].taxa} */}
                         teste
                       </p>
                     </div>
                     <div className="flex flex-col  items-center justify-center  h-full w-full">
                       <p>Recebido </p>
-                      <p>R$
+                      <p>
+                        R$
                         {/* {responseData.pagamentos[0].valor_recebido} */}
                         {responseData.pagamentos[0].valor_recebido}
                       </p>
@@ -280,12 +275,12 @@ export default function Vendas() {
                     </div>
                   </div>
                 </>
-
               ) : null}
             </div>
             <div className="w-full lg:gap-0 gap-2">
               {responseData.pagamentos.length > 1 ? (
-                <PagamentosCards reprocessSale={handleReprocessSale}
+                <PagamentosCards
+                  reprocessSale={handleReprocessSale}
                   isLoadingReprocessSale={isLoadingReprocessSale}
                   currentComponent={'pagamentos'}
                   titulo={'Pagamentos'}
@@ -311,17 +306,24 @@ export default function Vendas() {
               ) : null}
 
               {responseData.pedidos_splits.length >= 1 ? (
-                <PagamentosCards isLoadingReprocessSale={isLoadingReprocessSale}
+                <PagamentosCards
+                  isLoadingReprocessSale={isLoadingReprocessSale}
                   reprocessSale={handleReprocessSale}
                   currentComponent={'splits'}
                   titulo={'Splits'}
-                  arrayTittles={['Id', 'Estabelecimento', 'Tipo', 'Categoria', 'Valor',]}
-                  contentArray={['id', 'nome_fantasia', 'id', 'id', 'valor']} dados={responseData.pedidos_splits}
+                  arrayTittles={[
+                    'Id',
+                    'Estabelecimento',
+                    'Tipo',
+                    'Categoria',
+                    'Valor',
+                  ]}
+                  contentArray={['id', 'nome_fantasia', 'id', 'id', 'valor']}
+                  dados={responseData.pedidos_splits}
                 />
               ) : null}
             </div>
           </div>
-
         ) : null}
         {responseData ? (
           <div className=" bg-gray-800    max-w-full text-sm  grid grid-cols-1 lg:grid-cols-2 lg:col-span-2 ">
@@ -340,7 +342,7 @@ export default function Vendas() {
           </div>
         ) : null}
       </div>
-    </div >
+    </div>
   )
 }
 

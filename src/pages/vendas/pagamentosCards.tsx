@@ -21,10 +21,11 @@ export default function PagamentosCards(props: typeProps) {
         <h1 className="text-white text-start w-full p-2 ">{props.titulo}</h1>
         <div className="xl:flex flex-col hidden md:hidden w-full">
           <div
-            className={`grid ${props.currentComponent === 'pagamentos'
-              ? 'grid-cols-6'
-              : 'grid-cols-5'
-              } bg-gray-700 w-full `}
+            className={`grid ${
+              props.currentComponent === 'pagamentos'
+                ? 'grid-cols-6'
+                : 'grid-cols-5'
+            } bg-gray-700 w-full `}
           >
             <p className="p-2 text-white">{props.arrayTittles[0]}</p>
             <p className="p-2 text-white">{props.arrayTittles[1]}</p>
@@ -51,7 +52,6 @@ export default function PagamentosCards(props: typeProps) {
                     </p>
                   ) : (
                     <p className="p-2 text-green-400">
-
                       {statusPayment(data[props.contentArray[1]])}
                     </p>
                   )}
@@ -101,7 +101,11 @@ export default function PagamentosCards(props: typeProps) {
               </div>
               <div className={Pstyles}>
                 <p>{props.arrayTittles[1]}</p>
-                {props.currentComponent === 'pagamentos' ? (<p> {statusPayment(data[props.contentArray[1]])}</p>) : (<p> {data.estabelecimento.nome_fantasia}</p>)}
+                {props.currentComponent === 'pagamentos' ? (
+                  <p> {statusPayment(data[props.contentArray[1]])}</p>
+                ) : (
+                  <p> {data.estabelecimento.nome_fantasia}</p>
+                )}
               </div>
               <div className={Pstyles}>
                 <p>{props.arrayTittles[2]}</p>

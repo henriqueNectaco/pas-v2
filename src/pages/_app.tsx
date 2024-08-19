@@ -58,7 +58,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <Toaster position="top-center" />
         {!noHeaderRoutes.includes(router.pathname) && <NewHeader closeSideBar={closeSideBar} showSiderbar={showSiderbar} />}
         {sidebar && <Sidebar closeSidebar={closeSideBar} active={sidebar} onClick={showSiderbar} />}
-        <div style={{ marginLeft: sidebar ? (isLg ? '300px' : window.innerWidth <= 768 ? '100px' : '250px') : '0', transition: 'margin-left 0.4s ease-in-out' }}>
+        <div style={{ marginLeft: sidebar ? (isLg ? '300px' : window.innerWidth <= 768 ? '100px' : '250px') : '0', transition: 'margin-left 0.8s ease-in-out' }}>
           <Component {...pageProps} />
         </div>
       </main>
