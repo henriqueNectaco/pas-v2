@@ -65,7 +65,7 @@ export default function App() {
       } else {
         toast.warning('Apenas arquivos com a extensão .pki são permitidos');
         return false;
-      }
+      }  
     });
 
     // Set the valid files to the loader
