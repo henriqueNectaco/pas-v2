@@ -90,6 +90,7 @@ export type modalObject = {
   useTaxForTransaction?: boolean
   useDropdownChangeParents?: boolean
   action: string
+  useDateRangePickerWithTimer: boolean
 }
 export type ModalTypes = {
   setId?: Dispatch<SetStateAction<string | undefined>>

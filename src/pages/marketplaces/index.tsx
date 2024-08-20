@@ -27,7 +27,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const authRes = await axios.post(
     `https://api.zsystems.com.br/z1/autenticar`,
-    { token }
+    { token },
   )
 
   if (authRes.data.success === false) {
@@ -39,16 +39,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   }
 
-
-  const fetchMarketplacesData = await axios.get(`https://api.zsystems.com.br/z1/marketplaces?status=ativo`, { headers: { Authorization: `Bearer ${token}` }, })
+  const fetchMarketplacesData = await axios.get(
+    `https://api.zsystems.com.br/z1/marketplaces?status=ativo`,
+    { headers: { Authorization: `Bearer ${token}` } },
+  )
   return { props: { data: fetchMarketplacesData.data.marketplaces } }
 }
 
-
-
-
-export default function Marketplace({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-
+export default function Marketplace({
+  data,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [value, setValue] = useState<RangeValue<DateValue>>({
     start: parseDate(today),
     end: parseDate(today),
@@ -58,44 +58,52 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
     action: 'Confirmar',
     useDesativar: false,
     useDropdownChangeParents: false,
-    useDatePicker: false
+    useDatePicker: false,
   })
 
   const [date, setDate] = useState({
     startDate: formatDateToYYYYMMDD(value.start),
-    endDate: formatDateToYYYYMMDD(value.end)
+    endDate: formatDateToYYYYMMDD(value.end),
   })
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const token = Cookies.get('token')
   const router = useRouter()
   const [resData, setResData] = useState<Array<object> | null>(data)
-  const [statusMarketplace, setStatusMarketplace] = useState<Key | string>('ativos')
+  const [statusMarketplace, setStatusMarketplace] = useState<Key | string>(
+    'ativos',
+  )
   const handleReprocessAllSales = async () => {
-    try {//https://api.zsystems.com.br/marketplaces/reprocessar-pedidos
-      const res = await axios.post(`${localUrl}/reprocessar-pedidos`,
+    try {
+      // https://api.zsystems.com.br/marketplaces/reprocessar-pedidos
+      const res = await axios.post(
+        `${localUrl}/reprocessar-pedidos`,
         { startDate: date.startDate, endDate: date.endDate },
         // { headers: { Authorization: `Bearer ${token}` } },
       )
       if (res.data.success === true) {
         toast.success('Adicionado a fila :)')
-      } else { toast.error('Algo de inesperado aconteceu') }
+      } else {
+        toast.error('Algo de inesperado aconteceu')
+      }
     } catch (error) {
       console.log(error)
     }
   }
 
   const handleImportAllSales = async () => {
-    try {//https://api.zsystems.com.br/marketplaces/importar-pedidos
-      const res = await axios.post(`${localUrl}/importar-pedidos`,
+    try {
+      // https://api.zsystems.com.br/marketplaces/importar-pedidos
+      const res = await axios.post(
+        `${localUrl}/importar-pedidos`,
         { startDate: date.startDate, endDate: date.endDate },
-        //{ headers: { Authorization: `Bearer ${token}` } },
+        // { headers: { Authorization: `Bearer ${token}` } },
       )
       if (res.data.success === true) {
         toast.success('Adicionado a fila ')
-      } else { toast.error('Algo de inesperado aconteceu') }
-    }
-
-    catch (error) {
+      } else {
+        toast.error('Algo de inesperado aconteceu')
+      }
+    } catch (error) {
       console.error(error)
     }
   }
@@ -104,15 +112,15 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
     switch (modalProps.action) {
       case 'Reprocessar todas as vendas':
         await handleReprocessAllSales()
-        break;
+        break
       case 'Importar todas as vendas':
         await handleImportAllSales()
-        break;
+        break
       default:
-        console.log('outro');
-        break;
+        console.log('outro')
+        break
     }
-  };
+  }
 
   const fetchFilteredData = async () => {
     try {
@@ -151,15 +159,17 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
   }, [])
   useEffect(() => {
     setDate({
-      startDate: formatDateToYYYYMMDD(value.start)
-      ,
-      endDate: formatDateToYYYYMMDD(value.end)
+      startDate: formatDateToYYYYMMDD(value.start),
+      endDate: formatDateToYYYYMMDD(value.end),
     })
   }, [value])
   return (
-    <div className={`max-w-screen w-full   flex flex-col items-center bg-gray-200 `}>
-
-      <div className={`w-full flex flex-col items-center  ${resData === null ? 'h-screen' : 'h-full'}  lg:p-6 p-4 space-y-2 lg:space-y-4  mt-4`}>
+    <div
+      className={`max-w-screen w-full   flex flex-col items-center bg-gray-200 `}
+    >
+      <div
+        className={`w-full flex flex-col items-center  ${resData === null ? 'h-screen' : 'h-full'}  lg:p-6 p-4 space-y-2 lg:space-y-4  mt-4`}
+      >
         <div className=" w-full flex flex-col lg:grid lg:grid-cols-4 boder-2 gap-2  ">
           <div className=" flex flex-col lg:flex-row lg:col-span-2 gap-2 ">
             <Button
@@ -169,9 +179,9 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
               variant="solid"
               color="primary"
               onClick={() => {
-                setModalProps(prev => ({
+                setModalProps((prev) => ({
                   ...prev,
-                  action: 'Reprocessar todas as vendas'
+                  action: 'Reprocessar todas as vendas',
                 }))
                 onOpen()
               }}
@@ -190,10 +200,13 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
             </Button>
             <Button
               onClick={() => {
-                setModalProps(prev => ({
+                setModalProps((prev) => ({
                   ...prev,
                   action: 'Importar todas as vendas',
-                  useDatePicker: true, useTaxForTransaction: false, useDesativar: false
+                  useDatePicker: false,
+                  useDateRangePickerWithTimer: true,
+                  useTaxForTransaction: false,
+                  useDesativar: false,
                 }))
                 onOpen()
               }}
@@ -253,7 +266,8 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
           )}
         </>
       </div>
-      <ModalMine modalProps={modalProps}
+      <ModalMine
+        modalProps={modalProps}
         value={value}
         setValue={setValue}
         action={modalProps.action}
@@ -265,5 +279,5 @@ export default function Marketplace({ data }: InferGetServerSidePropsType<typeof
   )
 }
 
-/*        
-*/
+/*
+ */
