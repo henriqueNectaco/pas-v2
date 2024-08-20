@@ -7,7 +7,7 @@ export const FormSchemaCadastroMarketplaceFilho = z.object({
   website: z.string().min(1, { message: 'URL inválida' }),
   nome: z.string().min(1, { message: 'Campo obrigatório' }),
   cor: z.string().regex(/^#[0-9A-Fa-f]{6}$/, 'Cor hexadecimal inválida'),
-  estabelecimentoId: z.string().min(1, { message: 'Campo obrigatório' }),
+  // estabelecimentoId: z.string().min(1, { message: 'Campo obrigatório' }),
 })
 
 export const FormschemaCadastroMarketplace = z
@@ -18,7 +18,7 @@ export const FormschemaCadastroMarketplace = z
     sellerId: z.string().min(1, { message: 'Campo obrigatório' }),
     zpk: z.string().min(1, { message: 'Campo obrigatório' }),
     cobrancaPorTransacao: z.boolean().optional(),
-    cobrancaValor: z.string().optional(), // .transform(val => val ? Number(val) : undefined),
+    cobrancaValor: z.string().optional(),
     cobrancaEmail: z.string().email().optional(),
     carne: z.boolean().optional(),
     taxaAdministrativa: z.boolean().optional(),
@@ -27,37 +27,47 @@ export const FormschemaCadastroMarketplace = z
       .regex(/^#[0-9A-Fa-f]{6}$/, 'Cor hexadecimal inválida')
       .optional(),
     zoopMarketplaceId: z.string().min(1, { message: 'Campo obrigatório' }),
-
-    // Adicionando campo de arquivo
-    logo: z
-      .instanceof(File)
-      .refine((file) => file.size <= 5 * 1024 * 1024, {
-        message: 'O arquivo deve ter no máximo 5MB',
-      })
-      .refine((file) => ['image/jpeg', 'image/png'].includes(file.type), {
-        message: 'Somente arquivos JPEG ou PNG são permitidos',
-      })
-      .optional(),
-    loader: z
-      .instanceof(File)
-      .refine((file) => file.size <= 5 * 1024 * 1024, {
-        message: 'O arquivo deve ter no máximo 5MB',
-      })
-      .refine((file) => ['image/jpeg', 'image/png'].includes(file.type), {
-        message: 'Somente arquivos JPEG ou PNG são permitidos',
-      })
-      .optional(),
-    favIcon: z
-      .instanceof(File)
-      .refine((file) => file.size <= 5 * 1024 * 1024, {
-        message: 'O arquivo deve ter no máximo 5MB',
-      })
-      .refine((file) => ['image/jpeg', 'image/png'].includes(file.type), {
-        message: 'Somente arquivos JPEG ou PNG são permitidos',
-      })
-      .optional(),
   })
-  .strict()
+  .refine(
+    (data) =>
+      !data.cobrancaPorTransacao ||
+      (data.cobrancaValor !== undefined &&
+        data.cobrancaValor.trim().length > 0),
+    {
+      path: ['cobrancaValor'],
+      message:
+        'Campo obrigatório quando cobrança por transação está habilitada',
+    },
+  )
+
+// Adicionando campo de arquivo
+// logo: z
+//   .instanceof(File)
+//   .refine((file) => file.size <= 5 * 1024 * 1024, {
+//     message: 'O arquivo deve ter no máximo 5MB',
+//   })
+//   .refine((file) => ['image/jpeg', 'image/png'].includes(file.type), {
+//     message: 'Somente arquivos JPEG ou PNG são permitidos',
+//   })
+//   .optional(),
+// loader: z
+//   .instanceof(File)
+//   .refine((file) => file.size <= 5 * 1024 * 1024, {
+//     message: 'O arquivo deve ter no máximo 5MB',
+//   })
+//   .refine((file) => ['image/jpeg', 'image/png'].includes(file.type), {
+//     message: 'Somente arquivos JPEG ou PNG são permitidos',
+//   })
+//   .optional(),
+// favIcon: z
+//   .instanceof(File)
+//   .refine((file) => file.size <= 5 * 1024 * 1024, {
+//     message: 'O arquivo deve ter no máximo 5MB',
+//   })
+//   .refine((file) => ['image/jpeg', 'image/png'].includes(file.type), {
+//     message: 'Somente arquivos JPEG ou PNG são permitidos',
+//   })
+//   .optional(),
 
 export type propsFilterEstabeleciment = {
   limparFiltro: () => void

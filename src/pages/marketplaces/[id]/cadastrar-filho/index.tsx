@@ -77,7 +77,7 @@ export default function CadastrarFilho() {
       formData.append('favicon', favicon[0])
     }
     try {
-      const res = await axios.post(`${localUrl}/cadastromarketplace`, data)
+      const res = await axios.post(`${localUrl}/cadastromarketplace`, formData)
       console.log(res.data)
       // Handle success (e.g., navigate to another page, show success message, etc.)
       setActiveStep(activeStep + 1)
@@ -88,14 +88,7 @@ export default function CadastrarFilho() {
       setIsLoading(false)
     }
   }
-  const onSubmit = async (data: FormschemaData) => {
-    const isValid = await trigger()
-    if (isValid) {
-      await handleRegisterMarketplaceChild(data)
-    } else {
-      toast.error('Campos Inválidos')
-    }
-  }
+
   // const handleRestartNginx = async () => {
   //   try {
   //   } catch (error) {
@@ -103,45 +96,30 @@ export default function CadastrarFilho() {
   //   }
   // }
 
-  const handleUpdateLogo = (fileItems: FilePondFile[]) => {
-    const validFiles = fileItems.filter((fileItem) => {
-      const file = fileItem.file as File // Type casting here
-      if (file.type === 'image/png') {
-        return true
-      } else {
-        toast.warning('Apenas arquivos PNG são permitidos')
-        return false
-      }
-    })
+  // const handleUpdateLogo = (fileItems: FilePondFile[]) => {
+  //   const validFiles = fileItems.filter((fileItem) => {
+  //     const file = fileItem.file as File // Type casting here
+  //     if (file.type === 'image/png') {
+  //       return true
+  //     } else {
+  //       toast.warning('Apenas arquivos PNG são permitidos')
+  //       return false
+  //     }
+  //   })
 
-    setLogo(validFiles.map((fileItem) => fileItem.file as File)) // Type casting here
+  //   setLogo(validFiles.map((fileItem) => fileItem.file as File)) // Type casting here
+  // }
+  const handleUpdateLogo = (fileItems: FilePondFile[]) => {
+    setLogo(fileItems.map((fileItem) => fileItem.file as File))
   }
   const handleUpdateLoader = (fileItems: FilePondFile[]) => {
-    const validFiles = fileItems.filter((fileItem) => {
-      const file = fileItem.file as File // Type casting here
-      if (file.type === 'image/png') {
-        return true
-      } else {
-        toast.warning('Apenas arquivos PNG são permitidos')
-        return false
-      }
-    })
-    setLoader(validFiles.map((fileItem) => fileItem.file as File)) // Type casting here
+    setLoader(fileItems.map((fileItem) => fileItem.file as File))
   }
 
   const handleUpdateFavIcon = (fileItems: FilePondFile[]) => {
-    const validFiles = fileItems.filter((fileItem) => {
-      const file = fileItem.file as File // Type casting here
-      if (file.type === 'image/png') {
-        return true
-      } else {
-        toast.warning('Apenas arquivos PNG são permitidos')
-        return false
-      }
-    })
-
-    setFavIcon(validFiles.map((fileItem) => fileItem.file as File)) // Type casting here
+    setFavIcon(fileItems.map((fileItem) => fileItem.file as File))
   }
+
   useEffect(() => {
     fetchMarketplace()
     searchEstabeleciment()
@@ -150,7 +128,7 @@ export default function CadastrarFilho() {
   const handleNext = async () => {
     const isValid = await trigger()
     if (activeStep === 0 && isValid && logo.length !== 0) {
-      handleSubmit(onSubmit)()
+      handleSubmit(handleRegisterMarketplaceChild)()
       setActiveStep(activeStep + 1)
     } else if (activeStep === 1) {
       alert('reiniciando Nginx')
@@ -159,8 +137,8 @@ export default function CadastrarFilho() {
     }
   }
   return (
-    <div className="max-w-screen w-full h-full lg:h-screen bg-gray-200 pt-8 lg:pt-16 p-4 flex flex-col lg:justify-start lg:items-center">
-      <div className="w-full h-full lg:w-3/4 bg-white lg:max-h-screen lg:h-2/3 flex flex-col items-center shadow-2xl rounded-md">
+    <div className="max-w-screen w-full h-full lg:h-screen bg-gray-200 lg:pt-12 flex flex-col lg:justify-start lg:items-center">
+      <div className="w-full h-full lg:w-3/4 bg-white lg:h-2/3 flex flex-col items-center shadow-2xl rounded-md">
         <h1 className=" text-lg lg:text-2xl font-bold border-b border-black w-full flex items-center justify-center p-4">
           {activeStep === 0 ? 'Cadastrar marketplace filho' : 'Reiniciar Nginx'}
         </h1>
@@ -184,7 +162,8 @@ export default function CadastrarFilho() {
                     placeholder="Estabelecimento id"
                   />
                 </div>
-                <div className="w-full h-full">
+                <div className="w-full h-full flex flex-col gap-2">
+                  <h1 className="font-semibold">Logo*</h1>
                   <FilePondComponent
                     files={logo}
                     handleUpdateFiles={handleUpdateLogo}
@@ -194,7 +173,7 @@ export default function CadastrarFilho() {
                 </div>
               </div>
               <div className="h-full p-4 flex flex-col items-center justify-start space-y-4 lg:space-y-6">
-                <div>
+                <div className="w-full">
                   <Input
                     variant="underlined"
                     {...register('nome')}
@@ -208,8 +187,16 @@ export default function CadastrarFilho() {
                   )}
                 </div>
                 <Input {...register('cor')} variant="flat" type="color" />
-                <div className="w-full h-full">
-                  <FilePondComponent />
+                <div className="w-full h-full flex flex-col gap-2">
+                  <h1 className="font-semibold ">Loader</h1>
+                  <div className="w-full h-full">
+                    <FilePondComponent
+                      files={loader}
+                      handleUpdateFiles={handleUpdateLoader}
+                      titulo="Loader"
+                      name="loader"
+                    />
+                  </div>
                 </div>
               </div>
               <div className="w-full h-full flex flex-col items-center justify-center space-y-4 p-4 lg:space-y-6">
@@ -239,14 +226,22 @@ export default function CadastrarFilho() {
                     </span>
                   )}
                 </div>
-                <div className="w-full h-full">
-                  <FilePondComponent />
+                <div className="w-full h-full flex flex-col gap-2">
+                  <h1 className="font-semibold">FavIcon</h1>
+                  <div className="w-full h-full">
+                    <FilePondComponent
+                      files={favicon}
+                      handleUpdateFiles={handleUpdateFavIcon}
+                      name="favicon"
+                      titulo="FavIcon"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           )}
         </form>
-        <div className="flex justify-end border-t border-black w-full p-4">
+        <div className="flex  justify-center lg:justify-end border-t border-black w-full p-4   ">
           <Button
             color="primary"
             variant="solid"
@@ -255,8 +250,8 @@ export default function CadastrarFilho() {
             onPress={handleNext}
           >
             {isLoading && 'Processando...'}
-            {activeStep === 0 && 'Finalizar cadastro'}
-            {activeStep === 1 && 'Reiniciar Nginx'}
+            {activeStep === 0 && isLoading === false && 'Finalizar cadastro'}
+            {activeStep === 1 && isLoading === false && 'Reiniciar Nginx'}
           </Button>
         </div>
       </div>

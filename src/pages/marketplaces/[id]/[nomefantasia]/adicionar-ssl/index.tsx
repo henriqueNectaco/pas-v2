@@ -93,11 +93,53 @@ export default function App() {
         return false
       }
     })
-
-    // Set the valid files to the loader
     setPki(validFiles.map((fileItem) => fileItem.file as File)) // Type casting here
   }
+  const handleUpdateCrt = (fileItems: FilePondFile[]) => {
+    const validFiles = fileItems.filter((fileItem) => {
+      const file = fileItem.file as File // Type casting here
+      const fileName = file.name.toLowerCase() // Get file name and convert to lower case
 
+      // Check if the file has a .pki extension
+      if (fileName.endsWith('.crt')) {
+        return true
+      } else {
+        toast.warning('Apenas arquivos com a extensão .pki são permitidos!')
+        return false
+      }
+    })
+    setCrt(validFiles.map((fileItem) => fileItem.file as File)) // Type casting here
+  }
+  const handleUpdateBundleCrtFile = (fileItems: FilePondFile[]) => {
+    const validFiles = fileItems.filter((fileItem) => {
+      const file = fileItem.file as File // Type casting here
+      const fileName = file.name.toLowerCase() // Get file name and convert to lower case
+
+      // Check if the file has a .pki extension
+      if (fileName.endsWith('.pki')) {
+        return true
+      } else {
+        toast.warning('Apenas arquivos com a extensão .pki são permitidos!')
+        return false
+      }
+    })
+    setBundleCrtFile(validFiles.map((fileItem) => fileItem.file as File)) // Type casting here
+  }
+  const handleUpdateKeyFile = (fileItems: FilePondFile[]) => {
+    const validFiles = fileItems.filter((fileItem) => {
+      const file = fileItem.file as File // Type casting here
+      const fileName = file.name.toLowerCase() // Get file name and convert to lower case
+
+      // Check if the file has a .pki extension
+      if (fileName.endsWith('.pki')) {
+        return true
+      } else {
+        toast.warning('Apenas arquivos com a extensão .pki são permitidos!')
+        return false
+      }
+    })
+    setKey(validFiles.map((fileItem) => fileItem.file as File)) // Type casting here
+  }
   useEffect(() => {
     console.log(data)
   }, [data])
@@ -124,15 +166,13 @@ export default function App() {
         </div>
         {activeStep === 0 && (
           <div className="flex flex-col lg:grid lg:grid-cols-2 border w-full h-full p-4 gap-2">
-            <div className="border h-full p-4 space-y-4">
-              <FilePondComponent
+            <div className=" h-full p-4 space-y-4">
+              {/* <FilePondComponent
                 files={pki}
                 handleUpdateFiles={handleUpdatePki}
                 name="pki"
                 titulo=".pki"
-              />
-            </div>
-            <div className="border space-y-4 p-4 h-full">
+              /> */}
               <Input
                 required={true}
                 variant="underlined"
@@ -158,6 +198,14 @@ export default function App() {
                 Renovação?
               </Checkbox>
             </div>
+            <div className="  p-4 h-full">
+              <FilePondComponent
+                files={pki}
+                handleUpdateFiles={handleUpdatePki}
+                name="pki"
+                titulo=".pki"
+              />
+            </div>
           </div>
         )}
         {activeStep === 1 && (
@@ -166,15 +214,39 @@ export default function App() {
           </div>
         )}
         {activeStep === 2 && (
-          <div className="h-full w-full flex flex-col lg:grid lg:grid-cols-3 gap-4">
-            <div className="h-full ">
-              <FilePondComponent name="crt" titulo=".crt" />
+          <div className="h-full w-full flex flex-col lg:grid lg:grid-cols-3 gap-4 p-6">
+            <div className="h-full space-y-2">
+              <h1 className="font-semibold">Crt File*</h1>
+              <div className="h-full ">
+                <FilePondComponent
+                  files={crt}
+                  handleUpdateFiles={handleUpdateCrt}
+                  name="crt"
+                  titulo=".crt"
+                />
+              </div>
             </div>
-            <div className="h-full">
-              <FilePondComponent titulo=".key*" />
+            <div className="h-full space-y-2">
+              <h1 className="font-semibold">Key File*</h1>
+              <div className="h-full">
+                <FilePondComponent
+                  handleUpdateFiles={handleUpdateKeyFile}
+                  name="key"
+                  files={key}
+                  titulo=".key*"
+                />
+              </div>
             </div>
-            <div className="h-full ">
-              <FilePondComponent titulo="bundle.crt" />
+            <div className="h-full space-y-2">
+              <h1 className="font-semibold">Bundle Crt file*</h1>
+              <div className="h-full ">
+                <FilePondComponent
+                  handleUpdateFiles={handleUpdateBundleCrtFile}
+                  files={bundleCrtFile}
+                  name="bundle Crt File"
+                  titulo="bundle.crt"
+                />
+              </div>
             </div>
           </div>
         )}

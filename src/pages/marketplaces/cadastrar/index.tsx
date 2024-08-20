@@ -18,13 +18,15 @@ import { FormschemaCadastroMarketplace } from '@/lib/types/marketplaces'
 
 import 'filepond/dist/filepond.min.css'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
-import { apiUrl, localUrl, token } from '@/lib'
+import { apiUrl, localUrl } from '@/lib'
+import Cookies from 'js-cookie'
 import FilePondComponent from '@/components/cadastroMarketplace/filepond'
 import { FilePondFile } from 'filepond'
 
 type FormschemaData = z.infer<typeof FormschemaCadastroMarketplace>
 
 export default function CadastrarMarketplaces() {
+  const token = Cookies.get('token')
   const {
     handleSubmit,
     register,
@@ -66,39 +68,39 @@ export default function CadastrarMarketplaces() {
       toast.warning('Cannot go below step 0')
     }
   }
-  const RestartNginx = async () => {
-    const res = await axios
-      .post(
-        `${apiUrl}/marketplaces/restart-nginx`,
+  // const RestartNginx = async () => {
+  //   const res = await axios
+  //     .post(
+  //       `${apiUrl}/marketplaces/restart-nginx`,
 
-        {},
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      )
-      .catch((res) => {
-        if (res.code === 'ERR_NETWORK') {
-          toast.success('NGINX reiniciado com sucesso!')
-        }
-        toast.error(res.response.data.message || 'Unknown')
-      })
-  }
+  //       {},
+  //       {
+  //         headers: { Authorization: `Bearer ${token}` },
+  //       },
+  //     )
+  //     .catch((res) => {
+  //       if (res.code === 'ERR_NETWORK') {
+  //         toast.success('NGINX reiniciado com sucesso!')
+  //       }
+  //       toast.error(res.response.data.message || 'Unknown')
+  //     })
+  // }
 
-  const importarDadosZoop = async () => {
-    try {
-      const res = await axios.post(
-        `${apiUrl}/marketplaces/${marketplaceId}/importar-dados-zoop`,
-        {},
-        // {headers: { 'Authorization': `Bearer ${token}` }}
-      )
-      if (res.data.succes === true) {
-        toast.success('Rotina iniciada com sucesso!')
-        handleNextStep()
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  // const importarDadosZoop = async () => {
+  //   try {
+  //     const res = await axios.post(
+  //       `${apiUrl}/marketplaces/${marketplaceId}/importar-dados-zoop`,
+  //       {},
+  //       { headers: { Authorization: `Bearer ${token}` } },
+  //     )
+  //     if (res.data.succes === true) {
+  //       toast.success('Rotina iniciada com sucesso!')
+  //       handleNextStep()
+  //     }
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  // }
 
   const handleCadastrarMarketplace = async (dados: FormschemaData) => {
     const formData = new FormData()
@@ -115,6 +117,12 @@ export default function CadastrarMarketplaces() {
     formData.append('carne', String(dados.carne))
     formData.append('taxaAdministrativa', String(dados.taxaAdministrativa))
     formData.append('logo', logo[0])
+    if (dados.cobrancaEmail !== undefined) {
+      formData.append('cobrancaEmail', dados.cobrancaEmail)
+    }
+    if (dados.cobrancaValor !== undefined) {
+      formData.append('cobrancaValor', dados.cobrancaValor)
+    }
     if (favicon.length !== 0) {
       formData.append('favicon', favicon[0])
     }
@@ -293,7 +301,6 @@ export default function CadastrarMarketplaces() {
                           placeholder={'Valor da Cobrança*'}
                           variant="underlined"
                           labelPlacement="inside"
-                          type="number"
                         />
                         {errors.cobrancaValor && (
                           <span className="text-red-500 text-sm lg:text-md">
