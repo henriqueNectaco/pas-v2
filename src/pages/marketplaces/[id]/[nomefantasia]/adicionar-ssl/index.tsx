@@ -1,22 +1,13 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Divider,
-  Link,
-  Image,
   Button,
   Input,
   Checkbox,
   Breadcrumbs,
   BreadcrumbItem,
 } from '@nextui-org/react'
-import StepperComponent from '@/components/cadastroMarketplace/steper'
 import axios from 'axios'
 import { useRouter } from 'next/router'
-import FilePonds from '@/components/cadastroMarketplace/filepond'
 import { FilePondFile } from 'filepond'
 import { toast } from 'sonner'
 import FilePondComponent from '@/components/cadastroMarketplace/filepond'

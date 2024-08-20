@@ -93,7 +93,7 @@ export default function Vendas() {
   return (
     <div className="flex flex-col items-center  h-screen max-w-screen w-full ">
       <div
-        className={`w-full max-w-screen flex flex-col space-y-2 ${responseData?.pagamentos.length > 1 && 'bg-gray-800'} ${responseData !== null && responseData.pagamentos.length == 1 ? 'bg-gray-300' : ''}`}
+        className={`w-full max-w-screen flex flex-col space-y-2 ${responseData?.pagamentos.length > 1 && 'bg-gray-800'} ${responseData !== null && responseData.pagamentos.length === 1 ? 'bg-gray-300' : ''}`}
       >
         <div className="w-full lg:p-3 p-2 lg:pr-0 flex lg:flex-row flex-col items-center lg:gap-4  justify-center h-full">
           <FormVendas
@@ -188,7 +188,7 @@ export default function Vendas() {
         </div>
         {responseData ? (
           <div
-            className={`${responseData.pagamentos.length == 1 ? 'p-3 lg:pr-0' : ''}`}
+            className={`${responseData.pagamentos.length === 1 ? 'p-3 lg:pr-0' : ''}`}
           >
             <div
               className={`"w-full max-w-screen flex  ${responseData.pagamentos.length >= 3 ? '' : 'bg-white rounded-lg p-2'}    flex-col items-center  justify-center "`}

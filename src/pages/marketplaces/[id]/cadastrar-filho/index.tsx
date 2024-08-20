@@ -69,7 +69,13 @@ export default function CadastrarFilho() {
     formData.append('nome', data.nome)
     formData.append('website', data.website)
     formData.append('dominio', data.dominio)
-
+    formData.append('logo', logo[0])
+    if (loader.length !== 0) {
+      formData.append('loader', loader[0])
+    }
+    if (favicon.length !== 0) {
+      formData.append('favicon', favicon[0])
+    }
     try {
       const res = await axios.post(`${localUrl}/cadastromarketplace`, data)
       console.log(res.data)
@@ -90,12 +96,12 @@ export default function CadastrarFilho() {
       toast.error('Campos Inválidos')
     }
   }
-  const handleRestartNginx = async () => {
-    try {
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  // const handleRestartNginx = async () => {
+  //   try {
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  // }
 
   const handleUpdateLogo = (fileItems: FilePondFile[]) => {
     const validFiles = fileItems.filter((fileItem) => {
@@ -141,13 +147,124 @@ export default function CadastrarFilho() {
     searchEstabeleciment()
   }, [])
 
+  const handleNext = async () => {
+    const isValid = await trigger()
+    if (activeStep === 0 && isValid && logo.length !== 0) {
+      handleSubmit(onSubmit)()
+      setActiveStep(activeStep + 1)
+    } else if (activeStep === 1) {
+      alert('reiniciando Nginx')
+    } else {
+      toast.error('Logo obrigatória')
+    }
+  }
   return (
     <div className="max-w-screen w-full h-full lg:h-screen bg-gray-200 pt-8 lg:pt-16 p-4 flex flex-col lg:justify-start lg:items-center">
       <div className="w-full h-full lg:w-3/4 bg-white lg:max-h-screen lg:h-2/3 flex flex-col items-center shadow-2xl rounded-md">
         <h1 className=" text-lg lg:text-2xl font-bold border-b border-black w-full flex items-center justify-center p-4">
           {activeStep === 0 ? 'Cadastrar marketplace filho' : 'Reiniciar Nginx'}
         </h1>
-        <form className="w-full h-full" onSubmit={handleSubmit(onSubmit)}>
+        <form className="border h-full w-full">
+          {activeStep === 0 && (
+            <div className="p-4 lg:grid lg:grid-cols-3 flex flex-col h-full lg:h-3/4 w-full gap-4">
+              <div className="h-full p-4 flex flex-col items-center justify-start lg:justify-center space-y-4 lg:space-y-6">
+                <div className="w-full flex flex-col">
+                  <Input
+                    variant="underlined"
+                    disabled={true}
+                    value={`${marketplaceId} - ${nome}`}
+                    name="marketplace_id"
+                    placeholder="Marketplace Id"
+                  />
+                </div>
+                <div className="w-full flex flex-col">
+                  <Input
+                    variant="underlined"
+                    name="estabelecimento_id"
+                    placeholder="Estabelecimento id"
+                  />
+                </div>
+                <div className="w-full h-full">
+                  <FilePondComponent
+                    files={logo}
+                    handleUpdateFiles={handleUpdateLogo}
+                    name="logo"
+                    titulo="Logo*"
+                  />
+                </div>
+              </div>
+              <div className="h-full p-4 flex flex-col items-center justify-start space-y-4 lg:space-y-6">
+                <div>
+                  <Input
+                    variant="underlined"
+                    {...register('nome')}
+                    name="nome"
+                    placeholder="Nome"
+                  />
+                  {errors.nome && (
+                    <span className="text-red-500 text-sm lg:text-md">
+                      {errors.nome.message}
+                    </span>
+                  )}
+                </div>
+                <Input {...register('cor')} variant="flat" type="color" />
+                <div className="w-full h-full">
+                  <FilePondComponent />
+                </div>
+              </div>
+              <div className="w-full h-full flex flex-col items-center justify-center space-y-4 p-4 lg:space-y-6">
+                <div className="w-full flex flex-col">
+                  <Input
+                    {...register('dominio')}
+                    variant="underlined"
+                    name="dominio"
+                    placeholder="Dominio"
+                  />
+                  {errors.dominio && (
+                    <span className="text-red-500 text-sm lg:text-md">
+                      {errors.dominio.message}
+                    </span>
+                  )}
+                </div>
+                <div className="w-full flex flex-col">
+                  <Input
+                    {...register('website')}
+                    variant="underlined"
+                    name="website"
+                    placeholder="Website"
+                  />
+                  {errors.website && (
+                    <span className="text-red-500 text-sm lg:text-md">
+                      {errors.website.message}
+                    </span>
+                  )}
+                </div>
+                <div className="w-full h-full">
+                  <FilePondComponent />
+                </div>
+              </div>
+            </div>
+          )}
+        </form>
+        <div className="flex justify-end border-t border-black w-full p-4">
+          <Button
+            color="primary"
+            variant="solid"
+            type="submit"
+            disabled={isLoading}
+            onPress={handleNext}
+          >
+            {isLoading && 'Processando...'}
+            {activeStep === 0 && 'Finalizar cadastro'}
+            {activeStep === 1 && 'Reiniciar Nginx'}
+          </Button>
+        </div>
+      </div>
+    </div>
+  )
+}
+/*
+    <form className="w-full h-full" onSubmit={handleSubmit(onSubmit)}>
           {activeStep === 0 && (
             <div className="p-4 lg:grid lg:grid-cols-3 flex flex-col h-full lg:h-3/4 w-full gap-4">
               <div className="h-full p-4 flex flex-col items-center justify-start lg:justify-center space-y-4 lg:space-y-6">
@@ -230,7 +347,4 @@ export default function CadastrarFilho() {
             </Button>
           </div>
         </form>
-      </div>
-    </div>
-  )
-}
+        */
