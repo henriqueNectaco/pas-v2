@@ -1,7 +1,7 @@
 import { Button } from '@nextui-org/button'
 import React, { ChangeEvent } from 'react'
 import { Input } from '@nextui-org/input'
-import { FormVendasTypes } from '@/lib/types/vendas'
+import { FormVendasTypes } from '@/@types/vendas'
 export default function FormVendas(props: FormVendasTypes) {
   return (
     <>

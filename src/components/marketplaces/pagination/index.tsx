@@ -1,5 +1,5 @@
 import { Pagination, Button } from '@nextui-org/react'
-import { paginatorProps } from '@/lib/types/components'
+import { paginatorProps } from '@/types/components'
 export default function Paginator(props: paginatorProps) {
   //  const [currentPage, setCurrentPage] = useState(1)
 

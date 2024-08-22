@@ -14,7 +14,7 @@ import {
 } from '@nextui-org/react'
 import { CaretDown } from 'phosphor-react'
 import DateRangePickerComponent from '../rangedatepicker'
-import { ModalTypes, objectMarketplace } from '@/lib/types/marketplaces'
+import { ModalTypes, objectMarketplace } from '@/@types/marketplaces'
 import { useState } from 'react'
 import DateRangeWithTimer from '../dateRangePickerWithTimer'
 
@@ -47,9 +47,7 @@ export default function ModalMine(props: ModalTypes) {
                   />
                 )}
                 {props.modalProps?.useDateRangePickerWithTimer === true && (
-                  <DateRangeWithTimer
-                    setValue={props.onChangeDateRangePickerWithTimer}
-                  />
+                  <DateRangeWithTimer setValue={props.setValue} />
                 )}
                 {props.modalProps?.useDropdownChangeParents === true && (
                   <div className="w-full max-w-full">

@@ -123,6 +123,35 @@ interface DateObjectTimer {
   year: number
   // Outros campos opcionais
 }
+interface DateValue {
+  // Adapte este tipo ao que você está realmente usando
+  year: number
+  month: number
+  day: number
+  hour?: number
+  minute?: number
+  second?: number
+}
+
+export function convertToDateObjectTimer(
+  dateValue: DateValue,
+): DateObjectTimer {
+  return {
+    calendar: {
+      identifier: 'gregorian', // Ou o identificador apropriado
+    },
+    day: dateValue.day,
+    era: 'AD', // Ou o valor apropriado
+    hour: dateValue.hour ?? 0,
+    millisecond: 0, // Ou o valor apropriado
+    minute: dateValue.minute ?? 0,
+    month: dateValue.month,
+    offset: 0, // Ou o valor apropriado
+    second: dateValue.second ?? 0,
+    timeZone: 'UTC', // Ou o valor apropriado
+    year: dateValue.year,
+  }
+}
 export function formatDateRangeTimer(dateObj: DateObjectTimer) {
   const year = dateObj.year
   const month = String(dateObj.month).padStart(2, '0') // mês em formato 'mm'
@@ -130,5 +159,5 @@ export function formatDateRangeTimer(dateObj: DateObjectTimer) {
   const hour = String(dateObj.hour).padStart(2, '0') // hora em formato 'hh'
   const minute = String(dateObj.minute).padStart(2, '0') // minutos em formato 'mm'
 
-  return `${year}-${month}-${day} ${hour}:${minute} `
+  return `${year}-${month}-${day} ${hour}:${minute}`
 }

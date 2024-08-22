@@ -1,6 +1,7 @@
 import { parseDate } from '@internationalized/date'
 import ModalMine from '@/components/modal'
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
+
 import nextCookies from 'next-cookies'
 import {
   useDisclosure,
@@ -13,6 +14,7 @@ import {
   DateValue,
   RangeValue,
 } from '@nextui-org/react'
+
 import Cookies from 'js-cookie'
 import Router from 'next/router'
 import React, { Key, useEffect, useState } from 'react'
@@ -21,10 +23,11 @@ import { CaretDown } from 'phosphor-react'
 import { toast } from 'sonner'
 import TableMarketPlaces, { marketplaceItemsTypes } from './table'
 import {
-  formatDateRangeTimer,
   formatDateToYYYYMMDD,
   localUrl,
   today,
+  formatDateRangeTimer,
+  convertToDateObjectTimer,
 } from '@/lib'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -57,6 +60,11 @@ export default function Marketplace({
   const [value, setValue] = useState<RangeValue<DateValue>>({
     start: parseDate(today),
     end: parseDate(today),
+  })
+
+  const [valueImportarPedidos, setValueImportarPedidos] = useState({
+    startDate: '',
+    endDate: '',
   })
   const [modalProps, setModalProps] = useState({
     useTaxForTransaction: false,
@@ -101,7 +109,10 @@ export default function Marketplace({
       // https://api.zsystems.com.br/marketplaces/importar-pedidos
       const res = await axios.post(
         `${localUrl}/importar-pedidos`,
-        { startDate: date.startDate, endDate: date.endDate },
+        {
+          startDate: valueImportarPedidos.startDate,
+          endDate: valueImportarPedidos.endDate,
+        },
         // { headers: { Authorization: `Bearer ${token}` } },
       )
       if (res.data.success === true) {
@@ -163,12 +174,21 @@ export default function Marketplace({
 
     auth()
   }, [])
+
   useEffect(() => {
+    const dateObjStart = convertToDateObjectTimer(value.start)
+    const dateObjEnd = convertToDateObjectTimer(value.end)
     setDate({
       startDate: formatDateToYYYYMMDD(value.start),
       endDate: formatDateToYYYYMMDD(value.end),
     })
-    console.log(formatDateRangeTimer(value.start))
+    setValueImportarPedidos({
+      startDate: formatDateRangeTimer(dateObjStart),
+      endDate: formatDateRangeTimer(dateObjEnd),
+    })
+
+    console.log(date)
+    // const talvez = format(stringifff, 'yyyy-mm-ddd HH:mm')
   }, [value])
   return (
     <div
@@ -278,7 +298,6 @@ export default function Marketplace({
         </>
       </div>
       <ModalMine
-        onChangeDateRangePickerWithTimer={setValue}
         modalProps={modalProps}
         value={value}
         setValue={setValue}

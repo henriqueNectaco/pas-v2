@@ -93,9 +93,6 @@ export type modalObject = {
   useDateRangePickerWithTimer?: boolean
 }
 export type ModalTypes = {
-  onChangeDateRangePickerWithTimer?: (
-    value: RangeValue<DateValue>,
-  ) => void | undefined
   setId?: Dispatch<SetStateAction<string | undefined>>
   MarketplacesArray?: Array<objectMarketplace>
   modalProps: modalObject

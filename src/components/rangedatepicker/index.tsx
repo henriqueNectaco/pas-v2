@@ -1,6 +1,6 @@
 import { DateRangePicker } from '@nextui-org/react'
 
-import { datePickerProps } from '@/lib/types/dashboard'
+import { datePickerProps } from '@/@types/dashboard'
 // Função para obter o último dia do mês atual
 
 export default function DateRangePickerComponent(props: datePickerProps) {

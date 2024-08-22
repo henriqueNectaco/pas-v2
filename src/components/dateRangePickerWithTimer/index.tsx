@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { DateRangePicker, DateValue, RangeValue } from '@nextui-org/react'
 import { parseZonedDateTime } from '@internationalized/date'
 

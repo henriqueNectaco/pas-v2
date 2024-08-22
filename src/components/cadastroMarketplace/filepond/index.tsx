@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic'
 import 'filepond/dist/filepond.min.css'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
-import { typeFilePond } from '@/lib/types/components'
+import { typeFilePond } from '@/types/components'
 
 const FilePond = dynamic(
   () =>

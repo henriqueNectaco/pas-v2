@@ -6,7 +6,7 @@ import {
   DropdownItem,
   Button,
 } from '@nextui-org/react'
-import { typePropsDropDownMenuCache } from '@/lib/types/components'
+import { typePropsDropDownMenuCache } from '@/types/components'
 
 export default function DropDownMenuCache(props: typePropsDropDownMenuCache) {
   const [selected, setSelected] = useState('')

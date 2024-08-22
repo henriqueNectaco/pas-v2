@@ -10,7 +10,7 @@ import { Spinner } from '@nextui-org/react'
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import nextCookies from 'next-cookies'
 import Paginator from '@/components/marketplaces/pagination'
-import { objectMarketplace } from '@/lib/types/marketplaces'
+import { objectMarketplace } from '@/@types/marketplaces'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { token } = nextCookies(context)
