@@ -85,7 +85,7 @@ export default function Vendas() {
   }
   useEffect(() => {
     auth()
-  }, [])
+  })
 
   const splits = responseData?.pedidos_splits || []
   const somaSplits = arrayOfObjectsSum(splits, 'valor')

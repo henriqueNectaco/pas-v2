@@ -14,12 +14,12 @@ import {
   RangeValue,
 } from '@nextui-org/react'
 import Cookies from 'js-cookie'
-import Router, { useRouter } from 'next/router'
+import Router from 'next/router'
 import React, { Key, useEffect, useState } from 'react'
 import axios from 'axios'
 import { CaretDown } from 'phosphor-react'
 import { toast } from 'sonner'
-import TableMarketPlaces from './table'
+import TableMarketPlaces, { marketplaceItemsTypes } from './table'
 import { formatDateToYYYYMMDD, localUrl, today } from '@/lib'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -67,8 +67,10 @@ export default function Marketplace({
   })
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const token = Cookies.get('token')
-  const router = useRouter()
-  const [resData, setResData] = useState<Array<object> | null>(data)
+  // const router = useRouter()
+  const [resData, setResData] = useState<Array<marketplaceItemsTypes> | null>(
+    data,
+  )
   const [statusMarketplace, setStatusMarketplace] = useState<Key | string>(
     'ativos',
   )
@@ -182,6 +184,10 @@ export default function Marketplace({
                 setModalProps((prev) => ({
                   ...prev,
                   action: 'Reprocessar todas as vendas',
+                  useDatePicker: true,
+                  useDateRangePickerWithTimer: false,
+                  useTaxForTransaction: false,
+                  useDesativar: false,
                 }))
                 onOpen()
               }}

@@ -13,7 +13,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const authRes = await axios.post(
     `https://api.zsystems.com.br/z1/autenticar`,
-    { token }
+    { token },
   )
 
   if (authRes.data.success === false) {
@@ -35,42 +35,25 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return { props: { data: fetchChilds.data.estabelecimentos } }
 }
 
-
-
-export default function MarketplacesFilhos({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function MarketplacesFilhos({
+  data,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter()
-  const token = Cookies.get('token')
-  const { id } = router.query
+  // const token = Cookies.get('token')
+  // const { id } = router.query
   const [marketplacesChilds, setMarketplacesChilds] = useState(data)
-  const fetchMarketplacesChilds = async () => {
-    try {
-      const res = await axios.get(
-        `
-https://api.zsystems.com.br/marketplaces/${id}/filhos`,
-        { headers: { Authorization: `Bearer ${token}` } },
-      )
-      setMarketplacesChilds(res.data.estabelecimentos)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-  const auth = async () => {
-    try {
-      const res = await axios.post(
-        `https://api.zsystems.com.br/z1/autenticar`,
-        { token },
-      )
-      if (res.data.success === true) {
-        fetchMarketplacesChilds()
-      } else {
-        toast.error('Sua sessão expirou faça login novamente')
-        router.push('/')
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
+  //   const fetchMarketplacesChilds = async () => {
+  //     try {
+  //       const res = await axios.get(
+  //         `
+  // https://api.zsystems.com.br/marketplaces/${id}/filhos`,
+  //         { headers: { Authorization: `Bearer ${token}` } },
+  //       )
+  //       setMarketplacesChilds(res.data.estabelecimentos)
+  //     } catch (error) {
+  //       console.error(error)
+  //     }
+  //   }
 
   return (
     <div className="h-full max-w-screen w-full bg-gray-200 flex flex-col items-center  border-2 ">
@@ -80,7 +63,6 @@ https://api.zsystems.com.br/marketplaces/${id}/filhos`,
         ) : (
           <div className=" max-w-screen w-full h-full  space-y-4 p-4 lg:pt-12">
             <Table
-
               currentPage="filhos"
               array={['ID', 'Nome', 'Status', 'Data de criação', 'E-mail', '']}
               ColsBody={6}
@@ -90,7 +72,6 @@ https://api.zsystems.com.br/marketplaces/${id}/filhos`,
                 'nome_fantasia',
                 'status_estabelecimento_id',
                 'created',
-
               ]}
             />
           </div>

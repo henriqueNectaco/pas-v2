@@ -61,16 +61,18 @@ export const statusPayment = (statusPaymentId: number) => {
       return '-'
   }
 }
-export const statusMarketplacesChilds = (status: number) => {
+export const statusMarketplacesChilds = (status: number | undefined) => {
   switch (status) {
     case 2:
       return 'Aprovado'
     case 4:
       return 'Desabilitado'
+    case 1:
+      return 'Aguardando Aprovação'
   }
 }
 
-export const nullVerifiyer = (dataString: string) => {
+export const nullVerifiyer = (dataString: string | undefined) => {
   switch (dataString) {
     case '':
       return 'Unknown'

@@ -1,4 +1,4 @@
-export function formatarData(dataString: Date): string {
+export function formatarData(dataString: Date | undefined): string {
   const dataOriginal = new Date(dataString)
 
   const dia = dataOriginal.getDate().toString().padStart(2, '0')

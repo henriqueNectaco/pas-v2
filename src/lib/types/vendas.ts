@@ -1,7 +1,5 @@
 import { Dispatch, SetStateAction } from 'react'
 
-
-
 type EstabelecimentoType = {
   razao_social: string
   marketplace: {
@@ -29,12 +27,12 @@ export type typeResponseData = {
 }
 
 export interface ZoopTransaction {
-  created_at: Date;
+  created_at: Date
   payment_method: {
-    card_brand: string;
-  };
-  payment_type: string;
-  // 
+    card_brand: string
+  }
+  payment_type: string
+  //
 }
 export interface typePagament {
   status_pagamento_id: string

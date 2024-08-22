@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { toast } from 'sonner'
 import {
   Card,
@@ -18,7 +18,7 @@ import { FormschemaCadastroMarketplace } from '@/lib/types/marketplaces'
 
 import 'filepond/dist/filepond.min.css'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
-import { apiUrl, localUrl } from '@/lib'
+import { localUrl } from '@/lib'
 import Cookies from 'js-cookie'
 import FilePondComponent from '@/components/cadastroMarketplace/filepond'
 import { FilePondFile } from 'filepond'
@@ -26,7 +26,7 @@ import { FilePondFile } from 'filepond'
 type FormschemaData = z.infer<typeof FormschemaCadastroMarketplace>
 
 export default function CadastrarMarketplaces() {
-  const token = Cookies.get('token')
+  // const token = Cookies.get('token')
   const {
     handleSubmit,
     register,
@@ -38,7 +38,7 @@ export default function CadastrarMarketplaces() {
     mode: 'onChange',
   })
   const cobrancaPorTransacao = watch('cobrancaPorTransacao', false)
-  const [marketplaceId, setMarketplaceId] = useState(null)
+  // const [marketplaceId, setMarketplaceId] = useState(null)
   const [activeStep, setActiveStep] = useState<number>(0)
   const [loader, setLoader] = useState<File[]>([])
   const [logo, setLogo] = useState<File[]>([])

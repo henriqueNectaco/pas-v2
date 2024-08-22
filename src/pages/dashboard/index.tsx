@@ -1,7 +1,14 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
-import { today, yesterday, previousThirtyDays, thirtyDaysAgo, apiUrl, formatDateToYYYYMMDD } from '@/lib/'
+import {
+  today,
+  yesterday,
+  previousThirtyDays,
+  thirtyDaysAgo,
+  apiUrl,
+  formatDateToYYYYMMDD,
+} from '@/lib/'
 import { toast } from 'sonner'
 import Router from 'next/router'
 import DashComponent from '@/components/dasboard/dashComponent'
@@ -14,10 +21,7 @@ import nextCookies from 'next-cookies'
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { token } = nextCookies(context)
 
-  const authRes = await axios.post(
-    `${apiUrl}/autenticar`,
-    { token }
-  )
+  const authRes = await axios.post(`${apiUrl}/autenticar`, { token })
 
   if (authRes.data.success === false) {
     return {
@@ -28,15 +32,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   }
 
-
-
   return { props: { dados: authRes.data } }
 }
 
-
-export default function DashBoard({ dados }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function DashBoard({
+  dados,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const newDate = new Date()
-  const [isLg, setIsLg] = useState<boolean>()
 
   const [value, setValue] = useState<RangeValue<DateValue>>({
     start: parseDate(newDate.toISOString().split('T')[0]), // Data atual
@@ -128,10 +130,10 @@ export default function DashBoard({ dados }: InferGetServerSidePropsType<typeof 
       https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=${previousThirtyDays}&endDate=${thirtyDaysAgo}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
-      setData(prevData => ({
-        ...prevData, totalMarketPlaceRegistredPreviousMonth: res.data.totalMarketplaceChild
+      setData((prevData) => ({
+        ...prevData,
+        totalMarketPlaceRegistredPreviousMonth: res.data.totalMarketplaceChild,
       }))
-
     } catch (error) {
       console.error(error)
     }
@@ -143,8 +145,10 @@ export default function DashBoard({ dados }: InferGetServerSidePropsType<typeof 
         `https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=${thirtyDaysAgo}&endDate=${today}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
-      setData(prevData => ({
-        ...prevData, totalMarketplaceChildResgiteredLastThirtyDays: res.data.totalMarketplaceChild
+      setData((prevData) => ({
+        ...prevData,
+        totalMarketplaceChildResgiteredLastThirtyDays:
+          res.data.totalMarketplaceChild,
       }))
     } catch (error) {
       console.error(error)
@@ -156,8 +160,9 @@ export default function DashBoard({ dados }: InferGetServerSidePropsType<typeof 
         `https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${yesterday}&endDate=${yesterday}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
-      setData(prevData => ({
-        ...prevData, totalNaoProcessadoOntem: res.data.totalNotProcessed
+      setData((prevData) => ({
+        ...prevData,
+        totalNaoProcessadoOntem: res.data.totalNotProcessed,
       }))
     } catch (error) {
       console.error(error)
@@ -170,8 +175,9 @@ export default function DashBoard({ dados }: InferGetServerSidePropsType<typeof 
 https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDate=${today}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
-      setData(prevData => ({
-        ...prevData, totalNaoProcessadoHoje: res.data.totalNotProcessed
+      setData((prevData) => ({
+        ...prevData,
+        totalNaoProcessadoHoje: res.data.totalNotProcessed,
       }))
     } catch (error) {
       console.error(error)
@@ -184,8 +190,10 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
         `https://pas-aps.up.railway.app/establishment/total-registered?startDate=${thirtyDaysAgo}&endDate=${today}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
-      setData(prevData => ({
-        ...prevData, totalEstabelecimentosFilhosRegistradosUltimosTrintaDias: res.data.totalRegistered
+      setData((prevData) => ({
+        ...prevData,
+        totalEstabelecimentosFilhosRegistradosUltimosTrintaDias:
+          res.data.totalRegistered,
       }))
     } catch (error) {
       console.error(error)
@@ -197,8 +205,9 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
         `https://pas-aps.up.railway.app/sale/total-processed?startDate=${previousThirtyDays}&endDate=${thirtyDaysAgo}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
-      setData(prevData => ({
-        ...prevData, totalProcessadoMesAnterior: res.data.totalProcessed
+      setData((prevData) => ({
+        ...prevData,
+        totalProcessadoMesAnterior: res.data.totalProcessed,
       }))
     } catch (error) {
       console.error(error)
@@ -211,8 +220,9 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
         `https://pas-aps.up.railway.app/sale/total-processed?startDate=${thirtyDaysAgo}&endDate=${today}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
-      setData(prevData => ({
-        ...prevData, totalProcessadoMesAtual: res.data.totalProcessed
+      setData((prevData) => ({
+        ...prevData,
+        totalProcessadoMesAtual: res.data.totalProcessed,
       }))
     } catch (error) {
       console.error(error)
@@ -227,7 +237,10 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
           headers: { Authorization: `Bearer ${token}` },
         },
       )
-      setData(prevData => ({ ...prevData, totalProcessadoOntem: res.data.totalProcessed }))
+      setData((prevData) => ({
+        ...prevData,
+        totalProcessadoOntem: res.data.totalProcessed,
+      }))
     } catch (error) {
       console.error(error)
     }
@@ -241,8 +254,9 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
           headers: { Authorization: `Bearer ${token}` },
         },
       )
-      setData(prevData => ({
-        ...prevData, totalProcessadoHoje: res.data.totalProcessed
+      setData((prevData) => ({
+        ...prevData,
+        totalProcessadoHoje: res.data.totalProcessed,
       }))
     } catch (error) {
       console.error(error)
@@ -265,16 +279,15 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
         'https://api.zsystems.com.br/z1/indicadores',
         { headers: { Authorization: `Bearer ${token}` } },
       )
-      setData(prevData => ({
+      setData((prevData) => ({
         ...prevData,
         totalVendido: response.data.result.transacionadoHoje.valorTotal,
-        numVendas: response.data.result.transacionadoHoje.quantidade
+        numVendas: response.data.result.transacionadoHoje.quantidade,
       }))
     } catch (error) {
       console.error(error)
     }
   }
-
 
   const auth = async () => {
     try {
@@ -320,13 +333,10 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
   ])
   useEffect(() => {
     auth()
-
-  }, [])
-
+  })
 
   return (
     <div className=" h-screen max-w-screen flex flex-col items-center    ">
-
       <div className=" h-screen    w-full  max-w-screen flex flex-col items-center justify-start  lg:pt-10 ">
         <DashComponent
           data={data}
@@ -351,7 +361,3 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
     </div>
   )
 }
-
-
-
-

@@ -1,5 +1,5 @@
 import { RangeValue, DateValue } from '@nextui-org/react'
-import { Dispatch, Key, SetStateAction } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 import { z } from 'zod'
 
 export const FormSchemaCadastroMarketplaceFilho = z.object({
@@ -90,7 +90,7 @@ export type modalObject = {
   useTaxForTransaction?: boolean
   useDropdownChangeParents?: boolean
   action: string
-  useDateRangePickerWithTimer: boolean
+  useDateRangePickerWithTimer?: boolean
 }
 export type ModalTypes = {
   setId?: Dispatch<SetStateAction<string | undefined>>
@@ -106,20 +106,16 @@ export type ModalTypes = {
   setValue: (value: RangeValue<DateValue>) => void
   value: RangeValue<DateValue> | null | undefined
 }
-
-export type StepperTypes = {
-  stepsData: Array<typeStep>
-  activeStep: number
-}
 export type typeStep = {
   label: string
   active: boolean
 }
+export type StepperTypes = {
+  stepsData: Array<typeStep>
+  activeStep: number
+}
 
 export type typePropsCadastroMarketplace = {
-  setFilesLogo: any
-  setFilesFavIcon: any
-  setFilesLoader: any
   data: {
     nome: string
     zoopMarketplaceId: string
@@ -137,12 +133,4 @@ export type typePropsCadastroMarketplace = {
   stepsData: { label: string; active: boolean }[]
   handlePrevStep: () => void
   onClickNext: () => void
-}
-
-export type AdicionarSSlsTypes = {
-  data: {
-    dominio: string
-    nome: string
-    pki: any
-  }
 }

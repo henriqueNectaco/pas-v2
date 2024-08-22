@@ -13,19 +13,23 @@ import { EyeSlash, Eye } from 'phosphor-react'
 
 // Esquema de validação com Zod
 const Formschema = z.object({
-  email: z.string().email("E-mail inválido"),
-  senha: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
+  email: z.string().email('E-mail inválido'),
+  senha: z.string().min(6, 'A senha deve ter pelo menos 6 caracteres'),
 })
 type FormschemaData = z.infer<typeof Formschema>
 
 export default function Home() {
-  const [isVisible, setIsVisible] = useState(false);
-  const toggleVisibility = () => setIsVisible(!isVisible);
+  const [isVisible, setIsVisible] = useState(false)
+  const toggleVisibility = () => setIsVisible(!isVisible)
   const [isLoading, setIsLoading] = useState(false)
 
-  const { register, handleSubmit, formState: { errors, isValid } } = useForm<FormschemaData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<FormschemaData>({
     resolver: zodResolver(Formschema),
-    mode: 'onChange' // Isso permitirá que a validação ocorra a cada mudança no formulário
+    mode: 'onChange', // Isso permitirá que a validação ocorra a cada mudança no formulário
   })
 
   const router = useRouter()
@@ -102,7 +106,11 @@ export default function Home() {
                   {...register('email')}
                   required={true}
                 />
-                {errors.email && <span className="text-red-500 text-sm lg:text-md">{errors.email.message}</span>}
+                {errors.email && (
+                  <span className="text-red-500 text-sm lg:text-md">
+                    {errors.email.message}
+                  </span>
+                )}
               </div>
               <div className="w-full lg:p-4  flex flex-col gap-3 ">
                 <label htmlFor="password" className="  lg:text-base">
@@ -111,19 +119,34 @@ export default function Home() {
                 <Input
                   required={true}
                   endContent={
-                    <button className="focus:outline-none" type="button" onClick={toggleVisibility} aria-label="toggle password visibility">
+                    <button
+                      className="focus:outline-none"
+                      type="button"
+                      onClick={toggleVisibility}
+                      aria-label="toggle password visibility"
+                    >
                       {isVisible ? (
-                        <EyeSlash size={30} className="text-2xl text-default-400 pointer-events-none" />
+                        <EyeSlash
+                          size={30}
+                          className="text-2xl text-default-400 pointer-events-none"
+                        />
                       ) : (
-                        <Eye size={30} className="text-2xl text-default-400 pointer-events-none" />
+                        <Eye
+                          size={30}
+                          className="text-2xl text-default-400 pointer-events-none"
+                        />
                       )}
                     </button>
                   }
-                  type={isVisible ? "text" : "password"}
+                  type={isVisible ? 'text' : 'password'}
                   variant="underlined"
                   {...register('senha')}
                 />
-                {errors.senha && <span className="text-red-500 text-sm lg:text-md">{errors.senha.message}</span>}
+                {errors.senha && (
+                  <span className="text-red-500 text-sm lg:text-md">
+                    {errors.senha.message}
+                  </span>
+                )}
               </div>
               <div className=" lg:p-4 lg:h-[15vh] h-1/4 w-full flex flex-col items-center justify-center lg:justify-end  gap-2 lg:gap-4 ">
                 <Button

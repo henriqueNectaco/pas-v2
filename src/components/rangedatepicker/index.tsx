@@ -18,4 +18,3 @@ export default function DateRangePickerComponent(props: datePickerProps) {
     </div>
   )
 }
-
