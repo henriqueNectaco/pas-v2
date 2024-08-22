@@ -158,7 +158,7 @@ export default function Marketplace({
     }
 
     auth()
-  }, [])
+  })
   useEffect(() => {
     setDate({
       startDate: formatDateToYYYYMMDD(value.start),

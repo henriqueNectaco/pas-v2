@@ -7,14 +7,9 @@ import {
   DropdownTrigger,
 } from '@nextui-org/dropdown'
 import { DotsThreeOutlineVertical } from 'phosphor-react'
-import { Key, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { parseDate } from '@internationalized/date'
-import {
-  DateValue,
-  RangeValue,
-  useDatePicker,
-  useDisclosure,
-} from '@nextui-org/react'
+import { DateValue, RangeValue, useDisclosure } from '@nextui-org/react'
 import Cookies from 'js-cookie'
 import axios from 'axios'
 import { objectMarketplace } from '@/lib/types/marketplaces'
@@ -54,7 +49,7 @@ export default function DropDownMenuFilhos(props: typeProps) {
 
   const changeParent = async () => {
     try {
-      const res = await axios.put(
+      await axios.put(
         `${apiUrl}/${props.id}/change-parent`,
         // `${process.env.NEXT_PUBLIC_LOCAL}/posts`,
         { parentId: id },
@@ -68,7 +63,7 @@ export default function DropDownMenuFilhos(props: typeProps) {
   const reprocessarPedidos = async () => {
     // ${apiUrl}/estabelecimentos/${props.id}/reprocessar-pedidos?startDate=${date.startDate}&endDate=${date.endDate}
     try {
-      const res = await axios.post(
+      await axios.post(
         `https://urltesteefodace/z1/estabelecimentos/${props.id}/reprocessar-pedidos?startDate=${date.startDate}&endDate=${date.endDate}`,
         // { headers: { Authorization: `Bearer ${token}` } }
       )

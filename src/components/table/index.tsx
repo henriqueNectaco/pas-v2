@@ -22,7 +22,6 @@ type Dados = {
 
 type marketplaceProps = {
   array: Array<string>
-  contentArray: string[]
   data: Dados[]
   ColsBody: number
   currentPage: string
@@ -142,46 +141,56 @@ export default function Table(props: marketplaceProps) {
               >
                 <div className="flex flex-col items-center justify-center">
                   <p className="font-bold">{props.array[0]}</p>
-                  <p>{dados.id}</p>
+                  <p className="text-sm">{dados.id}</p>
                 </div>
                 <div className="flex flex-col items-center justify-center">
                   <p className="font-bold">{props.array[1]}</p>
                   {props.currentPage === 'crons' ? (
-                    <p>{dados.interval}</p>
+                    <p className="text-sm">{dados.interval}</p>
                   ) : (
-                    <p>{dados.nome_fantasia}</p>
+                    <p className="text-sm">{dados.nome_fantasia}</p>
                   )}
                 </div>
                 <div className="flex flex-col items-center justify-center">
                   <p className="font-bold">{props.array[2]}</p>
-                  {props.currentPage === 'filhos' ? (
-                    <p
-                      className={`${statusMarketplacesChilds(dados.status_estabelecimento_id) === 'Aprovado' ? 'text-green-500' : 'text-yellow-400'}`}
-                    >
-                      {statusMarketplacesChilds(dados[props.contentArray[2]])}
-                    </p>
-                  ) : (
-                    <p>{dados[props.contentArray[2]]}</p>
+                  {
+                    props.currentPage === 'filhos' && (
+                      <p
+                        className={`${statusMarketplacesChilds(dados.status_estabelecimento_id) === 'Aprovado' ? 'text-green-500' : 'text-yellow-400'}`}
+                      >
+                        {statusMarketplacesChilds(
+                          dados.status_estabelecimento_id,
+                        )}
+                      </p>
+                    )
+                    // <p>{dados[props.contentArray[2]]}</p>
+                  }
+                  {props.currentPage === 'crons' && (
+                    <p className="text-sm">{dados.message}</p>
+                  )}
+                  {props.currentPage === 'estabelecimentosFilhos' && (
+                    <p className="text-sm">{dados.identificacao_fatura}</p>
                   )}
                 </div>
                 <div className="flex flex-col items-center justify-center">
                   <p className="font-bold">{props.array[3]}</p>
-                  <p>{formatarData(dados[props.contentArray[3]])}</p>
+                  <p className="text-sm">{formatarData(dados.created)}</p>
                 </div>
                 {props.array.length >= 5 && (
                   <div className="flex flex-col items-center justify-center">
                     <p className="font-bold">{props.array[4]}</p>
-                    {props.currentPage === 'filhos' ? (
+                    {props.currentPage === 'filhos' &&
+                      dados.usuarios_estabelecimentos !== undefined &&
                       dados.usuarios_estabelecimentos.map(
-                        (usuarioEstabelecimento: any, idx: number) => (
-                          <p className="text-blue-500" key={idx}>
+                        (
+                          usuarioEstabelecimento: userEstabelecimento,
+                          idx: number,
+                        ) => (
+                          <p className="text-blue-500 text-sm" key={idx}>
                             {usuarioEstabelecimento.usuario.email}
                           </p>
                         ),
-                      )
-                    ) : (
-                      <p>{dados[props.contentArray[4]]}</p>
-                    )}
+                      )}
                   </div>
                 )}
                 {props.array.length > 5 && props.currentPage === 'filhos' && (

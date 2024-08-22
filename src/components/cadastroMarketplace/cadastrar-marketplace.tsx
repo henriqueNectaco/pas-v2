@@ -1,5 +1,3 @@
-
-
 // import 'filepond/dist/filepond.min.css'
 // import {
 //   Card,
@@ -20,9 +18,7 @@
 // import { zodResolver } from '@hookform/resolvers/zod'
 // import { register } from 'module'
 
-
 // export function CadastrarMarketplace(props: typePropsCadastroMarketplace) {
-
 
 //   return (
 //     <div className="flex flex-col items-center  h-full lg:max-h-screen bg-gray-200 p-4 ">
@@ -52,7 +48,6 @@
 //                     variant="underlined"
 //                     labelPlacement="inside"
 //                   />
-
 
 //                   <Input
 //                     value={props.data.zoopMarketplaceId}
@@ -85,7 +80,7 @@
 //                   />
 //                   <div>
 //                     <Input
-                      
+
 //                       //value={props.data.website}
 //                       //onChange={props.onChange}
 //                       name='website'
@@ -94,7 +89,7 @@
 //                       variant="underlined"
 //                       labelPlacement="inside"
 //                     />
-                    
+
 //                   </div>
 //                   <Input
 //                     value={props.data.zpk}
@@ -129,8 +124,6 @@
 //                   )}
 
 //                 </div>
-
-
 
 //                 <div className="p-6  flex flex-col justify-start lg:flex lg:flex-row gap-4 ">
 //                   <div className="flex items-center lg:justify-center justify-start space-x-2 ">
@@ -170,7 +163,6 @@
 
 //               </>) : null}
 //             {props.activeStep === 2 ? (<>
-
 
 //             </>
 //             ) : null}

@@ -8,6 +8,7 @@ import { Button } from '@nextui-org/button'
 import axios from 'axios'
 import { toast } from 'sonner'
 import { DateRangePicker } from '@nextui-org/date-picker'
+import { DateValue } from '@nextui-org/react'
 
 type typeData = {
   date: string | null
@@ -23,7 +24,7 @@ export default function RenovarCachePage() {
     date: null,
   })
 
-  const [valueDataRecebimento, setValueDataRecebimento] = useState(
+  const [valueDataRecebimento, setValueDataRecebimento] = useState<DateValue>(
     parseDate(today),
   )
 

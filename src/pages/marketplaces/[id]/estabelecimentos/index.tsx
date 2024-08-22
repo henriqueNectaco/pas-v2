@@ -10,6 +10,7 @@ import { Spinner } from '@nextui-org/react'
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import nextCookies from 'next-cookies'
 import Paginator from '@/components/marketplaces/pagination'
+import { objectMarketplace } from '@/lib/types/marketplaces'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { token } = nextCookies(context)
@@ -48,9 +49,9 @@ export default function Estabelecimentos({
   totalPages,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [isFirstRenderization, setIsFirstRenderization] = useState(true)
-  const [marketplacesPai, setMarketplacesPai] = useState<Array<object> | null>(
-    null,
-  )
+  const [marketplacesPai, setMarketplacesPai] = useState<
+    Array<objectMarketplace> | undefined
+  >(undefined)
   const [page, setPage] = useState(1)
   const [totalPagess, setTotalPagess] = useState(totalPages)
   const [token] = useState(Cookies.get('token'))
@@ -77,39 +78,38 @@ export default function Estabelecimentos({
       console.error(error)
     }
   }
-  const auth = async () => {
-    try {
-      const res = await axios.post(
-        `https://api.zsystems.com.br/z1/autenticar`,
-        { token },
-      )
-      if (res.data.success === false) {
-        toast.error('Sua sessão expirou, faça login novamente')
-        router.push('/')
-      } else {
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  // const auth = async () => {
+  //   try {
+  //     const res = await axios.post(
+  //       `https://api.zsystems.com.br/z1/autenticar`,
+  //       { token },
+  //     )
+  //     if (res.data.success === false) {
+  //       toast.error('Sua sessão expirou, faça login novamente')
+  //       router.push('/')
+  //     }
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  // }
 
-  const fetchEstabeleciments = async () => {
-    try {
-      setEstabeleciments(null)
-      const res = await axios.get(
-        `https://api.zsystems.com.br/z1/marketplace/${id}/estabelecimentos?limit=30&page=1`,
-        { headers: { Authorization: `Bearer ${token}` } },
-      )
-      if (res.data.success === true) {
-        setEstabeleciments(res.data.estabelecimentos)
-        setTotalPagess(res.data.pagination.pages)
-      } else {
-        toast.error(res.data.message)
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  // const fetchEstabeleciments = async () => {
+  //   try {
+  //     setEstabeleciments(null)
+  //     const res = await axios.get(
+  //       `https://api.zsystems.com.br/z1/marketplace/${id}/estabelecimentos?limit=30&page=1`,
+  //       { headers: { Authorization: `Bearer ${token}` } },
+  //     )
+  //     if (res.data.success === true) {
+  //       setEstabeleciments(res.data.estabelecimentos)
+  //       setTotalPagess(res.data.pagination.pages)
+  //     } else {
+  //       toast.error(res.data.message)
+  //     }
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  // }
   const queryParams = {
     limit: 30,
     page,
@@ -128,7 +128,6 @@ export default function Estabelecimentos({
           headers: { Authorization: `Bearer ${token}` },
         },
       )
-      const totalEstabeleciments = res.data.estabelecimentos
       if (res.data.success === true) {
         setEstabeleciments(res.data.estabelecimentos)
         setTotalPagess(res.data.pagination.pages)
@@ -186,19 +185,12 @@ export default function Estabelecimentos({
           <div className="gap-4 flex flex-col items-center justify-center  ">
             <Table
               array={['Id', 'Nome', 'Nome na Fatura', 'Data de criação', '']}
-              contentArray={[
-                'id',
-                'nome_fantasia',
-                'identificacao_fatura',
-                'created',
-              ]}
               ColsBody={5}
               currentPage="estabelecimentosFilhos"
               data={estabeleciments}
               MarketplacesArray={marketplacesPai}
             />
             <Paginator
-              setIsFirstRenderization={setIsFirstRenderization}
               total={totalPagess}
               onCickPrevious={() => {
                 setIsFirstRenderization(false)

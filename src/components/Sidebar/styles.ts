@@ -1,18 +1,17 @@
-import { Dispatch, SetStateAction } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 type ContainerProps = {
-  sidebar: boolean;
-};
-//Dispatch<SetStateAction<boolean>>
-export const Container = styled.div < ContainerProps > `
+  sidebar: boolean
+}
+// Dispatch<SetStateAction<boolean>>
+export const Container = styled.div<ContainerProps>`
   background-color: #2563eb;
   position: fixed;
   height: 100%;
   top: 0px;
   left: 0px;
   width: 300px;
-  left: ${props => (props.sidebar ? '0' : '-100%')};
+  left: ${(props) => (props.sidebar ? '0' : '-100%')};
   animation: showSidebar 0.4s;
   z-index: 9999; /* Adicionei z-index ao Container */
 
@@ -37,8 +36,8 @@ export const Container = styled.div < ContainerProps > `
       width: 300px;
     }
   }
-`;
+`
 
 export const Content = styled.div`
   margin-top: 100px;
-`;
+`

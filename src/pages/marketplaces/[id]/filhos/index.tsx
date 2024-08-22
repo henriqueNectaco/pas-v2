@@ -1,12 +1,13 @@
-import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
-import { toast } from 'sonner'
+// import { useRouter } from 'next/router'
+// import React, { useEffect, useState } from 'react'
+// import { toast } from 'sonner'
 import axios from 'axios'
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
 import { Spinner } from '@nextui-org/react'
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import nextCookies from 'next-cookies'
 import Table from '@/components/table'
+import { useState } from 'react'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { token } = nextCookies(context)
@@ -38,10 +39,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 export default function MarketplacesFilhos({
   data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const router = useRouter()
+  // const router = useRouter()
   // const token = Cookies.get('token')
   // const { id } = router.query
-  const [marketplacesChilds, setMarketplacesChilds] = useState(data)
+  const [marketplacesChilds] = useState(data)
   //   const fetchMarketplacesChilds = async () => {
   //     try {
   //       const res = await axios.get(
@@ -67,12 +68,6 @@ export default function MarketplacesFilhos({
               array={['ID', 'Nome', 'Status', 'Data de criação', 'E-mail', '']}
               ColsBody={6}
               data={marketplacesChilds}
-              contentArray={[
-                'id',
-                'nome_fantasia',
-                'status_estabelecimento_id',
-                'created',
-              ]}
             />
           </div>
         )}

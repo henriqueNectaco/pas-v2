@@ -5,7 +5,6 @@ import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import nextCookies from 'next-cookies'
 import Table from '@/components/table'
 import { apiUrl } from '@/lib'
-import { CronProps } from '@/lib/types/crons'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { token } = nextCookies(context)
@@ -31,7 +30,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 export default function Crons({
   data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const [crons, setCrons] = useState(data)
+  const [crons] = useState(data)
 
   return (
     <div className="h-full max-w-screen w-full text-black-500">
@@ -46,7 +45,6 @@ export default function Crons({
                 array={['crons', 'Scheduled', 'Mensagem', 'Data']}
                 data={crons}
                 ColsBody={4}
-                contentArray={['slug', 'interval', 'message', 'start_date']}
               />
             </div>
           )}
