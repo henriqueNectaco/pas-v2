@@ -6,7 +6,7 @@ type EstabelecimentoType = {
     nome: string
   }
 }
-type typePagamentos = {
+export type typePagamentos = {
   valor_recebido: number
   data_recebimento: Date
   valor: number
@@ -46,9 +46,16 @@ export type FormVendasTypes = {
   handleCleanInput: () => void
 }
 
-export type splitsProps = { splits: any | Array<string> }
-
 export type splits = {
+  id: string
+  valor: number
+  tipo_split: number
+  estabelecimento: {
+    nome_fantasia: string
+  }
+}
+
+export type splitsTypes = {
   id: string
   valor: number
   tipo_split: number

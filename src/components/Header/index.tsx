@@ -24,7 +24,7 @@ import Cookies from 'js-cookie'
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
-  const [modalPlacement, setModalPlacement] = React.useState('top')
+
   const menuItems = [
     'dashboard',
     'Dashboard',
@@ -149,12 +149,12 @@ export default function Header() {
         <Modal
           isOpen={isOpen}
           //          placement={modalPlacement}
-          placement='top'
+          placement="top"
           onOpenChange={onOpenChange}
-          radius='none'
+          radius="none"
         >
           <ModalContent className=" border-2 w-1/4">
-            {(onClose) => (
+            {() => (
               <>
                 <ModalHeader className="  flex flex-col  p-4 items-start justify-center gap-1">
                   <p className="text-yellow-400">LogOut</p>
@@ -163,9 +163,8 @@ export default function Header() {
                   <p className="text-xl">Deseja Efetuar o LogOut?</p>
                 </ModalBody>
                 <ModalFooter className="flex p-4 items-center justify-center">
-
                   <Button
-                    radius='sm'
+                    radius="sm"
                     fullWidth={true}
                     size="md"
                     color="primary"

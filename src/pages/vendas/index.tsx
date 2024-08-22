@@ -1,4 +1,4 @@
-import { Button } from '@nextui-org/react'
+import { Button, Spinner } from '@nextui-org/react'
 import axios from 'axios'
 import { formatarData } from '@/utils/dates'
 import { useEffect, useState } from 'react'
@@ -11,9 +11,11 @@ import Router from 'next/router'
 import { typeResponseData, ZoopTransaction } from '@/lib/types/vendas'
 import { apiUrl } from '../api/useApi'
 import PagamentosCards from './pagamentosCards'
-import { arrayOfObjectsSum } from '@/lib'
+import { arrayOfObjectsSumJs } from '@/lib/sum'
 
 export default function Vendas() {
+  const [pagamentos, setPagamentos] = useState()
+  const [splits, setSplits] = useState()
   // require('dotenv').config()
   // const apiUrl = process.env.NEXT_PUBLIC_API_URL
   const [isLoadingSearchSale, setIsLoadingSearchSale] = useState<boolean>(false)
@@ -24,7 +26,7 @@ export default function Vendas() {
     null,
   )
   const [responseZoopTransaction, setResponseZoopTransaction] =
-    useState<ZoopTransaction>(null)
+    useState<ZoopTransaction>()
   const token = Cookies.get('token')
   const handleCleanInput = () => {
     setVendaId('')
@@ -60,6 +62,8 @@ export default function Vendas() {
         if (response.data.success === true) {
           setResponseData(response.data.pedido)
           setResponseZoopTransaction(response.data.zoopTransaction)
+          setPagamentos(response.data.pedido.pagamentos)
+          setSplits(response.data.pedido.pedidos_splits)
           setIsLoadingSearchSale(false)
         } else {
           setIsLoadingSearchSale(false)
@@ -87,13 +91,13 @@ export default function Vendas() {
     auth()
   })
 
-  const splits = responseData?.pedidos_splits || []
-  const somaSplits = arrayOfObjectsSum(splits, 'valor')
+  const splitsCount = responseData?.pedidos_splits || []
+  const somaSplits = arrayOfObjectsSumJs(splitsCount, 'valor')
 
   return (
     <div className="flex flex-col items-center  h-screen max-w-screen w-full ">
       <div
-        className={`w-full max-w-screen flex flex-col space-y-2 ${responseData?.pagamentos.length > 1 && 'bg-gray-800'} ${responseData !== null && responseData.pagamentos.length === 1 ? 'bg-gray-300' : ''}`}
+        className={`w-full max-w-screen flex flex-col space-y-2 ${responseData !== null && responseData.pagamentos.length > 1 && 'bg-gray-800'} ${responseData !== null && responseData.pagamentos.length === 1 ? 'bg-gray-300' : ''}`}
       >
         <div className="w-full lg:p-3 p-2 lg:pr-0 flex lg:flex-row flex-col items-center lg:gap-4  justify-center h-full">
           <FormVendas
@@ -127,7 +131,7 @@ export default function Vendas() {
                   </div>
                   <div className="   flex flex-row items-start justify-between">
                     <p>Markup</p>
-                    <p>{responseZoopTransaction.payment_method.card_brand}</p>
+                    <p>{responseZoopTransaction?.payment_method.card_brand}</p>
                   </div>
                   <div className="   flex flex-row items-start justify-between">
                     <p>Tabela de Markup</p>
@@ -167,15 +171,19 @@ export default function Vendas() {
                   </div>
                   <div className="   flex flex-col lg:flex-row items-start justify-between">
                     <p>Data</p>
-                    <p>{formatarData(responseZoopTransaction.created_at)}</p>
+                    {responseZoopTransaction !== undefined ? (
+                      <p>{formatarData(responseZoopTransaction.created_at)}</p>
+                    ) : (
+                      <Spinner />
+                    )}
                   </div>
                   <div className="   flex  flex-row items-start justify-between">
                     <p>Forma de pagamento</p>
-                    <p>{responseZoopTransaction.payment_type}</p>
+                    <p>{responseZoopTransaction?.payment_type}</p>
                   </div>
                   <div className="   flex flex-row items-start justify-between">
                     <p>Bandeira</p>
-                    <p>{responseZoopTransaction.payment_method.card_brand}</p>
+                    <p>{responseZoopTransaction?.payment_method.card_brand}</p>
                   </div>
                   <div className="   flex flex-row items-start justify-between">
                     <p>Parcelas</p>
@@ -293,7 +301,7 @@ export default function Vendas() {
                     'Data Recebimento',
                     'DP',
                   ]}
-                  dados={responseData.pagamentos}
+                  dados={pagamentos}
                   contentArray={[
                     'id',
                     'status_pagamento_id',
@@ -318,8 +326,14 @@ export default function Vendas() {
                     'Categoria',
                     'Valor',
                   ]}
-                  contentArray={['id', 'nome_fantasia', 'id', 'id', 'valor']}
-                  dados={responseData.pedidos_splits}
+                  contentArray={[
+                    'id',
+                    'nome_fantasia',
+                    'tipo_split',
+                    'categoria',
+                    'valor',
+                  ]}
+                  dados={splits}
                 />
               ) : null}
             </div>

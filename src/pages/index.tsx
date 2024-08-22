@@ -75,7 +75,7 @@ export default function Home() {
 
   useEffect(() => {
     auth()
-  }, [])
+  })
 
   return (
     <div className="bg-gradient-to-r from-cyan-500 to-blue-500 h-screen w-screen flex justify-center items-center">

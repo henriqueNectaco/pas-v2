@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Input } from '@nextui-org/react'
 import axios from 'axios'
 import { useRouter } from 'next/router'
@@ -19,7 +19,6 @@ export default function CadastrarFilho() {
     register,
     formState: { errors },
     trigger,
-    watch,
   } = useForm<FormschemaData>({
     resolver: zodResolver(FormSchemaCadastroMarketplaceFilho),
     mode: 'onChange',

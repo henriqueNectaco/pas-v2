@@ -19,7 +19,7 @@ import { FormschemaCadastroMarketplace } from '@/lib/types/marketplaces'
 import 'filepond/dist/filepond.min.css'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 import { localUrl } from '@/lib'
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
 import FilePondComponent from '@/components/cadastroMarketplace/filepond'
 import { FilePondFile } from 'filepond'
 

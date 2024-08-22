@@ -10,7 +10,7 @@ import { toast } from 'sonner'
 import { DateRangePicker } from '@nextui-org/date-picker'
 import { DateValue } from '@nextui-org/react'
 
-type typeData = {
+export type typeDataRenovarCache = {
   date: string | null
 }
 
@@ -20,7 +20,7 @@ export default function RenovarCachePage() {
     end: parseDate(today), // Último dia do mês
   })
 
-  const [data, setData] = useState<typeData>({
+  const [data, setData] = useState<typeDataRenovarCache>({
     date: null,
   })
 
@@ -38,7 +38,7 @@ export default function RenovarCachePage() {
 
   const handleSubmit = async () => {
     try {
-      const res = await axios.post('http://localhost:4000/renovarcache', data)
+      await axios.post('http://localhost:4000/renovarcache', data)
       toast.success('Dados enviados com sucesso!')
     } catch (error) {
       toast.error('Erro ao enviar os dados.')

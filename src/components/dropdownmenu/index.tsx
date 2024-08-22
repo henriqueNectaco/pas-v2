@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import React, { useState } from 'react'
 import {
   Dropdown,
   DropdownTrigger,
@@ -6,12 +6,9 @@ import {
   DropdownItem,
   Button,
 } from '@nextui-org/react'
-type typeProps = {
-  title: string
-  items: Array<string>
-  setData: Dispatch<SetStateAction<object>>
-}
-export default function DropDownMenuCache(props: typeProps) {
+import { typePropsDropDownMenuCache } from '@/lib/types/components'
+
+export default function DropDownMenuCache(props: typePropsDropDownMenuCache) {
   const [selected, setSelected] = useState('')
   return (
     <Dropdown shouldBlockScroll={false}>

@@ -7,9 +7,16 @@ export default function FilterEstabeleciments(
   return (
     <div className="flex flex-col lg:grid lg:grid-cols-5 w-full rounded-xl mb-4 bg-white">
       <div className=" col-span-3 flex flex-col lg:flex-row lg:gap-6 gap-2  p-3 lg:items-end  items-center justify-center">
-        <Input onChange={props.onChange} name='id_estabelecimento' variant="underlined" label="ID" type='number' value={props.data.id_estabelecimento} />
         <Input
-          name='nome_fantasia'
+          onChange={props.onChange}
+          name="id_estabelecimento"
+          variant="underlined"
+          label="ID"
+          type="number"
+          value={props.data.id_estabelecimento}
+        />
+        <Input
+          name="nome_fantasia"
           variant="underlined"
           onChange={props.onChange}
           label="Nome Fantasia"
@@ -19,7 +26,7 @@ export default function FilterEstabeleciments(
           variant="underlined"
           onChange={props.onChange}
           value={props.data.identificacao_fatura}
-          name='identificacao_fatura'
+          name="identificacao_fatura"
           label="Nome na Fatura"
         />
       </div>

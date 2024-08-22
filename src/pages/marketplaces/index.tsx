@@ -20,7 +20,12 @@ import axios from 'axios'
 import { CaretDown } from 'phosphor-react'
 import { toast } from 'sonner'
 import TableMarketPlaces, { marketplaceItemsTypes } from './table'
-import { formatDateToYYYYMMDD, localUrl, today } from '@/lib'
+import {
+  formatDateRangeTimer,
+  formatDateToYYYYMMDD,
+  localUrl,
+  today,
+} from '@/lib'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { token } = nextCookies(context)
@@ -60,7 +65,6 @@ export default function Marketplace({
     useDropdownChangeParents: false,
     useDatePicker: false,
   })
-
   const [date, setDate] = useState({
     startDate: formatDateToYYYYMMDD(value.start),
     endDate: formatDateToYYYYMMDD(value.end),
@@ -158,12 +162,13 @@ export default function Marketplace({
     }
 
     auth()
-  })
+  }, [])
   useEffect(() => {
     setDate({
       startDate: formatDateToYYYYMMDD(value.start),
       endDate: formatDateToYYYYMMDD(value.end),
     })
+    console.log(formatDateRangeTimer(value.start))
   }, [value])
   return (
     <div
@@ -273,6 +278,7 @@ export default function Marketplace({
         </>
       </div>
       <ModalMine
+        onChangeDateRangePickerWithTimer={setValue}
         modalProps={modalProps}
         value={value}
         setValue={setValue}

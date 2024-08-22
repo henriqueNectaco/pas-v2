@@ -45,8 +45,18 @@ export function formatDateToYYYYMMDD(dateObj: DateObject): string {
   return `${year}-${month}-${day}`
 }
 
-export const statusPayment = (statusPaymentId: number) => {
+export const statusPayment = (statusPaymentId: number | string) => {
   switch (statusPaymentId) {
+    case '1':
+      return 'Pendente'
+    case '2':
+      return 'Pago'
+    case '3':
+      return 'Cancelado'
+    case '4':
+      return 'Estornado'
+    case '5':
+      return 'Pré Autorizado'
     case 1:
       return 'Pendente'
     case 2:
@@ -79,22 +89,6 @@ export const nullVerifiyer = (dataString: string | undefined) => {
     default:
       return dataString
   }
-}
-
-interface KeyedObject {
-  [key: string]: any
-}
-
-export function arrayOfObjectsSum(arr: KeyedObject[], key: string): number {
-  if (!Array.isArray(arr)) {
-    throw new Error('O parâmetro "arr" deve ser um array.')
-  }
-
-  return arr.reduce((sum, obj) => {
-    // Convertendo o valor para número e garantindo que seja zero se não for um número válido
-    const value = parseFloat(String(obj[key])) || 0
-    return sum + value
-  }, 0)
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

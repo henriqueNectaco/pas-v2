@@ -6,12 +6,12 @@ import {
   Breadcrumbs,
   BreadcrumbItem,
 } from '@nextui-org/react'
-import axios from 'axios'
+// import axios from 'axios'
 import { useRouter } from 'next/router'
 import { FilePondFile } from 'filepond'
 import { toast } from 'sonner'
 import FilePondComponent from '@/components/cadastroMarketplace/filepond'
-import { token } from '@/lib'
+
 type typeData = {
   nome: string | string[] | undefined
   dominio: string
@@ -24,7 +24,7 @@ export default function App() {
   const [key, setKey] = useState<File[]>([])
   const [bundleCrtFile, setBundleCrtFile] = useState<File[]>([])
   const router = useRouter()
-  const { id, nomefantasia } = router.query
+  const { nomefantasia } = router.query
   const [data, setData] = useState<typeData>({
     nome: nomefantasia,
     dominio: '',
@@ -55,31 +55,28 @@ export default function App() {
   //     })
   // }
 
-  const handleSubmit = async () => {
-    try {
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_LOCAL}/adicionarssl`,
-        data,
-      )
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  // const handleSubmit = async () => {
+  //   try {
+  //     await axios.post(`${process.env.NEXT_PUBLIC_LOCAL}/adicionarssl`, data)
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  // }
 
-  const handleNextStep = () => {
-    switch (activeStep) {
-      case 0:
-        if (renovacao === true) {
-          setActiveStep(activeStep + 1)
-        } else {
-          setActiveStep(activeStep + 1)
-        }
-        break
-      case 1:
-        handleSubmit()
-        break
-    }
-  }
+  // const handleNextStep = () => {
+  //   switch (activeStep) {
+  //     case 0:
+  //       if (renovacao === true) {
+  //         setActiveStep(activeStep + 1)
+  //       } else {
+  //         setActiveStep(activeStep + 1)
+  //       }
+  //       break
+  //     case 1:
+  //       handleSubmit()
+  //       break
+  //   }
+  // }
   const handleUpdatePki = (fileItems: FilePondFile[]) => {
     const validFiles = fileItems.filter((fileItem) => {
       const file = fileItem.file as File // Type casting here
@@ -183,7 +180,7 @@ export default function App() {
               <Input
                 variant="underlined"
                 name="nome"
-                value={nomefantasia}
+                value={String(nomefantasia)}
                 disabled={true}
                 label="Nome"
               />

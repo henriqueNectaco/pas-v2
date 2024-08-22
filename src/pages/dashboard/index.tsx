@@ -15,7 +15,7 @@ import DashComponent from '@/components/dasboard/dashComponent'
 import { parseDate } from '@internationalized/date'
 import { typeDataDashboard, typeServices } from '@/lib/types/dashboard'
 import { RangeValue, DateValue } from '@nextui-org/react'
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import { GetServerSideProps } from 'next'
 import nextCookies from 'next-cookies'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -32,14 +32,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   }
 
-  return { props: { dados: authRes.data } }
+  return { props: {} }
 }
 
-export default function DashBoard({
-  dados,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function DashBoard() {
   const newDate = new Date()
-
+  const token = Cookies.get('token')
   const [value, setValue] = useState<RangeValue<DateValue>>({
     start: parseDate(newDate.toISOString().split('T')[0]), // Data atual
     end: parseDate(newDate.toISOString().split('T')[0]), // Último dia do mês
@@ -83,7 +81,6 @@ export default function DashBoard({
     idEstabelecimentoReprocessarSaldo,
     setIdEstabelecimentoReprocessarSaldo,
   ] = useState<string | undefined>(undefined)
-  const token = Cookies.get('token')
 
   const reprocessarSaldo = async () => {
     setIsLoadingReprocessarSaldo(true)
@@ -295,19 +292,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
         `https://api.zsystems.com.br/z1/autenticar`,
         { token },
       )
-      if (res.data.success === true) {
-        fecthTotalMarketplaceChildResgistredPreviousMonth()
-        fetchDataServiceStatus()
-        fechAmountData()
-        FetchTotalProcessedYesterday()
-        fetchsTotalProcessedToday()
-        fetchTotalProcessedLastThirtyDays()
-        fetchTotalProcessedThirtyDaysLater()
-        fetchTotalMarketplaceChildRegistredLastThirtyDays()
-        fetchTotalEstabelecimentsChildRegistredLastThirtyDays()
-        fetchTotalNotProcessedToday()
-        fetchTotanNotProcessedYesterday()
-      } else {
+      if (res.data.success === false) {
         toast.error('Sua sessão expirou faça login novamente')
         Router.push('/')
       }
@@ -333,7 +318,18 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
   ])
   useEffect(() => {
     auth()
-  })
+    fecthTotalMarketplaceChildResgistredPreviousMonth()
+    fetchDataServiceStatus()
+    fechAmountData()
+    FetchTotalProcessedYesterday()
+    fetchsTotalProcessedToday()
+    fetchTotalProcessedLastThirtyDays()
+    fetchTotalProcessedThirtyDaysLater()
+    fetchTotalMarketplaceChildRegistredLastThirtyDays()
+    fetchTotalEstabelecimentsChildRegistredLastThirtyDays()
+    fetchTotalNotProcessedToday()
+    fetchTotanNotProcessedYesterday()
+  }, [])
 
   return (
     <div className=" h-screen max-w-screen flex flex-col items-center    ">

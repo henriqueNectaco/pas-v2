@@ -1,11 +1,7 @@
-import { SetStateAction, useState } from 'react'
 import dynamic from 'next/dynamic'
 import 'filepond/dist/filepond.min.css'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
-import axios from 'axios'
-import { Button } from '@nextui-org/button'
-import { FilePondFile, ActualFileObject, FilePondInitialFile } from 'filepond'
-import { toast } from 'sonner'
+import { typeFilePond } from '@/lib/types/components'
 
 const FilePond = dynamic(
   () =>
@@ -27,15 +23,6 @@ const FilePond = dynamic(
     }),
   { ssr: false },
 )
-
-type typeFilePond = {
-  handleUpdateFiles: (fileItems: FilePondFile[]) => void
-  // setFiles: React.Dispatch<SetStateAction<ActualFileObject[]>>
-  files: (string | Blob | ActualFileObject | FilePondInitialFile)[] | undefined
-  titulo: string
-  name: string
-  required?: boolean
-}
 
 export default function FilePondComponent(props: typeFilePond) {
   // const handleUpdateFiles = (fileItems: FilePondFile[]) => { // Corrigido

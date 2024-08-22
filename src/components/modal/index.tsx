@@ -16,7 +16,7 @@ import { CaretDown } from 'phosphor-react'
 import DateRangePickerComponent from '../rangedatepicker'
 import { ModalTypes, objectMarketplace } from '@/lib/types/marketplaces'
 import { useState } from 'react'
-import DateRangeWithTimer from '../daterangepickertimer'
+import DateRangeWithTimer from '../dateRangePickerWithTimer'
 
 export default function ModalMine(props: ModalTypes) {
   const [selected, setSelected] = useState<string>()
@@ -47,7 +47,9 @@ export default function ModalMine(props: ModalTypes) {
                   />
                 )}
                 {props.modalProps?.useDateRangePickerWithTimer === true && (
-                  <DateRangeWithTimer />
+                  <DateRangeWithTimer
+                    setValue={props.onChangeDateRangePickerWithTimer}
+                  />
                 )}
                 {props.modalProps?.useDropdownChangeParents === true && (
                   <div className="w-full max-w-full">

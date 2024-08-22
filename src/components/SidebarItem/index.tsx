@@ -5,12 +5,17 @@ type SidebarItemProps = {
   onClick: () => void
   Text: string
   href: string
-  Icon: any
+  Icon: React.ElementType
 }
-const SidebarItem: React.FC<SidebarItemProps> = ({ onClick, Icon, Text, href }) => {
+const SidebarItem: React.FC<SidebarItemProps> = ({
+  onClick,
+  Icon,
+  Text,
+  href,
+}) => {
   return (
-    <Link href={href || "#"} passHref onClick={onClick}>
-      <Container >
+    <Link href={href || '#'} passHref onClick={onClick}>
+      <Container>
         <Icon />
         {Text}
       </Container>

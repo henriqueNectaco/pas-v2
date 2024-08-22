@@ -1,12 +1,5 @@
-import { Dispatch, SetStateAction } from 'react'
 import { Pagination, Button } from '@nextui-org/react'
-type paginatorProps = {
-  onCickPrevious: () => void
-  onClickNext: () => void
-  page: number
-  total: number
-  onChangeCurrentPage: Dispatch<SetStateAction<number>>
-}
+import { paginatorProps } from '@/lib/types/components'
 export default function Paginator(props: paginatorProps) {
   //  const [currentPage, setCurrentPage] = useState(1)
 
