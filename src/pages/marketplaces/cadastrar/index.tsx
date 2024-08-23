@@ -38,7 +38,7 @@ export default function CadastrarMarketplaces() {
     mode: 'onChange',
   })
   const cobrancaPorTransacao = watch('cobrancaPorTransacao', false)
-  // const [marketplaceId, setMarketplaceId] = useState(null)
+  const [marketplaceId, setMarketplaceId] = useState(null)
   const [activeStep, setActiveStep] = useState<number>(0)
   const [loader, setLoader] = useState<File[]>([])
   const [logo, setLogo] = useState<File[]>([])
@@ -95,7 +95,7 @@ export default function CadastrarMarketplaces() {
   //     )
   //     if (res.data.succes === true) {
   //       toast.success('Rotina iniciada com sucesso!')
-  //       handleNextStep()
+  //       setActiveStep(activeStep+1)
   //     }
   //   } catch (error) {
   //     console.error(error)
@@ -108,9 +108,10 @@ export default function CadastrarMarketplaces() {
     formData.append('cor', String(dados.color))
     formData.append('nome', dados.nome)
     formData.append('dominio', dados.dominio)
-    formData.append('sellerId', dados.sellerId)
+    formData.append('zoopMarketplaceId', dados.zoopMarketplaceId)
+    formData.append('mainSellerId', dados.sellerId)
     formData.append('website', dados.website) // Handle optional fields
-    formData.append('zpk', dados.zpk)
+    formData.append('zoopPublishableKey', dados.zpk)
     formData.append('cobrancaValor', String(dados.cobrancaValor))
     formData.append('cobrancaEmail', String(dados.cobrancaEmail))
     formData.append('cobrancaPorTransacao', String(dados.cobrancaPorTransacao))
@@ -144,8 +145,10 @@ export default function CadastrarMarketplaces() {
       )
       if (res.data.succes === true) {
         toast.success('Marketplace cadastrado com sucesso!')
-        // setMarketplaceId(res.data.marketplace.id);
-        handleNextStep()
+        setMarketplaceId(res.data.marketplace.id)
+        setActiveStep(activeStep + 1)
+      } else {
+        toast.error('Alog inesperado ocorreu ')
       }
     } catch (error) {
       console.error(error)
@@ -170,14 +173,12 @@ export default function CadastrarMarketplaces() {
     }
     if (activeStep === 1 && logo.length > 0) {
       handleSubmit(handleCadastrarMarketplace)()
-      handleNextStep()
     } else if (activeStep === 1 && logo.length === 0) {
       toast.warning('Arquivo logo obrigatório')
     } else if (activeStep === 2) {
-      alert('Importando dados zoop')
-      handleNextStep()
+      // importarDadosZoop()
     } else if (activeStep === 3) {
-      alert('Reiniciando nginx')
+      // restartNginx()
     }
   }
 
@@ -393,13 +394,19 @@ export default function CadastrarMarketplaces() {
                 </div>
               )}
               {activeStep === 2 && (
-                <div className=" p-4">
+                <div className=" p-16 flex items-center w-full justify-center">
                   <h2 className="font-semibold">
                     Clique no botão para importar dados Zoop
                   </h2>
                 </div>
               )}
-              {activeStep === 3 && <p>step3</p>}
+              {activeStep === 3 && (
+                <div className=" p-16 flex items-center w-full justify-center">
+                  <h2 className="font-semibold">
+                    Clique no botão para reiniciar Nginx
+                  </h2>
+                </div>
+              )}
             </CardContent>
             <CardFooter className=" flex items-center lg:justify-end gap-2">
               {activeStep === 1 && (

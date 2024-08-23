@@ -24,10 +24,10 @@ import { toast } from 'sonner'
 import TableMarketPlaces, { marketplaceItemsTypes } from './table'
 import {
   formatDateToYYYYMMDD,
-  localUrl,
   today,
   formatDateRangeTimer,
   convertToDateObjectTimer,
+  apiUrl,
 } from '@/lib'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -88,9 +88,8 @@ export default function Marketplace({
   )
   const handleReprocessAllSales = async () => {
     try {
-      // https://api.zsystems.com.br/marketplaces/reprocessar-pedidos
       const res = await axios.post(
-        `${localUrl}/reprocessar-pedidos`,
+        `${apiUrl}/reprocessar-pedidos`,
         { startDate: date.startDate, endDate: date.endDate },
         // { headers: { Authorization: `Bearer ${token}` } },
       )
@@ -108,7 +107,7 @@ export default function Marketplace({
     try {
       // https://api.zsystems.com.br/marketplaces/importar-pedidos
       const res = await axios.post(
-        `${localUrl}/importar-pedidos`,
+        `${apiUrl}/marketplaces/importar-pedidos`,
         {
           startDate: valueImportarPedidos.startDate,
           endDate: valueImportarPedidos.endDate,
@@ -145,7 +144,7 @@ export default function Marketplace({
         setResData(null)
       }
       const res = await axios.get(
-        `https://api.zsystems.com.br/z1/marketplaces?status=${statusMarketplace}`,
+        `${apiUrl}/marketplaces?status=${statusMarketplace}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
 
@@ -158,10 +157,7 @@ export default function Marketplace({
   useEffect(() => {
     const auth = async () => {
       try {
-        const res = await axios.post(
-          `https://api.zsystems.com.br/z1/autenticar`,
-          { token },
-        )
+        const res = await axios.post(`${apiUrl}/autenticar`, { token })
         if (res.data.success === false) {
           toast.error('Sua sessão expirou faça login novamente')
           Router.push('/')
@@ -187,7 +183,6 @@ export default function Marketplace({
       endDate: formatDateRangeTimer(dateObjEnd),
     })
 
-    console.log(date)
     // const talvez = format(stringifff, 'yyyy-mm-ddd HH:mm')
   }, [value])
   return (

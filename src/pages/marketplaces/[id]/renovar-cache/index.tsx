@@ -58,9 +58,6 @@ export default function RenovarCachePage() {
       }))
     }
   }, [valueDataRecebimento, valueDateRange, setValueDateRange])
-  useEffect(() => {
-    console.log(data)
-  }, [data])
 
   return (
     <div className="max-w-screen w-full max-h-screen h-screen lg:overflow-y-hidden bg-gray-200">
