@@ -107,35 +107,13 @@ export default function App() {
     })
     setCrt(validFiles.map((fileItem) => fileItem.file as File)) // Type casting here
   }
+
   const handleUpdateBundleCrtFile = (fileItems: FilePondFile[]) => {
-    const validFiles = fileItems.filter((fileItem) => {
-      const file = fileItem.file as File // Type casting here
-      const fileName = file.name.toLowerCase() // Get file name and convert to lower case
-
-      // Check if the file has a .pki extension
-      if (fileName.endsWith('.pki')) {
-        return true
-      } else {
-        toast.warning('Apenas arquivos com a extensão .pki são permitidos!')
-        return false
-      }
-    })
-    setBundleCrtFile(validFiles.map((fileItem) => fileItem.file as File)) // Type casting here
+    setBundleCrtFile(fileItems.map((fileItem) => fileItem.file as File))
   }
-  const handleUpdateKeyFile = (fileItems: FilePondFile[]) => {
-    const validFiles = fileItems.filter((fileItem) => {
-      const file = fileItem.file as File // Type casting here
-      const fileName = file.name.toLowerCase() // Get file name and convert to lower case
 
-      // Check if the file has a .pki extension
-      if (fileName.endsWith('.pki')) {
-        return true
-      } else {
-        toast.warning('Apenas arquivos com a extensão .pki são permitidos!')
-        return false
-      }
-    })
-    setKey(validFiles.map((fileItem) => fileItem.file as File)) // Type casting here
+  const handleUpdateKeyFile = (fileItems: FilePondFile[]) => {
+    setKey(fileItems.map((fileItem) => fileItem.file as File))
   }
   useEffect(() => {
     console.log(data)

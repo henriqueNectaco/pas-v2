@@ -78,8 +78,8 @@ export default function Home() {
   })
 
   return (
-    <div className="bg-gradient-to-r from-cyan-500 to-blue-500 h-screen w-screen flex justify-center items-center">
-      <div className=" shadow-2xl bg-white h-full sm:flex sm:flex-col sm:justify-center sm:items-center lg:w-4/6 lg:h-4/6 md:flex md:flex-col md:items-center md:justify-center md:h-4/6 sm:p-0 lg:grid lg:grid-cols-2  lg:rounded-md">
+    <div className="bg-gradient-to-r from-cyan-500 to-blue-500 h-screen w-screen flex justify-center items-center p-4">
+      <div className=" h-full md:h-4/6 lg:w-4/6 lg:h-4/6 shadow-2xl bg-white  sm:flex sm:flex-col sm:justify-center sm:items-center  md:flex md:flex-col md:items-center md:justify-center  sm:p-0 lg:grid lg:grid-cols-2  lg:rounded-md">
         <div className=" lg:rounded-2xl lg:col-start-1 lg:col-end-2 flex justify-center items-center bg-white lg:h-full p-4  ">
           <Image
             quality={100}
@@ -89,7 +89,7 @@ export default function Home() {
             height={300}
           />
         </div>
-        <div className="border-l-2  border-gray-300 rounded-r-2xl lg:col-start-2 lg:col-end-3 bg-white max-w-screen-xl mx-auto w-full h-full lg:flex sm:flex sm:flex-col sm:items-center sm:justify-center lg:flex-col lg:items-center lg:justify-center lg:p-12 p-4">
+        <div className="border-l-2  border-gray-300 rounded-r-2xl lg:col-start-2 lg:col-end-3 bg-white max-w-screen-xl mx-auto w-full h-full lg:flex sm:flex sm:flex-col sm:items-center sm:justify-center lg:flex-col lg:items-center lg:justify-center lg:p-8 lg:pt-12 p-4">
           <div className="flex flex-col items-center justify-center  lg:w-full lg:h-full max-w-screen-xl mx-auto w-full m-0 h-full sm:h-full p-4 ">
             <h1 className="text-3xl lg:text-4xl">Entrar</h1>
             <form
