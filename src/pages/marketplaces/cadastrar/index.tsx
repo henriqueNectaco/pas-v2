@@ -18,15 +18,17 @@ import { FormschemaCadastroMarketplace } from '@/@types/marketplaces'
 
 import 'filepond/dist/filepond.min.css'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
-import { localUrl } from '@/lib'
-// import Cookies from 'js-cookie'
+import { apiUrl, localUrl } from '@/lib'
+import Cookies from 'js-cookie'
 import FilePondComponent from '@/components/cadastroMarketplace/filepond'
 import { FilePondFile } from 'filepond'
+import { useRouter } from 'next/router'
 
 type FormschemaData = z.infer<typeof FormschemaCadastroMarketplace>
 
 export default function CadastrarMarketplaces() {
-  // const token = Cookies.get('token')
+  const router = useRouter()
+  const token = Cookies.get('token')
   const {
     handleSubmit,
     register,
@@ -101,7 +103,17 @@ export default function CadastrarMarketplaces() {
   //     console.error(error)
   //   }
   // }
-
+  const auth = async () => {
+    try {
+      const res = await axios.post(`${apiUrl}/autenticar`, token)
+      if (res.data.success === false) {
+        toast.warning('Sessão expirada')
+        router.push('/')
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
   const handleCadastrarMarketplace = async (dados: FormschemaData) => {
     const formData = new FormData()
 

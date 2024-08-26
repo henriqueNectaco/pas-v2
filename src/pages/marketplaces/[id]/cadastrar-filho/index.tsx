@@ -112,7 +112,17 @@ export default function CadastrarFilho() {
       setIsLoading(false)
     }
   }
-
+  const auth = async () => {
+    try {
+      const res = await axios.post(`${apiUrl}/autenticar`, token)
+      if (res.data.success === false) {
+        toast.warning('Login expirado')
+        router.push('/')
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
   const reiniciarNginx = async () => {
     await axios
       .post(
@@ -156,6 +166,7 @@ export default function CadastrarFilho() {
   }
 
   useEffect(() => {
+    auth()
     fetchMarketplace()
     searchEstabeleciment()
   }, [])
@@ -178,7 +189,7 @@ export default function CadastrarFilho() {
 
   return (
     <div className="max-w-screen w-full h-full lg:h-screen bg-gray-200 lg:pt-12  flex flex-col lg:justify-start lg:items-center">
-      <div className="w-full  lg:w-3/4 bg-white flex flex-col items-center shadow-2xl rounded-md">
+      <div className="w-full  lg:w-3/4 bg-white flex flex-col items-center shadow-2xl rounded-md  p-6">
         <h1 className=" text-lg lg:text-2xl font-bold border-b border-black w-full flex items-center justify-center p-4">
           {activeStep === 0 ? 'Cadastrar marketplace filho' : 'Reiniciar Nginx'}
         </h1>

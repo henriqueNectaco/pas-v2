@@ -233,13 +233,9 @@ export default function Vendas() {
                       </div>
                     </div>
 
-                    <div className="flex flex-col  items-center justify-center  w-full h-full p-4">
+                    <div className="flex flex-col  items-center justify-center   w-full h-full p-4">
                       <p>Taxa</p>
-                      <p>
-                        R$
-                        {/* {responseData.pagamentos[0].taxa} */}
-                        teste
-                      </p>
+                      <p>R$ {responseData.pagamentos[0].taxa}</p>
                     </div>
                     <div className="flex flex-col  items-center justify-center  h-full w-full">
                       <p>Recebido </p>

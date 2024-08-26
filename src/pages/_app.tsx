@@ -76,7 +76,7 @@ export default function App({ Component, pageProps }: AppProps) {
                   ? '100px'
                   : '250px'
               : '0',
-            transition: 'margin-left 0.8s ease-in-out',
+            transition: 'margin-left 0.3s ease-in-out',
           }}
         >
           <Component {...pageProps} />
