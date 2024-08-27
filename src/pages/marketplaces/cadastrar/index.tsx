@@ -14,7 +14,7 @@ import { z } from 'zod'
 import StepperComponent from '@/components/cadastroMarketplace/steper'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { FormschemaCadastroMarketplace } from '@/@types/marketplaces'
+import { FormschemaCadastroMarketplace } from '@/types/marketplaces'
 
 import 'filepond/dist/filepond.min.css'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'

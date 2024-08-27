@@ -10,7 +10,7 @@ import { Spinner } from '@nextui-org/react'
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import nextCookies from 'next-cookies'
 import Paginator from '@/components/marketplaces/pagination'
-import { objectMarketplace } from '@/@types/marketplaces'
+import { objectMarketplace } from '@/types/marketplaces'
 import { apiUrl } from '@/lib'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

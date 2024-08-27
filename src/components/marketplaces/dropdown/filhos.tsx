@@ -12,7 +12,7 @@ import { parseDate } from '@internationalized/date'
 import { DateValue, RangeValue, useDisclosure } from '@nextui-org/react'
 import Cookies from 'js-cookie'
 import axios from 'axios'
-import { objectMarketplace } from '@/@types/marketplaces'
+import { objectMarketplace } from '@/types/marketplaces'
 import router from 'next/router'
 import { today, formatDateToYYYYMMDD, apiUrl } from '@/lib'
 

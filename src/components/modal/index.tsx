@@ -14,7 +14,7 @@ import {
 } from '@nextui-org/react'
 import { CaretDown } from 'phosphor-react'
 import DateRangePickerComponent from '../rangedatepicker'
-import { ModalTypes, objectMarketplace } from '@/@types/marketplaces'
+import { ModalTypes, objectMarketplace } from '@/types/marketplaces'
 import { useState } from 'react'
 import DateRangeWithTimer from '../dateRangePickerWithTimer'
 
