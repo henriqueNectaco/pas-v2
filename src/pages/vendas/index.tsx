@@ -201,7 +201,7 @@ export default function Vendas() {
             </div>
           ) : null}
         </div>
-        {responseData ? (
+        {responseData !== null ? (
           <div
             className={`${responseData.pagamentos.length === 1 ? 'p-3 lg:pr-0' : ''}`}
           >
