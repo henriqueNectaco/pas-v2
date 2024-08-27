@@ -261,10 +261,9 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
   }
   const fetchDataServiceStatus = async () => {
     try {
-      const response = await axios.get(
-        'https://api.zsystems.com.br/z1/services-status',
-        { headers: { Authorization: `Bearer ${token}` } },
-      )
+      const response = await axios.get(`${apiUrl}/services-status`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       setServicesStatus(response.data.services)
     } catch (error) {
       console.error('Erro ao chamar a API:', error)
@@ -272,10 +271,9 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
   }
   const fechAmountData = async () => {
     try {
-      const response = await axios.get(
-        'https://api.zsystems.com.br/z1/indicadores',
-        { headers: { Authorization: `Bearer ${token}` } },
-      )
+      const response = await axios.get(`${apiUrl}/indicadores`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       setData((prevData) => ({
         ...prevData,
         totalVendido: response.data.result.transacionadoHoje.valorTotal,
@@ -288,10 +286,7 @@ https://pas-aps.up.railway.app/sale/total-not-processed?startDate=${today}&endDa
 
   const auth = async () => {
     try {
-      const res = await axios.post(
-        `https://api.zsystems.com.br/z1/autenticar`,
-        { token },
-      )
+      const res = await axios.post(`${apiUrl}/autenticar`, { token })
       if (res.data.success === false) {
         toast.error('Sua sessão expirou faça login novamente')
         Router.push('/')

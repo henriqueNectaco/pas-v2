@@ -11,14 +11,12 @@ import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import nextCookies from 'next-cookies'
 import Paginator from '@/components/marketplaces/pagination'
 import { objectMarketplace } from '@/@types/marketplaces'
+import { apiUrl } from '@/lib'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { token } = nextCookies(context)
 
-  const authRes = await axios.post(
-    `https://api.zsystems.com.br/z1/autenticar`,
-    { token },
-  )
+  const authRes = await axios.post(`${apiUrl}/autenticar`, { token })
 
   if (authRes.data.success === false) {
     return {
@@ -30,7 +28,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
   const { id } = context.query
   const res = await axios.get(
-    `https://api.zsystems.com.br/z1/marketplace/${id}/estabelecimentos?limit=30&page=1`,
+    `${apiUrl}/marketplace/${id}/estabelecimentos?limit=30&page=1`,
     {
       headers: { Authorization: `Bearer ${token}` },
     },

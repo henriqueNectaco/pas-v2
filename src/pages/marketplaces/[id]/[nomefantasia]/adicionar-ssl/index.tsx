@@ -14,7 +14,6 @@ import FilePondComponent from '@/components/cadastroMarketplace/filepond'
 import { apiAuth, apiUrl } from '@/pages/api/useApi'
 import Cookies from 'js-cookie'
 import axios from 'axios'
-import { localUrl } from '@/lib'
 type typeData = {
   nome: string | string[] | undefined
   dominio: string | null
@@ -73,12 +72,16 @@ export default function App() {
       formData.append('dominio', String(data.dominio))
       formData.append('renovacao', String(renovacao))
       // ${apiUrl}/estabelecimentos/validar-pki
-      const res = await axios.post(`${localUrl}/adicionarssl`, formData, {
-        headers: {
-          'Content-type': 'multipart/form-data',
-          // 'Authorization': `Bearer ${token}`
+      const res = await axios.post(
+        `${apiUrl}/estabelecimentos/validar-pki`,
+        formData,
+        {
+          headers: {
+            'Content-type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`,
+          },
         },
-      })
+      )
       if (res.data.success === true && renovacao === true) {
         setActiveStep(activeStep + 1)
       } else if (res.data.success === true && renovacao === false) {
@@ -96,12 +99,16 @@ export default function App() {
       formData.append('keyFile', key[0])
       formData.append('bundleCrtFile', bundleCrtFile[0])
       // ${apiUrl}/estabelecimentos/adicionar-ssl
-      const res = await axios.post(`${apiUrl}/adicionarssl`, formData, {
-        headers: {
-          'Content-type': 'multipart/form-data',
-          // 'Authorization': `Bearer ${token}`
+      const res = await axios.post(
+        `${apiUrl}/estabelecimentos/adicionar-ssl`,
+        formData,
+        {
+          headers: {
+            'Content-type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`,
+          },
         },
-      })
+      )
       if (res.data.success === true) {
         setActiveStep(activeStep + 1)
       }
@@ -113,7 +120,7 @@ export default function App() {
   const RestartNginx = async () => {
     const res = await axios
       .post(
-        `/marketplaces/restart-nginx`,
+        `${apiUrl}/marketplaces/restart-nginx`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -177,7 +184,7 @@ export default function App() {
     } else if (activeStep === 3) {
       RestartNginx()
     } else {
-      alert('deu ruim ')
+      toast.warning('Campos Invalidos')
     }
   }
 

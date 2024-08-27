@@ -12,10 +12,7 @@ import { useState } from 'react'
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { token } = nextCookies(context)
 
-  const authRes = await axios.post(
-    `https://api.zsystems.com.br/z1/autenticar`,
-    { token },
-  )
+  const authRes = await axios.post(`${apiUrl}/autenticar`, { token })
 
   if (authRes.data.success === false) {
     return {

@@ -64,8 +64,8 @@ export default function DropDownMenuFilhos(props: typeProps) {
     // ${apiUrl}/estabelecimentos/${props.id}/reprocessar-pedidos?startDate=${date.startDate}&endDate=${date.endDate}
     try {
       await axios.post(
-        `https://urltesteefodace/z1/estabelecimentos/${props.id}/reprocessar-pedidos?startDate=${date.startDate}&endDate=${date.endDate}`,
-        // { headers: { Authorization: `Bearer ${token}` } }
+        `${apiUrl}/estabelecimentos/${props.id}/reprocessar-pedidos?startDate=${date.startDate}&endDate=${date.endDate}`,
+        { headers: { Authorization: `Bearer ${token}` } },
       )
     } catch (error) {
       console.error(error)
