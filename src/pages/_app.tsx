@@ -1,13 +1,13 @@
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import { NextUIProvider } from '@nextui-org/system'
-import { Open_Sans } from 'next/font/google'
+import { Roboto } from 'next/font/google'
 import { Toaster } from 'sonner'
 import { useRouter } from 'next/router'
 import NewHeader from '@/components/newHeader'
 import { useEffect, useState } from 'react'
 import Sidebar from '../components/Sidebar'
-const openSans = Open_Sans({ subsets: ['latin'], weight: '500' })
+const openSans = Roboto({ subsets: ['latin'], weight: '500' })
 
 export default function App({ Component, pageProps }: AppProps) {
   const [sidebar, setSidebar] = useState<boolean | undefined>()
