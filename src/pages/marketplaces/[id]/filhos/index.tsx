@@ -8,6 +8,7 @@ import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import nextCookies from 'next-cookies'
 import Table from '@/components/table'
 import { useState } from 'react'
+import { apiUrl } from '@/lib'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { token } = nextCookies(context)
