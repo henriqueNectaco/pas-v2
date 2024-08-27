@@ -1,6 +1,6 @@
 import { Button, Spinner } from '@nextui-org/react'
 import axios from 'axios'
-import { formatarData } from '@/utils/dates'
+
 import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 // import JSONPrettyMon from 'react-json-pretty/themes/monikai.css'
@@ -11,7 +11,7 @@ import Router from 'next/router'
 import { typeResponseData, ZoopTransaction } from '@/types/vendas'
 import { api, apiUrl } from '../api/useApi'
 import PagamentosCards from './pagamentosCards'
-import { arrayOfObjectsSumJs } from '@/lib/sum'
+import { arrayOfObjectsSumJs, formatarData } from '@/lib/sum'
 
 export default function Vendas() {
   const [pagamentos, setPagamentos] = useState()

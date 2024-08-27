@@ -1,9 +1,9 @@
-import { formatarData } from '@/utils/dates'
 import { Spinner } from '@nextui-org/react'
 import { statusMarketplacesChilds, nullVerifiyer } from '@/lib/index'
 import DropDownMenuFilhos from '../marketplaces/dropdown/filhos'
 import React from 'react'
 import { objectMarketplace } from '@/types/marketplaces'
+import { formatarData } from '@/lib/sum'
 type userEstabelecimento = {
   usuario: {
     email: string

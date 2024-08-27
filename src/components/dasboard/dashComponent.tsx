@@ -10,9 +10,10 @@ import { CardTitle, CardHeader, CardContent, Card } from '@/components/ui/card'
 import { Input } from '@nextui-org/input'
 import DateRangePickerComponent from '../../components/rangedatepicker/index'
 import { Spinner } from '@nextui-org/react'
-import { formatarData } from '@/utils/dates'
+
 import React, { ChangeEvent } from 'react'
 import { Article, CurrencyDollar } from 'phosphor-react'
+import { formatarData } from '@/lib/sum'
 export default function DashComponent(props: TypePropsDashComponent) {
   return (
     <>

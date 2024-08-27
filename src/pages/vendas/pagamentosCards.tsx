@@ -1,5 +1,6 @@
 import { statusPayment } from '@/lib'
-import { formatarData } from '@/utils/dates'
+import { formatarData } from '@/lib/sum'
+
 import { Button } from '@nextui-org/button'
 
 type typeData = {
