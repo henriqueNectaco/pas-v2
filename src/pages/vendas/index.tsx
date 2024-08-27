@@ -3,8 +3,8 @@ import axios from 'axios'
 import { formatarData } from '@/utils/dates'
 import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
-import JSONPrettyMon from 'react-json-pretty/themes/monikai.css'
-import JSONPretty from 'react-json-pretty'
+// import JSONPrettyMon from 'react-json-pretty/themes/monikai.css'
+// import JSONPretty from 'react-json-pretty'
 import FormVendas from './form'
 import { toast } from 'sonner'
 import Router from 'next/router'
@@ -350,7 +350,7 @@ export default function Vendas() {
             </div>
           </div>
         ) : null}
-        {responseData ? (
+        {/* {responseData ? (
           <div className=" bg-gray-800    max-w-full text-sm  grid grid-cols-1 lg:grid-cols-2 lg:col-span-2 ">
             <div className=" w-full text-left p-2  space-y-2 lg:space-y-4">
               <p className="text-white">Vendas</p>
@@ -365,7 +365,7 @@ export default function Vendas() {
               />
             </div>
           </div>
-        ) : null}
+        ) : null} */}
       </div>
     </div>
   )
