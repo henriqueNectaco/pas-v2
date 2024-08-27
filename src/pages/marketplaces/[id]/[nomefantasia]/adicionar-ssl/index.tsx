@@ -118,7 +118,7 @@ export default function App() {
   }
 
   const RestartNginx = async () => {
-    const res = await axios
+    await axios
       .post(
         `${apiUrl}/marketplaces/restart-nginx`,
         {},
