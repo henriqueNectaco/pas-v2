@@ -102,17 +102,17 @@ export default function CadastrarMarketplaces() {
       console.error(error)
     }
   }
-  // const auth = async () => {
-  //   try {
-  //     const res = await axios.post(`${apiUrl}/autenticar`, token)
-  //     if (res.data.success === false) {
-  //       toast.warning('Sessão expirada')
-  //       router.push('/')
-  //     }
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // }
+  const auth = async () => {
+    try {
+      const res = await axios.post(`${apiUrl}/autenticar`, { token })
+      if (res.data.success === false) {
+        toast.warning('Sessão expirada')
+        router.push('/')
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
   const handleCadastrarMarketplace = async (dados: FormschemaData) => {
     const formData = new FormData()
 
@@ -191,7 +191,9 @@ export default function CadastrarMarketplaces() {
       RestartNginx()
     }
   }
-  useEffect(() => {}, [])
+  useEffect(() => {
+    auth()
+  }, [])
   return (
     <div className="max-w-screen bg-gray-200 h-full lg:h-screen lg:pt-12">
       <div className="flex flex-col items-center h-full lg:max-h-screen bg-gray-200 p-4">
