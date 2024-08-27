@@ -1,8 +1,16 @@
 import dynamic from 'next/dynamic'
 import 'filepond/dist/filepond.min.css'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
-import { typeFilePond } from '@/@types/components'
+import { FilePondFile, ActualFileObject, FilePondInitialFile } from 'filepond'
 
+type typeFilePond = {
+  handleUpdateFiles: (fileItems: FilePondFile[]) => void
+  // setFiles: React.Dispatch<SetStateAction<ActualFileObject[]>>
+  files: (string | Blob | ActualFileObject | FilePondInitialFile)[] | undefined
+  titulo: string
+  name: string
+  required?: boolean
+}
 const FilePond = dynamic(
   () =>
     import('react-filepond').then(async (module) => {
