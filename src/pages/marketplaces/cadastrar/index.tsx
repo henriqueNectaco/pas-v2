@@ -71,7 +71,7 @@ export default function CadastrarMarketplaces() {
     }
   }
   const RestartNginx = async () => {
-    const res = await axios
+    await axios
       .post(
         `${apiUrl}/marketplaces/restart-nginx`,
         {},
@@ -102,17 +102,17 @@ export default function CadastrarMarketplaces() {
       console.error(error)
     }
   }
-  const auth = async () => {
-    try {
-      const res = await axios.post(`${apiUrl}/autenticar`, token)
-      if (res.data.success === false) {
-        toast.warning('Sessão expirada')
-        router.push('/')
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  // const auth = async () => {
+  //   try {
+  //     const res = await axios.post(`${apiUrl}/autenticar`, token)
+  //     if (res.data.success === false) {
+  //       toast.warning('Sessão expirada')
+  //       router.push('/')
+  //     }
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  // }
   const handleCadastrarMarketplace = async (dados: FormschemaData) => {
     const formData = new FormData()
 
