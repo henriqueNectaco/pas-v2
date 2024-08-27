@@ -12,12 +12,12 @@ import { FilePondFile } from 'filepond'
 import { toast } from 'sonner'
 import FilePondComponent from '@/components/cadastroMarketplace/filepond'
 import { apiAuth, apiUrl } from '@/pages/api/useApi'
-import { error } from 'console'
 import Cookies from 'js-cookie'
 import axios from 'axios'
+import { localUrl } from '@/lib'
 type typeData = {
   nome: string | string[] | undefined
-  dominio: string
+  dominio: string | null
 }
 
 export default function App() {
@@ -31,9 +31,9 @@ export default function App() {
   const { nomefantasia } = router.query
   const [data, setData] = useState<typeData>({
     nome: nomefantasia,
-    dominio: '',
+    dominio: null,
   })
-  const [activeStep, setActiveStep] = useState<number>(0)
+  const [activeStep, setActiveStep] = useState<number>(2)
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target
@@ -43,6 +43,13 @@ export default function App() {
     }))
   }
 
+  const isValid = () => {
+    if (activeStep === 0) {
+      return pki.length > 0 && data.dominio !== ''
+    } else if (activeStep === 2) {
+      return crt.length > 0 && key.length > 0 && bundleCrtFile.length > 0
+    }
+  }
   const auth = async () => {
     try {
       const res = await apiAuth.post('/autenticar', { token })
@@ -55,45 +62,71 @@ export default function App() {
       console.error(error)
     }
   }
-  // const RestartNginx = async () => {
-  //   const res = await axios
-  //     .post(
-  //       `/marketplaces/restart-nginx`,
-  //       {},
-  //       {
-  //         headers: { Authorization: `Bearer ${token}` },
-  //       },
-  //     )
-  //     .catch((res) => {
-  //       if (res.code === 'ERR_NETWORK') {
-  //         toast.success('NGINX reiniciado com sucesso!')
-  //       }
-  //       toast.error(res.response.data.message || 'Unknown')
-  //     })
-  // }
+  const validarPki = async () => {
+    try {
+      const formData = new FormData()
+      if (pki.length !== 0) {
+        formData.append('pkiValidation', pki[0])
+        formData.append('originalFileName', pki[0].name)
+      }
+      formData.append('nome', String(data.nome))
+      formData.append('dominio', String(data.dominio))
+      formData.append('renovacao', String(renovacao))
+      // ${apiUrl}/estabelecimentos/validar-pki
+      const res = await axios.post(`${localUrl}/adicionarssl`, formData, {
+        headers: {
+          'Content-type': 'multipart/form-data',
+          // 'Authorization': `Bearer ${token}`
+        },
+      })
+      if (res.data.success === true && renovacao === true) {
+        setActiveStep(activeStep + 1)
+      } else if (res.data.success === true && renovacao === false) {
+        setActiveStep(activeStep + 1)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  const handleAdicionarSsl = async () => {
+    try {
+      const formData = new FormData()
+      formData.append('dominio', String(data.dominio))
+      formData.append('crtFile', crt[0])
+      formData.append('keyFile', key[0])
+      formData.append('bundleCrtFile', bundleCrtFile[0])
+      // ${apiUrl}/estabelecimentos/adicionar-ssl
+      const res = await axios.post(`${apiUrl}/adicionarssl`, formData, {
+        headers: {
+          'Content-type': 'multipart/form-data',
+          // 'Authorization': `Bearer ${token}`
+        },
+      })
+      if (res.data.success === true) {
+        setActiveStep(activeStep + 1)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
-  // const handleSubmit = async () => {
-  //   try {
-  //     await axios.post(`${process.env.NEXT_PUBLIC_LOCAL}/adicionarssl`, data)
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // }
+  const RestartNginx = async () => {
+    const res = await axios
+      .post(
+        `/marketplaces/restart-nginx`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      )
+      .catch((res) => {
+        if (res.code === 'ERR_NETWORK') {
+          toast.success('NGINX reiniciado com sucesso!')
+        }
+        toast.error(res.response.data.message || 'Unknown')
+      })
+  }
 
-  // const handleNextStep = () => {
-  //   switch (activeStep) {
-  //     case 0:
-  //       if (renovacao === true) {
-  //         setActiveStep(activeStep + 1)
-  //       } else {
-  //         setActiveStep(activeStep + 1)
-  //       }
-  //       break
-  //     case 1:
-  //       handleSubmit()
-  //       break
-  //   }
-  // }
   const handleUpdatePki = (fileItems: FilePondFile[]) => {
     const validFiles = fileItems.filter((fileItem) => {
       const file = fileItem.file as File // Type casting here
@@ -118,7 +151,7 @@ export default function App() {
       if (fileName.endsWith('.crt')) {
         return true
       } else {
-        toast.warning('Apenas arquivos com a extensão .pki são permitidos!')
+        toast.warning('Apenas arquivos com a extensão .crt são permitidos!')
         return false
       }
     })
@@ -132,6 +165,22 @@ export default function App() {
   const handleUpdateKeyFile = (fileItems: FilePondFile[]) => {
     setKey(fileItems.map((fileItem) => fileItem.file as File))
   }
+  const handleNext = async () => {
+    if (activeStep === 0 && isValid()) {
+      validarPki()
+    } else if (activeStep === 2 && isValid()) {
+      handleAdicionarSsl()
+    } else if (activeStep === 2 && !isValid()) {
+      toast.warning('Campos Invalidos')
+    } else if (activeStep === 1) {
+      RestartNginx()
+    } else if (activeStep === 3) {
+      RestartNginx()
+    } else {
+      alert('deu ruim ')
+    }
+  }
+
   useEffect(() => {
     auth()
     console.log(data)
@@ -248,7 +297,7 @@ export default function App() {
             size="md"
             variant="bordered"
             color="primary"
-            onClick={() => setActiveStep(activeStep + 1)}
+            onClick={handleNext}
           >
             {activeStep === 0 && 'Validar pki'}
             {activeStep === 1 && 'Reiniciar Nginx'}
