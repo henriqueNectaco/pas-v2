@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import {
   Card,
@@ -18,7 +18,7 @@ import { FormschemaCadastroMarketplace } from '@/@types/marketplaces'
 
 import 'filepond/dist/filepond.min.css'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
-import { apiUrl, localUrl } from '@/lib'
+import { apiUrl } from '@/lib'
 import Cookies from 'js-cookie'
 import FilePondComponent from '@/components/cadastroMarketplace/filepond'
 import { FilePondFile } from 'filepond'
@@ -70,39 +70,38 @@ export default function CadastrarMarketplaces() {
       toast.warning('Cannot go below step 0')
     }
   }
-  // const RestartNginx = async () => {
-  //   const res = await axios
-  //     .post(
-  //       `${apiUrl}/marketplaces/restart-nginx`,
-
-  //       {},
-  //       {
-  //         headers: { Authorization: `Bearer ${token}` },
-  //       },
-  //     )
-  //     .catch((res) => {
-  //       if (res.code === 'ERR_NETWORK') {
-  //         toast.success('NGINX reiniciado com sucesso!')
-  //       }
-  //       toast.error(res.response.data.message || 'Unknown')
-  //     })
-  // }
-
-  // const importarDadosZoop = async () => {
-  //   try {
-  //     const res = await axios.post(
-  //       `${apiUrl}/marketplaces/${marketplaceId}/importar-dados-zoop`,
-  //       {},
-  //       { headers: { Authorization: `Bearer ${token}` } },
-  //     )
-  //     if (res.data.succes === true) {
-  //       toast.success('Rotina iniciada com sucesso!')
-  //       setActiveStep(activeStep+1)
-  //     }
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // }
+  const RestartNginx = async () => {
+    const res = await axios
+      .post(
+        `${apiUrl}/marketplaces/restart-nginx`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      )
+      .catch((res) => {
+        if (res.code === 'ERR_NETWORK') {
+          toast.success('NGINX reiniciado com sucesso!')
+          setActiveStep(activeStep + 1)
+        }
+        toast.error(res.response.data.message || 'Unknown')
+      })
+  }
+  const importarDadosZoop = async () => {
+    try {
+      const res = await axios.post(
+        `${apiUrl}/marketplaces/${marketplaceId}/importar-dados-zoop`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } },
+      )
+      if (res.data.succes === true) {
+        toast.success('Rotina iniciada com sucesso!')
+        setActiveStep(activeStep + 1)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
   const auth = async () => {
     try {
       const res = await axios.post(`${apiUrl}/autenticar`, token)
@@ -144,9 +143,8 @@ export default function CadastrarMarketplaces() {
     }
     try {
       const res = await axios.post(
-        `
-        ${localUrl}/cadastromarketplace`,
-        // ${apiUrl}/marketplaces/add
+        `${apiUrl}/marketplaces/add`,
+
         formData,
         {
           headers: {
@@ -188,12 +186,12 @@ export default function CadastrarMarketplaces() {
     } else if (activeStep === 1 && logo.length === 0) {
       toast.warning('Arquivo logo obrigatório')
     } else if (activeStep === 2) {
-      // importarDadosZoop()
+      importarDadosZoop()
     } else if (activeStep === 3) {
-      // restartNginx()
+      RestartNginx()
     }
   }
-
+  useEffect(() => {}, [])
   return (
     <div className="max-w-screen bg-gray-200 h-full lg:h-screen lg:pt-12">
       <div className="flex flex-col items-center h-full lg:max-h-screen bg-gray-200 p-4">

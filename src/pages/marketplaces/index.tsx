@@ -33,10 +33,7 @@ import {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { token } = nextCookies(context)
 
-  const authRes = await axios.post(
-    `https://api.zsystems.com.br/z1/autenticar`,
-    { token },
-  )
+  const authRes = await axios.post(`${apiUrl}/autenticar`, { token })
 
   if (authRes.data.success === false) {
     return {
@@ -48,7 +45,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   const fetchMarketplacesData = await axios.get(
-    `https://api.zsystems.com.br/z1/marketplaces?status=ativo`,
+    `${apiUrl}/marketplaces?status=ativo`,
     { headers: { Authorization: `Bearer ${token}` } },
   )
   return { props: { data: fetchMarketplacesData.data.marketplaces } }

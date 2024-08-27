@@ -88,7 +88,7 @@ export default function DashBoard() {
       setIsLoadingReprocessarSaldo(true)
       const res = await axios.get(
         `
-      https://api.zsystems.com.br/z1/reprocessar-saldo/${idEstabelecimentoReprocessarSaldo}/${daysReprocessarSaldo}`,
+      ${apiUrl}/reprocessar-saldo/${idEstabelecimentoReprocessarSaldo}/${daysReprocessarSaldo}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -106,7 +106,7 @@ export default function DashBoard() {
     setIsLoadingReprocessarVenda(true)
     try {
       const res = await axios.get(
-        `https://api.zsystems.com.br/z1/reprocessar-vendas/${idEstabelecimentoReprocessarVenda}/${formatDateToYYYYMMDD(value.start)}/${formatDateToYYYYMMDD(value.end)}`,
+        `${apiUrl}/reprocessar-vendas/${idEstabelecimentoReprocessarVenda}/${formatDateToYYYYMMDD(value.start)}/${formatDateToYYYYMMDD(value.end)}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },

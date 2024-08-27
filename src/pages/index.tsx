@@ -10,6 +10,7 @@ import { useRouter } from 'next/router'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { EyeSlash, Eye } from 'phosphor-react'
+import { apiUrl } from '@/lib'
 
 // Esquema de validação com Zod
 const Formschema = z.object({
@@ -37,10 +38,7 @@ export default function Home() {
   const onSubmit = async (data: FormschemaData) => {
     try {
       setIsLoading(true)
-      const response = await axios.post(
-        'https://api.zsystems.com.br/z1/login',
-        data,
-      )
+      const response = await axios.post(`${apiUrl}/login`, data)
       if (response.data.success === true) {
         setIsLoading(false)
         Cookies.set('token', response.data.usuario.token)
@@ -60,10 +58,9 @@ export default function Home() {
 
   const auth = async () => {
     try {
-      const response = await axios.post(
-        'https://api.zsystems.com.br/z1/autenticar',
-        { token: Cookies.get('token') },
-      )
+      const response = await axios.post(`${apiUrl}/autenticar`, {
+        token: Cookies.get('token'),
+      })
       if (response.data.success === true) {
         toast.success('Login Encontrado')
         router.push('/dashboard')
@@ -75,10 +72,10 @@ export default function Home() {
 
   useEffect(() => {
     auth()
-  })
+  }, [])
 
   return (
-    <div className="bg-gradient-to-r from-cyan-500 to-blue-500 h-screen w-screen flex justify-center items-center p-4">
+    <div className="bg-gradient-to-r from-cyan-500 to-blue-500 h-screen w-screen flex justify-center items-center lg:p-4">
       <div className=" h-full md:h-4/6 lg:w-4/6 lg:h-4/6 shadow-2xl bg-white  sm:flex sm:flex-col sm:justify-center sm:items-center  md:flex md:flex-col md:items-center md:justify-center  sm:p-0 lg:grid lg:grid-cols-2  lg:rounded-md">
         <div className=" lg:rounded-2xl lg:col-start-1 lg:col-end-2 flex justify-center items-center bg-white lg:h-full p-4  ">
           <Image

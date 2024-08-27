@@ -11,13 +11,17 @@ import { useRouter } from 'next/router'
 import { FilePondFile } from 'filepond'
 import { toast } from 'sonner'
 import FilePondComponent from '@/components/cadastroMarketplace/filepond'
-
+import { apiAuth, apiUrl } from '@/pages/api/useApi'
+import { error } from 'console'
+import Cookies from 'js-cookie'
+import axios from 'axios'
 type typeData = {
   nome: string | string[] | undefined
   dominio: string
 }
 
 export default function App() {
+  const token = Cookies.get('token')
   const [renovacao, setRenovacao] = useState(false)
   const [pki, setPki] = useState<File[]>([])
   const [crt, setCrt] = useState<File[]>([])
@@ -37,6 +41,19 @@ export default function App() {
       ...prevData,
       [name]: type === 'checkbox' ? checked : value,
     }))
+  }
+
+  const auth = async () => {
+    try {
+      const res = await apiAuth.post('/autenticar', { token })
+      // const res = await axios.post(`${apiUrl}/autenticar`, { token })
+      if (res.data.success === false) {
+        toast.warning('Sessão expirada')
+        router.push('/')
+      }
+    } catch (error) {
+      console.error(error)
+    }
   }
   // const RestartNginx = async () => {
   //   const res = await axios
@@ -116,10 +133,11 @@ export default function App() {
     setKey(fileItems.map((fileItem) => fileItem.file as File))
   }
   useEffect(() => {
+    auth()
     console.log(data)
   }, [data])
   return (
-    <div className=" flex flex-col items-center bg-gray-300 max-w-screen w-full h-full lg:h-screen overflow-y-hidden p-6 lg:p-12 lg:pt-20">
+    <div className=" flex flex-col items-center bg-gray-300 max-w-screen w-full h-full lg:h-screen overflow-y-hidden p-0 lg:p-12 lg:pt-20">
       <div className=" h-full flex flex-col  bg-white shadow-xl rounded-md w-full lg:w-1/2 border  lg:h-2/3">
         <div className="p-4 border-b  border-black font-bold flex items-center justify-start text-2xl w-full">
           <Breadcrumbs underline="active" size="md">

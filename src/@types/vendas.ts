@@ -14,6 +14,7 @@ export type typePagamentos = {
   markup: null | number
 }
 export type typeResponseData = {
+  markup: null
   pagamentos: Array<typePagamentos>
   pedidos_splits: Array<object>
   parcelas: number

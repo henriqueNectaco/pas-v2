@@ -6,8 +6,9 @@ import {
   Input,
 } from '@nextui-org/react'
 import axios from 'axios'
+import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
-import { apiUrl, localUrl, token } from '@/lib'
+import { apiUrl } from '@/lib'
 import { FormSchemaCadastroMarketplaceFilho } from '@/@types/marketplaces'
 import z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -15,6 +16,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import FilePondComponent from '@/components/cadastroMarketplace/filepond'
 import { FilePondFile } from 'filepond'
+import { apiAuth } from '@/pages/api/useApi'
 
 type FormschemaData = z.infer<typeof FormSchemaCadastroMarketplaceFilho>
 type estabelecimentosItems = {
@@ -22,6 +24,7 @@ type estabelecimentosItems = {
   identificacao_fatura: string
 }
 export default function CadastrarFilho() {
+  const token = Cookies.get('token')
   const router = useRouter()
   const {
     handleSubmit,
@@ -90,15 +93,16 @@ export default function CadastrarFilho() {
     try {
       //      await axios.post(`${apiUrl}/marketplaces/filhos/add`,formData)
       const res = await axios.post(
-        `${localUrl}/cadastromarketplace`,
+        `${apiUrl}/marketplaces/filhos/add`,
         formData,
-        //    {
-        //   headers: {
-        //     'Content-Type': 'multipart/form-data',
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // })
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`,
+          },
+        },
       )
+
       // Handle success (e.g., navigate to another page, show success message, etc.)
       if (res.data.success === true) {
         setActiveStep(activeStep + 1)
@@ -114,7 +118,7 @@ export default function CadastrarFilho() {
   }
   const auth = async () => {
     try {
-      const res = await axios.post(`${apiUrl}/autenticar`, token)
+      const res = await apiAuth.post(`/autenticar`, { token })
       if (res.data.success === false) {
         toast.warning('Login expirado')
         router.push('/')
@@ -193,10 +197,10 @@ export default function CadastrarFilho() {
         <h1 className=" text-lg lg:text-2xl font-bold border-b border-black w-full flex items-center justify-center p-4">
           {activeStep === 0 ? 'Cadastrar marketplace filho' : 'Reiniciar Nginx'}
         </h1>
-        <form className="border  w-full">
+        <form className="  w-full">
           {activeStep === 0 && (
             <div className="p-4 pt-8 pb-8 lg:grid lg:grid-rows-2 flex flex-col h-full l w-full gap-4 ">
-              <div className="border flex flex-col space-y-3">
+              <div className=" flex flex-col space-y-3">
                 <div className="flex flex-col lg:grid lg:grid-cols-3 gap-6">
                   {/* <div className="w-full flex flex-col">
                     <Input
@@ -297,7 +301,7 @@ export default function CadastrarFilho() {
                   </div>
                 </div>
               </div>
-              <div className="border flex flex-col lg:grid lg:grid-cols-3 gap-6">
+              <div className=" flex flex-col lg:grid lg:grid-cols-3 gap-6">
                 <div className="w-full h-full flex flex-col gap-2">
                   <h1 className="font-semibold">Logo*</h1>
                   <FilePondComponent
@@ -333,7 +337,7 @@ export default function CadastrarFilho() {
             </div>
           )}
         </form>
-        <div className="flex  justify-center lg:justify-end border-t border-black w-full p-2   h-full">
+        <div className="flex  justify-center lg:justify-end  w-full    h-full">
           <Button
             color="primary"
             variant="shadow"

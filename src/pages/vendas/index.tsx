@@ -9,7 +9,7 @@ import FormVendas from './form'
 import { toast } from 'sonner'
 import Router from 'next/router'
 import { typeResponseData, ZoopTransaction } from '@/@types/vendas'
-import { apiUrl } from '../api/useApi'
+import { api, apiUrl } from '../api/useApi'
 import PagamentosCards from './pagamentosCards'
 import { arrayOfObjectsSumJs } from '@/lib/sum'
 
@@ -89,7 +89,7 @@ export default function Vendas() {
   }
   useEffect(() => {
     auth()
-  })
+  }, [])
 
   const splitsCount = responseData?.pedidos_splits || []
   const somaSplits = arrayOfObjectsSumJs(splitsCount, 'valor')
@@ -127,7 +127,13 @@ export default function Vendas() {
                   </div>
                   <div className="   flex  flex-row items-start justify-between">
                     <p>Taxa Custos</p>
-                    <p>{responseData.pagamentos[0].taxa}</p>
+
+                    {responseData.pagamentos.length > 0 ? (
+                      <p>{responseData.pagamentos[0].taxa}</p>
+                    ) : (
+                      <p>0</p>
+                    )}
+                    {/* {responseData.pagamentos[0].taxa} */}
                   </div>
                   <div className="   flex flex-row items-start justify-between">
                     <p>Markup</p>
@@ -135,10 +141,11 @@ export default function Vendas() {
                   </div>
                   <div className="   flex flex-row items-start justify-between">
                     <p>Tabela de Markup</p>
-                    <p>
-                      {/* {responseData.pagamentos[0].markup} */}
-                      teste
-                    </p>
+                    {responseData.markup === null ? (
+                      <p>0</p>
+                    ) : (
+                      <p>{responseData.pagamentos[0].markup}</p>
+                    )}
                   </div>
                   <div className="   flex flex-row items-start justify-between">
                     <p>Splits</p>
@@ -201,7 +208,7 @@ export default function Vendas() {
             <div
               className={`"w-full max-w-screen flex  ${responseData.pagamentos.length >= 3 ? '' : 'bg-white rounded-lg p-2'}    flex-col items-center  justify-center "`}
             >
-              {responseData.pagamentos.length <= 1 ? (
+              {responseData.pagamentos.length === 1 && (
                 <>
                   <h1 className="font-bold w-full flex items-center justify-center pt-2">
                     Pagamentos
@@ -226,6 +233,9 @@ export default function Vendas() {
                       <div className="flex flex-row gap-2">
                         <p>Data Recebimento</p>
                         <p>
+                          {/* {new Date(
+                            responseData.pagamentos[0].data_recebimento,
+                          ).toLocaleString('pt-BR', { timeZone: 'UTC' })} */}
                           {new Date(
                             responseData.pagamentos[0].data_recebimento,
                           ).toLocaleString('pt-BR', { timeZone: 'UTC' })}
@@ -235,13 +245,15 @@ export default function Vendas() {
 
                     <div className="flex flex-col  items-center justify-center   w-full h-full p-4">
                       <p>Taxa</p>
-                      <p>R$ {responseData.pagamentos[0].taxa}</p>
+                      <p>
+                        R$
+                        {responseData.pagamentos[0].taxa}
+                      </p>
                     </div>
                     <div className="flex flex-col  items-center justify-center  h-full w-full">
                       <p>Recebido </p>
                       <p>
                         R$
-                        {/* {responseData.pagamentos[0].valor_recebido} */}
                         {responseData.pagamentos[0].valor_recebido}
                       </p>
                     </div>
@@ -256,12 +268,15 @@ export default function Vendas() {
                         size="md"
                         onClick={async () => {
                           try {
-                            const res = await axios.get(
-                              `https://api.zsystems.com.br/z1/vendas/${responseData.id}/reprocessar`,
-                              {
-                                headers: { Authorization: `Bearer ${token}` },
-                              },
+                            const res = await api.get(
+                              `/vendas/${responseData.id}/reprocessar`,
                             )
+                            // const res = await axios.get(
+                            //   `https://api.zsystems.com.br/z1/vendas/${responseData.id}/reprocessar`,
+                            //   {
+                            //     headers: { Authorization: `Bearer ${token}` },
+                            //   },
+                            // )
                             if (res.data.success === true) {
                               toast.success(
                                 'Adicionado a fila de reprocessamento',
@@ -274,12 +289,12 @@ export default function Vendas() {
                           }
                         }}
                       >
-                        Reprocessar vendas
+                        Reprocessar venda
                       </Button>
                     </div>
                   </div>
                 </>
-              ) : null}
+              )}
             </div>
             <div className="w-full lg:gap-0 gap-2">
               {responseData.pagamentos.length > 1 ? (
