@@ -36,6 +36,11 @@ type TypeProps = {
 }
 
 export default function PagamentosCards(props: TypeProps) {
+  // Fallback para garantir que os arrays não sejam undefined
+  const arrayTittles = props.arrayTittles || []
+  const contentArray = props.contentArray || []
+  const dados = props.dados || []
+
   const Pstyles =
     'flex flex-row items-center md:justify-start justify-center p-2 text-green-400 gap-2'
 
@@ -51,9 +56,9 @@ export default function PagamentosCards(props: TypeProps) {
                 : 'grid-cols-5'
             } bg-gray-700 w-full`}
           >
-            {props.arrayTittles.length !== 0 && (
+            {arrayTittles.length > 0 && (
               <>
-                {props.arrayTittles.map((title, index) => (
+                {arrayTittles.map((title, index) => (
                   <p key={index} className="p-2 text-white">
                     {title}
                   </p>
@@ -61,9 +66,9 @@ export default function PagamentosCards(props: TypeProps) {
               </>
             )}
           </div>
-          {props.dados && props.dados.length > 0 ? (
+          {dados.length > 0 ? (
             <>
-              {props.dados.map((data, index) => (
+              {dados.map((data, index) => (
                 <div
                   key={index}
                   className={`grid ${
@@ -84,19 +89,19 @@ export default function PagamentosCards(props: TypeProps) {
                   )}
 
                   <p className="p-2 text-green-400">
-                    {String(data[props.contentArray[2] as keyof typeData])}
+                    {String(data[contentArray[2] as keyof typeData])}
                   </p>
 
                   <p className="p-2 text-green-400">
-                    {String(data[props.contentArray[3] as keyof typeData])}
+                    {String(data[contentArray[3] as keyof typeData])}
                   </p>
                   <p className="p-2 text-green-400">
-                    {String(data[props.contentArray[4] as keyof typeData])}
+                    {String(data[contentArray[4] as keyof typeData])}
                   </p>
                   {props.currentComponent === 'pagamentos' && (
                     <p className="p-2 text-green-400">
                       {formatarData(
-                        String(data[props.contentArray[5] as keyof typeData]),
+                        String(data[contentArray[5] as keyof typeData]),
                       )}
                     </p>
                   )}
@@ -122,22 +127,20 @@ export default function PagamentosCards(props: TypeProps) {
       <div className="xl:hidden w-full flex flex-col bg-gray-800 p-2">
         <h1 className="text-white">{props.titulo}</h1>
         <div className="flex flex-col md:grid md:grid-cols-2 lg:grid lg:grid-cols-3 gap-2">
-          {props.dados !== undefined && (
+          {dados.length > 0 && (
             <>
-              {props.dados.map((data) => (
+              {dados.map((data) => (
                 <div className="bg-gray-700 rounded-md shadow-md" key={data.id}>
                   <div className={Pstyles}>
-                    <p>{props.arrayTittles[0]}</p>
-                    <p>
-                      {String(data[props.contentArray[0] as keyof typeData])}
-                    </p>
+                    <p>{arrayTittles[0]}</p>
+                    <p>{String(data[contentArray[0] as keyof typeData])}</p>
                   </div>
                   <div className={Pstyles}>
-                    <p>{props.arrayTittles[1]}</p>
+                    <p>{arrayTittles[1]}</p>
                     {props.currentComponent === 'pagamentos' ? (
                       <p>
                         {statusPayment(
-                          String(data[props.contentArray[1] as keyof typeData]),
+                          String(data[contentArray[1] as keyof typeData]),
                         )}
                       </p>
                     ) : (
@@ -145,29 +148,23 @@ export default function PagamentosCards(props: TypeProps) {
                     )}
                   </div>
                   <div className={Pstyles}>
-                    <p>{props.arrayTittles[2]}</p>
-                    <p>
-                      {String(data[props.contentArray[2] as keyof typeData])}
-                    </p>
+                    <p>{arrayTittles[2]}</p>
+                    <p>{String(data[contentArray[2] as keyof typeData])}</p>
                   </div>
                   <div className={Pstyles}>
-                    <p>{props.arrayTittles[3]}</p>
-                    <p>
-                      {String(data[props.contentArray[3] as keyof typeData])}
-                    </p>
+                    <p>{arrayTittles[3]}</p>
+                    <p>{String(data[contentArray[3] as keyof typeData])}</p>
                   </div>
                   <div className={Pstyles}>
-                    <p>{props.arrayTittles[4]}</p>
-                    <p>
-                      {String(data[props.contentArray[4] as keyof typeData])}
-                    </p>
+                    <p>{arrayTittles[4]}</p>
+                    <p>{String(data[contentArray[4] as keyof typeData])}</p>
                   </div>
                   {props.currentComponent === 'pagamentos' ? (
                     <div className={Pstyles}>
-                      <p>{props.arrayTittles[5]}</p>
+                      <p>{arrayTittles[5]}</p>
                       <p>
                         {formatarData(
-                          String(data[props.contentArray[5] as keyof typeData]),
+                          String(data[contentArray[5] as keyof typeData]),
                         )}
                       </p>
                     </div>
