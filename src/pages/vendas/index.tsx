@@ -1,9 +1,9 @@
 import { Button, Spinner } from '@nextui-org/react'
 import axios from 'axios'
-import ReactJson from 'react-json-view'
+
 import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
-
+import dynamic from 'next/dynamic'
 // import JSONPrettyMon from 'react-json-pretty/themes/monikai.css'
 // import JSONPretty from 'react-json-pretty'
 import FormVendas from './form'
@@ -13,7 +13,7 @@ import { typeResponseData, ZoopTransaction } from '@/types/vendas'
 import { api, apiUrl } from '../api/useApi'
 import PagamentosCards from './pagamentosCards'
 import { arrayOfObjectsSumJs, formatarData } from '@/lib/sum'
-
+const ReactJson = dynamic(() => import('react-json-view'), { ssr: false }) // Dynamically import react-json-view
 export default function Vendas() {
   const [pagamentos, setPagamentos] = useState()
   const [splits, setSplits] = useState()
