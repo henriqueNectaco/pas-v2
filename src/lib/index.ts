@@ -6,7 +6,7 @@ import axios from 'axios'
 
 export const apiUrl = process.env.NEXT_PUBLIC_API_URL
 export const localUrl = process.env.NEXT_PUBLIC_LOCAL
-
+export const apiPas = process.env.NEXT_PUBLIC_API_PAS
 const newDate = new Date()
 
 export const token = Cookies.get('token')

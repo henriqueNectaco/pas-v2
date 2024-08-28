@@ -1,8 +1,9 @@
 import { Button, Spinner } from '@nextui-org/react'
 import axios from 'axios'
-
+import ReactJson from 'react-json-view'
 import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
+
 // import JSONPrettyMon from 'react-json-pretty/themes/monikai.css'
 // import JSONPretty from 'react-json-pretty'
 import FormVendas from './form'
@@ -366,6 +367,32 @@ export default function Vendas() {
             </div>
           </div>
         ) : null} */}
+        {responseData && responseZoopTransaction && (
+          <div className=" bg-gray-800 text-white   max-w-full text-sm  grid grid-cols-1 lg:grid-cols-2  ">
+            <div className=" w-full text-left p-2  space-y-2 lg:space-y-4">
+              <p className="text-white">Vendas</p>
+              <ReactJson
+                src={responseData}
+                displayDataTypes={false}
+                theme="google"
+                indentWidth={10}
+                iconStyle="square"
+                enableClipboard={true}
+              />
+            </div>
+            <div className=" w-full text-left  p-2 pr-0 space-y-2 lg:space-y-4 ">
+              <p className="text-white">Zoop Transactions</p>
+              <ReactJson
+                src={responseZoopTransaction}
+                displayDataTypes={false}
+                theme="google"
+                indentWidth={10}
+                iconStyle="square"
+                enableClipboard={true}
+              />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
