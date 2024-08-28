@@ -8,6 +8,7 @@ import {
   thirtyDaysAgo,
   apiUrl,
   formatDateToYYYYMMDD,
+  apiPas,
 } from '@/lib/'
 import { toast } from 'sonner'
 import Router from 'next/router'
@@ -124,7 +125,7 @@ export default function DashBoard() {
     try {
       const res = await axios.get(
         `
-      https://pas.nectaco.com.br/establishment/total-marketplace-child?startDate=${previousThirtyDays}&endDate=${thirtyDaysAgo}`,
+      ${apiPas}/establishment/total-marketplace-child?startDate=${previousThirtyDays}&endDate=${thirtyDaysAgo}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
       setData((prevData) => ({
@@ -139,7 +140,7 @@ export default function DashBoard() {
   const fetchTotalMarketplaceChildRegistredLastThirtyDays = async () => {
     try {
       const res = await axios.get(
-        `https://pas-aps.up.railway.app/establishment/total-marketplace-child?startDate=${thirtyDaysAgo}&endDate=${today}`,
+        `${apiPas}/establishment/total-marketplace-child?startDate=${thirtyDaysAgo}&endDate=${today}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
       setData((prevData) => ({
@@ -154,7 +155,7 @@ export default function DashBoard() {
   const fetchTotanNotProcessedYesterday = async () => {
     try {
       const res = await axios.get(
-        `https://pas.nectaco.com.br/sale/total-not-processed?startDate=${yesterday}&endDate=${yesterday}`,
+        `${apiPas}/sale/total-not-processed?startDate=${yesterday}&endDate=${yesterday}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
       setData((prevData) => ({
@@ -169,7 +170,7 @@ export default function DashBoard() {
     try {
       const res = await axios.get(
         `
-https://pas.nectaco.com.br/sale/total-not-processed?startDate=${today}&endDate=${today}`,
+${apiPas}/sale/total-not-processed?startDate=${today}&endDate=${today}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
       setData((prevData) => ({
@@ -184,7 +185,7 @@ https://pas.nectaco.com.br/sale/total-not-processed?startDate=${today}&endDate=$
   const fetchTotalEstabelecimentsChildRegistredLastThirtyDays = async () => {
     try {
       const res = await axios.get(
-        `https://pas.nectaco.com.br/establishment/total-registered?startDate=${thirtyDaysAgo}&endDate=${today}`,
+        `${apiPas}/establishment/total-registered?startDate=${thirtyDaysAgo}&endDate=${today}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
       setData((prevData) => ({
@@ -199,7 +200,7 @@ https://pas.nectaco.com.br/sale/total-not-processed?startDate=${today}&endDate=$
   const fetchTotalProcessedThirtyDaysLater = async () => {
     try {
       const res = await axios.get(
-        `https://pas.nectaco.com.br/sale/total-processed?startDate=${previousThirtyDays}&endDate=${thirtyDaysAgo}`,
+        `${apiPas}/sale/total-processed?startDate=${previousThirtyDays}&endDate=${thirtyDaysAgo}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
       setData((prevData) => ({
@@ -214,7 +215,7 @@ https://pas.nectaco.com.br/sale/total-not-processed?startDate=${today}&endDate=$
   const fetchTotalProcessedLastThirtyDays = async () => {
     try {
       const res = await axios.get(
-        `https://pas.nectaco.com.br/sale/total-processed?startDate=${thirtyDaysAgo}&endDate=${today}`,
+        `${apiPas}/sale/total-processed?startDate=${thirtyDaysAgo}&endDate=${today}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
       setData((prevData) => ({
@@ -229,7 +230,7 @@ https://pas.nectaco.com.br/sale/total-not-processed?startDate=${today}&endDate=$
   const FetchTotalProcessedYesterday = async () => {
     try {
       const res = await axios.get(
-        `https://pas.nectaco.com.br/sale/total-processed?startDate=${yesterday}&endDate=${yesterday}`,
+        `${apiPas}/sale/total-processed?startDate=${yesterday}&endDate=${yesterday}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -246,7 +247,7 @@ https://pas.nectaco.com.br/sale/total-not-processed?startDate=${today}&endDate=$
   const fetchsTotalProcessedToday = async () => {
     try {
       const res = await axios.get(
-        `https://pas.nectaco.com.br/sale/total-processed?startDate=${today}&endDate=${today}`,
+        `${apiPas}/sale/total-processed?startDate=${today}&endDate=${today}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },

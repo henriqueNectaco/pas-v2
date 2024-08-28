@@ -203,7 +203,9 @@ export default function Estabelecimentos({
             />
           </div>
         ) : (
-          <Spinner />
+          <div className="flex  h-full items-center justify-center w-full border ">
+            <Spinner size="lg" />
+          </div>
         )}
       </div>
     </div>

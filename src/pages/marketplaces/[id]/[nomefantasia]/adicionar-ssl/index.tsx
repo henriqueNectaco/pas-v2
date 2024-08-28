@@ -32,7 +32,7 @@ export default function App() {
     nome: nomefantasia,
     dominio: null,
   })
-  const [activeStep, setActiveStep] = useState<number>(2)
+  const [activeStep, setActiveStep] = useState<number>(0)
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target

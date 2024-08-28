@@ -33,7 +33,7 @@ export default function Table(props: marketplaceProps) {
   const stylesRows = 'p-4 pl-6 border-b flex items-center justify-start '
   return (
     <div className="max-w-screen w-full h-full">
-      <div className="overflow-auto rounded-2xl bg-white shadow-3xl hidden md:hidden lg:hidden xl:block border max-w-screen">
+      <div className="overflow-auto rounded-2xl bg-white shadow-3xl hidden md:hidden lg:hidden xl:block border max-w-screen flex ">
         <div
           className={`border-b-3 border-b-black w-full lg:grid lg:grid-cols-${props.array.length} `}
         >
