@@ -51,11 +51,15 @@ export default function PagamentosCards(props: TypeProps) {
                 : 'grid-cols-5'
             } bg-gray-700 w-full`}
           >
-            {props.arrayTittles.map((title, index) => (
-              <p key={index} className="p-2 text-white">
-                {title}
-              </p>
-            ))}
+            {props.arrayTittles.length !== 0 && (
+              <>
+                {props.arrayTittles.map((title, index) => (
+                  <p key={index} className="p-2 text-white">
+                    {title}
+                  </p>
+                ))}
+              </>
+            )}
           </div>
           {props.dados && props.dados.length > 0 ? (
             <>
