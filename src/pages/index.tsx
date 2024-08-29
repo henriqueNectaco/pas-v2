@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import logo from '../assets/logo.svg'
-import { Input, Button, Checkbox } from '@nextui-org/react'
+import { Input, Button } from '@nextui-org/react'
 import { useForm } from 'react-hook-form'
 import React, { useState, useEffect } from 'react'
 import { toast } from 'sonner'
