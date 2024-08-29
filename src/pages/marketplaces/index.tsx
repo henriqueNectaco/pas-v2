@@ -21,7 +21,9 @@ import React, { Key, useEffect, useState } from 'react'
 import axios from 'axios'
 import { CaretDown } from 'phosphor-react'
 import { toast } from 'sonner'
-import TableMarketPlaces, { marketplaceItemsTypes } from './table'
+import TableMarketPlaces, {
+  marketplaceItemsTypes,
+} from '../../components/marketplaces/table/table'
 import {
   formatDateToYYYYMMDD,
   today,

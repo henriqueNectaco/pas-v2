@@ -1,6 +1,6 @@
 import { Spinner } from '@nextui-org/react'
 
-import DropdownButton from './dropdown'
+import DropdownButton from '../../../pages/marketplaces/dropdown'
 export type marketplaceItemsTypes = {
   id: number
   mainECId: number

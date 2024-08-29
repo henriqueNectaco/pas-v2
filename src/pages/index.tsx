@@ -75,7 +75,7 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="bg-gradient-to-r from-cyan-500 to-blue-500 h-screen w-screen flex justify-center items-center lg:p-4">
+    <div className="bg-gradient-to-r from-cyan-500 to-blue-500 h-screen w-screen flex justify-center items-center lg:p-16">
       <div className=" h-full md:h-4/6 lg:w-4/6 lg:h-4/6 shadow-2xl bg-white  sm:flex sm:flex-col sm:justify-center sm:items-center  md:flex md:flex-col md:items-center md:justify-center  sm:p-0 lg:grid lg:grid-cols-2  lg:rounded-md">
         <div className=" lg:rounded-2xl lg:col-start-1 lg:col-end-2 flex justify-center items-center bg-white lg:h-full p-4  ">
           <Image
@@ -91,7 +91,7 @@ export default function Home() {
             <h1 className="text-3xl lg:text-4xl">Entrar</h1>
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="  mt-2 w-full p-4   h-full flex flex-col items-center justify-start lg:justify-center "
+              className="  mt-2 w-full    h-full flex flex-col items-center justify-start lg:justify-center "
             >
               <div className=" w-full lg:p-4 flex flex-col gap-3">
                 <label htmlFor="email" className="block lg:text-base">
@@ -145,7 +145,7 @@ export default function Home() {
                   </span>
                 )}
               </div>
-              <div className=" lg:p-4 lg:h-[15vh] h-1/4 w-full flex flex-col items-center justify-center lg:justify-end  gap-2 lg:gap-4 ">
+              <div className=" lg:p-4  h-1/4 w-full flex flex-col items-center justify-center lg:justify-start  gap-2 lg:gap-4 ">
                 <Button
                   type="submit"
                   variant="ghost"
@@ -158,9 +158,9 @@ export default function Home() {
                 >
                   Entrar
                 </Button>
-                <Checkbox color="primary" radius="md" size="md" className="">
+                {/* <Checkbox color="primary" radius="md" size="md" className="">
                   Manter conectado?
-                </Checkbox>
+                </Checkbox> */}
               </div>
             </form>
           </div>
