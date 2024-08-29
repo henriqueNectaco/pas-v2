@@ -27,25 +27,25 @@ const Sidebar: React.FC<SidebarProps> = ({ active, onClick, closeSidebar }) => {
           onClick={onClick}
           Icon={FaChartBar}
           Text="Dashboard"
-          href={`${process.env.NEXT_PUBLIC_BASE_URL}/dashboard`}
+          href={`/dashboard`}
         />
         <SidebarItem
           onClick={onClick}
           Icon={FaCartPlus}
           Text="Vendas"
-          href={`${process.env.NEXT_PUBLIC_BASE_URL}/vendas`}
+          href={`/vendas`}
         />
         <SidebarItem
           onClick={onClick}
           Icon={FaLaptopHouse}
           Text="Marketplaces"
-          href={`${process.env.NEXT_PUBLIC_BASE_URL}/marketplaces`}
+          href={`/marketplaces`}
         />
         <SidebarItem
           onClick={onClick}
           Icon={FaFolderOpen}
           Text="Crons"
-          href={`${process.env.NEXT_PUBLIC_BASE_URL}/crons`}
+          href={`/crons`}
         />
       </Content>
     </Container>

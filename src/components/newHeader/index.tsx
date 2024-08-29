@@ -44,28 +44,28 @@ export default function NewHeader(props: header) {
         </div>
         <div className="hidden col-span-3  lg:flex flex-row p-6 items-center gap-6 justify-center">
           <Link
-            href={`${process.env.NEXT_PUBLIC_BASE_URL}/dashboard`}
+            href={`/dashboard`}
             onClick={props.closeSideBar}
             className="text-lg text-white"
           >
             Dashboard
           </Link>
           <Link
-            href={`${process.env.NEXT_PUBLIC_BASE_URL}/vendas`}
+            href={`/vendas`}
             onClick={props.closeSideBar}
             className="text-lg text-white"
           >
             Vendas
           </Link>
           <Link
-            href={`${process.env.NEXT_PUBLIC_BASE_URL}/marketplaces`}
+            href={`/marketplaces`}
             onClick={props.closeSideBar}
             className="text-lg text-white"
           >
             Marketplaces
           </Link>
           <Link
-            href={`${process.env.NEXT_PUBLIC_BASE_URL}/crons`}
+            href={`/crons`}
             className="text-lg text-white"
             onClick={props.closeSideBar}
           >
