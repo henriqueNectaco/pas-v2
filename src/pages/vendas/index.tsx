@@ -368,7 +368,7 @@ export default function Vendas() {
           </div>
         ) : null} */}
         {responseData && responseZoopTransaction && (
-          <div className=" bg-gray-800 text-white   max-w-full text-sm  grid grid-cols-1 lg:grid-cols-2  ">
+          <div className=" bg-gray-800 text-white   max-w-screen text-sm  grid grid-cols-1 lg:grid-cols-2  ">
             <div className=" w-full text-left p-2  space-y-2 lg:space-y-4">
               <p className="text-white">Vendas</p>
               <ReactJson
@@ -378,6 +378,7 @@ export default function Vendas() {
                 indentWidth={10}
                 iconStyle="square"
                 enableClipboard={true}
+                style={{ wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}
               />
             </div>
             <div className=" w-full text-left  p-2 pr-0 space-y-2 lg:space-y-4 ">
@@ -389,6 +390,7 @@ export default function Vendas() {
                 indentWidth={10}
                 iconStyle="square"
                 enableClipboard={true}
+                style={{ wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}
               />
             </div>
           </div>
