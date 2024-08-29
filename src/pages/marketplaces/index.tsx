@@ -295,7 +295,9 @@ export default function Marketplace() {
 
         <>
           {!resData ? (
-            <Spinner size="lg" color="primary" />
+            <div className="w-full h-full flex items-center justify-center">
+              <Spinner size="lg" color="primary" />
+            </div>
           ) : (
             <div className=" max-w-screen w-full  bg-gray-200">
               <TableMarketPlaces marketplace={resData} />
