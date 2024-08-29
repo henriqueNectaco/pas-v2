@@ -1,8 +1,8 @@
 import { parseDate } from '@internationalized/date'
 import ModalMine from '@/components/modal'
-import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
+// import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 
-import nextCookies from 'next-cookies'
+// import nextCookies from 'next-cookies'
 import {
   useDisclosure,
   Dropdown,
@@ -16,7 +16,7 @@ import {
 } from '@nextui-org/react'
 
 import Cookies from 'js-cookie'
-import Router from 'next/router'
+import Router, { useRouter } from 'next/router'
 import React, { Key, useEffect, useState } from 'react'
 import axios from 'axios'
 import { CaretDown } from 'phosphor-react'
@@ -31,31 +31,33 @@ import {
   convertToDateObjectTimer,
   apiUrl,
 } from '@/lib'
+import { api } from '../api/useApi'
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { token } = nextCookies(context)
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   const { token } = nextCookies(context)
 
-  const authRes = await axios.post(`${apiUrl}/autenticar`, { token })
+//   // const authRes = await axios.post(`${apiUrl}/autenticar`, { token })
 
-  if (authRes.data.success === false) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    }
-  }
+//   // if (authRes.data.success === false) {
+//   //   return {
+//   //     redirect: {
+//   //       destination: '/',
+//   //       permanent: false,
+//   //     },
+//   //   }
+//   // }
 
-  const fetchMarketplacesData = await axios.get(
-    `${apiUrl}/marketplaces?status=ativo`,
-    { headers: { Authorization: `Bearer ${token}` } },
-  )
-  return { props: { data: fetchMarketplacesData.data.marketplaces } }
-}
+//   const fetchMarketplacesData = await axios.get(
+//     `${apiUrl}/marketplaces?status=ativo`,
+//     { headers: { Authorization: `Bearer ${token}` } },
+//   )
+//   return { props: { data: fetchMarketplacesData.data.marketplaces } }
+// }
 
-export default function Marketplace({
-  data,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Marketplace() {
+  //   {
+  //   data,
+  // }: InferGetServerSidePropsType<typeof getServerSideProps>
   const [value, setValue] = useState<RangeValue<DateValue>>({
     start: parseDate(today),
     end: parseDate(today),
@@ -78,13 +80,35 @@ export default function Marketplace({
   })
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const token = Cookies.get('token')
-  // const router = useRouter()
+  const router = useRouter()
   const [resData, setResData] = useState<Array<marketplaceItemsTypes> | null>(
-    data,
+    // data,
+    null,
   )
   const [statusMarketplace, setStatusMarketplace] = useState<Key | string>(
     'ativos',
   )
+  const fetchMarketplaces = async () => {
+    try {
+      const res = await api.get(`/marketplaces?status=ativo`)
+      if (res.data.success === true) {
+        setResData(res.data.marketplaces)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  const auth = async () => {
+    try {
+      const res = await axios.post(`${apiUrl}/autenticar`, { token })
+      if (res.data.success === false) {
+        toast.warning('Sua sessão expirou faça login novamente')
+        router.push('/')
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
   const handleReprocessAllSales = async () => {
     try {
       const res = await axios.post(
@@ -154,20 +178,8 @@ export default function Marketplace({
   }
 
   useEffect(() => {
-    const auth = async () => {
-      try {
-        const res = await axios.post(`${apiUrl}/autenticar`, { token })
-        if (res.data.success === false) {
-          toast.error('Sua sessão expirou faça login novamente')
-          Router.push('/')
-          //        getServerSideDate(setResData, token)
-        }
-      } catch (error) {
-        console.error(error)
-      }
-    }
-
     auth()
+    fetchMarketplaces()
   }, [])
 
   useEffect(() => {

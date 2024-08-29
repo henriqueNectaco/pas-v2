@@ -88,7 +88,7 @@ export default function Home() {
         </div>
         <div className="border-l-2  border-gray-300 rounded-r-2xl lg:col-start-2 lg:col-end-3 bg-white max-w-screen-xl mx-auto w-full h-full lg:flex sm:flex sm:flex-col sm:items-center sm:justify-center lg:flex-col lg:items-center lg:justify-center  lg:pt-12 p-4">
           <div className="flex flex-col items-center justify-center  lg:w-full lg:h-full max-w-screen-xl mx-auto w-full m-0 h-full sm:h-full p-4 ">
-            <h1 className="text-3xl lg:text-4xl">Entrar</h1>
+            <h1 className="text-2xl lg:text-3xl">Entrar</h1>
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="  mt-2 w-full    h-full flex flex-col items-center justify-start lg:justify-center "
