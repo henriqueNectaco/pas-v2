@@ -4,8 +4,6 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 import dynamic from 'next/dynamic'
-// import JSONPrettyMon from 'react-json-pretty/themes/monikai.css'
-// import JSONPretty from 'react-json-pretty'
 import FormVendas from './form'
 import { toast } from 'sonner'
 import Router from 'next/router'
@@ -17,8 +15,6 @@ const ReactJson = dynamic(() => import('react-json-view'), { ssr: false }) // Dy
 export default function Vendas() {
   const [pagamentos, setPagamentos] = useState()
   const [splits, setSplits] = useState()
-  // require('dotenv').config()
-  // const apiUrl = process.env.NEXT_PUBLIC_API_URL
   const [isLoadingSearchSale, setIsLoadingSearchSale] = useState<boolean>(false)
   const [isLoadingReprocessSale, setIsLoadingReprocessSale] =
     useState<boolean>(false)
@@ -37,10 +33,7 @@ export default function Vendas() {
   const handleReprocessSale = async () => {
     setIsLoadingReprocessSale(true)
     try {
-      const response = await axios.get(
-        `${apiUrl}/vendas/${responseData?.id}/reprocessar`,
-        { headers: { Authorization: `Bearer ${token}` } },
-      )
+      const response = await api.get(`/vendas/${responseData?.id}/reprocessar`)
       if (response.data.success === true) {
         toast.success('Pedido Adicionado a fila de reprocessamento')
         setIsLoadingReprocessSale(false)
@@ -267,28 +260,7 @@ export default function Vendas() {
                       <Button
                         color="danger"
                         size="md"
-                        onClick={async () => {
-                          try {
-                            const res = await api.get(
-                              `/vendas/${responseData.id}/reprocessar`,
-                            )
-                            // const res = await axios.get(
-                            //   `https://api.zsystems.com.br/z1/vendas/${responseData.id}/reprocessar`,
-                            //   {
-                            //     headers: { Authorization: `Bearer ${token}` },
-                            //   },
-                            // )
-                            if (res.data.success === true) {
-                              toast.success(
-                                'Adicionado a fila de reprocessamento',
-                              )
-                            } else {
-                              toast.warning(res.data.error)
-                            }
-                          } catch (error) {
-                            console.error(error)
-                          }
-                        }}
+                        onClick={handleReprocessSale}
                       >
                         Reprocessar venda
                       </Button>
@@ -351,22 +323,6 @@ export default function Vendas() {
             </div>
           </div>
         ) : null}
-        {/* {responseData ? (
-          <div className=" bg-gray-800    max-w-full text-sm  grid grid-cols-1 lg:grid-cols-2 lg:col-span-2 ">
-            <div className=" w-full text-left p-2  space-y-2 lg:space-y-4">
-              <p className="text-white">Vendas</p>
-              <JSONPretty data={responseData} theme={{ JSONPrettyMon }} />
-            </div>
-            <div className=" w-full text-left  p-2 pr-0 space-y-2 lg:space-y-4 ">
-              <p className="text-white">Zoop Transactions</p>
-              <JSONPretty
-                className=" roundead-xl "
-                data={responseZoopTransaction}
-                theme={{ JSONPrettyMon }}
-              />
-            </div>
-          </div>
-        ) : null} */}
         {responseData && responseZoopTransaction && (
           <div className=" bg-gray-800 text-white   max-w-screen text-sm  grid grid-cols-1 lg:grid-cols-2  ">
             <div className=" w-full text-left p-2  space-y-2 lg:space-y-4">
@@ -399,15 +355,3 @@ export default function Vendas() {
     </div>
   )
 }
-
-/*  function status_payment(statusPaymentId: number) {
-    switch (statusPaymentId) {
-      case 1:
-        return 'Aprovado'
-      case 2:
-        return 'Pendente'
-      case 3:
-        return 'Negado'
-    }
-  }
- */
