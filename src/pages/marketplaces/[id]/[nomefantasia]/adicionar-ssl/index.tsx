@@ -21,6 +21,7 @@ type typeData = {
 
 export default function App() {
   const token = Cookies.get('token')
+  const [isLoading, setIsLoading] = useState(false)
   const [renovacao, setRenovacao] = useState(false)
   const [pki, setPki] = useState<File[]>([])
   const [crt, setCrt] = useState<File[]>([])
@@ -63,6 +64,7 @@ export default function App() {
   }
   const validarPki = async () => {
     try {
+      setIsLoading(true)
       const formData = new FormData()
       if (pki.length !== 0) {
         formData.append('pkiValidation', pki[0])
@@ -83,16 +85,20 @@ export default function App() {
         },
       )
       if (res.data.success === true && renovacao === true) {
+        setIsLoading(false)
         setActiveStep(activeStep + 1)
       } else if (res.data.success === true && renovacao === false) {
         setActiveStep(activeStep + 1)
+        setIsLoading(false)
       }
     } catch (error) {
       console.error(error)
+      setIsLoading(false)
     }
   }
   const handleAdicionarSsl = async () => {
     try {
+      setIsLoading(true)
       const formData = new FormData()
       formData.append('dominio', String(data.dominio))
       formData.append('crtFile', crt[0])
@@ -110,6 +116,7 @@ export default function App() {
         },
       )
       if (res.data.success === true) {
+        setIsLoading(false)
         setActiveStep(activeStep + 1)
       }
     } catch (error) {
@@ -118,6 +125,7 @@ export default function App() {
   }
 
   const RestartNginx = async () => {
+    setIsLoading(true)
     await axios
       .post(
         `https://api.zsystems.com.br/marketplaces/restart-nginx`,
@@ -128,8 +136,15 @@ export default function App() {
       )
       .catch((res) => {
         if (res.code === 'ERR_NETWORK') {
-          setActiveStep(activeStep + 1)
-          toast.success('NGINX reiniciado com sucesso!')
+          if (activeStep === 3) {
+            setIsLoading(false)
+            toast.success('NGINX reiniciado com sucesso!')
+            router.push('/marketplaces')
+          } else {
+            setIsLoading(false)
+            toast.success('NGINX reiniciado com sucesso!')
+            setActiveStep(activeStep + 1)
+          }
         }
         toast.error(res.response.data.message || 'Unknown')
       })
@@ -187,8 +202,7 @@ export default function App() {
 
   useEffect(() => {
     auth()
-    console.log(data)
-  }, [data])
+  }, [])
   return (
     <div className=" flex flex-col items-center bg-gray-300 max-w-screen w-full h-full lg:h-screen overflow-y-hidden p-0 lg:p-12 lg:pt-20">
       <div className=" h-full flex flex-col  bg-white shadow-xl rounded-md w-full lg:w-1/2 border  lg:h-2/3">
@@ -298,6 +312,7 @@ export default function App() {
         )}
         <div className="border-t border-black flex items-center justify-end p-4 w-full ">
           <Button
+            isLoading={isLoading}
             size="md"
             variant="bordered"
             color="primary"

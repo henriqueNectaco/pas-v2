@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 import { GetServerSideProps } from 'next'
 import nextCookies from 'next-cookies'
 import axios from 'axios'
-
+export const apiUrlSetup = process.env.NEXT_PUBLIC_API_SETUP
 export const apiUrl = process.env.NEXT_PUBLIC_API_URL
 export const localUrl = process.env.NEXT_PUBLIC_LOCAL
 export const apiPas = process.env.NEXT_PUBLIC_API_PAS

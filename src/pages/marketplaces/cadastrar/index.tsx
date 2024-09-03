@@ -18,7 +18,7 @@ import { FormschemaCadastroMarketplace } from '@/types/marketplaces'
 
 import 'filepond/dist/filepond.min.css'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
-import { apiUrl } from '@/lib'
+import { apiUrl, apiUrlSetup } from '@/lib'
 import Cookies from 'js-cookie'
 import FilePondComponent from '@/components/cadastroMarketplace/filepond'
 import { FilePondFile } from 'filepond'
@@ -39,6 +39,7 @@ export default function CadastrarMarketplaces() {
     resolver: zodResolver(FormschemaCadastroMarketplace),
     mode: 'onChange',
   })
+  const [isLoading, setIsLoading] = useState(false)
   const cobrancaPorTransacao = watch('cobrancaPorTransacao', false)
   const [marketplaceId, setMarketplaceId] = useState(null)
   const [activeStep, setActiveStep] = useState<number>(0)
@@ -71,9 +72,10 @@ export default function CadastrarMarketplaces() {
     }
   }
   const RestartNginx = async () => {
+    setIsLoading(true)
     await axios
       .post(
-        `${apiUrl}/marketplaces/restart-nginx`,
+        `${apiUrlSetup}/marketplaces/restart-nginx`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -81,24 +83,29 @@ export default function CadastrarMarketplaces() {
       )
       .catch((res) => {
         if (res.code === 'ERR_NETWORK') {
+          setIsLoading(false)
           toast.success('NGINX reiniciado com sucesso!')
           setActiveStep(activeStep + 1)
         }
         toast.error(res.response.data.message || 'Unknown')
+        setIsLoading(false)
       })
   }
   const importarDadosZoop = async () => {
     try {
+      setIsLoading(true)
       const res = await axios.post(
-        `${apiUrl}/marketplaces/${marketplaceId}/importar-dados-zoop`,
+        `${apiUrlSetup}/marketplaces/${marketplaceId}/importar-dados-zoop`,
         {},
         { headers: { Authorization: `Bearer ${token}` } },
       )
-      if (res.data.succes === true) {
+      if (res.data.success === true) {
+        setIsLoading(false)
         toast.success('Rotina iniciada com sucesso!')
         setActiveStep(activeStep + 1)
       }
     } catch (error) {
+      setIsLoading(false)
       console.error(error)
     }
   }
@@ -114,6 +121,7 @@ export default function CadastrarMarketplaces() {
     }
   }
   const handleCadastrarMarketplace = async (dados: FormschemaData) => {
+    setIsLoading(true)
     const formData = new FormData()
 
     formData.append('cor', String(dados.color))
@@ -143,7 +151,7 @@ export default function CadastrarMarketplaces() {
     }
     try {
       const res = await axios.post(
-        `${apiUrl}/marketplaces/add`,
+        `${apiUrlSetup}/marketplaces/add`,
 
         formData,
         {
@@ -153,14 +161,17 @@ export default function CadastrarMarketplaces() {
           },
         },
       )
-      if (res.data.succes === true) {
+      if (res.data.success === true) {
+        setIsLoading(false)
         toast.success('Marketplace cadastrado com sucesso!')
         setMarketplaceId(res.data.marketplace.id)
         setActiveStep(activeStep + 1)
       } else {
+        setIsLoading(false)
         toast.error('Alog inesperado ocorreu ')
       }
     } catch (error) {
+      setIsLoading(false)
       console.error(error)
       toast.error('Erro ao cadastrar Marketplace.')
     }
@@ -438,6 +449,7 @@ export default function CadastrarMarketplaces() {
                 color="primary"
                 onPress={handleNext}
                 aria-label="next step"
+                isLoading={isLoading}
               >
                 {activeStep === 0 && 'Avançar'}
                 {activeStep === 1 && 'Finalizar cadastro'}
