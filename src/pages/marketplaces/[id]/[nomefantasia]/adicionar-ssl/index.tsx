@@ -143,7 +143,7 @@ export default function App() {
   //   setPki(validFiles.map((fileItem) => fileItem.file as File)) // Type casting here
   // }
   const handleUpdatePki = (fileItems: FilePondFile[]) => {
-    setBundleCrtFile(fileItems.map((fileItem) => fileItem.file as File))
+    setPki(fileItems.map((fileItem) => fileItem.file as File))
   }
   const handleUpdateCrt = (fileItems: FilePondFile[]) => {
     const validFiles = fileItems.filter((fileItem) => {
