@@ -11,7 +11,7 @@ import { useRouter } from 'next/router'
 import { FilePondFile } from 'filepond'
 import { toast } from 'sonner'
 import FilePondComponent from '@/components/cadastroMarketplace/filepond'
-import { apiAuth, apiUrl } from '@/pages/api/useApi'
+import { apiAuth } from '@/pages/api/useApi'
 import Cookies from 'js-cookie'
 import axios from 'axios'
 type typeData = {
@@ -73,7 +73,7 @@ export default function App() {
       formData.append('renovacao', String(renovacao))
       // ${apiUrl}/estabelecimentos/validar-pki
       const res = await axios.post(
-        `${apiUrl}/estabelecimentos/validar-pki`,
+        `https://api.zsystems.com.br/estabelecimentos/validar-pki`,
         formData,
         {
           headers: {
@@ -100,7 +100,7 @@ export default function App() {
       formData.append('bundleCrtFile', bundleCrtFile[0])
       // ${apiUrl}/estabelecimentos/adicionar-ssl
       const res = await axios.post(
-        `${apiUrl}/estabelecimentos/adicionar-ssl`,
+        `https://api.zsystems.com.br/estabelecimentos/adicionar-ssl`,
         formData,
         {
           headers: {
@@ -120,7 +120,7 @@ export default function App() {
   const RestartNginx = async () => {
     await axios
       .post(
-        `${apiUrl}/marketplaces/restart-nginx`,
+        `https://api.zsystems.com.br/marketplaces/restart-nginx`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
