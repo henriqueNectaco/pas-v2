@@ -40,10 +40,9 @@ export default function Home() {
       setIsLoading(true)
       const response = await axios.post(`${apiUrl}/login`, data)
       if (response.data.success === true) {
-        setIsLoading(false)
         Cookies.set('token', response.data.usuario.token)
         toast.success('Login realizado com sucesso!')
-
+        setIsLoading(false)
         router.push('/dashboard')
       } else {
         setIsLoading(false)

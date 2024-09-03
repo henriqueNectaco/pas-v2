@@ -134,20 +134,16 @@ export default function App() {
       })
   }
 
-  const handleUpdatePki = (fileItems: FilePondFile[]) => {
-    const validFiles = fileItems.filter((fileItem) => {
-      const file = fileItem.file as File // Type casting here
-      const fileName = file.name.toLowerCase() // Get file name and convert to lower case
+  // const handleUpdatePki = (fileItems: FilePondFile[]) => {
+  //   const validFiles = fileItems.filter((fileItem) => {
+  //     const file = fileItem.file as File // Type casting here
+  //     const fileName = file.name.toLowerCase() // Get file name and convert to lower case
 
-      // Check if the file has a .pki extension
-      if (fileName.endsWith('.pki')) {
-        return true
-      } else {
-        toast.warning('Apenas arquivos com a extensão .pki são permitidos!')
-        return false
-      }
-    })
-    setPki(validFiles.map((fileItem) => fileItem.file as File)) // Type casting here
+  //   })
+  //   setPki(validFiles.map((fileItem) => fileItem.file as File)) // Type casting here
+  // }
+  const handleUpdatePki = (fileItems: FilePondFile[]) => {
+    setBundleCrtFile(fileItems.map((fileItem) => fileItem.file as File))
   }
   const handleUpdateCrt = (fileItems: FilePondFile[]) => {
     const validFiles = fileItems.filter((fileItem) => {
