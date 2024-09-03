@@ -128,6 +128,7 @@ export default function App() {
       )
       .catch((res) => {
         if (res.code === 'ERR_NETWORK') {
+          setActiveStep(activeStep + 1)
           toast.success('NGINX reiniciado com sucesso!')
         }
         toast.error(res.response.data.message || 'Unknown')
