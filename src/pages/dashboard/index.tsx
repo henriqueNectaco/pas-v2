@@ -16,26 +16,6 @@ import DashComponent from '@/components/dasboard/dashComponent'
 import { parseDate } from '@internationalized/date'
 import { typeDataDashboard, typeServices } from '@/types/dashboard'
 import { RangeValue, DateValue } from '@nextui-org/react'
-import { GetServerSideProps } from 'next'
-import nextCookies from 'next-cookies'
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { token } = nextCookies(context)
-
-  const authRes = await axios.post(`${apiUrl}/autenticar`, { token })
-
-  if (authRes.data.success === false) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    }
-  }
-
-  return { props: {} }
-}
-
 export default function DashBoard() {
   const newDate = new Date()
   const token = Cookies.get('token')
