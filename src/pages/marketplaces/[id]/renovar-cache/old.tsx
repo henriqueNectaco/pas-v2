@@ -61,13 +61,13 @@ export default function RenovarCachePage() {
 
   return (
     <div className="max-w-screen w-full max-h-screen h-screen flex items-start justify-center    bg-gray-200 p-8 pt-12">
-      <div className="w-full lg:w-2/4  flex flex-col items-center justify-start bg-white rounded-md shadow-xl ">
+      <div className="w-full lg:w-2/3  flex flex-col items-center justify-start bg-white rounded-md shadow-xl ">
         <h1 className="border-b border-black w-full p-4 flex items-center justify-center text-xl font-semibold">
           Renovar Cache
         </h1>
-        <div className="w-full  flex flex-col   h-full  p-4 lg:p-10 gap-4  ">
+        <div className="w-full  flex flex-col   h-full  p-4 lg:p-10 gap-4 grid grid-cols-2 ">
           <div className="flex flex-col   ">
-            <div className=" flex flex-col lg:flex-row items-center justify-center gap-2 ">
+            <div className=" flex flex-col items-center justify-center gap-2 ">
               <DateRangePicker
                 radius="sm"
                 size="md"
@@ -116,68 +116,53 @@ export default function RenovarCachePage() {
           </div>
           <div className="pt-2 flex flex-col h-full  gap-2">
             <div className="flex flex-col    gap-2  ">
-              <div className="flex lg:flex-row flex-col w-full   gap-4">
-                <div className='flex flex-col w-full gap-1'>
-                  <p className='lg:text-lg'>Tipo de venda</p>
-                  <DropDownMenuCache
-                    title={'Selecione o tipo de venda'}
-                    setData={setData}
-                    items={['Presencial', 'Online', 'Link de pagamento']}
-                  />
-                </div>
-                <div className='flex flex-col w-full gap-1'>
-                  <span className='lg:text-lg'>Status da venda</span>
-                  <DropDownMenuCache
-                    title="Selecione o status da venda"
-                    setData={setData}
-                    items={[
-                      'Pendente',
-                      'Aprovado',
-                      'Falhado',
-                      'Cancelado',
-                      'Estornado',
-                    ]}
-                  />
-                </div>
-
+              <div className="flex lg:flex-row flex-col w-full   gap-1">
+                <DropDownMenuCache
+                  title={'Tipo de venda'}
+                  setData={setData}
+                  items={['Presencial', 'Online', 'Link de pagamento']}
+                />
+                <DropDownMenuCache
+                  title="Status da Venda"
+                  setData={setData}
+                  items={[
+                    'Pendente',
+                    'Aprovado',
+                    'Falhado',
+                    'Cancelado',
+                    'Estornado',
+                  ]}
+                />
               </div>
-              <div className='flex  flex-col lg:flex-row gap-4'>
-                <div className='flex flex-col w-full gap-1'>
-                  <span className='lg:text-lg'>Bandeira</span>
-                  <DropDownMenuCache
-                    title="Selecione uma bandeira"
-                    items={[
-                      'American Express',
-                      'Elo',
-                      'Maestro',
-                      'Mastercard',
-                      'Visa',
-                      'Visa electron',
-                      'Diners Club',
-                      'Hiper',
-                      'Hipercard',
-                      'Banescard',
-                    ]}
-                    setData={setData}
-                  />
-                </div>
-                <div className='flex flex-col w-full gap-1'>
-                  <span className='lg:text-lg'>Forma de pagamento</span>
-                  <DropDownMenuCache
-                    title={'Formas Pagamentos'}
-                    setData={setData}
-                    items={[
-                      'Boleto',
-                      'Débito',
-                      'Pix',
-                      'Crédito à Vista',
-                      'Crédito parcelado',
-                    ]}
-                  />
-                </div>
-              </div>
+              <DropDownMenuCache
+                title="Bandeira"
+                items={[
+                  'American Express',
+                  'Elo',
+                  'Maestro',
+                  'Mastercard',
+                  'Visa',
+                  'Visa electron',
+                  'Diners Club',
+                  'Hiper',
+                  'Hipercard',
+                  'Banescard',
+                ]}
+                setData={setData}
+              />
+              <DropDownMenuCache
+                title={'Formas Pagamentos'}
+                setData={setData}
+                items={[
+                  'Boleto',
+                  'Débito',
+                  'Pix',
+                  'Crédito à Vista',
+                  'Crédito parcelado',
+                ]}
+              />
             </div>
-            <div className=" flex items-end h-full">
+            <div className="border border-black flex items-end h-full">
               <Button color="primary" fullWidth={true} onClick={handleSubmit}>
                 ENVIAR
               </Button>
