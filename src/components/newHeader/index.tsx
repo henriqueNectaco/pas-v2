@@ -14,7 +14,7 @@ import {
 // import Sidebar from '../Sidebar'
 import { SignOut, TextAlignJustify, Warning } from 'phosphor-react'
 // import { LogOut } from 'lucide-react'
-import Link from 'next/link'
+// import Link from 'next/link'
 import { useRouter } from 'next/router'
 type header = {
   closeSideBar: () => void
@@ -33,7 +33,7 @@ export default function NewHeader(props: header) {
   return (
     <>
       <div
-        className={`bg-blue-600 flex flex-row lg:grid lg:grid-cols-5 shadow-[0_0_7px_3px]  `}
+        className={`bg-blue-600 flex flex-row lg:grid lg:grid-cols-2 shadow-[0_0_7px_3px]  `}
       >
         <div className=" text-white  flex items-center p-6 lg:col-span-1 w-full">
           <TextAlignJustify
@@ -42,7 +42,7 @@ export default function NewHeader(props: header) {
             className="hover:cursor-pointer"
           />
         </div>
-        <div className="hidden col-span-3  lg:flex flex-row p-6 items-center gap-6 justify-center">
+        {/* <div className="hidden col-span-3  lg:flex flex-row p-6 items-center gap-6 justify-center">
           <Link
             href={`/dashboard`}
             onClick={props.closeSideBar}
@@ -71,7 +71,7 @@ export default function NewHeader(props: header) {
           >
             Crons
           </Link>
-        </div>
+        </div> */}
         <div className=" flex col-span-1 items-center  justify-end  w-full  p-6">
           <SignOut
             color="white"

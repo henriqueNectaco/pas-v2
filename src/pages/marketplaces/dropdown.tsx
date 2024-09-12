@@ -15,7 +15,7 @@ import {
 import { DotsThreeOutlineVertical } from 'phosphor-react'
 import ModalMine from '@/components/modal'
 import axios from 'axios'
-import { formatDateToYYYYMMDD, localUrl, today } from '@/lib'
+import { apiPas, apiUrl, formatDateToYYYYMMDD, localUrl, today } from '@/lib'
 
 type TypeProps = {
   id: number
@@ -68,7 +68,7 @@ export default function DropdownButton(props: TypeProps) {
   const importarECs = async () => {
     try {
       await axios.post(
-        `https://pas-aps.up.railway.app/marketplace/import-establishment`,
+        `${apiPas}/import-establishment`,
         {
           startDate: formatDateToYYYYMMDD(value.start),
           endDate: formatDateToYYYYMMDD(value.end),
@@ -83,7 +83,7 @@ export default function DropdownButton(props: TypeProps) {
   const importarVendas = async () => {
     try {
       await axios.post(
-        `https://api.zsystems.com.br/marketplaces/${props.id}/importar-pedidos`,
+        `${apiPas}/marketplaces/${props.id}/importar-pedidos`,
         {
           startDate: formatDateToYYYYMMDD(value.start),
           endDate: formatDateToYYYYMMDD(value.end),
@@ -107,7 +107,7 @@ export default function DropdownButton(props: TypeProps) {
   const reprocessarVendas = async () => {
     try {
       await axios.post(
-        `https://api.zsystems.com.br/marketplaces/reprocessar-pedidos/${props.id}`,
+        `${apiUrl}/marketplaces/reprocessar-pedidos/${props.id}`,
         {
           startDate: formatDateToYYYYMMDD(value.start),
           endDate: formatDateToYYYYMMDD(value.end),

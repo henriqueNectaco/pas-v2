@@ -71,7 +71,7 @@ export default function DashBoard() {
       setIsLoadingReprocessarSaldo(true)
       const res = await axios.get(
         `
-      ${apiUrl}/reprocessar-saldo/${idEstabelecimentoReprocessarSaldo}/${daysReprocessarSaldo}`,
+      ${apiUrl}/z1/reprocessar-saldo/${idEstabelecimentoReprocessarSaldo}/${daysReprocessarSaldo}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -89,7 +89,7 @@ export default function DashBoard() {
     setIsLoadingReprocessarVenda(true)
     try {
       const res = await axios.get(
-        `${apiUrl}/reprocessar-vendas/${idEstabelecimentoReprocessarVenda}/${formatDateToYYYYMMDD(value.start)}/${formatDateToYYYYMMDD(value.end)}`,
+        `${apiUrl}/z1/reprocessar-vendas/${idEstabelecimentoReprocessarVenda}/${formatDateToYYYYMMDD(value.start)}/${formatDateToYYYYMMDD(value.end)}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -245,7 +245,7 @@ ${apiPas}/sale/total-not-processed?startDate=${today}&endDate=${today}`,
   const fetchDataServiceStatus = async () => {
     try {
       setServicesStatus(null)
-      const response = await axios.get(`${apiUrl}/services-status`, {
+      const response = await axios.get(`${apiUrl}/z1/services-status`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       setServicesStatus(response.data.services)
@@ -255,7 +255,7 @@ ${apiPas}/sale/total-not-processed?startDate=${today}&endDate=${today}`,
   }
   const fechAmountData = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/indicadores`, {
+      const response = await axios.get(`${apiUrl}/z1/indicadores`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       setData((prevData) => ({
@@ -270,7 +270,7 @@ ${apiPas}/sale/total-not-processed?startDate=${today}&endDate=${today}`,
 
   const auth = async () => {
     try {
-      const res = await axios.post(`${apiUrl}/autenticar`, { token })
+      const res = await axios.post(`${apiUrl}/z1/autenticar`, { token })
       if (res.data.success === false) {
         toast.error('Sua sessão expirou faça login novamente')
         Router.push('/')

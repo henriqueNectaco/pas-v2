@@ -49,7 +49,7 @@ export default function Vendas() {
         toast.error('Preencha o  campo ID da venda')
         setIsLoadingSearchSale(false)
       } else {
-        const response = await axios.get(`${apiUrl}/vendas/${vendaId}`, {
+        const response = await axios.get(`${apiUrl}/z1/vendas/${vendaId}`, {
           headers: { Authorization: `Bearer ${token}` },
         })
 
@@ -72,7 +72,7 @@ export default function Vendas() {
   }
   const auth = async () => {
     try {
-      const res = await axios.post(`${apiUrl}/autenticar`, { token })
+      const res = await axios.post(`${apiUrl}/z1/autenticar`, { token })
       if (res.data.success === false) {
         toast.error('Sua sessão expirou faça login novamente')
         Router.push('/')

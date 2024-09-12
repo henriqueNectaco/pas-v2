@@ -25,7 +25,6 @@ import TableMarketPlaces, {
   marketplaceItemsTypes,
 } from '../../components/marketplaces/table/table'
 import {
-  formatDateToYYYYMMDD,
   today,
   formatDateRangeTimer,
   convertToDateObjectTimer,
@@ -63,7 +62,7 @@ export default function Marketplace() {
     end: parseDate(today),
   })
 
-  const [valueImportarPedidos, setValueImportarPedidos] = useState({
+  const [date, setDate] = useState({
     startDate: '',
     endDate: '',
   })
@@ -73,10 +72,6 @@ export default function Marketplace() {
     useDesativar: false,
     useDropdownChangeParents: false,
     useDatePicker: false,
-  })
-  const [date, setDate] = useState({
-    startDate: formatDateToYYYYMMDD(value.start),
-    endDate: formatDateToYYYYMMDD(value.end),
   })
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const token = Cookies.get('token')
@@ -113,8 +108,11 @@ export default function Marketplace() {
     try {
       const res = await axios.post(
         `${apiUrl}/reprocessar-pedidos`,
-        { startDate: date.startDate, endDate: date.endDate },
-        // { headers: { Authorization: `Bearer ${token}` } },
+        {
+          startDate: date.startDate,
+          endDate: date.endDate,
+        },
+        { headers: { Authorization: `Bearer ${token}` } },
       )
       if (res.data.success === true) {
         toast.success('Adicionado a fila :)')
@@ -132,8 +130,8 @@ export default function Marketplace() {
       const res = await axios.post(
         `${apiUrl}/marketplaces/importar-pedidos`,
         {
-          startDate: valueImportarPedidos.startDate,
-          endDate: valueImportarPedidos.endDate,
+          startDate: date.startDate,
+          endDate: date.endDate,
         },
         // { headers: { Authorization: `Bearer ${token}` } },
       )
@@ -167,7 +165,7 @@ export default function Marketplace() {
         setResData(null)
       }
       const res = await axios.get(
-        `${apiUrl}/marketplaces?status=${statusMarketplace}`,
+        `${apiUrl}/z1/marketplaces?status=${statusMarketplace}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
 
@@ -185,11 +183,8 @@ export default function Marketplace() {
   useEffect(() => {
     const dateObjStart = convertToDateObjectTimer(value.start)
     const dateObjEnd = convertToDateObjectTimer(value.end)
+
     setDate({
-      startDate: formatDateToYYYYMMDD(value.start),
-      endDate: formatDateToYYYYMMDD(value.end),
-    })
-    setValueImportarPedidos({
       startDate: formatDateRangeTimer(dateObjStart),
       endDate: formatDateRangeTimer(dateObjEnd),
     })
@@ -215,8 +210,8 @@ export default function Marketplace() {
                 setModalProps((prev) => ({
                   ...prev,
                   action: 'Reprocessar todas as vendas',
-                  useDatePicker: true,
-                  useDateRangePickerWithTimer: false,
+                  useDatePicker: false,
+                  useDateRangePickerWithTimer: true,
                   useTaxForTransaction: false,
                   useDesativar: false,
                 }))

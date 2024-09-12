@@ -24,12 +24,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   }
   const { id } = context.query
-  const fetchChilds = await axios.get(
-    `https://api.zsystems.com.br/marketplaces/${id}/filhos`,
-    {
-      headers: { Authorization: `Bearer ${token}` },
-    },
-  )
+  const fetchChilds = await axios.get(`${apiUrl}/marketplaces/${id}/filhos`, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
 
   return { props: { data: fetchChilds.data.estabelecimentos } }
 }

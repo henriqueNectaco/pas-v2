@@ -28,7 +28,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
   const { id } = context.query
   const res = await axios.get(
-    `${apiUrl}/marketplace/${id}/estabelecimentos?limit=30&page=1`,
+    `${apiUrl}/z1/marketplace/${id}/estabelecimentos?limit=30&page=1`,
     {
       headers: { Authorization: `Bearer ${token}` },
     },
@@ -64,10 +64,9 @@ export default function Estabelecimentos({
   const { id } = router.query
   const fetchChilds = async () => {
     try {
-      const res = await axios.get(
-        `https://api.zsystems.com.br/marketplaces/${id}/filhos`,
-        { headers: { Authorization: `Bearer ${token}` } },
-      )
+      const res = await axios.get(`${apiUrl}/marketplaces/${id}/filhos`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
 
       if (res.data.success === true) {
         setMarketplacesPai(res.data.estabelecimentos)
@@ -120,7 +119,7 @@ export default function Estabelecimentos({
     try {
       setEstabeleciments(null)
       const res = await axios.get(
-        `https://api.zsystems.com.br/z1/marketplace/${id}/estabelecimentos`,
+        `${apiUrl}/z1/marketplace/${id}/estabelecimentos`,
         {
           params: queryParams,
           headers: { Authorization: `Bearer ${token}` },
