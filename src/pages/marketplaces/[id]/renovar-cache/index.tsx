@@ -117,16 +117,16 @@ export default function RenovarCachePage() {
           <div className="pt-2 flex flex-col h-full  gap-2">
             <div className="flex flex-col    gap-2  ">
               <div className="flex lg:flex-row flex-col w-full   gap-4">
-                <div className='flex flex-col w-full gap-1'>
-                  <p className='lg:text-lg'>Tipo de venda</p>
+                <div className="flex flex-col w-full gap-1">
+                  <p className="lg:text-lg">Tipo de venda</p>
                   <DropDownMenuCache
                     title={'Selecione o tipo de venda'}
                     setData={setData}
                     items={['Presencial', 'Online', 'Link de pagamento']}
                   />
                 </div>
-                <div className='flex flex-col w-full gap-1'>
-                  <span className='lg:text-lg'>Status da venda</span>
+                <div className="flex flex-col w-full gap-1">
+                  <span className="lg:text-lg">Status da venda</span>
                   <DropDownMenuCache
                     title="Selecione o status da venda"
                     setData={setData}
@@ -139,11 +139,10 @@ export default function RenovarCachePage() {
                     ]}
                   />
                 </div>
-
               </div>
-              <div className='flex  flex-col lg:flex-row gap-4'>
-                <div className='flex flex-col w-full gap-1'>
-                  <span className='lg:text-lg'>Bandeira</span>
+              <div className="flex  flex-col lg:flex-row gap-4">
+                <div className="flex flex-col w-full gap-1">
+                  <span className="lg:text-lg">Bandeira</span>
                   <DropDownMenuCache
                     title="Selecione uma bandeira"
                     items={[
@@ -161,8 +160,8 @@ export default function RenovarCachePage() {
                     setData={setData}
                   />
                 </div>
-                <div className='flex flex-col w-full gap-1'>
-                  <span className='lg:text-lg'>Forma de pagamento</span>
+                <div className="flex flex-col w-full gap-1">
+                  <span className="lg:text-lg">Forma de pagamento</span>
                   <DropDownMenuCache
                     title={'Formas Pagamentos'}
                     setData={setData}

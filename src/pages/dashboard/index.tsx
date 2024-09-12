@@ -45,7 +45,9 @@ export default function DashBoard() {
     marketplacesCadastradosUltimos30dias: undefined,
     estabelecimentosFilhosRegistradosUltimos30dias: undefined,
   })
-  const [servicesStatus, setServicesStatus] = useState<typeServices[] | null>([])
+  const [servicesStatus, setServicesStatus] = useState<typeServices[] | null>(
+    [],
+  )
   const [isDisabledReprocessSales, setIsDisabledReprocessSales] = useState(true)
   const [isDisabledReprocessarSaldo, setIsDisabledReprocessarSaldo] =
     useState(true)
