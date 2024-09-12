@@ -25,7 +25,7 @@ export type TypePropsDashComponent = {
     SetStateAction<string | undefined>
   >
   inputDias: Dispatch<SetStateAction<string | undefined>>
-  servicesStatus: typeServices[]
+  servicesStatus: typeServices[] | null
   isDisabledReprocessSale: boolean
   isLoadingReprocessarVenda: boolean
   isLoadingReprocessarSaldo: boolean

@@ -45,7 +45,7 @@ export default function DashBoard() {
     marketplacesCadastradosUltimos30dias: undefined,
     estabelecimentosFilhosRegistradosUltimos30dias: undefined,
   })
-  const [servicesStatus, setServicesStatus] = useState<typeServices[]>([])
+  const [servicesStatus, setServicesStatus] = useState<typeServices[] | null>([])
   const [isDisabledReprocessSales, setIsDisabledReprocessSales] = useState(true)
   const [isDisabledReprocessarSaldo, setIsDisabledReprocessarSaldo] =
     useState(true)
@@ -242,6 +242,7 @@ ${apiPas}/sale/total-not-processed?startDate=${today}&endDate=${today}`,
   }
   const fetchDataServiceStatus = async () => {
     try {
+      setServicesStatus(null)
       const response = await axios.get(`${apiUrl}/services-status`, {
         headers: { Authorization: `Bearer ${token}` },
       })
@@ -293,20 +294,35 @@ ${apiPas}/sale/total-not-processed?startDate=${today}&endDate=${today}`,
     daysReprocessarSaldo,
   ])
   useEffect(() => {
-    auth()
-    fecthTotalMarketplaceChildResgistredPreviousMonth()
-    fetchDataServiceStatus()
-    fechAmountData()
-    FetchTotalProcessedYesterday()
-    fetchsTotalProcessedToday()
-    fetchTotalProcessedLastThirtyDays()
-    fetchTotalProcessedThirtyDaysLater()
-    fetchTotalMarketplaceChildRegistredLastThirtyDays()
-    fetchTotalEstabelecimentsChildRegistredLastThirtyDays()
-    fetchTotalNotProcessedToday()
-    fetchTotanNotProcessedYesterday()
-  }, [])
+    // Função para fazer fetch dos dados necessários
+    const fetchData = async () => {
+      await auth()
+      await fecthTotalMarketplaceChildResgistredPreviousMonth()
+      await fetchDataServiceStatus()
+      await fechAmountData()
+      await FetchTotalProcessedYesterday()
+      await fetchsTotalProcessedToday()
+      await fetchTotalProcessedLastThirtyDays()
+      await fetchTotalProcessedThirtyDaysLater()
+      await fetchTotalMarketplaceChildRegistredLastThirtyDays()
+      await fetchTotalEstabelecimentsChildRegistredLastThirtyDays()
+      await fetchTotalNotProcessedToday()
+      await fetchTotanNotProcessedYesterday()
+    }
 
+    // Chama fetchData inicialmente
+    fetchData()
+
+    // Define o intervalo para chamar fetchData a cada 30 segundos
+    const intervalId = setInterval(fetchDataServiceStatus, 60000)
+    const intervalIdFetchAmountData = setInterval(fechAmountData, 30000)
+
+    // Limpeza do intervalo ao desmontar o componente
+    return () => {
+      clearInterval(intervalId)
+      clearInterval(intervalIdFetchAmountData)
+    }
+  }, [])
   return (
     <div className=" h-screen max-w-screen flex flex-col items-center    ">
       <div className=" h-screen    w-full  max-w-screen flex flex-col items-center justify-start  lg:pt-10 ">
