@@ -133,7 +133,7 @@ export default function Marketplace() {
           startDate: date.startDate,
           endDate: date.endDate,
         },
-        // { headers: { Authorization: `Bearer ${token}` } },
+        { headers: { Authorization: `Bearer ${token}` } },
       )
       if (res.data.success === true) {
         toast.success('Adicionado a fila ')
