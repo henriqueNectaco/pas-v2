@@ -14,6 +14,7 @@ import FilePondComponent from '@/components/cadastroMarketplace/filepond'
 import { apiAuth } from '@/pages/api/useApi'
 import Cookies from 'js-cookie'
 import axios from 'axios'
+import { apiUrl } from '@/lib'
 type typeData = {
   nome: string | string[] | undefined
   dominio: string | null
@@ -73,7 +74,7 @@ export default function App() {
       formData.append('renovacao', String(renovacao))
       // ${apiUrl}/estabelecimentos/validar-pki
       const res = await axios.post(
-        `https://api.zsystems.com.br/estabelecimentos/validar-pki`,
+        `${apiUrl}/estabelecimentos/validar-pki`,
         formData,
         {
           headers: {
@@ -100,7 +101,7 @@ export default function App() {
       formData.append('bundleCrtFile', bundleCrtFile[0])
       // ${apiUrl}/estabelecimentos/adicionar-ssl
       const res = await axios.post(
-        `https://api.zsystems.com.br/estabelecimentos/adicionar-ssl`,
+        `${apiUrl}/estabelecimentos/adicionar-ssl`,
         formData,
         {
           headers: {
@@ -120,7 +121,7 @@ export default function App() {
   const RestartNginx = async () => {
     await axios
       .post(
-        `https://api.zsystems.com.br/marketplaces/restart-nginx`,
+        `${apiUrl}/marketplaces/restart-nginx`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
