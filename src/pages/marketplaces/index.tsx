@@ -107,7 +107,7 @@ export default function Marketplace() {
   const handleReprocessAllSales = async () => {
     try {
       const res = await axios.post(
-        `${apiUrl}/reprocessar-pedidos`,
+        `${apiUrl}/marketplaces/reprocessar-pedidos`,
         {
           startDate: date.startDate,
           endDate: date.endDate,
