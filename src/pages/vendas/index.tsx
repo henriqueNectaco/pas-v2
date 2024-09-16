@@ -331,29 +331,6 @@ export default function Vendas() {
                   </div>
                 </div>
               )}
-              {/* 
-              {responseData.pedidos_splits.length >= 1 ? (
-                <PagamentosCards
-                  isLoadingReprocessSale={isLoadingReprocessSale}
-                  currentComponent={'splits'}
-                  titulo={'Splits'}
-                  arrayTittles={[
-                    'Id',
-                    'Estabelecimento',
-                    'Tipo',
-                    'Categoria',
-                    'Valor',
-                  ]}
-                  contentArray={[
-                    'id',
-                    'nome_fantasia',
-                    'tipo_split',
-                    'categoria',
-                    'valor',
-                  ]}
-                  dados={splits}
-                />
-              ) : null} */}
             </div>
           </div>
         ) : null}
