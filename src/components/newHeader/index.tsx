@@ -96,7 +96,7 @@ export default function NewHeader(props: header) {
             <>
               <ModalBody className=" flex flex-row items-center justify-center  border-b border-black p-6">
                 <Warning size={25} color="#e9ec41" />
-                <p className="text-xl">Deseja Efetuar o LogOut?</p>
+                <p className="text-xl">Deseja efetuar o LogOut?</p>
               </ModalBody>
               <ModalFooter className="flex p-4 items-center justify-center">
                 <Button
