@@ -91,7 +91,7 @@ export default function Vendas() {
   return (
     <div className="flex flex-col items-center  h-screen max-w-screen w-full ">
       <div
-        className={`w-full max-w-screen flex flex-col space-y-2 ${responseData !== null && responseData.pagamentos.length > 1 && 'bg-gray-800'} ${responseData !== null && responseData.pagamentos.length === 1 ? 'bg-gray-300' : ''}`}
+        className={`w-full max-w-screen flex flex-col ${responseData?.pagamentos !== undefined && responseData?.pagamentos.length > 1 && 'space-y-2'} ${responseData !== null && responseData.pagamentos.length > 1 && 'bg-gray-800'} ${responseData !== null && responseData.pagamentos.length === 1 ? 'bg-gray-300' : ''}`}
       >
         <div className="w-full lg:p-3 p-2 lg:pr-0 flex lg:flex-row flex-col items-center lg:gap-4  justify-center h-full">
           <FormVendas
@@ -270,37 +270,71 @@ export default function Vendas() {
               )}
             </div>
             <div className="w-full lg:gap-0 gap-2">
-              {responseData.pagamentos.length > 1 ? (
-                <PagamentosCards
-                  reprocessSale={handleReprocessSale}
-                  isLoadingReprocessSale={isLoadingReprocessSale}
-                  currentComponent={'pagamentos'}
-                  titulo={'Pagamentos'}
-                  arrayTittles={[
-                    'Id',
-                    'Status',
-                    'Valor',
-                    'Taxa',
-                    'Recebido',
-                    'Data Recebimento',
-                    'DP',
-                  ]}
-                  dados={pagamentos}
-                  contentArray={[
-                    'id',
-                    'status_pagamento_id',
-                    'valor',
-                    'taxa',
-                    'valor_recebido',
-                    'data_recebimento',
-                  ]}
-                />
-              ) : null}
+              {responseData.pagamentos.length > 1 && (
+                <div className="w-full">
+                  <PagamentosCards
+                    isLoadingReprocessSale={isLoadingReprocessSale}
+                    currentComponent={'pagamentos'}
+                    titulo={'Pagamentos'}
+                    arrayTittles={[
+                      'Id',
+                      'Status',
+                      'Valor',
+                      'Taxa',
+                      'Recebido',
+                      'Data Recebimento',
+                      'DP',
+                    ]}
+                    dados={pagamentos}
+                    contentArray={[
+                      'id',
+                      'status_pagamento_id',
+                      'valor',
+                      'taxa',
+                      'valor_recebido',
+                      'data_recebimento',
+                    ]}
+                  />
+                  {responseData.pedidos_splits.length >= 1 && (
+                    <PagamentosCards
+                      isLoadingReprocessSale={isLoadingReprocessSale}
+                      currentComponent={'splits'}
+                      titulo={'Splits'}
+                      arrayTittles={[
+                        'Id',
+                        'Estabelecimento',
+                        'Tipo',
+                        'Categoria',
+                        'Valor',
+                      ]}
+                      contentArray={[
+                        'id',
+                        'nome_fantasia',
+                        'tipo_split',
+                        'categoria',
+                        'valor',
+                      ]}
+                      dados={splits}
+                    />
+                  )}
 
+                  <div className="p-4 w-full lg:grid xl:grid lg:grid-cols-5">
+                    <Button
+                      fullWidth
+                      color="danger"
+                      variant="shadow"
+                      isLoading={isLoadingReprocessSale}
+                      onClick={handleReprocessSale}
+                    >
+                      Reprocessar Venda
+                    </Button>
+                  </div>
+                </div>
+              )}
+              {/* 
               {responseData.pedidos_splits.length >= 1 ? (
                 <PagamentosCards
                   isLoadingReprocessSale={isLoadingReprocessSale}
-                  reprocessSale={handleReprocessSale}
                   currentComponent={'splits'}
                   titulo={'Splits'}
                   arrayTittles={[
@@ -319,7 +353,7 @@ export default function Vendas() {
                   ]}
                   dados={splits}
                 />
-              ) : null}
+              ) : null} */}
             </div>
           </div>
         ) : null}

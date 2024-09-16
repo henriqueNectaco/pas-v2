@@ -1,8 +1,6 @@
 import { statusPayment } from '@/lib'
 import { formatarData } from '@/lib/sum'
 
-import { Button } from '@nextui-org/button'
-
 type typeData = {
   id?: string
   status_pagamento_id: number
@@ -32,7 +30,6 @@ type TypeProps = {
   contentArray: Array<ContentArrayKeys>
   dados: Array<typeData> | undefined
   isLoadingReprocessSale: boolean
-  reprocessSale: () => void
 }
 
 export default function PagamentosCards(props: TypeProps) {
@@ -107,19 +104,6 @@ export default function PagamentosCards(props: TypeProps) {
                   )}
                 </div>
               ))}
-              {props.currentComponent === 'pagamentos' && (
-                <div className="pt-4 w-full lg:grid xl:grid lg:grid-cols-5">
-                  <Button
-                    fullWidth
-                    color="danger"
-                    variant="shadow"
-                    isLoading={props.isLoadingReprocessSale}
-                    onClick={props.reprocessSale}
-                  >
-                    Reprocessar Venda
-                  </Button>
-                </div>
-              )}
             </>
           ) : null}
         </div>
@@ -174,20 +158,6 @@ export default function PagamentosCards(props: TypeProps) {
             </>
           )}
         </div>
-        {props.currentComponent === 'pagamentos' ? (
-          <div className="mt-1 w-full lg:grid xl:grid lg:grid-cols-3">
-            <Button
-              fullWidth
-              color="danger"
-              variant="ghost"
-              className="flex lg:items-center lg:justify-start"
-              isLoading={props.isLoadingReprocessSale}
-              onClick={props.reprocessSale}
-            >
-              Reprocessar Venda
-            </Button>
-          </div>
-        ) : null}
       </div>
     </div>
   )
